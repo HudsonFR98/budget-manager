@@ -1,0 +1,10 @@
+{
+    "app": "app",
+    "nginx_demo_port": "8000",
+    "gunicorn_demo_port": "5000",
+    "login_redirect": "project.listing",
+    "db_prod": "postgresql://web:ph2013_x@serv-ics-db2/mci",
+    "url_prod": "http://serv-ics-app",
+    "server_prod": "serv-ics-app",
+    "vagrant_ip": "33.33.33.60"
+}

@@ -1,0 +1,20 @@
+.vagrant
+.pytest_cache
+.vscode
+.coverage
+{{ cookiecutter.app }}.egg-info
+data
+celerybeat-schedule
+syntax: glob
+coverage_report
+.mypy_cache
+dist
+
+*.pyc
+**/__pycache__
+
+docs/_build/html/.doctrees/**
+docs/_build/doctrees/**
+
+.coverage
+docs/_build/html/.buildinfo

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/{{ cookiecutter.app }}.css">
+    <title>{{ cookiecutter.app }}</title>
+  </head>
+  <body>
+  <nav class="navbar navbar-expand navbar-dark">
+      <a class="navbar-brand" href="#">{{ cookiecutter.app }}</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse"
+        data-target="#navbarColor02" aria-controls="navbarColor02"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      {% raw %}
+      {% if g.user %}
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <!-- <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Exemple
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ url_for('auth.login') }}">Connexion</a>
+            </div>
+          </li>
+        </ul> -->
+        <span class="navbar-text" style="margin-right: 5px">{{ g.user }}</span>
+        <span class="navbar-text"><a href="/docs"><i class="fas fa-info-circle"></i></a></span>
+      </div>
+      {% endif %}
+    </nav>
+
+    <div class="container-fluid">
+    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+    {% if errors %}
+    <div class="alert alert-danger" role="alert" style="margin-top: 5px">
+        {%- for msg in errors %}
+        {{ msg|safe }}{% if not loop.last %}<br>{% endif %}
+        {% endfor -%}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% with errors = get_flashed_messages(category_filter=["message"]) %}
+    {% if errors %}
+    <div class="alert alert-success" role="alert" style="margin-top: 5px">
+        {%- for msg in errors %}
+        {{ msg|safe }}{% if not loop.last %}<br>{% endif %}
+        {% endfor -%}
+    </div>
+    {% endif %}
+    {% endwith %}
+    {% endraw %}
+
+    {% block body %}{% endblock %}
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    {% block js %}{% endblock %}
+  </body>
+</html>

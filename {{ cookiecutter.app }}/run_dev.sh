@@ -1,0 +1,1 @@
+{{ cookiecutter.app|upper }}_CONTEXT=dev FLASK_ENV=development FLASK_APP={{ cookiecutter.app }}_app flask run

@@ -1,0 +1,10 @@
+gunicorn
+SQLAlchemy
+psycopg2-binary
+python-ldap
+requests
+XlsxWriter
+alembic
+Flask
+git+http://gitlab+deploy-token-2:jzxc1hVQ1pwGLrU8DXGg@serv-gitlab.igbmc.u-strasbg.fr/ics/libics.git@py3
+WTForms

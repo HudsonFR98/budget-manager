@@ -1,0 +1,9 @@
+babel
+mock
+pytest
+pytest-cov
+pycodestyle
+typing
+fabric==2.1.3
+Sphinx
+invoke==1.2.0

@@ -1,0 +1,9 @@
+recursive-include {{ cookiecutter.app }}/static *
+recursive-include {{ cookiecutter.app }}/bin *
+recursive-include {{ cookiecutter.app }}/templates *
+recursive-include migrations *.py
+recursive-include deploy *
+recursive-include docs *
+include *.py *.ini
+global-exclude *.pyc *.php
+recursive-exclude {{ cookiecutter.app }}/tests *

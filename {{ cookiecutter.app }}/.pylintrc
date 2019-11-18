@@ -1,0 +1,8 @@
+[MASTER]
+init-hook='import sys; sys.path.append("e:\\ics_src\\libics")'
+
+[MESSAGES CONTROL]
+disable=C0330, C0103
+
+[TYPECHECK]
+ignored-classes=scoped_session
