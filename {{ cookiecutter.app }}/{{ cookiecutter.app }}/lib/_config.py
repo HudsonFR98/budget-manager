@@ -61,20 +61,20 @@ class Config(object):
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
-    SQLALCHEMY_DATABASE_URI = {{ cookiecutter.db_prod }}
+    SQLALCHEMY_DATABASE_URI = "{{ cookiecutter.db_prod }}"
 
 
 class DevConfig(Config):
 
     CONTEXT = 'dev'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/mci' \
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/mci" \
         % os.environ.get('DB_IP', '')
 
 
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
-    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@serv-ics-recette2/mci'
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-recette2/mci"
 
 
 class TestConfig(Config):
