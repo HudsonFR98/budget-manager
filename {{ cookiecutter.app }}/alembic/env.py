@@ -5,7 +5,7 @@ from sqlalchemy import pool
 
 from alembic import context
 from {{ cookiecutter.app }}.lib import CONFIG
-from {{ cookiecutter.app }}.model.models import *
+from {{ cookiecutter.app }}.models import *
 from ics.db.sa import Base, DBSession
 
 
