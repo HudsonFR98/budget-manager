@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="{{ cookiecutter.app|upper }}",
+    name="{{ cookiecutter.app }}",
     description='',
     version="1.0.0",
     packages=find_packages(),
