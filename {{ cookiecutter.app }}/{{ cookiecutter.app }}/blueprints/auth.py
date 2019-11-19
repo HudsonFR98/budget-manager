@@ -3,7 +3,7 @@ import logging
 from flask import session, redirect, url_for, request, Blueprint, render_template
 from flask import make_response, g, flash
 
-from {{ cookiecutter.app }}.lib.config import config
+from {{ cookiecutter.app }}.lib import config
 from {{ cookiecutter.app }}.models import User
 
 auth = Blueprint('auth', __name__)
@@ -28,7 +28,7 @@ def login():
             return render_template('login.html')
 
         session['user_id'] = g.user.id
-        response = make_response(redirect(url_for({{ cookiecutter.login_redirect }})))
+        response = make_response(redirect(url_for("{{ cookiecutter.login_redirect }}")))
         response.set_cookie('ics_signature', value='signed !!')
         return response
 

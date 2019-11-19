@@ -59,3 +59,14 @@ def commit():
 
 def rollback():
     sa.DBSession.rollback()
+
+
+def login(client, username, password):
+    return client.post(
+        '/login',
+        data=dict(USR=username, PWD=password),
+        follow_redirects=True)
+
+
+def logout(client):
+    return client.get('/logout', follow_redirects=True)

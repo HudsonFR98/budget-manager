@@ -15,19 +15,15 @@ PACKAGES = set((
     'libldap2-dev', 'libpq-dev', 'libsasl2-dev', 'postgresql-client',
     'libjpeg-dev', 'libfreetype6-dev', 'libz-dev', 'nginx', 'supervisor',
     'python-dev', 'python3-pip', 'python3-venv'))
-
-{% if cookiecutter.use_odbc %}
+{% if cookiecutter.use_odbc|int -%}
 PACKAGES = PACKAGES.union((
     'unixodbc', 'unixodbc-dev',
     'freetds-common', 'freetds-bin', 'tdsodbc', 'g++'))
-{% endif %}
-
-
-{% if cookiecutter.use_redis %}
+{% endif -%}
+{% if cookiecutter.use_redis|int -%}
 PACKAGES.add('redis-server')
-{% endif %}
-
-{% if cookiecutter.use_r %}
+{% endif -%}
+{% if cookiecutter.use_r|int -%}
 PACKAGES.add('r-base')
 PACKAGES.add('r-base-dev')
 R_PACKAGES = {{ cookiecutter.r_packages }}
@@ -88,6 +84,7 @@ def create_dirs():
 
 def install_debian_packages():
     banner('Debian packages')
+    sudo("apt-get update")
     sudo('apt-get install -y --force-yes {}'.format(' '.join(PACKAGES)))
 
 
@@ -274,9 +271,9 @@ def deploy(context, tarball):
         create_user()
     create_dirs()
     install_debian_packages()
-    {% if cookiecutter.use_r %}
+    {% if cookiecutter.use_r|int -%}
     install_r_packages()
-    {% endif %}
+    {% endif -%}
     install_venv(context)
     install_sources(context, tarball)
     install_python_libs(context)
@@ -284,9 +281,9 @@ def deploy(context, tarball):
         install_nginx(context)
     if context in ("demo", "prod"):
         install_supervisor(context)
-    {% if cookiecutter.use_odbc %}
+    {% if cookiecutter.use_odbc|int -%}
     install_odbc()
-    {% endif %}
+    {% endif -%}
     if context in ("test", "demo", "prod"):
         run_migrations(context)
     restart()
@@ -305,6 +302,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--tarball", help="tarball à déployer", default="")
     parser.add_argument("--context", help="contexte d'execution (test, dev, demo, prod)")
+    parser.add_argument("--action", help="action (deploy, update)")
     args = parser.parse_args()
 
     if args.action == "deploy":

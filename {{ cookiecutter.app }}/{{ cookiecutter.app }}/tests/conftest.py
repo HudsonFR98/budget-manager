@@ -1,8 +1,9 @@
 import pytest
-
+import logging
 from ics.db import sa
 from . import util
 from {{ cookiecutter.app }}.lib import config
+from {{ cookiecutter.app }} import create_app
 
 
 @pytest.fixture(scope="module", autouse=True)
@@ -20,4 +21,9 @@ def with_data(data):
     util.load(*data)
     yield
     util.unload(*data)
-    util.flush()
+    # util.flush()
+
+
+@pytest.fixture(scope='module')
+def app():
+    yield create_app()

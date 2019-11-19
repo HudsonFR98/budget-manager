@@ -3,7 +3,7 @@ import logging
 from functools import wraps
 from flask import session, url_for, redirect, g
 
-from {{ cookiecutter.app }}.models import User
+from {{ cookiecutter.app }} import dao
 from ics.db import sa
 
 log = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ def before_request():
 
     g.user = None
     if 'user_id' in session:
-        g.user = User.query.get(session['user_id'])
+        g.user = dao.get_user(session['user_id'])
         g.user.reload_permissions()
 
 

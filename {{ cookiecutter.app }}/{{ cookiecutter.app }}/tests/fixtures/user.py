@@ -1,17 +1,17 @@
-from {{ cookiecutter.app }}.model import models
+from {{ cookiecutter.app }} import models
 
 
 DATA = {
     models.User: [
         dict(
-            last_name=u'Selloum',
+            last_name='Selloum',
             has_left=0,
-            first_name=u'Mohammed',
+            first_name='Mohammed',
             id=1,
-            pwd=u'test',
-            ide=u'selloum',
+            pwd='test',
+            ide='selloum',
             ptf_id=3,
-            email=u'amoro@igbmc.fr',
+            email='selloum@igbmc.fr',
             center_id=1
         ),
     ],

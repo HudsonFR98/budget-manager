@@ -79,6 +79,7 @@ class DemoConfig(Config):
 
 class TestConfig(Config):
 
+    CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
     SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/mci_test' \
