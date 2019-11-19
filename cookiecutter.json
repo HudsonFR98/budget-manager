@@ -4,7 +4,12 @@
     "gunicorn_demo_port": "5000",
     "login_redirect": "project.listing",
     "db_prod": "postgresql://web:ph2013_x@serv-ics-db2/mci",
-    "url_prod": "http://serv-ics-app",
-    "server_prod": "serv-ics-app",
-    "vagrant_ip": "33.33.33.60"
+    "url_prod": "http://serv-ics-{{ cookiecutter.app }}",
+    "server_prod": "serv-ics-{{ cookiecutter.app }}",
+    "vagrant_ip": "33.33.33.60",
+    "dirs": "['/var/log/{{ cookiecutter.app }}', '/opt/{{ cookiecutter.app }}_docs']",
+    "use_odbc": false,
+    "use_redis": false,
+    "use_r": false,
+    "r_packages": [],
 }

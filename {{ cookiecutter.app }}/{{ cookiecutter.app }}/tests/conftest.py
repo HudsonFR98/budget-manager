@@ -1,14 +1,14 @@
 import pytest
 
-from sqlalchemy import DDL
 from ics.db import sa
 from . import util
+from {{ cookiecutter.app }}.lib import config
 
 
 @pytest.fixture(scope="module", autouse=True)
 def connect_db():
-    logging.basicConfig(level=CONFIG.LOG_LEVEL)
-    sa.open(CONFIG.SQLALCHEMY_DATABASE_URI)
+    logging.basicConfig(level=config.LOG_LEVEL)
+    sa.open(config.SQLALCHEMY_DATABASE_URI)
     yield
     util.disconnect()
 

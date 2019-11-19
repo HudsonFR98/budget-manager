@@ -93,10 +93,10 @@ if os.environ['{{ cookiecutter.app|upper }}_CONTEXT'] in ('dev', 'test') and 'DB
     raise Exception("La variable d'environnement DB_IP n'est pas renseignée")
 
 
-_ENV = dict(
+_envs = dict(
     test=TestConfig,
     dev=DevConfig,
     demo=DemoConfig,
     prod=ProdConfig
 )
-CONFIG = _ENV[os.environ['{{ cookiecutter.app|upper }}_CONTEXT']]
+config = _envs[os.environ['{{ cookiecutter.app|upper }}_CONTEXT']]

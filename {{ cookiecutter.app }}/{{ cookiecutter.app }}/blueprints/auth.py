@@ -3,7 +3,7 @@ import logging
 from flask import session, redirect, url_for, request, Blueprint, render_template
 from flask import make_response, g, flash
 
-from {{ cookiecutter.app }}.lib.config import CONFIG
+from {{ cookiecutter.app }}.lib.config import config
 from {{ cookiecutter.app }}.models import User
 
 auth = Blueprint('auth', __name__)
@@ -21,7 +21,7 @@ def login():
             user = User.authenticate(request.form['USR'], request.form['PWD'])
             g.user = user
         except Exception as e:
-            if CONFIG.CONTEXT == 'dev':
+            if config.CONTEXT == 'dev':
                 flash(str(e), 'error')
             else:
                 flash('mauvais utilisateur ou mot de passe', 'error')

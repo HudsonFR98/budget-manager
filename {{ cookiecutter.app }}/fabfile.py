@@ -13,8 +13,9 @@ def _do(env, action):
     tarball = glob('dist/*')[0].split('/')[-1]
     c = Connection(host=HOSTS[env], user='devics')
     c.put('dist/{}'.format(tarball), remote='/tmp/%s' % (tarball,))
-    c.put('deploy/{}_{}.py'.format(action, env), remote='/tmp/install.py')
-    c.run('python3 /tmp/install.py --tarball {}'.format(tarball))
+    c.put('deploy/install.py', remote='/tmp/install.py')
+    cmd = 'python3 /tmp/install.py --tarball {} --context {} --action {}'
+    c.run(cmd.format(tarball, env, action))
     c.run('rm /tmp/install.py')
     c.run('rm /tmp/{}'.format(tarball))
 

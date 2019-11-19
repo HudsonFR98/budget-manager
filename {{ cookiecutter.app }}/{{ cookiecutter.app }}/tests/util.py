@@ -5,15 +5,15 @@ from ics.tests.util import with_collections
 from ics.tests.util import load_collections as load
 from ics.tests.util import unload_collections as unload
 
-from {{ cookiecutter.app }}.lib.config import CONFIG
+from {{ cookiecutter.app }}.lib import config
 from {{ cookiecutter.app }} import models
 from sqlalchemy import DDL
 
 
 def connect():
-    logging.basicConfig(level=CONFIG.LOG_LEVEL)
+    logging.basicConfig(level=config.LOG_LEVEL)
     # logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-    sa.open(CONFIG.SQLALCHEMY_DATABASE_URI)
+    sa.open(config.SQLALCHEMY_DATABASE_URI)
 
 
 def disconnect():
