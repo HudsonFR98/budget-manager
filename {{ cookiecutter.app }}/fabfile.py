@@ -8,7 +8,8 @@ HOSTS = {
 }
 
 
-def _do(env, action):
+@task
+def install(ctx, action, env):
 
     tarball = glob('dist/*')[0].split('/')[-1]
     c = Connection(host=HOSTS[env], user='devics')
@@ -18,15 +19,3 @@ def _do(env, action):
     c.run(cmd.format(tarball, env, action))
     c.run('rm /tmp/install.py')
     c.run('rm /tmp/{}'.format(tarball))
-
-
-@task
-def deploy(ctx, env):
-
-    _do(env, 'deploy')
-
-
-@task
-def update(ctx, env):
-
-    _do(env, 'update')

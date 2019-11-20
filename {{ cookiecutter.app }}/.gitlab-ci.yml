@@ -13,7 +13,7 @@ stages:
 install_env:
   stage: install
   script:
-    - python3 deploy/deploy_test.py
+    - python3 deploy/install.py --action deploy --context test
 
 pytest:
   stage: test
@@ -48,7 +48,7 @@ build_sdist:
 deploy_demo:
   stage: demo
   script:
-    - /opt/env3/{{ cookiecutter.app }}/bin/fab deploy --env demo
+    - /opt/env3/{{ cookiecutter.app }}/bin/fab install --action deploy --env demo
   when: manual
   environment:
     name: staging
@@ -57,7 +57,7 @@ deploy_demo:
 update_demo:
   stage: demo
   script:
-    - /opt/env3/{{ cookiecutter.app }}/bin/fab update --env demo
+    - /opt/env3/{{ cookiecutter.app }}/bin/fab install --action update --env demo
   when: manual
   environment:
     name: staging
@@ -66,7 +66,7 @@ update_demo:
 deploy_prod:
   stage: prod
   script:
-    - /opt/env/{{ cookiecutter.app }}/bin/fab deploy --env prod
+    - /opt/env/{{ cookiecutter.app }}/bin/fab install --action deploy --env prod
   when: manual
   environment:
     name: prod
@@ -75,7 +75,7 @@ deploy_prod:
 update_prod:
   stage: prod
   script:
-    - /opt/env/{{ cookiecutter.app }}/bin/fab update --env prod
+    - /opt/env/{{ cookiecutter.app }}/bin/fab install --action update --env prod
   when: manual
   environment:
     name: prod

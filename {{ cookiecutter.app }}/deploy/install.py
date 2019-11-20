@@ -305,6 +305,8 @@ def main():
     parser.add_argument("--action", help="action (deploy, update)")
     args = parser.parse_args()
 
+    assert args.action in ('deploy', 'update')
+    assert args.context in ('test', 'dev', 'demo', 'prod')
     if args.action == "deploy":
         deploy(args.context, args.tarball)
     elif args.action == "update":
