@@ -152,7 +152,7 @@ def _install_sources_package(tarball):
     banner('Sources of {{ cookiecutter.app }}')
     if os.path.exists('/opt/{{ cookiecutter.app }}'):
         sudo('rm -rf /opt/{{ cookiecutter.app }}')
-    call('cd /tmp && sudo tar zxvf %s -C /opt'.format(tarball))
+    call('cd /tmp && sudo tar zxvf {} -C /opt'.format(tarball))
     oldname = os.path.join('/opt', tarball.replace('.tar.gz', ''))
     sudo('mv %s %s' % (oldname, '/opt/{{ cookiecutter.app }}'))
     sudo('chown -R web.web /opt/{{ cookiecutter.app }}')
