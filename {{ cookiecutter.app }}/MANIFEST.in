@@ -1,6 +1,7 @@
 recursive-include {{ cookiecutter.app }}/static *
 recursive-include {{ cookiecutter.app }}/bin *
 recursive-include {{ cookiecutter.app }}/templates *
+recursive-include {{ cookiecutter.app }}/i18n *
 recursive-include migrations *.py
 recursive-include deploy *
 recursive-include docs *
