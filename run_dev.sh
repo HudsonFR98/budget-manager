@@ -1,0 +1,1 @@
+DB_IP=PC1-0136-A FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev FLASK_ENV=development FLASK_APP=fair3r_custom_overlay_app flask run

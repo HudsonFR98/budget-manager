@@ -1,0 +1,58 @@
+server {
+    listen 80;
+    sendfile  off;
+    client_max_body_size 8M;
+    server_name localhost serv-ics-fair3r_custom_overlay;
+    access_log  /var/log/fair3r_custom_overlay/access.log;
+    proxy_connect_timeout       600;
+    proxy_send_timeout          600;
+    proxy_read_timeout          600;
+    send_timeout                600;
+
+    if ($http_cookie ~ 'ics_signature=signed !!') {
+      set $fair3r_custom_overlay_secure '1';
+    }
+
+    location /static {
+        autoindex on;
+        alias /opt/fair3r_custom_overlay/fair3r_custom_overlay/static/;
+    }
+
+    location /prive {
+        autoindex on;
+        alias /opt/fair3r_custom_overlay_docs/;
+    }
+
+    location /docs {
+        alias /opt/fair3r_custom_overlay/docs/_build/html/;
+    }
+
+    location /rest {
+        allow   192.168.0.0/16;
+        allow   130.79.78.0/24;
+        allow   130.79.79.0/24;
+        allow   130.79.77.0/24;
+        allow   130.79.76.0/24;
+        allow   130.79.138.0/24;
+        allow   130.79.137.0/24;
+        allow   192.168.8.22;
+        deny    all;
+
+        #auth_basic "Restricted";
+        #auth_basic_user_file /etc/nginx/htpasswd;
+
+        try_files $uri @proxy;
+    }
+
+    location / {
+        try_files $uri @proxy;
+    }
+
+    location @proxy {
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host:$server_port;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+}
