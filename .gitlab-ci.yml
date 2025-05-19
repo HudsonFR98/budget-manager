@@ -2,11 +2,13 @@ variables:
   FAIR3R_CUSTOM_OVERLAY_CONTEXT: test
   DB_IP: localhost
   PGPASSWORD: ph2013_x
+  DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
 stages:
   - install
   - test
   - build
+  - docker
   - demo
   - prod
 
@@ -45,38 +47,62 @@ build_sdist:
     - dist/
     expire_in: 1 week
 
+build_docker:
+  stage: docker
+  image: docker:28.1.1
+  services:
+    - docker:28.1.1-dind
+  variables:
+    DOCKER_TLS_CERTDIR: "/certs"
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker build -t $DOCKER_IMAGE .
+    - docker push $DOCKER_IMAGE
+  only:
+    - master
+    - tags
+
 deploy_demo:
   stage: demo
   script:
-    - /opt/env3/fair3r_custom_overlay/bin/fab install --action deploy --env demo
+    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-recette:8124/
+    url: http://serv-ics-fco-d-01:8080/
+  needs:
+    - build_docker
 
 update_demo:
   stage: demo
   script:
-    - /opt/env3/fair3r_custom_overlay/bin/fab install --action update --env demo
+    - python3 deploy/ansible_deploy.py --action update --env demo --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-recette:8080/
+    url: http://serv-ics-fco-d-01:8080/
+  needs:
+    - build_docker
 
 deploy_prod:
   stage: prod
   script:
-    - /opt/env/fair3r_custom_overlay/bin/fab install --action deploy --env prod
+    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-fair3r_custom_overlay
+    url: http://serv-ics-fco-p-01
+  needs:
+    - build_docker
 
 update_prod:
   stage: prod
   script:
-    - /opt/env/fair3r_custom_overlay/bin/fab install --action update --env prod
+    - python3 deploy/ansible_deploy.py --action update --env prod --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-fair3r_custom_overlay
+    url: http://serv-ics-fco-p-01
+  needs:
+    - build_docker

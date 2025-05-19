@@ -119,8 +119,6 @@ def _install_sources_dev():
     """ en dev, on fait un lien symbolique """
 
     banner('Sources of fair3r_custom_overlay')
-    if not os.path.exists('/opt/fair3r_custom_overlay'):
-        sudo('ln -s /ics_src/fair3r_custom_overlay /opt/fair3r_custom_overlay')
     run_as('web',
         "cd /opt/fair3r_custom_overlay && /opt/env3/fair3r_custom_overlay/bin/python setup.py develop")
 
@@ -160,7 +158,7 @@ def install_sources(context, tarball):
 def install_python_libs(context):
 
     user = get_user(context)
-    run_as(user, '/opt/env3/fair3r_custom_overlay/bin/pip install -U setuptools pip==9.0.3')
+    run_as(user, '/opt/env3/fair3r_custom_overlay/bin/pip install -U setuptools pip')
 
     if context in ('dev', 'test'):
         banner('Python dev libs')

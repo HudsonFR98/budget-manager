@@ -6,5 +6,5 @@ requests
 xlsxwriter
 alembic
 flask
-git+http://gitlab+deploy-token-2:jzxc1hVQ1pwGLrU8DXGg@serv-gitlab.igbmc.u-strasbg.fr/ics/libics.git@py3
+git+http://gitlab+deploy-token-7:4AoAtGnmn2DBB7tPgkxV@serv-gitlab.igbmc.u-strasbg.fr/ics/libics.git@py3.9
 wtforms

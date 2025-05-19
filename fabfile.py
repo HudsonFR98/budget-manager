@@ -3,8 +3,8 @@ from fabric import Connection
 from glob import glob
 
 HOSTS = {
-    'demo': 'serv-ics-recette',
-    'prod': 'serv-ics-fair3r_custom_overlay',
+    'demo': 'serv-ics-fco-d-01',
+    'prod': 'serv-ics-fco-p-01',
 }
 
 

@@ -67,14 +67,15 @@ class ProdConfig(Config):
 class DevConfig(Config):
 
     CONTEXT = 'dev'
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/mci" \
+    DB_URI = "postgresql://web:ph2013_x@%s/fco" % os.environ.get('DB_IP', '')
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/fco" \
         % os.environ.get('DB_IP', '')
 
 
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-recette2/mci"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-fco-d-01/fco"
 
 
 class TestConfig(Config):
