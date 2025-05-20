@@ -15,61 +15,65 @@
         line-height: 1.5;
         overflow-x: auto;
     }
-    .error-template {
-        padding: 40px 15px;
-        text-align: center;
-    }
-    .error-actions {
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-    .error-actions .btn {
-        margin-right: 10px;
-    }
+.error-template {
+    padding: 40px 15px;
+    text-align: center;
+}
+.error-actions {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.error-actions .btn {
+    margin-right: 10px;
+}
 
-    /* Documentation styles */
-    .doc-header {
-        border-bottom: 2px solid #007bff;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
+/* Documentation styles */
+.doc-header {
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
 
-    .doc-section {
-        margin-bottom: 30px;
-    }
+.doc-section {
+    margin-bottom: 30px;
+}
 
-    .doc-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 100%;
-    }
+.doc-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
 
-    .doc-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    }
+.doc-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
 
-    .doc-card .card-header {
-        font-weight: bold;
-        background-color: #f8f9fa;
-    }
+.doc-card .card-header {
+    font-weight: bold;
+    background-color: #f8f9fa;
+}
 
-    .doc-card .card-header i {
-        margin-right: 10px;
-        color: #007bff;
-    }
+.doc-card .card-header i {
+    margin-right: 10px;
+    color: #007bff;
+}
 
-    .doc-note {
-        background-color: #e9f7fe;
-        border-left: 4px solid #007bff;
-        padding: 15px;
-        margin-top: 20px;
-    }
+.doc-note {
+    background-color: #e9f7fe;
+    border-left: 4px solid #007bff;
+    padding: 15px;
+    margin-top: 20px;
+}
 
-    .doc-note h4 {
-        color: #007bff;
-        margin-bottom: 10px;
-    }
+.doc-note h4 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
 
-    .doc-note p {
-        margin-bottom: 0;
-    }
+.doc-note p {
+    margin-bottom: 0;
+}
+
+.context-badge{
+    font-size: 1.2em; padding: 5px 10px;
+}

@@ -20,13 +20,22 @@
   <body>
   <nav class="navbar navbar-expand navbar-light bg-light">
       <a class="navbar-brand" href="#"><i class="fas fa-cog"></i> fair3r_custom_overlay</a>
+      {% if CONTEXT %}
+        {% if CONTEXT == 'dev' %}
+          <span class="context-badge badge badge-warning ml-2 badge-lg">{{ CONTEXT }}</span>
+        {% elif CONTEXT == 'demo' %}
+          <span class="context-badge badge badge-primary ml-2 badge-lg">{{ CONTEXT }}</span>
+        {% else %}
+          <span class="context-badge badge badge-secondary ml-2 badge-lg">{{ CONTEXT }}</span>
+        {% endif %}
+      {% endif %}
       <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarColor02" aria-controls="navbarColor02"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarColor02">
+      <div class="collapse navbar-collapse" id="navbarColor02" style="margin-left: 20px;">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown active">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
