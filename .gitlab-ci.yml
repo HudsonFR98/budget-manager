@@ -20,7 +20,7 @@ install_env:
 pytest:
   stage: test
   script:
-    - psql mci_test -h localhost -U web -f fair3r_custom_overlay/tests/reset.sql
+    - psql fco_test -h localhost -U web -f fair3r_custom_overlay/tests/reset.sql
     - FAIR3R_CUSTOM_OVERLAY_CONTEXT=test /opt/env3/fair3r_custom_overlay/bin/pytest --cov-report term --cov-report html:coverage_report --cov=fair3r_custom_overlay fair3r_custom_overlay/tests
   artifacts:
     paths:

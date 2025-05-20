@@ -36,7 +36,7 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 ### TEST Environment
 - **Purpose**: Automated testing in CI/CD pipeline
 - **Configuration**: `TestConfig` class
-- **Database**: Uses a test database (`mci_test`) on localhost
+- **Database**: Uses a test database (`fco_test`) on localhost
 - **Run Command**: `run_tests.sh` script or directly through GitLab CI
 - **Special Features**: Has `TESTING=True` flag and reduced logging level
 
