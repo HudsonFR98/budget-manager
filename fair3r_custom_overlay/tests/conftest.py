@@ -1,6 +1,6 @@
 import pytest
 import logging
-from ics.db import sa
+from fair3r_custom_overlay.lib import database
 from . import util
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay import create_app
@@ -9,7 +9,7 @@ from fair3r_custom_overlay import create_app
 @pytest.fixture(scope="module", autouse=True)
 def connect_db():
     logging.basicConfig(level=config.LOG_LEVEL)
-    sa.open(config.SQLALCHEMY_DATABASE_URI)
+    database.open(config.SQLALCHEMY_DATABASE_URI)
     yield
     util.disconnect()
 

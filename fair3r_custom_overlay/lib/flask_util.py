@@ -4,7 +4,7 @@ from functools import wraps
 from flask import session, url_for, redirect, g
 
 from fair3r_custom_overlay import dao
-from ics.db import sa
+from fair3r_custom_overlay.lib.database import DBSession
 
 log = logging.getLogger(__name__)
 
@@ -32,4 +32,4 @@ def before_request():
 def after_request():
     """ launched after each request """
 
-    sa.DBSession.remove()
+    DBSession.remove()

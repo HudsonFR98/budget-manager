@@ -18,14 +18,14 @@
     <title>fair3r_custom_overlay</title>
   </head>
   <body>
-  <nav class="navbar navbar-expand navbar-dark">
-      <a class="navbar-brand" href="#">fair3r_custom_overlay</a>
+  <nav class="navbar navbar-expand navbar-light bg-light">
+      <a class="navbar-brand" href="#"><i class="fas fa-cog"></i> fair3r_custom_overlay</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse"
         data-target="#navbarColor02" aria-controls="navbarColor02"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item dropdown active">
@@ -39,7 +39,7 @@
           </li>
         </ul>
         <span class="navbar-text" style="margin-right: 5px">{{ g.user }}</span>
-        <span class="navbar-text"><a href="/docs"><i class="fas fa-info-circle"></i></a></span>
+        <span class="navbar-text"><a href="{{ url_for('doc.index') }}"><i class="fas fa-info-circle"></i></a></span>
       </div>
     </nav>
 
@@ -81,6 +81,6 @@
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 
     {% block js %}{% endblock %}
-    
+
   </body>
 </html>

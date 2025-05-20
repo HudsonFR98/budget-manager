@@ -61,15 +61,19 @@ class Config(object):
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-db2/mci"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-db2/fco"
 
 
 class DevConfig(Config):
 
     CONTEXT = 'dev'
+    DEBUG = True
+    TESTING = False
+    LOG_LEVEL = logging.DEBUG
     DB_URI = "postgresql://web:ph2013_x@%s/fco" % os.environ.get('DB_IP', '')
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/fco" \
         % os.environ.get('DB_IP', '')
+    PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
 
 
 class DemoConfig(Config):
@@ -83,7 +87,7 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/mci_test' \
+    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/fco_test' \
         % os.environ.get('DB_IP', '')
     SERVER_NAME = 'localhost'
 

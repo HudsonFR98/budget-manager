@@ -28,7 +28,7 @@ def login():
             return render_template('login.html')
 
         session['user_id'] = g.user.id
-        response = make_response(redirect(url_for("project.listing")))
+        response = make_response(redirect(url_for("dashboard.home")))
         response.set_cookie('ics_signature', value='signed !!')
         return response
 

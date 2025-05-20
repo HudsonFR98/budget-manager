@@ -1,64 +1,63 @@
 import logging
 
-from ics.db import sa
-from ics.tests.util import with_collections
-from ics.tests.util import load_collections as load
-from ics.tests.util import unload_collections as unload
-
+from fair3r_custom_overlay.lib import database
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay import models
 from sqlalchemy import DDL
 
+# Define our own test utility functions
+def with_collections(collections):
+    """Decorator to load collections for a test function"""
+    def decorator(func):
+        def wrapper(*args, **kwargs):
+            load(collections)
+            try:
+                return func(*args, **kwargs)
+            finally:
+                unload(collections)
+        return wrapper
+    return decorator
+
+def load_collections(collections):
+    """Load collections into the database"""
+    load(collections)
+
+def unload_collections(collections):
+    """Unload collections from the database"""
+    unload(collections)
+
+# Alias for backward compatibility
+load = load_collections
+unload = unload_collections
 
 def connect():
     logging.basicConfig(level=config.LOG_LEVEL)
     # logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-    sa.open(config.SQLALCHEMY_DATABASE_URI)
+    database.open(config.SQLALCHEMY_DATABASE_URI)
 
 
 def disconnect():
-    sa.DBSession.remove()
+    database.DBSession.remove()
 
 
 def flush():
-    sa.DBSession.rollback()
-    models.AdminPcr.query.delete()
-    models.PcrWell.query.delete()
-    models.PCR.query.delete()
-    models.Run.query.delete()
-    models.MatingGenotypeAllele.query.delete()
-    models.MatingGenotype.query.delete()
-    models.Sample.query.delete()
-    models.Batch.query.delete()
-    models.MatingGenotype.query.delete()
-    models.Mating.query.delete()
-    models.Request.query.delete()
-    models.MultiplexPairs.query.delete()
-    models.OligoWellContent.query.delete()
-    models.PairAlleles.query.delete()
-    models.Multiplex.query.delete()
-    models.OligoPair.query.delete()
-    models.OligoSlide.query.delete()
-    models.OligoPlate.query.delete()
-    models.OligoSlidesStock.query.delete()
-    models.Gene.query.delete()
-    models.DNAPlate.query.delete()
-    models.Allele.query.delete()
-    models.Request.query.delete()
+    database.DBSession.rollback()
+    # Only delete data from our models
     models.User.query.delete()
+    models.Role.query.delete()
     commit()
 
 
 def expire():
-    sa.DBSession.expire_all()
+    database.DBSession.expire_all()
 
 
 def commit():
-    sa.DBSession.commit()
+    database.DBSession.commit()
 
 
 def rollback():
-    sa.DBSession.rollback()
+    database.DBSession.rollback()
 
 
 def login(client, username, password):

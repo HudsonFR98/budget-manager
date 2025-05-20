@@ -1,12 +1,15 @@
 
-from flask import Flask
+from flask import Flask, render_template
 
 from fair3r_custom_overlay.lib import error
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay.lib import flask_util
-from ics.db import sa
+from fair3r_custom_overlay.lib import database
+from fair3r_custom_overlay.models import User
 
 from .blueprints.auth import auth
+from .blueprints.dashboard import dashboard
+from .blueprints.doc import doc
 # from .blueprints.rest import rest
 
 
@@ -14,15 +17,55 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(config)
-    sa.open(config.SQLALCHEMY_DATABASE_URI)
+    database.open(config.SQLALCHEMY_DATABASE_URI)
+
+    # Create admin user if no users exist
+    User.create_admin_if_not_exists()
 
     if config.CONTEXT == 'prod':
         app.logger.addHandler(error.get_mail_handler())
 
-        @app.errorhandler(Exception)
-        def unhandled_exception(e):
-            app.logger.error(error.get_error_email(e))
-            return 'error', 500
+    # Register error handlers for common HTTP errors
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('error.html',
+                              error_code=404,
+                              error_name='Page Not Found',
+                              error_description='The requested page could not be found.'), 404
+
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template('error.html',
+                              error_code=403,
+                              error_name='Forbidden',
+                              error_description='You do not have permission to access this resource.'), 403
+
+    @app.errorhandler(400)
+    def bad_request(e):
+        return render_template('error.html',
+                              error_code=400,
+                              error_name='Bad Request',
+                              error_description='The server could not understand the request.'), 400
+
+    @app.errorhandler(Exception)
+    def unhandled_exception(e):
+        error_details = error.get_error_email(e)
+        app.logger.error(error_details)
+
+        if config.CONTEXT == 'prod':
+            # In production, don't show traceback to users
+            return render_template('error.html', 
+                                  error_code=500,
+                                  error_name='Internal Server Error',
+                                  error_description='An unexpected error occurred. The administrator has been notified.'), 500
+        else:
+            # In development, show detailed error information
+            import traceback
+            return render_template('error.html', 
+                                  error_code=500,
+                                  error_name='Internal Server Error',
+                                  error_description=str(e),
+                                  traceback=traceback.format_exc()), 500
 
     @app.before_request
     def before_request():
@@ -37,6 +80,8 @@ def create_app():
         return dict(CONTEXT=config.CONTEXT)
 
     app.register_blueprint(auth)
+    app.register_blueprint(dashboard)
+    app.register_blueprint(doc, url_prefix='/doc/')
     # app.register_blueprint(rest, url_prefix='/rest')
 
     return app

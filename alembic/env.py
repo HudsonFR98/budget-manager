@@ -6,7 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 from fair3r_custom_overlay.lib import config as fair3r_custom_overlay_config
 from fair3r_custom_overlay.models import *
-from ics.db.sa import Base, DBSession
+from fair3r_custom_overlay.lib.database import Base, DBSession
 
 
 # this is the Alembic Config object, which provides

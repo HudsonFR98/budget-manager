@@ -22,18 +22,26 @@ def get_mail_handler():
 
 
 def get_error_email(e):
+    try:
+        # Get the traceback as a string
+        tb_str = traceback.format_exc()
+        if isinstance(tb_str, bytes):
+            tb_str = tb_str.decode('utf-8', errors='replace')
 
-    msg = traceback.format_exc().decode('latin-1') + '\n\n'
-    msg += 'Paramètres:\n'
-    for k, v in request.values.items():
-        msg += '%s: %s\n' % (k, v)
-    msg += '\nSession:\n'
-    for k, v in session.items():
-        msg += '%s: %s\n' % (k, v)
-    if hasattr(g, 'user') and g.user:
-        msg += 'user=%s\n' % g.user.last_name
-    msg += '\n\nENVIRONEMENT\n\n'
-    for key in sorted(request.environ.keys()):
-        msg += '%s: %s\n' % (key, request.environ.get(key))
+        msg = tb_str + '\n\n'
+        msg += 'Paramètres:\n'
+        for k, v in request.values.items():
+            msg += '%s: %s\n' % (k, v)
+        msg += '\nSession:\n'
+        for k, v in session.items():
+            msg += '%s: %s\n' % (k, v)
+        if hasattr(g, 'user') and g.user:
+            msg += 'user=%s\n' % g.user.last_name
+        msg += '\n\nENVIRONEMENT\n\n'
+        for key in sorted(request.environ.keys()):
+            msg += '%s: %s\n' % (key, request.environ.get(key))
 
-    return msg.encode('latin-1')
+        return msg
+    except Exception as ex:
+        # If there's an error formatting the error message, return a simple error message
+        return f"Error generating error report: {str(ex)}\nOriginal error: {str(e)}"

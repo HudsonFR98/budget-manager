@@ -1,0 +1,93 @@
+---
+# Ansible playbook to deploy fair3r_custom_overlay using Docker
+# Replaces the functionality of fabfile.py and install.py for Docker deployment
+
+- name: Deploy fair3r_custom_overlay using Docker
+  hosts: "{{ target_host }}"
+  remote_user: devics
+  become: yes
+  vars:
+    action: "{{ action | default('deploy') }}"
+    context: "{{ context | default('demo') }}"
+    docker_image: "{{ docker_image }}"
+    container_name: "fair3r_custom_overlay_{{ context }}"
+    db_host: "{{ db_host | default('localhost') }}"
+
+  tasks:
+    - name: Install Docker dependencies
+      apt:
+        name: 
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg-agent
+          - software-properties-common
+        state: present
+        update_cache: yes
+
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+
+    - name: Install Docker
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: present
+        update_cache: yes
+
+    - name: Create necessary directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: devics
+        group: devics
+        mode: '0755'
+      with_items:
+        - /var/log/fair3r_custom_overlay
+        - /opt/fair3r_custom_overlay_data
+
+    - name: Log in to GitLab Container Registry
+      docker_login:
+        registry: "{{ docker_registry }}"
+        username: "{{ registry_username }}"
+        password: "{{ registry_password }}"
+        state: present
+
+    - name: Pull Docker image
+      docker_image:
+        name: "{{ docker_image }}"
+        source: pull
+        force_source: yes
+
+    - name: Stop and remove existing container
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+      ignore_errors: yes
+      when: action == 'update' or action == 'deploy'
+
+    - name: Run Docker container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ docker_image }}"
+        state: started
+        restart_policy: always
+        ports:
+          - "8080:8080"
+        env:
+          FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
+          DB_IP: "{{ db_host }}"
+        volumes:
+          - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
+          - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data

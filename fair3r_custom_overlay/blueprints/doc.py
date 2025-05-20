@@ -1,0 +1,13 @@
+import logging
+
+from flask import Blueprint, render_template
+from fair3r_custom_overlay.lib.flask_util import login_required
+
+doc = Blueprint('doc', __name__)
+log = logging.getLogger(__name__)
+
+
+@doc.route('')
+def index():
+    """Documentation home page - provides information about the application"""
+    return render_template('doc/index.html')

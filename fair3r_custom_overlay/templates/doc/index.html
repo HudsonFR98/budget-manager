@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h1 class="mb-0"><i class="fas fa-book"></i> Documentation</h1>
+                </div>
+                <div class="card-body">
+                    <div class="doc-header">
+                        <h2>Welcome to the Fair3r Custom Overlay Documentation</h2>
+                        <p class="lead">
+                            This documentation provides information about the Fair3r Custom Overlay application, its features, and how to use it.
+                        </p>
+                    </div>
+
+                    <div class="row mt-4 doc-section">
+                        <div class="col-md-6">
+                            <div class="card mb-4 doc-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-users"></i> User Management</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>The application includes a comprehensive user management system with role-based permissions:</p>
+                                    <ul>
+                                        <li>User authentication and authorization</li>
+                                        <li>Role-based access control</li>
+                                        <li>Permission management</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-4 doc-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-database"></i> Database</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>The application uses PostgreSQL as its database with Alembic for migrations:</p>
+                                    <ul>
+                                        <li>Automatic database migrations</li>
+                                        <li>SQLAlchemy ORM for database access</li>
+                                        <li>Efficient data management</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row doc-section">
+                        <div class="col-md-6">
+                            <div class="card mb-4 doc-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-cogs"></i> Configuration</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>The application supports multiple environments:</p>
+                                    <ul>
+                                        <li>Development</li>
+                                        <li>Testing</li>
+                                        <li>Demo</li>
+                                        <li>Production</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="card mb-4 doc-card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-docker"></i> Deployment</h3>
+                                </div>
+                                <div class="card-body">
+                                    <p>The application can be deployed using Docker:</p>
+                                    <ul>
+                                        <li>Docker Compose for local development</li>
+                                        <li>Ansible for production deployment</li>
+                                        <li>CI/CD pipeline integration</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="doc-note mt-4">
+                        <h4><i class="fas fa-info-circle"></i> Note</h4>
+                        <p>This documentation is customizable and can be edited to include specific information about your implementation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
