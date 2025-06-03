@@ -101,7 +101,7 @@ For local development with Docker:
 
 2. **Access the application**:
    - Web interface: http://localhost:8080
-   - Database: localhost:5433 (PostgreSQL)
+   - Database: localhost:5431 (PostgreSQL)
 
 3. **Environment variables**:
    - Set in docker-compose.yml for local development

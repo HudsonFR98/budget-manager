@@ -1,93 +1,172 @@
 {% extends "base.html" %}
 
+{% block js %}
+<script>
+    // Simple search functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('doc-search-input');
+        const contentSections = document.querySelectorAll('.doc-content-section');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = searchInput.value.toLowerCase();
+
+            if (searchTerm.length < 2) {
+                // Show all sections if search term is too short
+                contentSections.forEach(section => {
+                    section.style.display = 'block';
+                });
+                return;
+            }
+
+            contentSections.forEach(section => {
+                const text = section.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = 'none';
+                }
+            });
+        });
+
+        // Handle sidebar navigation
+        const sidebarLinks = document.querySelectorAll('.doc-sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // Remove active class from all links
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+
+                // Add active class to clicked link
+                this.classList.add('active');
+
+                // Get the target section id
+                const targetId = this.getAttribute('href').substring(1);
+
+                // Hide all sections
+                contentSections.forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show the target section
+                document.getElementById(targetId).style.display = 'block';
+            });
+        });
+
+        // Activate the first link by default
+        if (sidebarLinks.length > 0) {
+            sidebarLinks[0].click();
+        }
+    });
+</script>
+{% endblock %}
+
 {% block body %}
-<div class="container mt-5">
+<div class="container-fluid mt-4">
     <div class="row">
-        <div class="col-md-12">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h1 class="mb-0"><i class="fas fa-book"></i> Documentation</h1>
+        <!-- Documentation Header -->
+        <div class="col-12 mb-4">
+            <div class="doc-header bg-light p-3 rounded">
+                <h1 class="mb-0"><i class="fas fa-book"></i> Documentation</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Sidebar -->
+        <div class="col-md-3">
+            <div class="card doc-sidebar">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" id="doc-search-input" class="form-control" placeholder="Search documentation...">
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                        </div>
+                    </div>
                 </div>
+                <div class="card-body p-0">
+                    <div class="doc-sidebar-nav">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#overview"><i class="fas fa-home"></i> Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#user-management"><i class="fas fa-users"></i> User Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#database"><i class="fas fa-database"></i> Database</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#configuration"><i class="fas fa-cogs"></i> Configuration</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#deployment"><i class="fab fa-docker"></i> Deployment</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="col-md-9">
+            <div class="card">
                 <div class="card-body">
-                    <div class="doc-header">
+                    <!-- Overview Section -->
+                    <div id="overview" class="doc-content-section">
                         <h2>Welcome to the Fair3r Custom Overlay Documentation</h2>
                         <p class="lead">
                             This documentation provides information about the Fair3r Custom Overlay application, its features, and how to use it.
                         </p>
-                    </div>
-
-                    <div class="row mt-4 doc-section">
-                        <div class="col-md-6">
-                            <div class="card mb-4 doc-card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-users"></i> User Management</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p>The application includes a comprehensive user management system with role-based permissions:</p>
-                                    <ul>
-                                        <li>User authentication and authorization</li>
-                                        <li>Role-based access control</li>
-                                        <li>Permission management</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card mb-4 doc-card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-database"></i> Database</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p>The application uses PostgreSQL as its database with Alembic for migrations:</p>
-                                    <ul>
-                                        <li>Automatic database migrations</li>
-                                        <li>SQLAlchemy ORM for database access</li>
-                                        <li>Efficient data management</li>
-                                    </ul>
-                                </div>
-                            </div>
+                        <div class="doc-note mt-4">
+                            <h4><i class="fas fa-info-circle"></i> Note</h4>
+                            <p>This documentation is customizable and can be edited to include specific information about your implementation.</p>
                         </div>
                     </div>
 
-                    <div class="row doc-section">
-                        <div class="col-md-6">
-                            <div class="card mb-4 doc-card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-cogs"></i> Configuration</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p>The application supports multiple environments:</p>
-                                    <ul>
-                                        <li>Development</li>
-                                        <li>Testing</li>
-                                        <li>Demo</li>
-                                        <li>Production</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card mb-4 doc-card">
-                                <div class="card-header">
-                                    <h3><i class="fas fa-docker"></i> Deployment</h3>
-                                </div>
-                                <div class="card-body">
-                                    <p>The application can be deployed using Docker:</p>
-                                    <ul>
-                                        <li>Docker Compose for local development</li>
-                                        <li>Ansible for production deployment</li>
-                                        <li>CI/CD pipeline integration</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                    <!-- User Management Section -->
+                    <div id="user-management" class="doc-content-section">
+                        <h2><i class="fas fa-users"></i> User Management</h2>
+                        <p>The application includes a comprehensive user management system with role-based permissions:</p>
+                        <ul>
+                            <li>User authentication and authorization</li>
+                            <li>Role-based access control</li>
+                            <li>Permission management</li>
+                        </ul>
                     </div>
 
-                    <div class="doc-note mt-4">
-                        <h4><i class="fas fa-info-circle"></i> Note</h4>
-                        <p>This documentation is customizable and can be edited to include specific information about your implementation.</p>
+                    <!-- Database Section -->
+                    <div id="database" class="doc-content-section">
+                        <h2><i class="fas fa-database"></i> Database</h2>
+                        <p>The application uses PostgreSQL as its database with Alembic for migrations:</p>
+                        <ul>
+                            <li>Automatic database migrations</li>
+                            <li>SQLAlchemy ORM for database access</li>
+                            <li>Efficient data management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Configuration Section -->
+                    <div id="configuration" class="doc-content-section">
+                        <h2><i class="fas fa-cogs"></i> Configuration</h2>
+                        <p>The application supports multiple environments:</p>
+                        <ul>
+                            <li>Development</li>
+                            <li>Testing</li>
+                            <li>Demo</li>
+                            <li>Production</li>
+                        </ul>
+                    </div>
+
+                    <!-- Deployment Section -->
+                    <div id="deployment" class="doc-content-section">
+                        <h2><i class="fab fa-docker"></i> Deployment</h2>
+                        <p>The application can be deployed using Docker:</p>
+                        <ul>
+                            <li>Docker Compose for local development</li>
+                            <li>Ansible for production deployment</li>
+                            <li>CI/CD pipeline integration</li>
+                        </ul>
                     </div>
                 </div>
             </div>

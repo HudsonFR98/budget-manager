@@ -19,7 +19,7 @@
   </head>
   <body>
   <nav class="navbar navbar-expand navbar-light bg-light">
-      <a class="navbar-brand" href="#"><i class="fas fa-cog"></i> fair3r_custom_overlay</a>
+      <a class="navbar-brand" href="{{ url_for('dashboard.home') }}"><i class="fas fa-cog"></i> fair3r_custom_overlay</a>
       {% if CONTEXT %}
         {% if CONTEXT == 'dev' %}
           <span class="context-badge badge badge-warning ml-2 badge-lg">{{ CONTEXT }}</span>
