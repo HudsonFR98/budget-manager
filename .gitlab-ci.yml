@@ -16,6 +16,8 @@ install_env:
   stage: install
   script:
     - python3 deploy/install.py --action deploy --context test
+  tags:
+    - python3
 
 pytest:
   stage: test
