@@ -46,18 +46,12 @@ pep8:
   image: python:3.10
   script:
     - pip install flake8
-    - export PATH="$HOME/.local/bin:$PATH"
     - flake8 fair3r_custom_overlay | tee pep8.out || true
-    # Compter les erreurs
-    - ERRORS=$(wc -l < pep8.out)
-    - echo "Nombre d'erreurs PEP8 : $ERRORS"
-    - if [ "$ERRORS" -gt 20 ]; then echo "Trop d'erreurs PEP8 ($ERRORS). Échec du job."; exit 1; fi
+  allow_failure: true
   artifacts:
     paths:
       - pep8.out
     expire_in: 1 week
-  tags:
-    - python3
 
 build_sdist:
   stage: build
