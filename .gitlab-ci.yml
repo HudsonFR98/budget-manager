@@ -27,11 +27,10 @@ build_docker:
     - master
     - tags
   tags:
-    - python3
+    - docker
 
 pytest:
   stage: test
-  image: python:3.10
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
@@ -40,7 +39,7 @@ pytest:
   needs:
     - build_docker
   tags:
-    - python3
+    - docker
 
 pep8:
   stage: test
@@ -54,7 +53,7 @@ pep8:
       - pep8.out
     expire_in: 1 week
   tags:
-    - python3
+    - docker
 
 build_sdist:
   stage: build
