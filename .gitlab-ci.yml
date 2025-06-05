@@ -38,6 +38,8 @@ pytest:
     url: http://serv-ics-fco-t-01:8080/
   needs:
     - build_docker
+  tags:
+    - python3
 
 pep8:
   stage: test
@@ -50,6 +52,8 @@ pep8:
     paths:
       - pep8.out
     expire_in: 1 week
+  tags:
+    - python3
 
 build_sdist:
   stage: build
@@ -62,6 +66,8 @@ build_sdist:
       - dist/
     expire_in: 1 week
   allow_failure: true
+  tags:
+    - python3
 
 deploy_demo:
   stage: demo
