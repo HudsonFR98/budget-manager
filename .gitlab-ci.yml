@@ -27,7 +27,7 @@ build_docker:
     - master
     - tags
   tags:
-    - docker
+    - ics-docker
 
 pytest:
   stage: test
@@ -40,7 +40,7 @@ pytest:
   needs:
     - build_docker
   tags:
-    - docker
+    - ics-docker
 
 pep8:
   stage: test
@@ -54,7 +54,7 @@ pep8:
       - pep8.out
     expire_in: 1 week
   tags:
-    - docker
+    - ics-docker
 
 build_sdist:
   stage: build
