@@ -26,6 +26,8 @@ build_docker:
   only:
     - master
     - tags
+  tag:
+    - python3
 
 pytest:
   stage: test
