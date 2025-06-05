@@ -7,7 +7,7 @@ import sys
 def main():
     parser = argparse.ArgumentParser(description='Deploy fair3r_custom_overlay using Ansible')
     parser.add_argument('--action', choices=['deploy', 'update'], required=True, help='Action to perform')
-    parser.add_argument('--env', choices=['demo', 'prod'], required=True, help='Environment to deploy to')
+    parser.add_argument('--env', choices=['test', 'demo', 'prod'], required=True, help='Environment to deploy to')
     parser.add_argument('--docker', action='store_true', help='Use Docker for deployment')
     parser.add_argument('--docker-image', help='Docker image to deploy')
     parser.add_argument('--docker-registry', default='registry.gitlab.com', help='Docker registry')
