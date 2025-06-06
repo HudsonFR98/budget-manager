@@ -55,7 +55,7 @@ def main():
 
     # Install Ansible collection
     try:
-        subprocess.check_call(['ansible-galaxy', 'collection', 'install', '-r', 'deploy/ansible/requirements.yml'])
+        subprocess.check_call(['ansible-galaxy', 'collection', 'install', '-r', 'ansible/requirements.yml'])
     except subprocess.CalledProcessError as e:
         print(f"Error installing Ansible collection: {e}", file=sys.stderr)
         sys.exit(1)
