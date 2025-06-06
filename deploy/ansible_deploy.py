@@ -53,6 +53,12 @@ def main():
         if args.registry_password:
             cmd.extend(['-e', f'registry_password={args.registry_password}'])
 
+    # Install Ansible collection
+    try:
+        subprocess.check_call(['ansible-galaxy', 'collection', 'install', '-r', 'deploy/ansible/requirements.yml'])
+    except subprocess.CalledProcessError as e:
+        print(f"Error installing Ansible collection: {e}", file=sys.stderr)
+        sys.exit(1)
     # Run the Ansible command
     try:
         subprocess.check_call(cmd)

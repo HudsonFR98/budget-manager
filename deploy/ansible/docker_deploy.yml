@@ -94,7 +94,7 @@
           - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
 
     - name: Run pytest in test container
-      docker_container_exec:
+      community.docker.docker_container_exec:
         container: "{{ container_name }}"
         command: >
           bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_host }}
