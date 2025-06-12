@@ -33,13 +33,7 @@ build_docker:
 
 pytest:
   stage: test
-  image: python:3.10
   before_script:
-    - mkdir -p ~/.ssh
-    - printenv RUNNER_SSH_PRIVATE_KEY | base64 -d > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
-    - eval "$(ssh-agent -s)"
-    - ssh-add ~/.ssh/id_rsa
     - pip install ansible
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
