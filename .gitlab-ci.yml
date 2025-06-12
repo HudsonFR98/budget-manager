@@ -51,8 +51,6 @@ pytest:
     - build_docker
   tags:
     - ics-docker
-  volumes:
-    - /home/gitlab-runner/.ssh:/mnt/ssh:ro
 
 pep8:
   stage: test
