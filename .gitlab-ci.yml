@@ -35,6 +35,10 @@ pytest:
   stage: test
   before_script:
     - pip install ansible
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan serv-ics-fco-t-01 >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
