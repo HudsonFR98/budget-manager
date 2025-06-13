@@ -43,7 +43,7 @@ pytest:
     - ssh-keyscan serv-ics-fco-t-01 >> ~/.ssh/known_hosts  # if needed
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
     name: test
     url: http://serv-ics-fco-t-01:8080/
