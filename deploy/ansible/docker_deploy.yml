@@ -65,20 +65,62 @@
         password: "{{ registry_password }}"
         state: present
 
+    - name: Copy init-db.sh script to remote
+      copy:
+        src: deploy/init-db.sh
+        dest: /opt/fair3r_custom_overlay_data/init-db.sh
+        mode: '0755'
+
+    - name: Copy reset.sql script to remote
+      copy:
+        src: fair3r_custom_overlay/tests/reset.sql
+        dest: /opt/fair3r_custom_overlay_data/init.sql
+        mode: '0644'
+
+    - name: Run PostgreSQL Docker container
+      docker_container:
+        name: db
+        image: postgres:16
+        state: started
+        restart_policy: always
+        ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: web
+          POSTGRES_PASSWORD: ph2013_x
+          POSTGRES_DB: postgres
+        volumes:
+          - /opt/fair3r_custom_overlay_data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+          - /opt/fair3r_custom_overlay_data/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+        command: postgres -c 'max_connections=100'
+        healthcheck:
+          test: [ "CMD-SHELL", "pg_isready -U web -d fco" ]
+          interval: 5s
+          timeout: 5s
+          retries: 5
+
+    - name: Wait for database container to be healthy
+      docker_container_info:
+        name: db
+      register: db_info
+      until: db_info.container.State.Health.Status == "healthy"
+      retries: 10
+      delay: 3
+
     - name: Pull Docker image
       docker_image:
         name: "{{ docker_image }}"
         source: pull
         force_source: yes
 
-    - name: Stop and remove existing container
+    - name: Stop and remove existing app container
       docker_container:
         name: "{{ container_name }}"
         state: absent
       ignore_errors: yes
       when: action == 'update' or action == 'deploy'
 
-    - name: Run Docker container
+    - name: Run App Docker container
       docker_container:
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
@@ -104,10 +146,10 @@
           --cov=fair3r_custom_overlay fair3r_custom_overlay/tests"
       when: context == 'test'
 
-    - name: Show pytest output
+    - name: Print pytest output line-by-line
       debug:
-        var: pytest_result.stdout_lines
-      when: context == 'test'
+        msg: "{{ item }}"
+      loop: "{{ pytest_result.stdout_lines }}"
 
     - name: Fail the playbook if tests fail
       fail:
