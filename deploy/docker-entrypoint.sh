@@ -33,9 +33,5 @@ run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR
 echo "Starting Nginx..."
 nginx -g "daemon off;" &
 
-if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" != "test" ]; then
-    bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_host }} /opt/env3/fair3r_custom_overlay/bin/pytest --cov-report term --cov-report html:/opt/fair3r_custom_overlay_data/coverage_report --cov=fair3r_custom_overlay fair3r_custom_overlay/tests"
-fi
-
 # Execute the command passed to docker run
 exec "$@"

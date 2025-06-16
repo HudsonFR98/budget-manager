@@ -93,14 +93,23 @@
           - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
           - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
 
-    - name: Print Docker test container logs
-      shell: docker logs {{ container_name }}
-      register: container_logs
-      failed_when: true  # Fail the playbook if logs can't be retrieved
-      changed_when: false
+    - name: Run pytest in test container
+      community.docker.docker_container_exec:
+        container: "{{ container_name }}"
+        command: >
+          bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_host }}
+          /opt/env3/fair3r_custom_overlay/bin/pytest
+          --cov-report term
+          --cov-report html:/opt/fair3r_custom_overlay_data/coverage_report
+          --cov=fair3r_custom_overlay fair3r_custom_overlay/tests"
       when: context == 'test'
 
-    - name: Show test container logs in CI console
+    - name: Show pytest output
       debug:
-        var: container_logs.stdout_lines
+        var: pytest_result.stdout_lines
       when: context == 'test'
+
+    - name: Fail the playbook if tests fail
+      fail:
+        msg: "Tests failed"
+      when: context == 'test' and pytest_result.rc != 0
