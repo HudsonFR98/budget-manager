@@ -8,3 +8,9 @@ alembic
 flask
 git+http://gitlab+deploy-token-7:4AoAtGnmn2DBB7tPgkxV@serv-gitlab.igbmc.u-strasbg.fr/ics/libics.git@py3.9
 wtforms
+babel
+mock
+pytest
+pytest-cov
+pycodestyle
+typing

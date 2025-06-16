@@ -1,8 +1,0 @@
-babel
-mock
-pytest
-pytest-cov
-pycodestyle
-typing
-ansible>=2.9.0
-Sphinx
