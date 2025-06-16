@@ -83,7 +83,7 @@
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
         state: started
-        restart_policy: no
+        restart_policy: always
         ports:
           - "8080:8080"
         env:
@@ -92,9 +92,3 @@
         volumes:
           - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
           - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
-        command: >-
-          {% if context == 'test' %}
-          bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_host }} /opt/env3/fair3r_custom_overlay/bin/pytest --cov-report=term --cov-report=html"
-          {% else %}
-          null
-          {% endif %}
