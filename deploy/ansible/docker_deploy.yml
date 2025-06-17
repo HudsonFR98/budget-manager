@@ -26,6 +26,12 @@
         state: present
         update_cache: yes
 
+    - name: Install PostgreSQL client
+      apt:
+        name: postgresql-client
+        state: present
+        update_cache: yes
+
     - name: Add Docker GPG key
       apt_key:
         url: https://download.docker.com/linux/debian/gpg
@@ -114,6 +120,28 @@
       until: db_check.rc == 0
       retries: 10
       delay: 3
+      changed_when: false
+      failed_when: false
+
+    - name: Show database status
+      debug:
+        msg: "{{ db_check.stdout_lines }}"
+      when: db_check.rc != 0
+
+    - name: Check database container logs
+      shell: docker logs db
+      register: db_logs
+      when: db_check.rc != 0
+
+    - name: Show database container logs
+      debug:
+        msg: "{{ db_logs.stdout_lines }}"
+      when: db_check.rc != 0
+
+    - name: Fail if database is not ready
+      fail:
+        msg: "Database 'fco' was not created after multiple attempts"
+      when: db_check.rc != 0
 
     - name: Pull Docker image
       docker_image:

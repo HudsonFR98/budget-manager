@@ -14,6 +14,8 @@ DB_EXISTS=$(psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTG
 if [ -z "$DB_EXISTS" ]; then
     echo "Creating database fco..."
     psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" -c "CREATE DATABASE fco;"
+    echo "Waiting for database to be fully initialized..."
+    sleep 5
 else
     echo "Database fco already exists."
 fi
