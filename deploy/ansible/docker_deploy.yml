@@ -83,6 +83,11 @@
         dest: /opt/fair3r_custom_overlay_data/init.sql
         mode: '0644'
 
+    - name: Create Docker network
+      community.docker.docker_network:
+        name: fair3r_custom_overlay_network
+        state: present
+
     - name: Run PostgreSQL Docker container
       docker_container:
         name: db
@@ -99,6 +104,8 @@
           - /opt/fair3r_custom_overlay_data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
           - /opt/fair3r_custom_overlay_data/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
         command: postgres -c 'max_connections=100'
+        networks:
+          - name: fair3r_custom_overlay_network
         healthcheck:
           test: [ "CMD-SHELL", "pg_isready -U web -d postgres" ]
           interval: 5s
@@ -115,7 +122,7 @@
 
     - name: Wait for fco database to be created
       shell: |
-        PGPASSWORD=ph2013_x psql -h localhost -U web -d postgres -c "SELECT 1 FROM pg_database WHERE datname = 'fco'" | grep -q 1
+        PGPASSWORD=ph2013_x psql -h db -U web -d postgres -c "SELECT 1 FROM pg_database WHERE datname = 'fco'" | grep -q 1
       register: db_check
       until: db_check.rc == 0
       retries: 10
@@ -166,16 +173,18 @@
           - "8080:8080"
         env:
           FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
-          DB_IP: "{{ db_host }}"
+          DB_IP: db
         volumes:
           - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
           - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
+        networks:
+          - name: fair3r_custom_overlay_network
 
     - name: Run pytest in test container
       community.docker.docker_container_exec:
         container: "{{ container_name }}"
         command: >
-          bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_host }}
+          bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP=db
           /opt/env3/fair3r_custom_overlay/bin/pytest
           --cov-report term
           --cov-report html:/opt/fair3r_custom_overlay_data/coverage_report

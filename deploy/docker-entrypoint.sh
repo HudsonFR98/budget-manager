@@ -11,7 +11,7 @@ echo "Waiting for fco database to be ready..."
 max_retries=30
 retries=0
 while [ $retries -lt $max_retries ]; do
-    if PGPASSWORD=ph2013_x psql -h $DB_IP -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
+    if PGPASSWORD=ph2013_x psql -h db -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
         echo "Database fco is ready!"
         break
     fi
@@ -31,7 +31,7 @@ fi
 
 # Run database migrations if needed
 echo "Running database migrations..."
-run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=$DB_IP /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"
+run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=db /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"
 
 # Start Nginx if needed
 echo "Starting Nginx..."
