@@ -22,6 +22,10 @@ done
 
 if [ $retries -eq $max_retries ]; then
     echo "Error: Maximum retries reached. Database fco is not available."
+    echo "Checking database container status..."
+    docker ps | grep db
+    echo "Checking database logs..."
+    docker logs db
     exit 1
 fi
 

@@ -62,6 +62,7 @@ class ProdConfig(Config):
 
     CONTEXT = 'prod'
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-db2/fco"
+    LOG_LEVEL = logging.ERROR
 
 
 class DevConfig(Config):
@@ -80,6 +81,7 @@ class DemoConfig(Config):
 
     CONTEXT = 'demo'
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-fco-d-01/fco"
+    LOG_LEVEL = logging.ERROR
 
 
 class TestConfig(Config):
@@ -87,7 +89,7 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/fco_test' \
+    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/fco' \
         % os.environ.get('DB_IP', '')
     SERVER_NAME = 'localhost'
 

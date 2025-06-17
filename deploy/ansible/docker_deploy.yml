@@ -94,7 +94,7 @@
           - /opt/fair3r_custom_overlay_data/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
         command: postgres -c 'max_connections=100'
         healthcheck:
-          test: [ "CMD-SHELL", "pg_isready -U web -d fco" ]
+          test: [ "CMD-SHELL", "pg_isready -U web -d postgres" ]
           interval: 5s
           timeout: 5s
           retries: 5
@@ -104,6 +104,14 @@
         name: db
       register: db_info
       until: db_info.container.State.Health.Status == "healthy"
+      retries: 10
+      delay: 3
+
+    - name: Wait for fco database to be created
+      shell: |
+        PGPASSWORD=ph2013_x psql -h localhost -U web -d postgres -c "SELECT 1 FROM pg_database WHERE datname = 'fco'" | grep -q 1
+      register: db_check
+      until: db_check.rc == 0
       retries: 10
       delay: 3
 
