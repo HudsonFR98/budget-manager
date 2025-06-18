@@ -20,15 +20,6 @@ while [ $retries -lt $max_retries ]; do
     sleep 2
 done
 
-if [ $retries -eq $max_retries ]; then
-    echo "Error: Maximum retries reached. Database fco is not available."
-    echo "Checking database container status..."
-    docker ps | grep db
-    echo "Checking database logs..."
-    docker logs db
-    exit 1
-fi
-
 # Run database migrations if needed
 echo "Running database migrations..."
 run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=db /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"

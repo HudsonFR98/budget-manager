@@ -120,36 +120,6 @@
       retries: 10
       delay: 3
 
-    - name: Wait for fco database to be created
-      shell: |
-        PGPASSWORD=ph2013_x psql -h db -U web -d postgres -c "SELECT 1 FROM pg_database WHERE datname = 'fco'" | grep -q 1
-      register: db_check
-      until: db_check.rc == 0
-      retries: 10
-      delay: 3
-      changed_when: false
-      failed_when: false
-
-    - name: Show database status
-      debug:
-        msg: "{{ db_check.stdout_lines }}"
-      when: db_check.rc != 0
-
-    - name: Check database container logs
-      shell: docker logs db
-      register: db_logs
-      when: db_check.rc != 0
-
-    - name: Show database container logs
-      debug:
-        msg: "{{ db_logs.stdout_lines }}"
-      when: db_check.rc != 0
-
-    - name: Fail if database is not ready
-      fail:
-        msg: "Database 'fco' was not created after multiple attempts"
-      when: db_check.rc != 0
-
     - name: Pull Docker image
       docker_image:
         name: "{{ docker_image }}"
