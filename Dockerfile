@@ -25,8 +25,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Create app user
-RUN groupadd -r web && useradd -r -g web -m -s /bin/bash web
+# Create app user with specific UID/GID to match host
+RUN groupadd -g 1000 web && useradd -r -g web -u 1000 -m -s /bin/bash web
 
 # Create necessary directories with correct permissions
 RUN mkdir -p /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
