@@ -64,6 +64,23 @@
         - /var/log/fair3r_custom_overlay
         - /opt/fair3r_custom_overlay_data
 
+    - name: Set log directory permissions for Docker container
+      file:
+        path: /var/log/fair3r_custom_overlay
+        state: directory
+        owner: "1000"  # UID of web user in container
+        group: "1000"  # GID of web user in container
+        mode: '0775'
+        recurse: yes
+
+    - name: Create log file with correct permissions
+      file:
+        path: /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log
+        state: touch
+        owner: "1000"
+        group: "1000"
+        mode: '0664'
+
     - name: Log in to GitLab Container Registry
       docker_login:
         registry: "{{ docker_registry }}"

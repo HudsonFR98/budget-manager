@@ -28,9 +28,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Create app user
 RUN groupadd -r web && useradd -r -g web -m -s /bin/bash web
 
-# Create necessary directories
+# Create necessary directories with correct permissions
 RUN mkdir -p /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
-    && chown -R web:web /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs
+    && chown -R web:web /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
+    && chmod 775 /var/log/fair3r_custom_overlay \
+    && touch /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log \
+    && chown web:web /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log \
+    && chmod 664 /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log
 
 # Set working directory
 WORKDIR /opt/fair3r_custom_overlay
