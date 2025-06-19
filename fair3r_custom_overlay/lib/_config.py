@@ -89,8 +89,8 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    SQLALCHEMY_DATABASE_URI = 'postgresql://web:ph2013_x@%s/fco' \
-        % os.environ.get('DB_IP', '')
+    DB_URI = "postgresql://web:ph2013_x@db/fco"
+    SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
 
 
