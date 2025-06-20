@@ -6,6 +6,64 @@ FAIR3R_CUSTOM_OVERLAY
 
 The application's CI/CD pipeline is organized through GitLab CI/CD, with distinct stages for different environments. Here's a step-by-step breakdown of how it works:
 
+## Development Setup
+
+### Prerequisites
+- Docker and Docker Compose installed
+- Git
+
+### Quick Start
+1. Clone the repository
+2. Run the setup script:
+   ```bash
+   ./setup_dev.sh
+   ```
+3. Start the development environment:
+   ```bash
+   docker compose up --build
+   ```
+4. Access the application at http://localhost:8080
+
+### Development Environment Details
+- **Database**: PostgreSQL 16 on port 5431
+- **Application**: Flask app on port 8080
+- **Logs**: Stored in `./logs/` directory
+- **User**: Container runs as UID 1000 for proper file permissions
+
+
+**Environment variables**:
+   - Set in docker-compose.yml for local development
+   - Can be overridden with a .env file
+
+**Compatibility Notes**:
+   - The docker-compose.yml file uses version 3.8 for compatibility with Docker Compose 2.35.1 and Docker 28.1.1
+   - The CI/CD pipeline uses Docker 28.1.1 for building and testing
+   - The PostgreSQL container uses the Alpine-based image for better compatibility
+   - Both containers have healthchecks configured to ensure proper initialization
+   - Volume configurations have been simplified for better compatibility
+   - The Ansible deployment scripts install the full set of Docker packages needed for Docker 28.1.1
+
+**Run test in development**
+   ```
+   # Run tests with coverage
+   docker exec -it fair3r-custom-overlay-app-1 /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py
+   ```
+
+## Testing
+
+The application uses a consolidated testing approach with organized, easily editable test data.
+
+Test data is organized in the `fair3r_custom_overlay/tests/fixtures/` directory
+
+
+### Test Runner
+
+The consolidated test runner (`run_tests.py`) handles:
+- Permission issues by using temporary directories
+- Environment variable setup
+- Coverage reporting
+- Cleanup after execution
+
 ## 1. GitLab CI/CD Pipeline Structure
 
 The pipeline is defined in `.gitlab-ci.yml` and consists of six stages:
@@ -30,14 +88,14 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Purpose**: Local development
 - **Configuration**: `DevConfig` class
 - **Database**: Uses a local database specified by `DB_IP` environment variable
-- **Run Command**: `run_dev.sh` script sets the environment variables and runs Flask in development mode
-- **Deployment**: Symbolic link to source code for easy development or Docker container
+- **Run Command**: `docker compose up --build`
+- **Deployment**: Docker containers with volume mounts for development
 
 ### TEST Environment
 - **Purpose**: Automated testing in CI/CD pipeline
 - **Configuration**: `TestConfig` class
-- **Database**: Uses a test database (`fco_test`) on localhost
-- **Run Command**: `run_tests.sh` script or directly through GitLab CI
+- **Database**: Uses a test database (`fco`) on the `db` container
+- **Run Command**: Automated through GitLab CI
 - **Special Features**: Has `TESTING=True` flag and reduced logging level
 
 ### DEMO Environment (Integration)
@@ -90,29 +148,5 @@ Updates to existing installations are handled by:
 - Dedicated GitLab CI jobs (`update_demo` and `update_prod`)
 - Only pulls the latest Docker image and restarts the container
 
-## 6. Docker Development
-
-For local development with Docker:
-
-1. **Build and run with docker-compose**:
-   ```bash
-   docker compose up --build
-   ```
-
-2. **Access the application**:
-   - Web interface: http://localhost:8080
-   - Database: localhost:5431 (PostgreSQL)
-
-3. **Environment variables**:
-   - Set in docker-compose.yml for local development
-   - Can be overridden with a .env file
-
-4. **Compatibility Notes**:
-   - The docker-compose.yml file uses version 3.8 for compatibility with Docker Compose 2.35.1 and Docker 28.1.1
-   - The CI/CD pipeline uses Docker 28.1.1 for building and testing
-   - The PostgreSQL container uses the Alpine-based image for better compatibility
-   - Both containers have healthchecks configured to ensure proper initialization
-   - Volume configurations have been simplified for better compatibility
-   - The Ansible deployment scripts install the full set of Docker packages needed for Docker 28.1.1
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.

@@ -1,9 +1,15 @@
 #!/bin/bash
 set -e
 
-# Function to run as web user
+# Function to run as web user (only if we're not already web user)
 run_as_web() {
-    su - web -c "$1"
+    if [ "$(id -u)" = "1000" ]; then
+        # We're already running as web user
+        eval "$1"
+    else
+        # Switch to web user
+        su - web -c "$1"
+    fi
 }
 
 # Wait for the fco database to be ready
@@ -19,6 +25,15 @@ while [ $retries -lt $max_retries ]; do
     echo "Database fco not ready yet, retrying... ($retries/$max_retries)"
     sleep 2
 done
+
+if [ $retries -eq $max_retries ]; then
+    echo "Error: Maximum retries reached. Database fco is not available."
+    echo "Checking database container status..."
+    docker ps | grep db
+    echo "Checking database logs..."
+    docker logs db
+    exit 1
+fi
 
 # Run database migrations if needed
 echo "Running database migrations..."

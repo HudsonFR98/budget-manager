@@ -1,5 +1,5 @@
 # Dockerfile for fair3r_custom_overlay
-FROM python:3.8-slim
+FROM python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -56,7 +56,11 @@ EXPOSE 8080
 
 # Set up entrypoint
 COPY deploy/docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh && chown web:web /docker-entrypoint.sh
+
+# Switch to web user for the rest of the operations
+USER web
+
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Default command with improved error logging

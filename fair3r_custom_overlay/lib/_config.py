@@ -1,43 +1,82 @@
 import os
 import logging
+import tempfile
 
 from logging.config import dictConfig
 
 
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {
-        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-    }},
-    'handlers': {
-        'file': {
+def setup_logging():
+    """Set up logging configuration with proper error handling."""
+    log_dir = '/var/log/fair3r_custom_overlay'
+    log_file = os.path.join(log_dir, 'fair3r_custom_overlay.log')
+    
+    # Ensure log directory exists and is writable
+    try:
+        os.makedirs(log_dir, exist_ok=True)
+        # Test if we can write to the directory
+        test_file = os.path.join(log_dir, '.test_write')
+        with open(test_file, 'w') as f:
+            f.write('test')
+        os.remove(test_file)
+        use_file_handler = True
+    except (OSError, PermissionError):
+        # If we can't write to the log directory, use a temporary file or console only
+        use_file_handler = False
+        log_file = os.path.join(tempfile.gettempdir(), 'fair3r_custom_overlay.log')
+    
+    config = {
+        'version': 1,
+        'formatters': {'default': {
+            'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
+        }},
+        'handlers': {
+            'console': {
+                'level': 'DEBUG',
+                'formatter': 'default',
+                'class': 'logging.StreamHandler',
+            },
+        },
+        'loggers': {
+            'fair3r_custom_overlay': {
+                'handlers': ['console'],
+                'level': 'DEBUG',
+                'propagate': False
+            },
+            'sqlalchemy.engine': {
+                'handlers': ['console'],
+                'level': 'WARNING',
+                'propagate': False
+            },
+        }
+    }
+    
+    # Add file handler only if we can write to the log directory
+    if use_file_handler:
+        config['handlers']['file'] = {
             'level': 'DEBUG',
             'formatter': 'default',
             'class': 'logging.handlers.RotatingFileHandler',
-            'filename': '/var/log/fair3r_custom_overlay/fair3r_custom_overlay.log',
-            'mode': 'w+',
+            'filename': log_file,
+            'mode': 'a',
             'maxBytes': 5000000,
             'backupCount': 10,
-        },
-        'console': {
-            'level': 'DEBUG',
-            'formatter': 'default',
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'fair3r_custom_overlay': {
-            'handlers': ['file', 'console'],
-            'level': 'DEBUG',
-            'propagate': False
-        },
-        'sqlalchemy.engine': {
-            'handlers': ['file', 'console'],
-            'level': 'WARNING',
-            'propagate': False
-        },
-    }
-})
+        }
+        config['loggers']['fair3r_custom_overlay']['handlers'].append('file')
+        config['loggers']['sqlalchemy.engine']['handlers'].append('file')
+    
+    try:
+        dictConfig(config)
+    except Exception as e:
+        # Fallback to basic logging if configuration fails
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format='[%(asctime)s] %(levelname)s in %(module)s: %(message)s'
+        )
+        logging.warning(f"Failed to configure logging: {e}")
+
+
+# Set up logging when module is imported
+setup_logging()
 
 
 class Config(object):
@@ -89,7 +128,7 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    DB_URI = "postgresql://web:ph2013_x@db/fco"
+    DB_URI = "postgresql://web:ph2013_x@%s/fco" % os.environ.get('DB_IP', 'db')
     SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
 

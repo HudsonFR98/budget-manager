@@ -26,7 +26,8 @@ def before_request():
     g.user = None
     if 'user_id' in session:
         g.user = dao.get_user(session['user_id'])
-        g.user.reload_permissions()
+        if g.user is not None:
+            g.user.reload_permissions()
 
 
 def after_request():
