@@ -22,11 +22,20 @@ def index():
     if config.CONTEXT != 'test':
         abort(404)
     
-    # Coverage report directory
-    coverage_dir = '/opt/fair3r_custom_overlay_data/coverage_report/html'
+    # Check multiple possible coverage report locations
+    possible_locations = [
+        '/opt/fair3r_custom_overlay_data/coverage_report/html',
+        '/tmp/coverage_report/html',
+        '/tmp/coverage_report'
+    ]
     
-    # Check if coverage report exists
-    if not os.path.exists(os.path.join(coverage_dir, 'index.html')):
+    coverage_dir = None
+    for location in possible_locations:
+        if os.path.exists(os.path.join(location, 'index.html')):
+            coverage_dir = location
+            break
+    
+    if not coverage_dir:
         abort(404, description="Coverage report not found. Run tests first.")
     
     return send_from_directory(coverage_dir, 'index.html')
@@ -50,12 +59,21 @@ def static_files(filename):
     if config.CONTEXT != 'test':
         abort(404)
     
-    # Coverage report directory
-    coverage_dir = '/opt/fair3r_custom_overlay_data/coverage_report/html'
+    # Check multiple possible coverage report locations
+    possible_locations = [
+        '/opt/fair3r_custom_overlay_data/coverage_report/html',
+        '/tmp/coverage_report/html',
+        '/tmp/coverage_report'
+    ]
     
-    # Check if file exists
-    file_path = os.path.join(coverage_dir, filename)
-    if not os.path.exists(file_path):
+    coverage_dir = None
+    for location in possible_locations:
+        file_path = os.path.join(location, filename)
+        if os.path.exists(file_path):
+            coverage_dir = location
+            break
+    
+    if not coverage_dir:
         abort(404)
     
     return send_from_directory(coverage_dir, filename) 

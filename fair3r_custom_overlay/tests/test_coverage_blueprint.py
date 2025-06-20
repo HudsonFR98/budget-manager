@@ -45,6 +45,10 @@ def test_coverage_blueprint_registered_in_test_context(app):
         response = client.get('/coverage/')
         # Should return 404 if coverage report doesn't exist, but route should be accessible
         assert response.status_code in [200, 404], "Coverage route should be accessible"
+        
+        # Test that the Tests dropdown menu is present in the navbar
+        response = client.get('/')
+        assert b'Coverage' in response.data, "Coverage link should be present in test context"
 
 
 def test_coverage_blueprint_not_available_in_other_contexts():

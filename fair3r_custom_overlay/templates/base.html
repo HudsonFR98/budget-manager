@@ -48,12 +48,14 @@
               <a class="dropdown-item" href="{{ url_for('auth.login') }}">Connexion</a>
             </div>
           </li>
+          {% if CONTEXT == 'test' %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('coverage.index') }}"><i class="fas fa-chart-bar"></i> Coverage</a>
+          </li>
+          {% endif %}
         </ul>
         <span class="navbar-text" style="margin-right: 5px">{{ g.user }}</span>
         <span class="navbar-text"><a href="{{ url_for('doc.index') }}"><i class="fas fa-info-circle"></i></a></span>
-        {% if CONTEXT == 'test' %}
-        <span class="navbar-text"><a href="{{ url_for('coverage.index') }}" title="Last Test Coverage Report"><i class="fas fa-chart-bar"></i></a></span>
-        {% endif %}
       </div>
     </nav>
 
