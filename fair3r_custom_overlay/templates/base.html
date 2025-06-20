@@ -49,8 +49,15 @@
             </div>
           </li>
           {% if CONTEXT == 'test' %}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('coverage.index') }}"><i class="fas fa-chart-bar"></i> Coverage</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="testDropdown"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Tests
+            </a>
+            <div class="dropdown-menu" aria-labelledby="testDropdown">
+              <a class="dropdown-item" href="{{ url_for('coverage.index') }}">Coverage</a>
+              <a class="dropdown-item" href="{{ url_for('tests.output') }}">Test Output</a>
+            </div>
           </li>
           {% endif %}
         </ul>

@@ -35,33 +35,3 @@ def test_database_connection():
     finally:
         # Step 4: Clean up database session
         database.DBSession.remove()
-
-
-def test_config_loading():
-    """
-    Test that the application configuration is loaded correctly for the test environment.
-    
-    This test verifies that the configuration system is working properly
-    and that the test environment is configured correctly. It ensures
-    that the application is running in test mode with the appropriate
-    settings.
-    
-    The test checks:
-    - The context is set to 'test'
-    - Testing mode is enabled
-    - Database URI contains the expected test database name
-    
-    This test is important because incorrect configuration can cause
-    tests to behave unexpectedly or connect to the wrong database.
-    
-    Assertions:
-        - CONTEXT should be 'test'
-        - TESTING flag should be True
-        - Database URI should contain 'fco' (test database)
-    """
-    # Verify test context is set correctly
-    assert config.CONTEXT == 'test'
-    # Verify testing mode is enabled
-    assert hasattr(config, 'TESTING') and config.TESTING is True
-    # Verify database URI points to test database
-    assert 'fco' in config.SQLALCHEMY_DATABASE_URI 

@@ -1,0 +1,69 @@
+import logging
+import os
+from flask import Blueprint, render_template, abort
+from fair3r_custom_overlay.lib import config
+
+tests = Blueprint('tests', __name__)
+log = logging.getLogger(__name__)
+
+
+@tests.route('/output')
+def output():
+    """
+    Display the last test run output with detailed results.
+    
+    This route shows the results of the most recent test run, including:
+    - Number of tests passed/failed
+    - Test execution time
+    - Warnings and errors
+    - Coverage information
+    
+    The test output is only available in test context for security reasons.
+    
+    Returns:
+        HTML page with test output or 404 if not in test context
+    """
+    # Only allow access in test context
+    if config.CONTEXT != 'test':
+        abort(404)
+    
+    # Try to read the last test output from various possible locations
+    test_output = get_last_test_output()
+    
+    if not test_output:
+        # If no test output found, show a message
+        return render_template('tests/output.html', 
+                              test_output="No test output found. Run tests first.",
+                              has_output=False)
+    
+    return render_template('tests/output.html', 
+                          test_output=test_output,
+                          has_output=True)
+
+
+def get_last_test_output():
+    """
+    Retrieve the last test run output from various possible locations.
+    
+    This function checks multiple locations where test output might be stored
+    and returns the most recent test output found.
+    
+    Returns:
+        str: The test output text, or None if no output found
+    """
+    # Possible locations for test output
+    possible_locations = [
+        '/opt/fair3r_custom_overlay_data/test_output.log',
+        '/tmp/test_output.log',
+        '/var/log/fair3r_custom_overlay/test_output.log'
+    ]
+    
+    for location in possible_locations:
+        if os.path.exists(location):
+            try:
+                with open(location, 'r', encoding='utf-8') as f:
+                    return f.read()
+            except Exception as e:
+                log.warning(f"Could not read test output from {location}: {e}")
+    
+    return None 

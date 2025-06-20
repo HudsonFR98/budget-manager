@@ -48,11 +48,15 @@ def main():
         COVERAGE_FILE: Points to temporary coverage data file
         PYTEST_CACHE_DIR: Points to temporary pytest cache directory
     """
-    # Step 1: Set environment variables for test execution
-    os.environ['FAIR3R_CUSTOM_OVERLAY_CONTEXT'] = 'test'
+    # Step 1: Get context from environment or default to 'test'
+    context = os.environ.get('FAIR3R_CUSTOM_OVERLAY_CONTEXT', 'test')
+    print(f"Running tests in context: {context}")
+    
+    # Step 2: Set environment variables for test execution
+    os.environ['FAIR3R_CUSTOM_OVERLAY_CONTEXT'] = context
     os.environ['DB_IP'] = 'db'
     
-    # Step 2: Create temporary directories to avoid permission issues
+    # Step 3: Create temporary directories to avoid permission issues
     temp_dir = tempfile.mkdtemp(prefix='fair3r_test_')
     cache_dir = os.path.join(temp_dir, 'pytest_cache')
     coverage_dir = os.path.join(temp_dir, 'coverage')
@@ -61,13 +65,13 @@ def main():
     os.makedirs(cache_dir, exist_ok=True)
     os.makedirs(coverage_dir, exist_ok=True)
     
-    # Step 3: Set coverage data file to a writable location
+    # Step 4: Set coverage data file to a writable location
     os.environ['COVERAGE_FILE'] = os.path.join(coverage_dir, '.coverage')
     
-    # Step 4: Set pytest cache directory via environment variable
+    # Step 5: Set pytest cache directory via environment variable
     os.environ['PYTEST_CACHE_DIR'] = cache_dir
     
-    # Step 5: Build the pytest command with comprehensive options
+    # Step 6: Build the pytest command with comprehensive options
     cmd = [
         sys.executable, '-m', 'pytest',
         '--cov=fair3r_custom_overlay',           # Enable coverage for the main package
@@ -79,7 +83,7 @@ def main():
         'fair3r_custom_overlay/tests/'           # Test directory to run
     ]
     
-    # Step 6: Display execution information
+    # Step 7: Display execution information
     print("Running tests with command:", ' '.join(cmd))
     print("Environment variables:")
     print(f"  FAIR3R_CUSTOM_OVERLAY_CONTEXT: {os.environ.get('FAIR3R_CUSTOM_OVERLAY_CONTEXT')}")
@@ -87,10 +91,46 @@ def main():
     print(f"  COVERAGE_FILE: {os.environ.get('COVERAGE_FILE')}")
     print(f"  PYTEST_CACHE_DIR: {os.environ.get('PYTEST_CACHE_DIR')}")
     
-    # Step 7: Execute the test suite
-    result = subprocess.run(cmd, cwd='/opt/fair3r_custom_overlay')
+    # Step 8: Execute the test suite
+    result = subprocess.run(cmd, cwd='/opt/fair3r_custom_overlay', capture_output=True, text=True)
     
-    # Step 8: Report results and coverage information
+    # Step 9: Save test output to file for web interface (only in test context)
+    if context == 'test':
+        test_output_file = '/opt/fair3r_custom_overlay_data/test_output.log'
+        try:
+            with open(test_output_file, 'w', encoding='utf-8') as f:
+                f.write("Test Execution Command:\n")
+                f.write(" ".join(cmd) + "\n\n")
+                f.write("Environment Variables:\n")
+                f.write(f"  FAIR3R_CUSTOM_OVERLAY_CONTEXT: {os.environ.get('FAIR3R_CUSTOM_OVERLAY_CONTEXT')}\n")
+                f.write(f"  DB_IP: {os.environ.get('DB_IP')}\n")
+                f.write(f"  COVERAGE_FILE: {os.environ.get('COVERAGE_FILE')}\n")
+                f.write(f"  PYTEST_CACHE_DIR: {os.environ.get('PYTEST_CACHE_DIR')}\n\n")
+                f.write("Test Output:\n")
+                f.write("=" * 50 + "\n")
+                f.write(result.stdout)
+                if result.stderr:
+                    f.write("\nErrors:\n")
+                    f.write("=" * 50 + "\n")
+                    f.write(result.stderr)
+                f.write(f"\n\nExit Code: {result.returncode}")
+            print(f"Test output saved to: {test_output_file}")
+        except Exception as e:
+            print(f"Warning: Could not save test output: {e}")
+    else:
+        # In dev context, just display the output without saving
+        print("\n" + "=" * 50)
+        print("TEST OUTPUT:")
+        print("=" * 50)
+        print(result.stdout)
+        if result.stderr:
+            print("\n" + "=" * 50)
+            print("ERRORS:")
+            print("=" * 50)
+            print(result.stderr)
+        print(f"\nExit Code: {result.returncode}")
+    
+    # Step 10: Report results and coverage information
     if result.returncode == 0:
         print(f"\nCoverage reports generated in: {coverage_dir}")
         
@@ -126,7 +166,7 @@ def main():
             except Exception as alt_e:
                 print(f"Warning: Alternative copy also failed: {alt_e}")
     
-    # Step 9: Clean up temporary directory (but keep coverage report)
+    # Step 11: Clean up temporary directory (but keep coverage report)
     try:
         import shutil
         shutil.rmtree(temp_dir)
@@ -134,7 +174,7 @@ def main():
     except Exception as e:
         print(f"Warning: Could not clean up temporary directory {temp_dir}: {e}")
     
-    # Step 10: Return the test execution result
+    # Step 12: Return the test execution result
     return result.returncode
 
 

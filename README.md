@@ -45,8 +45,7 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 
 **Run test in development**
    ```
-   # Run tests with coverage
-   docker exec -it fair3r-custom-overlay-app-1 /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py
+   docker exec -it fair3r-custom-overlay-app-1 bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py"
    ```
 
 ## Testing
