@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template
 
 from fair3r_custom_overlay.lib import error
@@ -10,6 +9,7 @@ from fair3r_custom_overlay.models import User
 from .blueprints.auth import auth
 from .blueprints.dashboard import dashboard
 from .blueprints.doc import doc
+from .blueprints.coverage import coverage
 # from .blueprints.rest import rest
 
 
@@ -82,6 +82,9 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(dashboard)
     app.register_blueprint(doc, url_prefix='/doc/')
+    # Register coverage blueprint only in test context
+    if config.CONTEXT == 'test':
+        app.register_blueprint(coverage, url_prefix='/coverage/')
     # app.register_blueprint(rest, url_prefix='/rest')
 
     return app

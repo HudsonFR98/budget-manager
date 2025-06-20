@@ -196,13 +196,8 @@
         container: "{{ container_name }}"
         command: >
           bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP=db
-          /opt/env3/fair3r_custom_overlay/bin/pytest
-          --cov=fair3r_custom_overlay
-          --cov-report=term
-          --cov-report=html:/opt/fair3r_custom_overlay_data/coverage_report
-          --cov-report=xml:/opt/fair3r_custom_overlay_data/coverage.xml
-          -v
-          fair3r_custom_overlay/tests/"
+          /opt/env3/fair3r_custom_overlay/bin/python
+          fair3r_custom_overlay/tests/run_tests.py"
       register: pytest_result
       when: context == 'test'
 

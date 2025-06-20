@@ -55,7 +55,6 @@ The application uses a consolidated testing approach with organized, easily edit
 
 Test data is organized in the `fair3r_custom_overlay/tests/fixtures/` directory
 
-
 ### Test Runner
 
 The consolidated test runner (`run_tests.py`) handles:

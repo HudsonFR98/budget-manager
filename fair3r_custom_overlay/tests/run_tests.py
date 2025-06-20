@@ -93,10 +93,28 @@ def main():
     # Step 8: Report results and coverage information
     if result.returncode == 0:
         print(f"\nCoverage reports generated in: {coverage_dir}")
-        print("To view HTML coverage report, copy it to a mounted volume:")
-        print(f"  cp -r {coverage_dir}/html /opt/fair3r_custom_overlay_data/")
+        
+        # Copy coverage report to the expected location for the coverage blueprint
+        coverage_dest_dir = '/opt/fair3r_custom_overlay_data/coverage_report'
+        html_source = os.path.join(coverage_dir, 'html')
+        html_dest = os.path.join(coverage_dest_dir, 'html')
+        
+        try:
+            import shutil
+            # Create destination directory if it doesn't exist
+            os.makedirs(coverage_dest_dir, exist_ok=True)
+            # Copy HTML coverage report to the expected location
+            if os.path.exists(html_source):
+                if os.path.exists(html_dest):
+                    shutil.rmtree(html_dest)
+                shutil.copytree(html_source, html_dest)
+                print(f"Coverage report copied to: {html_dest}")
+            else:
+                print("Warning: HTML coverage report not found")
+        except Exception as e:
+            print(f"Warning: Could not copy coverage report: {e}")
     
-    # Step 9: Clean up temporary directory
+    # Step 9: Clean up temporary directory (but keep coverage report)
     try:
         import shutil
         shutil.rmtree(temp_dir)
