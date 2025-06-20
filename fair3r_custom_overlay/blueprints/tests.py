@@ -3,11 +3,11 @@ import os
 from flask import Blueprint, render_template, abort
 from fair3r_custom_overlay.lib import config
 
-tests = Blueprint('tests', __name__)
+test_output = Blueprint('test_output', __name__)
 log = logging.getLogger(__name__)
 
 
-@tests.route('/output')
+@test_output.route('/output')
 def output():
     """
     Display the last test run output with detailed results.

@@ -10,7 +10,7 @@ from .blueprints.auth import auth
 from .blueprints.dashboard import dashboard
 from .blueprints.doc import doc
 from .blueprints.coverage import coverage
-from .blueprints.tests import tests
+from .blueprints.tests import test_output
 # from .blueprints.rest import rest
 
 
@@ -86,7 +86,7 @@ def create_app():
     # Register coverage blueprint only in test context
     if config.CONTEXT == 'test':
         app.register_blueprint(coverage, url_prefix='/coverage/')
-        app.register_blueprint(tests, url_prefix='/tests/')
+        app.register_blueprint(test_output, url_prefix='/tests/')
     # app.register_blueprint(rest, url_prefix='/rest')
 
     return app

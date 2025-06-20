@@ -94,3 +94,829 @@ wsgi.run_once: False
 wsgi.url_scheme: http
 wsgi.version: (1, 0)
 
+[2025-06-20 14:17:26,504] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/home
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /doc/
+QUERY_STRING: 
+RAW_URI: /doc/
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 54838
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 54838)>
+werkzeug.request: <Request 'http://localhost:8080/doc/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4957d720>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a1ee090>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:26,541] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_IF_NONE_MATCH: "1748953303.7952924-1356-2593071516"
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/doc/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 57110
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 57110)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f2e00>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a1d5850>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:31,841] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/home
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /doc/
+QUERY_STRING: 
+RAW_URI: /doc/
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 57124
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 57124)>
+werkzeug.request: <Request 'http://localhost:8080/doc/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f2e00>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a1d6a50>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:31,867] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/doc/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 57136
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 57136)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1840>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953b210>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:40,545] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/login
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /home
+QUERY_STRING: 
+RAW_URI: /home
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 38342
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 38342)>
+werkzeug.request: <Request 'http://localhost:8080/home' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1840>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953b250>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:40,573] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/home
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 38352
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 38352)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f32b0>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd49538150>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:50,800] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: none
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /logout
+QUERY_STRING: 
+RAW_URI: /logout
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34676
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34676)>
+werkzeug.request: <Request 'http://localhost:8080/logout' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f32b0>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953ae10>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:50,833] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/logout
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34678
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34678)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f0760>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd49538150>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:52,443] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/logout
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /home
+QUERY_STRING: 
+RAW_URI: /home
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34688
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34688)>
+werkzeug.request: <Request 'http://localhost:8080/home' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f0760>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a1d6c90>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:52,473] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/home
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34694
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34694)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f0640>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953b210>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:54,218] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/home
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /
+QUERY_STRING: 
+RAW_URI: /
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34698
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34698)>
+werkzeug.request: <Request 'http://localhost:8080/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f0640>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953b210>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:54,248] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34706
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34706)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1b10>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a38e4d0>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:54,757] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /
+QUERY_STRING: 
+RAW_URI: /
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34708
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34708)>
+werkzeug.request: <Request 'http://localhost:8080/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1b10>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953ae10>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:17:54,792] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 34716
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 34716)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1540>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd49538550>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+

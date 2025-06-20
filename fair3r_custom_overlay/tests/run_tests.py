@@ -92,7 +92,61 @@ def main():
     print(f"  PYTEST_CACHE_DIR: {os.environ.get('PYTEST_CACHE_DIR')}")
     
     # Step 8: Execute the test suite
-    result = subprocess.run(cmd, cwd='/opt/fair3r_custom_overlay', capture_output=True, text=True)
+    # Run pytest with real-time output to console, but also capture for web interface
+    print("\n" + "=" * 50)
+    print("RUNNING TESTS:")
+    print("=" * 50)
+    
+    # Use Popen to get real-time output while also capturing it
+    process = subprocess.Popen(
+        cmd, 
+        cwd='/opt/fair3r_custom_overlay', 
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.PIPE,
+        text=True,
+        bufsize=1,
+        universal_newlines=True
+    )
+    
+    # Collect output while showing it in real-time
+    stdout_lines = []
+    stderr_lines = []
+    
+    # Read stdout in real-time
+    if process.stdout:
+        while True:
+            output = process.stdout.readline()
+            if output == '' and process.poll() is not None:
+                break
+            if output:
+                print(output.rstrip())  # Show in console
+                stdout_lines.append(output)  # Capture for web interface
+    
+    # Read stderr in real-time
+    if process.stderr:
+        while True:
+            error = process.stderr.readline()
+            if error == '' and process.poll() is not None:
+                break
+            if error:
+                print(error.rstrip(), file=sys.stderr)  # Show in console
+                stderr_lines.append(error)  # Capture for web interface
+    
+    # Wait for process to complete and get return code
+    result = process.wait()
+    
+    # Combine captured output
+    result_stdout = ''.join(stdout_lines)
+    result_stderr = ''.join(stderr_lines)
+    
+    # Create a result object similar to subprocess.run for compatibility
+    class Result:
+        def __init__(self, returncode, stdout, stderr):
+            self.returncode = returncode
+            self.stdout = stdout
+            self.stderr = stderr
+    
+    result = Result(result, result_stdout, result_stderr)
     
     # Step 9: Save test output to file for web interface (only in test context)
     if context == 'test':
