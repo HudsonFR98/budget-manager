@@ -104,32 +104,14 @@ def main():
             # Create destination directory if it doesn't exist
             os.makedirs(coverage_dest_dir, exist_ok=True)
             
-            # Ensure proper permissions on the destination directory
-            try:
-                # Try to set permissions to allow writing
-                os.chmod(coverage_dest_dir, 0o775)
-            except PermissionError:
-                # If we can't change permissions, try using sudo
-                subprocess.run(['sudo', 'chmod', '775', coverage_dest_dir], check=False)
-            
             # Copy HTML coverage report to the expected location
             if os.path.exists(html_source):
                 if os.path.exists(html_dest):
-                    # Remove existing directory with proper permissions
-                    try:
-                        shutil.rmtree(html_dest)
-                    except PermissionError:
-                        subprocess.run(['sudo', 'rm', '-rf', html_dest], check=False)
+                    # Remove existing directory
+                    shutil.rmtree(html_dest)
                 
                 # Copy the directory
-                try:
-                    shutil.copytree(html_source, html_dest)
-                except PermissionError:
-                    # If direct copy fails, try with sudo
-                    subprocess.run(['sudo', 'cp', '-r', html_source, html_dest], check=False)
-                    # Fix ownership after copying
-                    subprocess.run(['sudo', 'chown', '-R', '1000:1000', html_dest], check=False)
-                
+                shutil.copytree(html_source, html_dest)
                 print(f"Coverage report copied to: {html_dest}")
             else:
                 print("Warning: HTML coverage report not found")

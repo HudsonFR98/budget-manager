@@ -81,6 +81,15 @@
         group: "1000"
         mode: '0664'
 
+    - name: Set data directory permissions for Docker container
+      file:
+        path: /opt/fair3r_custom_overlay_data
+        state: directory
+        owner: "1000"  # UID of web user in container
+        group: "1000"  # GID of web user in container
+        mode: '0775'
+        recurse: yes
+
     - name: Log in to GitLab Container Registry
       docker_login:
         registry: "{{ docker_registry }}"
