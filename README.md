@@ -18,9 +18,13 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
    ```bash
    ./setup_dev.sh
    ```
-3. Start the development environment:
+3. Start by building the development environment:
    ```bash
    docker compose up --build
+   ```
+   If the app is already built, you can simply use:
+   ```bash
+      docker compose up
    ```
 4. Access the application at http://localhost:8080
 

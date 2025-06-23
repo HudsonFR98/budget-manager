@@ -91,6 +91,11 @@ class Config(object):
     MAIL_PASSWORD = 'icsdev#67'
     SECRET_KEY = '5#yqsj4de85s6zzjkncwhjciksd'
 
+    # Session configuration
+    SESSION_COOKIE_SECURE = False
+    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+
     # docs paths
     DOC_DIR = '/opt/fair3r_custom_overlay_docs'
     BASE_URI = '/prive'
@@ -102,6 +107,10 @@ class ProdConfig(Config):
     CONTEXT = 'prod'
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@serv-ics-db2/fco"
     LOG_LEVEL = logging.ERROR
+    
+    # Secure session settings for production
+    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
 
 
 class DevConfig(Config):
@@ -114,6 +123,10 @@ class DevConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/fco" \
         % os.environ.get('DB_IP', '')
     PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
+    
+    # Development session settings for debugging
+    SESSION_COOKIE_SECURE = False
+    SESSION_COOKIE_HTTPONLY = False  # Allow JavaScript access for debugging
 
 
 class DemoConfig(Config):

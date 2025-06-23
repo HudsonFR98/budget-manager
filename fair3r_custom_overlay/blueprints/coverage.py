@@ -2,12 +2,14 @@ import logging
 import os
 from flask import Blueprint, send_from_directory, abort
 from fair3r_custom_overlay.lib import config
+from fair3r_custom_overlay.lib.flask_util import login_required
 
 coverage = Blueprint('coverage', __name__)
 log = logging.getLogger(__name__)
 
 
 @coverage.route('')
+@login_required
 def index():
     """
     Serve the coverage report index page.
@@ -42,6 +44,7 @@ def index():
 
 
 @coverage.route('/<path:filename>')
+@login_required
 def static_files(filename):
     """
     Serve static files from the coverage report directory.

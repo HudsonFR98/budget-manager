@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from flask_login import LoginManager
 
 from fair3r_custom_overlay.lib import error
 from fair3r_custom_overlay.lib import config
@@ -18,7 +19,23 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(config)
+    
+    # Session configuration is now handled in the config file
+    # The app.config.from_object(config) above loads all the session settings
+    
     database.open(config.SQLALCHEMY_DATABASE_URI)
+
+    # Initialize Flask-Login
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login'
+    login_manager.login_message = 'Please log in to access this page.'
+    login_manager.login_message_category = 'info'
+    
+    @login_manager.user_loader
+    def load_user(user_id):
+        """Load user by ID for Flask-Login"""
+        return User.query.get(int(user_id))
 
     # Create admin user if no users exist
     User.create_admin_if_not_exists()
@@ -72,9 +89,10 @@ def create_app():
     def before_request():
         return flask_util.before_request()
 
-    @app.before_request
-    def after_request():
-        return flask_util.after_request()
+    @app.after_request
+    def after_request(response):
+        flask_util.after_request()
+        return response
 
     @app.context_processor
     def inject_ui():

@@ -920,3 +920,623 @@ wsgi.run_once: False
 wsgi.url_scheme: http
 wsgi.version: (1, 0)
 
+[2025-06-20 14:34:16,090] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /
+QUERY_STRING: 
+RAW_URI: /
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 39522
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 39522)>
+werkzeug.request: <Request 'http://localhost:8080/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f1390>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd49563bd0>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:34:16,114] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 39532
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 39532)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f11b0>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4953b250>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:34:17,035] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=0, i
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: document
+HTTP_SEC_FETCH_MODE: navigate
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_SEC_FETCH_USER: ?1
+HTTP_UPGRADE_INSECURE_REQUESTS: 1
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /
+QUERY_STRING: 
+RAW_URI: /
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 39546
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 39546)>
+werkzeug.request: <Request 'http://localhost:8080/' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f11b0>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a1d6c90>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-20 14:34:17,060] ERROR in __init__: Traceback (most recent call last):
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 915, in full_dispatch_request
+    rv = self.preprocess_request()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/env3/fair3r_custom_overlay/lib/python3.11/site-packages/flask/app.py", line 1291, in preprocess_request
+    rv = self.ensure_sync(before_func)()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/__init__.py", line 72, in before_request
+    def before_request():
+               ^^^^^^^^^^^
+  File "/opt/fair3r_custom_overlay/fair3r_custom_overlay/lib/flask_util.py", line 29, in before_request
+    if g.user is not None:
+AttributeError: 'NoneType' object has no attribute 'reload_permissions'
+
+
+Paramètres:
+
+Session:
+user_id: 228
+
+
+ENVIRONEMENT
+
+HTTP_ACCEPT: text/css,*/*;q=0.1
+HTTP_ACCEPT_ENCODING: gzip, deflate, br, zstd
+HTTP_ACCEPT_LANGUAGE: fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3
+HTTP_CONNECTION: keep-alive
+HTTP_COOKIE: ckan=31d49f300de8c3d1e8546366ec412f357418a576gAJ9cQAoWAcAAABfZG9tYWlucQFOWAUAAABfcGF0aHECWAEAAAAvcQNYAwAAAF9pZHEEWIAAAABmMjExNjY0OTg4YzcxZTllMTdmYzNmMzE3YjBhMWVmYTJkY2M0ZjM1MjU3ZDZjZDUzZmI0NzRlZDgyYmFiZDcyODFlY2E1NGVmODU2MjcyNmY2MDhmZDYzNjFkYjE0M2ViNzFkMDc3YjExM2Y2M2RkNGI3Y2NmNWY3NDM1YjEyN3EFWA4AAABfY3JlYXRpb25fdGltZXEGR0HZ9Q/MZkNVWA4AAABfYWNjZXNzZWRfdGltZXEHR0HaFQi+0NpzWAgAAABfZXhwaXJlc3EIY2RhdGV0aW1lCmRhdGV0aW1lCnEJY19jb2RlY3MKZW5jb2RlCnEKWAsAAAAHw7YBEwQOBwAAAHELWAYAAABsYXRpbjFxDIZxDVJxDoVxD1JxEFgRAAAAX3JlbWVtYmVyX3NlY29uZHNxEUdA7swAAAAAAFgLAAAAbGFzdF9hY3RpdmVxEmgJaApYDQAAAAfDqQYTDi4ZCMKSw7NxE2gMhnEUUnEVhXEWUnEXWAYAAABfZnJlc2hxGIlYCAAAAF91c2VyX2lkcRlYJAAAADViMDI3OWRlLWZjNzEtNDI2My1hMWQ3LTQ2NGZlNWM5ZTY4MnEaWAsAAABfY3NyZl90b2tlbnEbWCgAAAA2ODQ2OGU0ZTdkNjRmNzhkNjNiNGQ5MjRlZjlkYzdjNGRkZjQyZTQzcRx1Lg==; fldt=hide; ics_signature="signed !!"; session=eyJ1c2VyX2lkIjoyMjh9.aFVeUw.hFKCwOC4_Q-C_f-VGe9D182G7ZQ
+HTTP_HOST: localhost:8080
+HTTP_PRIORITY: u=2
+HTTP_REFERER: http://localhost:8080/
+HTTP_SEC_FETCH_DEST: style
+HTTP_SEC_FETCH_MODE: no-cors
+HTTP_SEC_FETCH_SITE: same-origin
+HTTP_USER_AGENT: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:138.0) Gecko/20100101 Firefox/138.0
+PATH_INFO: /static/css/fair3r_custom_overlay.css
+QUERY_STRING: 
+RAW_URI: /static/css/fair3r_custom_overlay.css
+REMOTE_ADDR: 172.18.0.1
+REMOTE_PORT: 39554
+REQUEST_METHOD: GET
+SCRIPT_NAME: 
+SERVER_NAME: 0.0.0.0
+SERVER_PORT: 8080
+SERVER_PROTOCOL: HTTP/1.1
+SERVER_SOFTWARE: gunicorn/23.0.0
+gunicorn.socket: <socket.socket fd=11, family=2, type=1, proto=0, laddr=('172.18.0.3', 8080), raddr=('172.18.0.1', 39554)>
+werkzeug.request: <Request 'http://localhost:8080/static/css/fair3r_custom_overlay.css' [GET]>
+wsgi.errors: <gunicorn.http.wsgi.WSGIErrorsWrapper object at 0x7ddd4a1f2470>
+wsgi.file_wrapper: <class 'gunicorn.http.wsgi.FileWrapper'>
+wsgi.input: <gunicorn.http.body.Body object at 0x7ddd4a38e490>
+wsgi.input_terminated: True
+wsgi.multiprocess: False
+wsgi.multithread: False
+wsgi.run_once: False
+wsgi.url_scheme: http
+wsgi.version: (1, 0)
+
+[2025-06-23 10:10:50,094] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:50,141] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,159] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,162] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,205] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,887] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,890] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:53,920] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:54,175] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:54,179] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:54,211] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:58,188] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:10:58,194] DEBUG in auth: User logged in successfully: admin
+[2025-06-23 10:10:58,202] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 10:10:58,250] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 10:11:01,983] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 10:11:02,015] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 10:11:02,983] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 10:11:02,987] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:03,017] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,007] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,010] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,041] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,600] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,605] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:04,629] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:10,668] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:40,730] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,316] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,320] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 10:11:43,348] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,362] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 10:11:43,365] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,369] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 10:11:43,372] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,374] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 10:11:43,376] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,378] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 10:11:43,435] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,439] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 10:11:43,455] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 10:11:43,623] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,626] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 10:11:43,643] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 10:11:43,724] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,727] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 10:11:43,744] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 10:11:43,772] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 10:11:43,827] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,982] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:11:43,987] DEBUG in auth: User logged in successfully: customuser
+[2025-06-23 10:11:44,005] DEBUG in flask_util: User authenticated: customuser
+[2025-06-23 10:12:10,796] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:12:40,864] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:13:10,942] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:13:41,008] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:14:11,063] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:14:41,119] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:15:11,173] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:15:41,229] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:16:11,295] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:16:41,348] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:17:11,405] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:17:41,460] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:18:11,518] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:18:41,583] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:19:11,644] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:19:41,701] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:20:11,755] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:20:41,821] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:21:11,872] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:21:41,920] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:22:11,971] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:22:42,024] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:23:12,074] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:23:42,125] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:24:12,176] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:24:42,227] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:25:12,280] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:25:42,330] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:26:12,382] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:26:42,437] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:27:12,491] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:27:42,542] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:28:12,593] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:28:42,648] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:29:12,694] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:29:42,749] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:30:12,801] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:30:42,850] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:31:12,903] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:31:42,966] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:32:13,019] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:32:43,070] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:33:13,118] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:33:43,174] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:34:13,224] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:34:43,276] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:35:13,325] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:35:43,374] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:36:13,425] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:36:43,479] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:37:13,526] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:37:43,578] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:38:13,629] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:38:43,683] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:39:13,734] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:39:43,784] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:40:13,836] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:40:43,892] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:41:13,941] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:41:43,988] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:42:14,037] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:42:44,089] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:43:14,140] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:43:44,190] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:44:14,243] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:44:44,297] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:45:14,346] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:45:44,390] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:46:14,438] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:46:44,490] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:47:14,540] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:47:44,590] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:48:14,641] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:48:44,691] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:49:14,745] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:49:44,799] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:50:14,850] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:50:44,899] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:51:14,946] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:51:45,000] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:52:15,045] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:52:45,097] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:53:15,148] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:53:45,196] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:54:15,244] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:54:45,292] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:55:15,343] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:55:45,393] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:56:15,445] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:56:45,499] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:57:15,549] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:57:45,601] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:58:15,649] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:58:45,701] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:59:15,749] DEBUG in flask_util: No authenticated user
+[2025-06-23 10:59:45,801] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:00:15,852] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:00:45,899] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:01:15,951] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:01:46,004] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:02:16,055] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:02:46,109] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:03:16,159] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:03:46,210] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:04:16,259] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:04:46,307] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:05:16,357] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:05:46,410] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:06:16,457] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:06:46,510] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:07:16,561] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:07:46,610] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:08:16,666] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:08:46,715] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:09:16,769] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:09:46,816] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:10:16,863] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:10:46,918] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:11:16,968] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:11:47,015] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:12:17,060] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:12:47,114] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:13:17,161] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:13:47,212] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:14:17,264] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:14:47,316] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:15:17,364] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:15:47,422] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:16:17,474] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:16:47,521] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:17:17,572] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:17:47,623] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:18:17,678] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:18:47,726] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:19:17,776] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:19:47,823] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:20:17,883] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:20:47,938] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:21:17,993] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:21:48,056] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:22:18,113] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:22:48,175] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:23:18,233] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:23:48,285] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:24:18,341] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:24:48,402] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:25:18,455] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:25:48,513] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:26:18,571] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:26:48,627] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:27:18,681] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:27:48,734] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:28:18,797] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:28:48,852] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:29:18,900] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:29:48,952] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:30:19,002] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:30:49,056] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:31:19,134] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:31:49,196] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:32:19,261] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:32:49,347] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:33:19,413] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:33:49,479] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:34:19,542] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:34:49,597] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:35:19,653] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:35:49,725] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:36:19,797] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:36:49,866] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:37:19,952] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:37:50,013] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:38:20,073] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:38:50,141] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:39:20,204] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:39:50,270] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:40:20,328] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:40:50,387] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:41:20,464] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:41:50,518] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:42:20,575] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:42:50,628] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:43:20,689] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:43:50,742] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:44:20,792] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:44:50,848] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:45:20,902] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:45:50,957] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:46:21,017] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:46:51,073] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:47:21,138] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:47:51,191] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:21,249] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,721] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,726] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 11:48:24,758] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,776] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 11:48:24,780] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,782] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 11:48:24,785] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,787] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 11:48:24,790] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,792] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 11:48:24,873] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:24,878] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 11:48:24,902] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,936] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,944] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,954] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,959] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,968] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,975] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,983] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,988] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:24,993] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,003] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,074] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,116] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 11:48:25,138] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,171] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,177] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,183] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,188] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,190] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,192] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,257] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,261] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 11:48:25,283] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,315] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,320] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 11:48:25,389] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,417] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,582] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:48:25,586] DEBUG in auth: User logged in successfully: customuser
+[2025-06-23 11:48:25,608] DEBUG in flask_util: User authenticated: customuser
+[2025-06-23 11:48:25,642] DEBUG in flask_util: User authenticated: customuser
+[2025-06-23 11:48:51,306] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:49:21,361] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:49:51,426] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:50:21,480] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:50:51,538] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:51:21,589] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:51:51,648] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:52:20,297] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:52:20,327] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:52:24,140] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:52:24,143] DEBUG in auth: User logged in successfully: admin
+[2025-06-23 11:52:24,145] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:52:24,149] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:52:24,195] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:52:54,197] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:53:24,256] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:53:54,313] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:54:24,367] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:54:45,370] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:54:45,390] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:54:54,424] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:55:24,487] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:55:42,405] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:55:42,420] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:55:54,543] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:56:16,229] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:56:16,249] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 11:56:24,596] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:56:54,653] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:57:24,708] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:57:54,763] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:58:24,817] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:58:54,874] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:59:24,927] DEBUG in flask_util: No authenticated user
+[2025-06-23 11:59:54,983] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:00:25,043] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:00:55,097] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:01:25,153] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:01:55,208] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:02:25,262] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:02:55,329] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:03:25,384] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:03:55,436] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:04:25,496] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:04:55,552] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:05:25,605] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:05:55,660] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:06:25,723] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:06:55,783] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:07:25,845] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:07:55,919] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:08:25,981] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:09:10,199] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:09:40,276] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:10:10,349] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:10:40,421] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:11:26,780] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:14:10,158] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:14:40,239] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:15:10,308] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:15:40,369] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:16:10,449] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:17:08,338] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:17:35,418] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:17:35,480] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:17:38,408] DEBUG in flask_util: No authenticated user
+[2025-06-23 12:18:42,277] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 12:18:42,339] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 12:18:42,343] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 12:18:42,350] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 12:18:42,355] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 12:18:42,438] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 12:18:42,458] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,493] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,502] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,512] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,519] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,524] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,532] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,540] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,545] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,553] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,558] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,639] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 12:18:42,695] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,733] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,742] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,841] DEBUG in auth: User logged in successfully: selloum
+[2025-06-23 12:18:42,863] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,904] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:42,910] DEBUG in flask_util: User authenticated: selloum
+[2025-06-23 12:18:43,332] DEBUG in auth: User logged in successfully: customuser
+[2025-06-23 12:18:43,359] DEBUG in flask_util: User authenticated: customuser
+[2025-06-23 12:18:43,405] DEBUG in flask_util: User authenticated: customuser
+[2025-06-23 12:20:16,716] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:20:16,790] DEBUG in flask_util: User authenticated: admin

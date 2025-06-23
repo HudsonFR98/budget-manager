@@ -61,7 +61,11 @@
           </li>
           {% endif %}
         </ul>
-        <span class="navbar-text" style="margin-right: 5px">{{ g.user }}</span>
+        <span class="navbar-text" style="margin-right: 5px">
+          {% if current_user.is_authenticated %}
+            {{ current_user.ide }} | <a href="{{ url_for('auth.logout') }}">Logout</a>
+          {% endif %}
+        </span>
         <span class="navbar-text"><a href="{{ url_for('doc.index') }}"><i class="fas fa-info-circle"></i></a></span>
       </div>
     </nav>

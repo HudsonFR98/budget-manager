@@ -43,5 +43,13 @@ run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR
 echo "Starting Nginx..."
 nginx -g "daemon off;" &
 
-# Execute the command passed to docker run
-exec "$@"
+# Determine which server to use based on context
+if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "dev" ]; then
+    echo "Starting Flask development server with hot reloading..."
+    # Use Flask development server for hot reloading in dev mode
+    exec /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay_app.py
+else
+    echo "Starting Gunicorn production server..."
+    # Use Gunicorn for production/demo/test modes
+    exec /opt/env3/fair3r_custom_overlay/bin/gunicorn --bind 0.0.0.0:8080 --log-level=debug --capture-output --enable-stdio-inheritance fair3r_custom_overlay_app:app
+fi

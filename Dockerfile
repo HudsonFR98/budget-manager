@@ -62,6 +62,3 @@ RUN chmod +x /docker-entrypoint.sh && chown web:web /docker-entrypoint.sh
 USER web
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-
-# Default command with improved error logging
-CMD ["/opt/env3/fair3r_custom_overlay/bin/gunicorn", "--bind", "0.0.0.0:8080", "--log-level=debug", "--capture-output", "--enable-stdio-inheritance", "fair3r_custom_overlay_app:app"]

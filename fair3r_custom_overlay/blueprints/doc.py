@@ -8,6 +8,7 @@ log = logging.getLogger(__name__)
 
 
 @doc.route('')
+@login_required
 def index():
     """Documentation home page - provides information about the application"""
     return render_template('doc/index.html')

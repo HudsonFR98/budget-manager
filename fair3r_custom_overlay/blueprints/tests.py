@@ -2,12 +2,14 @@ import logging
 import os
 from flask import Blueprint, render_template, abort
 from fair3r_custom_overlay.lib import config
+from fair3r_custom_overlay.lib.flask_util import login_required
 
 test_output = Blueprint('test_output', __name__)
 log = logging.getLogger(__name__)
 
 
 @test_output.route('/output')
+@login_required
 def output():
     """
     Display the last test run output with detailed results.

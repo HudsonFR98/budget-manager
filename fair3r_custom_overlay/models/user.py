@@ -4,6 +4,7 @@ from typing import List, Optional
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Table
 from sqlalchemy.orm import relationship, validates
 from sqlalchemy.ext.declarative import declared_attr
+from flask_login import UserMixin
 
 from fair3r_custom_overlay.lib.database import Base, DBSession
 
@@ -58,7 +59,7 @@ class Role(Base):
             permissions.remove(permission)
             self.permissions = ','.join(permissions)
 
-class User(Base):
+class User(Base, UserMixin):
     """User model with role-based permissions"""
     __tablename__ = 'users'
     
@@ -84,7 +85,7 @@ class User(Base):
     @validates('pwd')
     def _hash_password(self, key, password):
         """Hash the password before storing it"""
-        if password:
+        if password and not password.startswith('sha256$'):
             return hashlib.sha256(password.encode()).hexdigest()
         return password
     
@@ -104,6 +105,19 @@ class User(Base):
         """String representation of the user"""
         return f"{self.first_name} {self.last_name}"
     
+    # Flask-Login required methods
+    def get_id(self):
+        """Return the user ID as a string (required by Flask-Login)"""
+        return str(self.id)
+    
+    def is_authenticated(self):
+        """Return True if the user is authenticated"""
+        return self.active and not self.has_left
+    
+    def is_active(self):
+        """Return True if the user is active"""
+        return self.active and not self.has_left
+    
     def reload_permissions(self):
         """Reload the user's permissions from their roles"""
         self._permissions = set()
@@ -114,7 +128,7 @@ class User(Base):
         """Check if the user has a specific permission"""
         if self._permissions is None:
             self.reload_permissions()
-        return permission in self._permissions
+        return permission in (self._permissions or set())
     
     def has_role(self, role_name: str) -> bool:
         """Check if the user has a specific role"""
