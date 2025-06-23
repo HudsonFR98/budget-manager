@@ -1540,3 +1540,16 @@ wsgi.version: (1, 0)
 [2025-06-23 12:18:43,405] DEBUG in flask_util: User authenticated: customuser
 [2025-06-23 12:20:16,716] DEBUG in flask_util: User authenticated: admin
 [2025-06-23 12:20:16,790] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:39:04,631] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:39:04,685] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:56:01,680] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:56:01,717] DEBUG in flask_util: User authenticated: admin
+[2025-06-23 12:56:15,910] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 12:56:15,933] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 13:04:59,226] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 13:04:59,277] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 13:05:01,929] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 13:05:16,537] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-23 13:05:20,852] DEBUG in auth: User logged in successfully: debannen
+[2025-06-23 13:05:20,863] DEBUG in flask_util: User authenticated: debannen
+[2025-06-23 13:05:20,911] DEBUG in flask_util: User authenticated: debannen

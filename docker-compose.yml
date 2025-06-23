@@ -16,11 +16,6 @@ services:
       - ./:/opt/fair3r_custom_overlay:cached
       - app_logs:/var/log/fair3r_custom_overlay
     restart: always
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
 
   db:
     image: postgres:16

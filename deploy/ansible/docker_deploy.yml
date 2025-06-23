@@ -114,14 +114,7 @@
         name: "{{ item }}"
         state: absent
       with_items:
-        - db
         - "{{ container_name }}"
-      ignore_errors: yes
-
-    - name: Remove existing network
-      community.docker.docker_network:
-        name: fair3r_custom_overlay_network
-        state: absent
       ignore_errors: yes
 
     - name: Create Docker network
