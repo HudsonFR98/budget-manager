@@ -18,7 +18,7 @@ services:
     restart: always
 
   db:
-    image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/postgres:16
+    image: postgres:16
     environment:
       - POSTGRES_USER=web
       - POSTGRES_PASSWORD=ph2013_x
