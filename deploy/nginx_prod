@@ -28,19 +28,6 @@ server {
     }
 
     location /rest {
-        allow   192.168.0.0/16;
-        allow   130.79.78.0/24;
-        allow   130.79.79.0/24;
-        allow   130.79.77.0/24;
-        allow   130.79.76.0/24;
-        allow   130.79.138.0/24;
-        allow   130.79.137.0/24;
-        allow   192.168.8.22;
-        deny    all;
-
-        #auth_basic "Restricted";
-        #auth_basic_user_file /etc/nginx/htpasswd;
-
         try_files $uri @proxy;
     }
 

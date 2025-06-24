@@ -1,5 +1,5 @@
 # Dockerfile for fair3r_custom_overlay
-FROM python:3.11-slim
+FROM ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
