@@ -113,7 +113,8 @@ class Config(object):
 
     REST_USER = 'icsws'
     REST_PASSWORD = 'Yqa6Pdyg'
-    EMAIL_DEV = 'vasseur@igbmc.fr'
+    EMAIL_DEV = 'debannnen@igbmc.fr'
+    ICS = 'ics@igbmc.fr'  # Required for error mail handler in production
     SETTINGS = None
     STATIC_URI = '/static'
     MAIL_SERVER = 'serv-hub.igbmc.u-strasbg.fr'

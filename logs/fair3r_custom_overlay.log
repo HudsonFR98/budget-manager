@@ -1591,3 +1591,7 @@ wsgi.version: (1, 0)
 [2025-06-24 14:09:21,325] INFO in user: Found 1 existing users
 [2025-06-24 14:09:21,325] INFO in user: Users already exist, skipping admin user creation
 [2025-06-24 14:09:21,325] INFO in __init__: Admin user check completed
+[2025-06-24 14:17:32,539] DEBUG in flask_util: User authenticated: debannen
+[2025-06-24 14:17:32,551] DEBUG in flask_util: User authenticated: debannen
+[2025-06-24 14:17:32,597] DEBUG in flask_util: User authenticated: debannen
+[2025-06-24 14:18:00,673] DEBUG in flask_util: User authenticated: debannen
