@@ -129,6 +129,7 @@ class Config(object):
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
+    DB_URI = "postgresql://web:ph2013_x@db/fco"
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
@@ -156,6 +157,7 @@ class DevConfig(Config):
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
+    DB_URI = "postgresql://web:ph2013_x@db/fco"
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
