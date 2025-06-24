@@ -18,6 +18,11 @@ Deployment Architecture:
 Environment Variables:
 - FAIR3R_CUSTOM_OVERLAY_CONTEXT: Required for all environments (dev, test, demo, prod)
 - DB_IP: Required only for dev environment (external database host)
+
+Session Security:
+- All environments currently configured for HTTP (SESSION_COOKIE_SECURE = False)
+- When HTTPS is enabled, update SESSION_COOKIE_SECURE to True in respective configs
+- SESSION_COOKIE_SAMESITE set to 'Lax' for HTTP compatibility
 """
 
 
@@ -100,9 +105,10 @@ class Config(object):
     Base configuration class.
     
     Session configurations are overridden by environment-specific classes:
-    - DEV: Relaxed settings for debugging
-    - TEST/DEMO: Standard security settings
-    - PROD: Strict security settings
+    - DEV: Relaxed settings for debugging (HTTP, JavaScript access)
+    - TEST/DEMO/PROD: Standard security settings (HTTP, no JavaScript access)
+    - All environments currently configured for HTTP compatibility
+    - When HTTPS is enabled, update SESSION_COOKIE_SECURE to True
     """
 
     REST_USER = 'icsws'
@@ -133,9 +139,11 @@ class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
-    SESSION_COOKIE_SECURE = True
+    # Session settings for production (HTTP environment)
+    # Note: If HTTPS is enabled later, change SESSION_COOKIE_SECURE to True
+    SESSION_COOKIE_SECURE = False  # Set to True when HTTPS is enabled
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Strict'
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for HTTP compatibility
 
 
 class DevConfig(Config):

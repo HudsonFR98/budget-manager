@@ -1565,3 +1565,29 @@ wsgi.version: (1, 0)
 [2025-06-24 12:50:49,340] DEBUG in flask_util: User authenticated: debannen
 [2025-06-24 12:54:03,751] DEBUG in flask_util: User authenticated: debannen
 [2025-06-24 12:54:03,783] DEBUG in flask_util: User authenticated: debannen
+[2025-06-24 14:08:56,012] INFO in __init__: Opening database connection to: postgresql://web:ph2013_x@db/fco
+[2025-06-24 14:08:56,061] INFO in __init__: Database connection opened successfully
+[2025-06-24 14:08:56,062] INFO in __init__: Checking for admin user...
+[2025-06-24 14:08:56,089] INFO in __init__: Admin user check completed
+[2025-06-24 14:09:06,117] INFO in __init__: Opening database connection to: postgresql://web:ph2013_x@db/fco
+[2025-06-24 14:09:06,154] INFO in __init__: Database connection opened successfully
+[2025-06-24 14:09:06,155] INFO in __init__: Checking for admin user...
+[2025-06-24 14:09:06,155] INFO in user: Checking if admin user exists...
+[2025-06-24 14:09:06,175] INFO in user: Found 1 existing users
+[2025-06-24 14:09:06,176] INFO in user: Users already exist, skipping admin user creation
+[2025-06-24 14:09:06,176] INFO in __init__: Admin user check completed
+[2025-06-24 14:09:15,179] INFO in __init__: Opening database connection to: postgresql://web:ph2013_x@db/fco
+[2025-06-24 14:09:15,215] INFO in __init__: Database connection opened successfully
+[2025-06-24 14:09:15,215] INFO in __init__: Checking for admin user...
+[2025-06-24 14:09:15,215] INFO in user: Checking if admin user exists...
+[2025-06-24 14:09:15,236] INFO in user: Found 1 existing users
+[2025-06-24 14:09:15,236] INFO in user: Users already exist, skipping admin user creation
+[2025-06-24 14:09:15,237] INFO in __init__: Admin user check completed
+[2025-06-24 14:09:21,258] INFO in __init__: Opening database connection to: postgresql://web:ph2013_x@db/fco
+[2025-06-24 14:09:21,294] INFO in __init__: Database connection opened successfully
+[2025-06-24 14:09:21,294] INFO in __init__: Checking for admin user...
+[2025-06-24 14:09:21,315] INFO in database: Database tables check: users=True, roles=True, user_roles=True
+[2025-06-24 14:09:21,315] INFO in user: Checking if admin user exists...
+[2025-06-24 14:09:21,325] INFO in user: Found 1 existing users
+[2025-06-24 14:09:21,325] INFO in user: Users already exist, skipping admin user creation
+[2025-06-24 14:09:21,325] INFO in __init__: Admin user check completed

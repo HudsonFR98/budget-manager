@@ -18,3 +18,4 @@ docs/_build/doctrees/**
 
 .coverage
 docs/_build/html/.buildinfo
+logs/fair3r_custom_overlay.log
