@@ -95,64 +95,90 @@ pep8:
   tags:
     - ics-docker
 
-build_sdist:
-  stage: build
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  script:
-    - pip install build
-    - python -m build --sdist
-  artifacts:
-    paths:
-      - dist/
-    expire_in: 1 week
-  allow_failure: true
-  tags:
-    - python3
-
 deploy_demo:
   stage: demo
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp /mnt/ssh/* ~/.ssh/
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
+    - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
     url: http://serv-ics-fco-d-01:8080/
   needs:
     - build_docker
+  tags:
+    - ics-docker
 
 update_demo:
   stage: demo
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp /mnt/ssh/* ~/.ssh/
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
+    - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action update --env demo --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env demo --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
     url: http://serv-ics-fco-d-01:8080/
   needs:
     - build_docker
+  tags:
+    - ics-docker
 
 deploy_prod:
   stage: prod
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp /mnt/ssh/* ~/.ssh/
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
+    - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-fco-p-01
+    url: http://serv-ics-fco-p-01:8080/
   needs:
     - build_docker
+  tags:
+    - ics-docker
 
 update_prod:
   stage: prod
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp /mnt/ssh/* ~/.ssh/
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
+    - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action update --env prod --docker --docker-image $DOCKER_IMAGE --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env prod --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-fco-p-01
+    url: http://serv-ics-fco-p-01:8080/
   needs:
     - build_docker
+  tags:
+    - ics-docker

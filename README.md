@@ -117,6 +117,7 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-p-01` server
+  - Accessible at `http://serv-ics-fco-p-01:8080/`
   - Uses Docker for process management
 
 ## 3. Deployment Process
@@ -146,9 +147,8 @@ Each environment has specific configurations for:
 ## 5. Update Process
 
 Updates to existing installations are handled by:
-- The Ansible playbooks
+- The Ansible playbooks with conditional logic based on action type
 - Dedicated GitLab CI jobs (`update_demo` and `update_prod`)
-- Only pulls the latest Docker image and restarts the container
-
+- Preserves existing database containers and data during updates
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
