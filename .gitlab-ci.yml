@@ -5,11 +5,38 @@ variables:
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
 stages:
+  - populate-proxy
   - docker
   - test
   - build
   - demo
   - prod
+
+populate_dependency_proxy:
+  stage: populate-proxy
+  image: docker:28.1.1
+  services:
+    - docker:28.1.1-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  before_script:
+    - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
+  script:
+    - echo "Populating dependency proxy with commonly used images..."
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1-dind
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/postgres:16
+    - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/alpine:latest
+    - echo "Dependency proxy population completed!"
+  only:
+    - master
+    - tags
+  when: manual
+  tags:
+    - ics-docker
 
 build_docker:
   stage: docker
