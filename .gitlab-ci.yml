@@ -49,6 +49,7 @@ build_docker:
     DOCKER_TLS_CERTDIR: ""
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
   script:
     - docker info
     - docker build --build-arg BASE_IMAGE=${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim -t $DOCKER_IMAGE .
