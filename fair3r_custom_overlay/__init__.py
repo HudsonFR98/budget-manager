@@ -1,10 +1,10 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_login import LoginManager
 
-from fair3r_custom_overlay.lib import error
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay.lib import flask_util
 from fair3r_custom_overlay.lib import database
+from fair3r_custom_overlay.lib import emails
 from fair3r_custom_overlay.models import User
 
 from .blueprints.auth import auth
@@ -40,11 +40,6 @@ def create_app():
     # Create admin user if no users exist
     User.create_admin_if_not_exists()
 
-    if config.CONTEXT == 'prod':
-        mail_handler = error.get_mail_handler(config)
-        if mail_handler:
-            app.logger.addHandler(mail_handler)
-
     # Register error handlers for common HTTP errors
     @app.errorhandler(404)
     def page_not_found(e):
@@ -67,10 +62,80 @@ def create_app():
                               error_name='Bad Request',
                               error_description='The server could not understand the request.'), 400
 
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        app.logger.error(f"Internal server error: {str(e)}")
+        
+        # Send error notification email
+        try:
+            # Collect request information
+            request_info = {
+                'URL': request.url if request else 'Unknown',
+                'Method': request.method if request else 'Unknown',
+                'Remote Address': request.remote_addr if request else 'Unknown',
+                'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
+                'Referrer': request.headers.get('Referer', 'None') if request else 'None'
+            }
+            
+            # Collect context information
+            context_info = {
+                'Environment': config.CONTEXT,
+                'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
+                'Debug Mode': getattr(config, 'DEBUG', False),
+                'Testing Mode': getattr(config, 'TESTING', False)
+            }
+            
+            # Send error notification email
+            emails.send_error_notification(e, request_info, context_info)
+            
+        except Exception as email_error:
+            # Log email sending failure but don't let it break the error handling
+            app.logger.error(f"Failed to send error notification email: {email_error}")
+
+        if config.CONTEXT == 'prod':
+            # In production, don't show traceback to users
+            return render_template('error.html', 
+                                  error_code=500,
+                                  error_name='Internal Server Error',
+                                  error_description='An unexpected error occurred. The administrator has been notified.'), 500
+        else:
+            # In development, show detailed error information
+            import traceback
+            return render_template('error.html', 
+                                  error_code=500,
+                                  error_name='Internal Server Error',
+                                  error_description=str(e),
+                                  traceback=traceback.format_exc()), 500
+
     @app.errorhandler(Exception)
     def unhandled_exception(e):
-        error_details = error.get_error_email(e)
-        app.logger.error(error_details)
+        app.logger.error(f"Unhandled exception: {str(e)}")
+        
+        # Send error notification email
+        try:
+            # Collect request information
+            request_info = {
+                'URL': request.url if request else 'Unknown',
+                'Method': request.method if request else 'Unknown',
+                'Remote Address': request.remote_addr if request else 'Unknown',
+                'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
+                'Referrer': request.headers.get('Referer', 'None') if request else 'None'
+            }
+            
+            # Collect context information
+            context_info = {
+                'Environment': config.CONTEXT,
+                'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
+                'Debug Mode': getattr(config, 'DEBUG', False),
+                'Testing Mode': getattr(config, 'TESTING', False)
+            }
+            
+            # Send error notification email
+            emails.send_error_notification(e, request_info, context_info)
+            
+        except Exception as email_error:
+            # Log email sending failure but don't let it break the error handling
+            app.logger.error(f"Failed to send error notification email: {email_error}")
 
         if config.CONTEXT == 'prod':
             # In production, don't show traceback to users

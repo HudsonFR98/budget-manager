@@ -114,13 +114,17 @@ class Config(object):
     REST_USER = 'icsws'
     REST_PASSWORD = 'Yqa6Pdyg'
     EMAIL_DEV = 'debannnen@igbmc.fr'
-    ICS = 'ics@igbmc.fr'  # Required for error mail handler in production
     SETTINGS = None
     STATIC_URI = '/static'
-    MAIL_SERVER = 'serv-hub.igbmc.u-strasbg.fr'
-    MAIL_USER = 'devics'
-    MAIL_PASSWORD = 'icsdev#67'
     SECRET_KEY = '5#yqsj4de85s6zzjkncwhjciksd'
+
+    # Error notification email settings
+    ERROR_EMAIL_FROM = 'ics@igbmc.fr'
+    ERROR_EMAIL_TO = EMAIL_DEV
+    ERROR_EMAIL_SMTP_SERVER = 'serv-hub.igbmc.u-strasbg.fr'
+    ERROR_EMAIL_SMTP_USER = 'devics'
+    ERROR_EMAIL_SMTP_PASSWORD = 'icsdev#67'
+    ERROR_EMAIL_SMTP_PORT = 587  # Standard SMTP port, adjust if needed
 
     # Session configuration (base settings, overridden by environment classes)
     SESSION_COOKIE_SECURE = False
