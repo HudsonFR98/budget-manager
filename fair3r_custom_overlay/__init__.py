@@ -40,117 +40,127 @@ def create_app():
     # Create admin user if no users exist
     User.create_admin_if_not_exists()
 
+    # Initialize Flask-DebugToolbar in development mode
+    if config.CONTEXT == 'dev' and getattr(config, 'DEBUG_TB_ENABLED', False):
+        try:
+            from flask_debugtoolbar import DebugToolbarExtension
+            toolbar = DebugToolbarExtension(app)
+        except ImportError:
+            app.logger.warning("Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar")
+
     # Register error handlers for common HTTP errors
-    @app.errorhandler(404)
-    def page_not_found(e):
-        return render_template('error.html',
-                              error_code=404,
-                              error_name='Page Not Found',
-                              error_description='The requested page could not be found.'), 404
+    # In development mode, let Flask handle errors natively for better debugging
+    if config.CONTEXT != 'dev':
+        @app.errorhandler(404)
+        def page_not_found(e):
+            return render_template('error.html',
+                                  error_code=404,
+                                  error_name='Page Not Found',
+                                  error_description='The requested page could not be found.'), 404
 
-    @app.errorhandler(403)
-    def forbidden(e):
-        return render_template('error.html',
-                              error_code=403,
-                              error_name='Forbidden',
-                              error_description='You do not have permission to access this resource.'), 403
+        @app.errorhandler(403)
+        def forbidden(e):
+            return render_template('error.html',
+                                  error_code=403,
+                                  error_name='Forbidden',
+                                  error_description='You do not have permission to access this resource.'), 403
 
-    @app.errorhandler(400)
-    def bad_request(e):
-        return render_template('error.html',
-                              error_code=400,
-                              error_name='Bad Request',
-                              error_description='The server could not understand the request.'), 400
+        @app.errorhandler(400)
+        def bad_request(e):
+            return render_template('error.html',
+                                  error_code=400,
+                                  error_name='Bad Request',
+                                  error_description='The server could not understand the request.'), 400
 
-    @app.errorhandler(500)
-    def internal_server_error(e):
-        app.logger.error(f"Internal server error: {str(e)}")
-        
-        # Send error notification email
-        try:
-            # Collect request information
-            request_info = {
-                'URL': request.url if request else 'Unknown',
-                'Method': request.method if request else 'Unknown',
-                'Remote Address': request.remote_addr if request else 'Unknown',
-                'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
-                'Referrer': request.headers.get('Referer', 'None') if request else 'None'
-            }
-            
-            # Collect context information
-            context_info = {
-                'Environment': config.CONTEXT,
-                'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
-                'Debug Mode': getattr(config, 'DEBUG', False),
-                'Testing Mode': getattr(config, 'TESTING', False)
-            }
+        @app.errorhandler(500)
+        def internal_server_error(e):
+            app.logger.error(f"Internal server error: {str(e)}")
             
             # Send error notification email
-            emails.send_error_notification(e, request_info, context_info)
-            
-        except Exception as email_error:
-            # Log email sending failure but don't let it break the error handling
-            app.logger.error(f"Failed to send error notification email: {email_error}")
+            try:
+                # Collect request information
+                request_info = {
+                    'URL': request.url if request else 'Unknown',
+                    'Method': request.method if request else 'Unknown',
+                    'Remote Address': request.remote_addr if request else 'Unknown',
+                    'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
+                    'Referrer': request.headers.get('Referer', 'None') if request else 'None'
+                }
+                
+                # Collect context information
+                context_info = {
+                    'Environment': config.CONTEXT,
+                    'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
+                    'Debug Mode': getattr(config, 'DEBUG', False),
+                    'Testing Mode': getattr(config, 'TESTING', False)
+                }
+                
+                # Send error notification email
+                emails.send_error_notification(e, request_info, context_info)
+                
+            except Exception as email_error:
+                # Log email sending failure but don't let it break the error handling
+                app.logger.error(f"Failed to send error notification email: {email_error}")
 
-        if config.CONTEXT == 'prod':
-            # In production, don't show traceback to users
-            return render_template('error.html', 
-                                  error_code=500,
-                                  error_name='Internal Server Error',
-                                  error_description='An unexpected error occurred. The administrator has been notified.'), 500
-        else:
-            # In development, show detailed error information
-            import traceback
-            return render_template('error.html', 
-                                  error_code=500,
-                                  error_name='Internal Server Error',
-                                  error_description=str(e),
-                                  traceback=traceback.format_exc()), 500
+            if config.CONTEXT == 'prod':
+                # In production, don't show traceback to users
+                return render_template('error.html', 
+                                      error_code=500,
+                                      error_name='Internal Server Error',
+                                      error_description='An unexpected error occurred. The administrator has been notified.'), 500
+            else:
+                # In development, show detailed error information
+                import traceback
+                return render_template('error.html', 
+                                      error_code=500,
+                                      error_name='Internal Server Error',
+                                      error_description=str(e),
+                                      traceback=traceback.format_exc()), 500
 
-    @app.errorhandler(Exception)
-    def unhandled_exception(e):
-        app.logger.error(f"Unhandled exception: {str(e)}")
-        
-        # Send error notification email
-        try:
-            # Collect request information
-            request_info = {
-                'URL': request.url if request else 'Unknown',
-                'Method': request.method if request else 'Unknown',
-                'Remote Address': request.remote_addr if request else 'Unknown',
-                'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
-                'Referrer': request.headers.get('Referer', 'None') if request else 'None'
-            }
-            
-            # Collect context information
-            context_info = {
-                'Environment': config.CONTEXT,
-                'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
-                'Debug Mode': getattr(config, 'DEBUG', False),
-                'Testing Mode': getattr(config, 'TESTING', False)
-            }
+        @app.errorhandler(Exception)
+        def unhandled_exception(e):
+            app.logger.error(f"Unhandled exception: {str(e)}")
             
             # Send error notification email
-            emails.send_error_notification(e, request_info, context_info)
-            
-        except Exception as email_error:
-            # Log email sending failure but don't let it break the error handling
-            app.logger.error(f"Failed to send error notification email: {email_error}")
+            try:
+                # Collect request information
+                request_info = {
+                    'URL': request.url if request else 'Unknown',
+                    'Method': request.method if request else 'Unknown',
+                    'Remote Address': request.remote_addr if request else 'Unknown',
+                    'User Agent': request.headers.get('User-Agent', 'Unknown') if request else 'Unknown',
+                    'Referrer': request.headers.get('Referer', 'None') if request else 'None'
+                }
+                
+                # Collect context information
+                context_info = {
+                    'Environment': config.CONTEXT,
+                    'Database URI': config.SQLALCHEMY_DATABASE_URI.split('@')[1] if '@' in config.SQLALCHEMY_DATABASE_URI else 'Unknown',
+                    'Debug Mode': getattr(config, 'DEBUG', False),
+                    'Testing Mode': getattr(config, 'TESTING', False)
+                }
+                
+                # Send error notification email
+                emails.send_error_notification(e, request_info, context_info)
+                
+            except Exception as email_error:
+                # Log email sending failure but don't let it break the error handling
+                app.logger.error(f"Failed to send error notification email: {email_error}")
 
-        if config.CONTEXT == 'prod':
-            # In production, don't show traceback to users
-            return render_template('error.html', 
-                                  error_code=500,
-                                  error_name='Internal Server Error',
-                                  error_description='An unexpected error occurred. The administrator has been notified.'), 500
-        else:
-            # In development, show detailed error information
-            import traceback
-            return render_template('error.html', 
-                                  error_code=500,
-                                  error_name='Internal Server Error',
-                                  error_description=str(e),
-                                  traceback=traceback.format_exc()), 500
+            if config.CONTEXT == 'prod':
+                # In production, don't show traceback to users
+                return render_template('error.html', 
+                                      error_code=500,
+                                      error_name='Internal Server Error',
+                                      error_description='An unexpected error occurred. The administrator has been notified.'), 500
+            else:
+                # In development, show detailed error information
+                import traceback
+                return render_template('error.html', 
+                                      error_code=500,
+                                      error_name='Internal Server Error',
+                                      error_description=str(e),
+                                      traceback=traceback.format_exc()), 500
 
     @app.before_request
     def before_request():

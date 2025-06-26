@@ -33,7 +33,11 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 - **Application**: Flask app on port 8080
 - **Logs**: Stored in `./logs/` directory
 - **User**: Container runs as UID 1000 for proper file permissions
-
+- **Debug Features**: 
+  - Flask's classic error reporting with detailed tracebacks
+  - Flask-DebugToolbar for development debugging
+  - Hot reloading enabled for code changes
+  - Debug route available at `/debug-error` to test error handling
 
 **Environment variables**:
    - Set in docker-compose.yml for local development

@@ -61,3 +61,14 @@ def test_session():
         return f"Session working! User: {current_user.ide}, User ID: {current_user.id}"
     else:
         return "No user in session"
+
+
+@auth.route('/debug-error')
+@login_required
+def debug_error():
+    """Debug route to demonstrate Flask's classic error reporting in development mode"""
+    if config.CONTEXT != 'dev':
+        return "This route is only available in development mode", 403
+    
+    # Intentionally raise an exception to demonstrate error handling
+    raise ValueError("This is a test error to demonstrate Flask's classic error reporting in development mode")

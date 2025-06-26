@@ -160,6 +160,10 @@ class DevConfig(Config):
         % os.environ.get('DB_IP', '')
     PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
     
+    # Enable Flask's debug toolbar
+    DEBUG_TB_ENABLED = True
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+    
     SESSION_COOKIE_SECURE = False
     SESSION_COOKIE_HTTPONLY = False  # Allow JavaScript access for debugging
     SESSION_COOKIE_SAMESITE = 'Lax'

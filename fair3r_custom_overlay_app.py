@@ -13,10 +13,12 @@ if __name__ == '__main__':
         # the main application file and imported modules
         print("Starting Flask development server with hot reloading enabled...")
         print("Changes to Python files will trigger automatic reloading.")
+        print("Flask's classic error reporting and debug toolbar are enabled.")
+        print("Access the debug toolbar at the bottom of any page in development mode.")
     
     app.run(
         debug=debug_mode, 
         host='0.0.0.0', 
         port=8080, 
-        use_reloader=True
+        use_reloader=debug_mode
     )

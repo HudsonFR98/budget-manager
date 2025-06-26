@@ -2942,3 +2942,46 @@ wsgi.version: (1, 0)
 [2025-06-26 13:19:03,142] DEBUG in auth: User logged in successfully: customuser
 [2025-06-26 13:19:03,158] DEBUG in flask_util: User authenticated: customuser
 [2025-06-26 13:19:03,179] DEBUG in flask_util: User authenticated: customuser
+[2025-06-26 13:25:31,419] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:25:36,543] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:25:44,790] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:26:13,061] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:27:48,463] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:27:48,502] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:28:05,713] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:28:37,983] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:28:38,908] WARNING in __init__: Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar
+[2025-06-26 13:28:46,661] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:30:28,131] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:31:56,160] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:31:59,904] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:34:28,000] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:35:17,314] DEBUG in flask_util: User authenticated: debannen
+[2025-06-26 13:35:30,742] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:35:30,906] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:35:30,938] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:35:30,969] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:35:31,002] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:35:31,094] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:35:31,110] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,217] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,250] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,285] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,289] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,322] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,354] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,385] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,389] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,423] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,455] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,535] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:35:31,550] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,658] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,692] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,816] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:35:31,833] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,936] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:31,968] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:35:32,282] DEBUG in auth: User logged in successfully: customuser
+[2025-06-26 13:35:32,298] DEBUG in flask_util: User authenticated: customuser
+[2025-06-26 13:35:32,411] DEBUG in flask_util: User authenticated: customuser
