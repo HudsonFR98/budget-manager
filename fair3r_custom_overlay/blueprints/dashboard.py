@@ -10,5 +10,4 @@ log = logging.getLogger(__name__)
 @login_required
 def home():
     """Dashboard home page - the default landing page after login"""
-    raise Exception('test')
     return render_template('dashboard/home.html')
