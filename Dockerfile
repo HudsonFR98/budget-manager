@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libfreetype6-dev \
     zlib1g-dev \
     nginx \
+    nano \
     supervisor \
     git \
     build-essential \
