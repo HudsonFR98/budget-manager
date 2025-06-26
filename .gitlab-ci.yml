@@ -12,6 +12,19 @@ stages:
   - demo
   - prod
 
+# Reusable job templates
+.ssh_setup_template: &ssh_setup_template
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
+  before_script:
+    - apt update && apt install -y openssh-client
+    - mkdir -p ~/.ssh
+    - cp /mnt/ssh/* ~/.ssh/
+    - chmod 600 ~/.ssh/id_rsa
+    - chmod 644 ~/.ssh/known_hosts
+    - ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
+    - pip install ansible
+
+
 populate_dependency_proxy:
   stage: populate-proxy
   image: docker:28.1.1
@@ -62,15 +75,9 @@ build_docker:
 
 pytest:
   stage: test
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  before_script:
-    - apt update && apt install -y openssh-client
-    - mkdir -p ~/.ssh
-    - cp /mnt/ssh/* ~/.ssh/
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-keyscan serv-ics-fco-t-01 >> ~/.ssh/known_hosts  # if needed
-    - pip install ansible
+  <<: *ssh_setup_template
+  variables:
+    SSH_HOST: serv-ics-fco-t-01
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
@@ -97,15 +104,9 @@ pep8:
 
 deploy_demo:
   stage: demo
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  before_script:
-    - apt update && apt install -y openssh-client
-    - mkdir -p ~/.ssh
-    - cp /mnt/ssh/* ~/.ssh/
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
-    - pip install ansible
+  <<: *ssh_setup_template
+  variables:
+    SSH_HOST: serv-ics-fco-d-01
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -119,15 +120,9 @@ deploy_demo:
 
 update_demo:
   stage: demo
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  before_script:
-    - apt update && apt install -y openssh-client
-    - mkdir -p ~/.ssh
-    - cp /mnt/ssh/* ~/.ssh/
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
-    - pip install ansible
+  <<: *ssh_setup_template
+  variables:
+    SSH_HOST: serv-ics-fco-d-01
   script:
     - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -141,15 +136,9 @@ update_demo:
 
 deploy_prod:
   stage: prod
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  before_script:
-    - apt update && apt install -y openssh-client
-    - mkdir -p ~/.ssh
-    - cp /mnt/ssh/* ~/.ssh/
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
-    - pip install ansible
+  <<: *ssh_setup_template
+  variables:
+    SSH_HOST: serv-ics-fco-p-01
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -163,15 +152,9 @@ deploy_prod:
 
 update_prod:
   stage: prod
-  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
-  before_script:
-    - apt update && apt install -y openssh-client
-    - mkdir -p ~/.ssh
-    - cp /mnt/ssh/* ~/.ssh/
-    - chmod 600 ~/.ssh/id_rsa
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
-    - pip install ansible
+  <<: *ssh_setup_template
+  variables:
+    SSH_HOST: serv-ics-fco-p-01
   script:
     - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
