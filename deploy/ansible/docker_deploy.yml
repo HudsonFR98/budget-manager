@@ -1,6 +1,5 @@
 ---
 # Ansible playbook to deploy fair3r_custom_overlay using Docker
-# Replaces the functionality of fabfile.py and install.py for Docker deployment
 
 
 - name: Deploy fair3r_custom_overlay using Docker
