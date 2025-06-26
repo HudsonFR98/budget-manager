@@ -5,6 +5,7 @@ from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay.lib import flask_util
 from fair3r_custom_overlay.lib import database
 from fair3r_custom_overlay.lib import emails
+from fair3r_custom_overlay.lib import version
 from fair3r_custom_overlay.models import User
 
 from .blueprints.auth import auth
@@ -165,7 +166,7 @@ def create_app():
 
     @app.context_processor
     def inject_ui():
-        return dict(CONTEXT=config.CONTEXT)
+        return dict(CONTEXT=config.CONTEXT, VERSION=version.get_version())
 
     app.register_blueprint(auth)
     app.register_blueprint(dashboard)

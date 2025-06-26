@@ -23,7 +23,8 @@ stages:
     - chmod 644 ~/.ssh/known_hosts
     - ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
     - pip install ansible
-
+  tags:
+    - ics-docker
 
 populate_dependency_proxy:
   stage: populate-proxy
@@ -78,6 +79,7 @@ pytest:
   <<: *ssh_setup_template
   variables:
     SSH_HOST: serv-ics-fco-t-01
+    BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
@@ -107,6 +109,7 @@ deploy_demo:
   <<: *ssh_setup_template
   variables:
     SSH_HOST: serv-ics-fco-d-01
+    BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -123,6 +126,7 @@ update_demo:
   <<: *ssh_setup_template
   variables:
     SSH_HOST: serv-ics-fco-d-01
+    BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -139,6 +143,7 @@ deploy_prod:
   <<: *ssh_setup_template
   variables:
     SSH_HOST: serv-ics-fco-p-01
+    BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
@@ -155,6 +160,7 @@ update_prod:
   <<: *ssh_setup_template
   variables:
     SSH_HOST: serv-ics-fco-p-01
+    BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual

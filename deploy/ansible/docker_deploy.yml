@@ -199,6 +199,7 @@
         env:
           FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
           DB_IP: db
+          BUILD_DATE: "{{ ansible_date_time.iso8601 | regex_replace('T', '.') | regex_replace(':', '.') | regex_replace('-', '.') | regex_replace('Z', '') }}"
         volumes:
           - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
           - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
