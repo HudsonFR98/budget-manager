@@ -40,14 +40,6 @@ def create_app():
     # Create admin user if no users exist
     User.create_admin_if_not_exists()
 
-    # Initialize Flask-DebugToolbar in development mode
-    if config.CONTEXT == 'dev' and getattr(config, 'DEBUG_TB_ENABLED', False):
-        try:
-            from flask_debugtoolbar import DebugToolbarExtension
-            toolbar = DebugToolbarExtension(app)
-        except ImportError:
-            app.logger.warning("Flask-DebugToolbar not available. Install with: pip install flask-debugtoolbar")
-
     # Register error handlers for common HTTP errors
     # In development mode, let Flask handle errors natively for better debugging
     if config.CONTEXT != 'dev':

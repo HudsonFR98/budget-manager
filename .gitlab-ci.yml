@@ -72,7 +72,7 @@ pytest:
     - ssh-keyscan serv-ics-fco-t-01 >> ~/.ssh/known_hosts  # if needed
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env test --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   environment:
     name: test
     url: http://serv-ics-fco-t-01:8080/
@@ -107,7 +107,7 @@ deploy_demo:
     - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
@@ -129,7 +129,7 @@ update_demo:
     - ssh-keyscan serv-ics-fco-d-01 >> ~/.ssh/known_hosts
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action update --env demo --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: staging
@@ -151,7 +151,7 @@ deploy_prod:
     - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod
@@ -173,7 +173,7 @@ update_prod:
     - ssh-keyscan serv-ics-fco-p-01 >> ~/.ssh/known_hosts
     - pip install ansible
   script:
-    - python3 deploy/ansible_deploy.py --action update --env prod --docker --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
   when: manual
   environment:
     name: prod

@@ -8,8 +8,7 @@ def main():
     parser = argparse.ArgumentParser(description='Deploy fair3r_custom_overlay using Ansible')
     parser.add_argument('--action', choices=['deploy', 'update'], required=True, help='Action to perform')
     parser.add_argument('--env', choices=['test', 'demo', 'prod'], required=True, help='Environment to deploy to')
-    parser.add_argument('--docker', action='store_true', help='Use Docker for deployment')
-    parser.add_argument('--docker-image', help='Docker image to deploy')
+    parser.add_argument('--docker-image', required=True, help='Docker image to deploy')
     parser.add_argument('--docker-registry', default='registry.gitlab.com', help='Docker registry')
     parser.add_argument('--registry-username', help='Docker registry username')
     parser.add_argument('--registry-password', help='Docker registry password')
@@ -22,8 +21,8 @@ def main():
     # Determine the target host based on the environment
     target_host = args.env
 
-    # Determine which playbook to use
-    playbook = 'ansible/docker_deploy.yml' if args.docker else 'ansible/deploy.yml'
+    # Always use docker_deploy.yml
+    playbook = 'ansible/docker_deploy.yml'
 
     # Build the Ansible command
     cmd = [
@@ -32,26 +31,17 @@ def main():
         playbook,
         '-e', f'action={args.action}',
         '-e', f'context={args.env}',
-        '-e', f'target_host={target_host}'
+        '-e', f'target_host={target_host}',
+        '-e', f'docker_image={args.docker_image}',
+        '-e', f'docker_registry={args.docker_registry}',
+        '-e', f'db_host={args.db_host}'
     ]
 
-    # Add Docker-specific parameters if using Docker
-    if args.docker:
-        if not args.docker_image:
-            print("Error: --docker-image is required when using --docker", file=sys.stderr)
-            sys.exit(1)
+    if args.registry_username:
+        cmd.extend(['-e', f'registry_username={args.registry_username}'])
 
-        cmd.extend([
-            '-e', f'docker_image={args.docker_image}',
-            '-e', f'docker_registry={args.docker_registry}',
-            '-e', f'db_host={args.db_host}'
-        ])
-
-        if args.registry_username:
-            cmd.extend(['-e', f'registry_username={args.registry_username}'])
-
-        if args.registry_password:
-            cmd.extend(['-e', f'registry_password={args.registry_password}'])
+    if args.registry_password:
+        cmd.extend(['-e', f'registry_password={args.registry_password}'])
 
     # Install Ansible collection
     try:
