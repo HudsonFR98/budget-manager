@@ -2887,3 +2887,58 @@ wsgi.version: (1, 0)
 [2025-06-26 13:08:02,710] ERROR in emails: Failed to send email to debannen@igbmc.fr: (535, b'5.7.3 Authentication unsuccessful')
 [2025-06-26 13:11:17,592] INFO in emails: Error notification email sent successfully to debannen@igbmc.fr
 [2025-06-26 13:11:17,889] INFO in emails: Email sent successfully to debannen@igbmc.fr
+[2025-06-26 13:18:31,646] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:18:31,682] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:18:31,687] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:18:31,691] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:18:31,694] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:18:31,746] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:18:31,762] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:18:31,764] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:32,069] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:18:32,241] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:18:32,259] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:18:32,262] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:32,612] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:18:32,660] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:18:32,662] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:32,948] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:18:33,043] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:18:33,065] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:18:33,068] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:33,368] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:18:33,418] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:18:33,420] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:33,762] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:18:33,994] DEBUG in auth: User logged in successfully: customuser
+[2025-06-26 13:18:34,009] DEBUG in flask_util: User authenticated: customuser
+[2025-06-26 13:18:34,011] ERROR in __init__: Unhandled exception: test
+[2025-06-26 13:18:34,306] INFO in emails: Error notification email sent successfully to debannnen@igbmc.fr
+[2025-06-26 13:19:02,555] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:19:02,591] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:19:02,594] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:19:02,598] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:19:02,601] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-26 13:19:02,652] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:19:02,668] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,692] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,696] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,703] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,708] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,712] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,716] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,721] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,726] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,730] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,734] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,818] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:19:02,834] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,856] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,861] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,919] DEBUG in auth: User logged in successfully: selloum
+[2025-06-26 13:19:02,934] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,956] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:02,961] DEBUG in flask_util: User authenticated: selloum
+[2025-06-26 13:19:03,142] DEBUG in auth: User logged in successfully: customuser
+[2025-06-26 13:19:03,158] DEBUG in flask_util: User authenticated: customuser
+[2025-06-26 13:19:03,179] DEBUG in flask_util: User authenticated: customuser
