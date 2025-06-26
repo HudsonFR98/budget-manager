@@ -129,8 +129,6 @@ class Config(object):
 
     # docs paths
     DOC_DIR = '/opt/fair3r_custom_overlay_docs'
-    BASE_URI = '/prive'
-    WORKLIST_DIR = os.path.join(DOC_DIR, 'geno', 'worklist')
 
 
 class ProdConfig(Config):

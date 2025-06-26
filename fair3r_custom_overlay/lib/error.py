@@ -8,17 +8,29 @@ from logging.handlers import SMTPHandler
 log = logging.getLogger(__name__)
 
 
-def get_mail_handler():
-    conf = current_app.config
-    mail_handler = SMTPHandler(
-        conf['MAIL_SERVER'],
-        conf['ICS'],
-        conf['EMAIL_DEV'],
-        'Erreur fair3r_custom_overlay',
-        credentials=(conf['MAIL_USER'], conf['MAIL_PASSWORD']),
-        secure=())
-    mail_handler.setLevel(logging.ERROR)
-    return mail_handler
+def get_mail_handler(config=None):
+    if config is None:
+        # Fallback to current_app if config is not provided (for backward compatibility)
+        try:
+            config = current_app.config
+        except RuntimeError:
+            # If we're outside application context, return None
+            log.warning("Cannot create mail handler: outside application context")
+            return None
+    
+    try:
+        mail_handler = SMTPHandler(
+            config['MAIL_SERVER'],
+            config['ICS'],
+            config['EMAIL_DEV'],
+            'Erreur fair3r_custom_overlay',
+            credentials=(config['MAIL_USER'], config['MAIL_PASSWORD']),
+            secure=())
+        mail_handler.setLevel(logging.ERROR)
+        return mail_handler
+    except Exception as e:
+        log.error(f"Failed to create mail handler: {e}")
+        return None
 
 
 def get_error_email(e):

@@ -41,7 +41,9 @@ def create_app():
     User.create_admin_if_not_exists()
 
     if config.CONTEXT == 'prod':
-        app.logger.addHandler(error.get_mail_handler())
+        mail_handler = error.get_mail_handler(config)
+        if mail_handler:
+            app.logger.addHandler(mail_handler)
 
     # Register error handlers for common HTTP errors
     @app.errorhandler(404)
