@@ -17,14 +17,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libjpeg-dev \
     libfreetype6-dev \
     zlib1g-dev \
-    nginx \
     nano \
-    supervisor \
     git \
     build-essential \
     gcc \
     curl \
-    openssl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -54,11 +51,8 @@ RUN /opt/env3/fair3r_custom_overlay/bin/pip install --upgrade pip setuptools \
     && /opt/env3/fair3r_custom_overlay/bin/pip install -r deploy/requirements.txt \
     && /opt/env3/fair3r_custom_overlay/bin/pip install -e .
 
-# Make SSL generation script executable
-RUN chmod +x /opt/fair3r_custom_overlay/deploy/generate_ssl_cert.sh
-
-# Expose ports (8080 for dev/test, 80 and 443 for demo/prod)
-EXPOSE 8080 80 443
+# Expose port
+EXPOSE 8080
 
 # Set up entrypoint
 COPY deploy/docker-entrypoint.sh /docker-entrypoint.sh

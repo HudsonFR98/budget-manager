@@ -145,7 +145,7 @@ class ProdConfig(Config):
     # Session settings for production (HTTPS environment)
     SESSION_COOKIE_SECURE = True  # Enable for HTTPS
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'  # Keep Lax for compatibility
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
 
 class DevConfig(Config):
@@ -178,7 +178,7 @@ class DemoConfig(Config):
     # Session settings for demo (HTTPS environment)
     SESSION_COOKIE_SECURE = True  # Enable for HTTPS
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'  # Keep Lax for compatibility
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
 
 class TestConfig(Config):

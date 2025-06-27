@@ -34,12 +34,6 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 - **Logs**: Stored in `./logs/` directory
 - **User**: Container runs as UID 1000 for proper file permissions
 
-### Production/Demo Environment Details
-- **Demo Environment**: Accessible on port 80 (HTTP) and 443 (HTTPS) at `http://serv-ics-fco-d-01/`
-- **Production Environment**: Accessible on port 80 (HTTP) and 443 (HTTPS) at `http://serv-ics-fco-p-01/`
-- **HTTPS**: Both demo and prod environments use self-signed SSL certificates
-- **Nginx**: Acts as reverse proxy to Gunicorn for demo and prod environments
-- **Session Security**: HTTPS-enabled with secure cookies for demo and prod environments
 
 **Environment variables**:
    - Set in docker-compose.yml for local development
@@ -133,9 +127,8 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-d-01` server
-  - Accessible at `http://serv-ics-fco-d-01/` (HTTP) and `https://serv-ics-fco-d-01/` (HTTPS)
-  - Uses Docker for process management with Nginx reverse proxy
-  - HTTPS enabled with self-signed certificates
+  - Accessible at `http://serv-ics-fco-d-01:8080/`
+  - Uses Docker for process management
 
 ### PROD Environment
 - **Purpose**: Production deployment
@@ -144,9 +137,8 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-p-01` server
-  - Accessible at `http://serv-ics-fco-p-01/` (HTTP) and `https://serv-ics-fco-p-01/` (HTTPS)
-  - Uses Docker for process management with Nginx reverse proxy
-  - HTTPS enabled with self-signed certificates
+  - Accessible at `http://serv-ics-fco-p-01:8080/`
+  - Uses Docker for process management
 
 ## 3. Deployment Process
 
@@ -180,3 +172,46 @@ Updates to existing installations are handled by:
 - Preserves existing database containers and data during updates
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
+
+## Nginx and HTTPS Setup (Demo and Production)
+
+The demo and production environments now use a modern Nginx reverse proxy with HTTPS support:
+
+### Architecture
+- **Nginx Container**: Handles HTTP/HTTPS traffic on ports 80/443
+- **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally)
+- **Database Container**: PostgreSQL 16 on internal port 5432
+- **SSL Certificates**: Automatically managed with Let's Encrypt
+
+### Features
+- **HTTPS Only**: All HTTP traffic is redirected to HTTPS
+- **Modern Security Headers**: HSTS, CSP, X-Frame-Options, etc.
+- **Rate Limiting**: Different limits for API, login, and general traffic
+- **Gzip Compression**: Optimized for performance
+- **Static File Caching**: Aggressive caching for static assets
+- **Health Checks**: Built-in health check endpoints
+
+### SSL Certificate Management
+SSL certificates are automatically obtained during deployment using Let's Encrypt:
+
+```bash
+# Manual certificate renewal (if needed)
+./deploy/renew_ssl.sh demo
+./deploy/renew_ssl.sh prod
+```
+
+Certificates are automatically renewed every 60 days by Let's Encrypt.
+
+### Access URLs
+- **Demo**: https://serv-ics-fco-d-01
+- **Production**: https://serv-ics-fco-p-01
+
+### Configuration Files
+- **Demo**: `deploy/nginx_demo.conf`
+- **Production**: `deploy/nginx_prod.conf`
+
+### Session Security
+Demo and production environments now use secure session cookies:
+- `SESSION_COOKIE_SECURE = True` (HTTPS only)
+- `SESSION_COOKIE_HTTPONLY = True` (No JavaScript access)
+- `SESSION_COOKIE_SAMESITE = 'Lax'` (CSRF protection)

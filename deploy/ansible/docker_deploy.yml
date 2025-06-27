@@ -11,6 +11,7 @@
     context: "{{ context | default('demo') }}"
     docker_image: "{{ docker_image }}"
     container_name: "fair3r_custom_overlay_{{ context }}"
+    nginx_container_name: "nginx_{{ context }}"
     db_host: "{{ db_host | default('localhost') }}"
 
   tasks:
@@ -62,6 +63,9 @@
       with_items:
         - /var/log/fair3r_custom_overlay
         - /opt/fair3r_custom_overlay_data
+        - /var/log/nginx
+        - /etc/letsencrypt
+        - /var/www/html
 
     - name: Set log directory permissions for Docker container
       file:
@@ -89,6 +93,15 @@
         mode: '0775'
         recurse: yes
 
+    - name: Set Nginx log directory permissions
+      file:
+        path: /var/log/nginx
+        state: directory
+        owner: "101"  # Nginx user
+        group: "101"  # Nginx group
+        mode: '0775'
+        recurse: yes
+
     - name: Log in to GitLab Container Registry
       docker_login:
         registry: "{{ docker_registry }}"
@@ -108,12 +121,19 @@
         dest: /opt/fair3r_custom_overlay_data/init.sql
         mode: '0644'
 
+    - name: Copy Nginx configuration
+      copy:
+        src: "../nginx_{{ context }}.conf"
+        dest: "/opt/fair3r_custom_overlay_data/nginx.conf"
+        mode: '0644'
+
     - name: Stop and remove existing containers
       docker_container:
         name: "{{ item }}"
         state: absent
       with_items:
         - "{{ container_name }}"
+        - "{{ nginx_container_name }}"
       ignore_errors: yes
 
     - name: Stop and remove database container (only for deploy action)
@@ -188,26 +208,13 @@
         source: pull
         force_source: yes
 
-    - name: Set ports for demo/prod environments
-      set_fact:
-        app_ports:
-          - "80:80"
-          - "443:443"
-      when: context in ['demo', 'prod']
-
-    - name: Set ports for test environment
-      set_fact:
-        app_ports:
-          - "8080:8080"
-      when: context == 'test'
-
-    - name: Run App Docker container
+    - name: Run App Docker container (internal only)
       docker_container:
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
         state: started
         restart_policy: always
-        ports: "{{ app_ports }}"
+        # No external port mapping - only accessible via Nginx
         env:
           FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
           DB_IP: db
@@ -221,6 +228,72 @@
         dns_servers:
           - 8.8.8.8
           - 8.8.4.4
+
+    - name: Wait for app container to be ready
+      wait_for:
+        host: "{{ container_name }}"
+        port: 8080
+        timeout: 60
+      delegate_to: "{{ target_host }}"
+
+    - name: Run Nginx container
+      docker_container:
+        name: "{{ nginx_container_name }}"
+        image: nginx:alpine
+        state: started
+        restart_policy: always
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - /opt/fair3r_custom_overlay_data/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+          - /var/log/nginx:/var/log/nginx
+          - /etc/letsencrypt:/etc/letsencrypt:ro
+          - /var/www/html:/var/www/html:ro
+        networks:
+          - name: fair3r_custom_overlay_network
+        depends_on:
+          - "{{ container_name }}"
+
+    - name: Install certbot for SSL certificates
+      apt:
+        name: 
+          - certbot
+          - python3-certbot-nginx
+        state: present
+        update_cache: yes
+
+    - name: Obtain SSL certificate for demo environment
+      command: >
+        certbot certonly --webroot 
+        --webroot-path=/var/www/html 
+        --email debannnen@igbmc.fr 
+        --agree-tos --no-eff-email 
+        --domains serv-ics-fco-d-01
+      when: context == 'demo' and action == 'deploy'
+      register: certbot_result
+      ignore_errors: yes
+
+    - name: Obtain SSL certificate for production environment
+      command: >
+        certbot certonly --webroot 
+        --webroot-path=/var/www/html 
+        --email debannnen@igbmc.fr 
+        --agree-tos --no-eff-email 
+        --domains serv-ics-fco-p-01
+      when: context == 'prod' and action == 'deploy'
+      register: certbot_result
+      ignore_errors: yes
+
+    - name: Show certbot result
+      debug:
+        msg: "{{ certbot_result.stdout_lines }}"
+      when: certbot_result is defined and certbot_result.rc == 0
+
+    - name: Show certbot errors if any
+      debug:
+        msg: "{{ certbot_result.stderr_lines }}"
+      when: certbot_result is defined and certbot_result.rc != 0
 
     - name: Verify network connectivity
       shell: |
