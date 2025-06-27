@@ -237,14 +237,6 @@
       retries: 10
       delay: 3
 
-    - name: Wait for app container port to be listening
-      shell: |
-        docker exec {{ container_name }} timeout 10 bash -c 'until netstat -tlnp | grep :8080 > /dev/null; do sleep 2; done'
-      register: port_check_result
-      retries: 15
-      delay: 3
-      until: port_check_result.rc == 0
-
     - name: Run Nginx container
       docker_container:
         name: "{{ nginx_container_name }}"
