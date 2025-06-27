@@ -208,7 +208,7 @@
         source: pull
         force_source: yes
 
-    - name: Run App Docker container (internal only)
+    - name: Run App Docker container
       docker_container:
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
@@ -230,11 +230,20 @@
           - 8.8.4.4
 
     - name: Wait for app container to be ready
-      wait_for:
-        host: "{{ container_name }}"
-        port: 8080
-        timeout: 60
-      delegate_to: "{{ target_host }}"
+      docker_container_info:
+        name: "{{ container_name }}"
+      register: app_info
+      until: app_info.container.State.Status == "running"
+      retries: 10
+      delay: 3
+
+    - name: Wait for app container port to be listening
+      shell: |
+        docker exec {{ container_name }} timeout 10 bash -c 'until netstat -tlnp | grep :8080 > /dev/null; do sleep 2; done'
+      register: port_check_result
+      retries: 15
+      delay: 3
+      until: port_check_result.rc == 0
 
     - name: Run Nginx container
       docker_container:
