@@ -16,8 +16,8 @@ server {
     server_name serv-ics-fco-d-01;
     
     # SSL configuration
-    ssl_certificate /opt/fair3r_custom_overlay/ssl/certs/fair3r_custom_overlay.crt;
-    ssl_certificate_key /opt/fair3r_custom_overlay/ssl/private/fair3r_custom_overlay.key;
+    ssl_certificate /opt/fair3r_custom_overlay_data/ssl/certs/fair3r_custom_overlay.crt;
+    ssl_certificate_key /opt/fair3r_custom_overlay_data/ssl/private/fair3r_custom_overlay.key;
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_ciphers ECDHE-RSA-AES256-GCM-SHA512:DHE-RSA-AES256-GCM-SHA512:ECDHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES256-GCM-SHA384;
     ssl_prefer_server_ciphers off;
