@@ -253,8 +253,6 @@
           - /var/www/html:/var/www/html:ro
         networks:
           - name: fair3r_custom_overlay_network
-        depends_on:
-          - "{{ container_name }}"
 
     - name: Install certbot for SSL certificates
       apt:
