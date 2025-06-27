@@ -47,19 +47,22 @@ if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "demo" ] || [ "$FAIR3R_CUSTOM_OVERLAY_CO
     echo "Generating SSL certificate..."
     /opt/fair3r_custom_overlay/deploy/generate_ssl_cert.sh
     
-    # Copy appropriate Nginx configuration
+    # Create custom Nginx configuration directory
+    mkdir -p /opt/fair3r_custom_overlay_data/nginx
+    
+    # Copy appropriate Nginx configuration to writable location
     if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "demo" ]; then
-        cp /opt/fair3r_custom_overlay/deploy/nginx_demo /etc/nginx/sites-available/default
+        cp /opt/fair3r_custom_overlay/deploy/nginx_demo /opt/fair3r_custom_overlay_data/nginx/nginx.conf
     else
-        cp /opt/fair3r_custom_overlay/deploy/nginx_prod /etc/nginx/sites-available/default
+        cp /opt/fair3r_custom_overlay/deploy/nginx_prod /opt/fair3r_custom_overlay_data/nginx/nginx.conf
     fi
     
     # Test Nginx configuration
-    nginx -t
+    nginx -t -c /opt/fair3r_custom_overlay_data/nginx/nginx.conf
     
-    # Start Nginx in background
+    # Start Nginx in background with custom config
     echo "Starting Nginx..."
-    nginx -g "daemon off;" &
+    nginx -c /opt/fair3r_custom_overlay_data/nginx/nginx.conf -g "daemon off;" &
     
     # Start Gunicorn for production/demo
     echo "Starting Gunicorn production server..."
