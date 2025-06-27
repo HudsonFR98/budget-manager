@@ -138,15 +138,14 @@ class Config(object):
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
-    DB_URI = "postgresql://web:ph2013_x@db/fco"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@db/fco"
+    DB_URI = "postgresql://web:fco2025_x@db/fco"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
-    # Session settings for production (HTTP environment)
-    # Note: If HTTPS is enabled later, change SESSION_COOKIE_SECURE to True
-    SESSION_COOKIE_SECURE = False  # Set to True when HTTPS is enabled
+    # Session settings for production (HTTPS environment)
+    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for HTTP compatibility
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Keep Lax for compatibility
 
 
 class DevConfig(Config):
@@ -155,8 +154,8 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = False
     LOG_LEVEL = logging.DEBUG
-    DB_URI = "postgresql://web:ph2013_x@%s/fco" % os.environ.get('DB_IP', '')
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@%s/fco" \
+    DB_URI = "postgresql://web:fco2025_x@%s/fco" % os.environ.get('DB_IP', '')
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@%s/fco" \
         % os.environ.get('DB_IP', '')
     PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
     
@@ -172,13 +171,14 @@ class DevConfig(Config):
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
-    DB_URI = "postgresql://web:ph2013_x@db/fco"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:ph2013_x@db/fco"
+    DB_URI = "postgresql://web:fco2025_x@db/fco"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
-    SESSION_COOKIE_SECURE = False  # May not have HTTPS in staging
+    # Session settings for demo (HTTPS environment)
+    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Keep Lax for compatibility
 
 
 class TestConfig(Config):
@@ -186,7 +186,7 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    DB_URI = "postgresql://web:ph2013_x@%s/fco" % os.environ.get('DB_IP', 'db')
+    DB_URI = "postgresql://web:fco2025_x@%s/fco" % os.environ.get('DB_IP', 'db')
     SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
     

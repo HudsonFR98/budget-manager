@@ -34,6 +34,12 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 - **Logs**: Stored in `./logs/` directory
 - **User**: Container runs as UID 1000 for proper file permissions
 
+### Production/Demo Environment Details
+- **Demo Environment**: Accessible on port 80 (HTTP) and 443 (HTTPS) at `http://serv-ics-fco-d-01/`
+- **Production Environment**: Accessible on port 80 (HTTP) and 443 (HTTPS) at `http://serv-ics-fco-p-01/`
+- **HTTPS**: Both demo and prod environments use self-signed SSL certificates
+- **Nginx**: Acts as reverse proxy to Gunicorn for demo and prod environments
+- **Session Security**: HTTPS-enabled with secure cookies for demo and prod environments
 
 **Environment variables**:
    - Set in docker-compose.yml for local development
@@ -51,6 +57,26 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
    ```
    docker exec -it fair3r-custom-overlay-app-1 bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py"
    ```
+
+### Resetting Development Database or Changing Database Password
+If you need to reset all development data (for example, after changing the database password or to start with a clean database):
+
+1. **Stop and remove all containers and volumes:**
+   ```bash
+   docker compose down -v --remove-orphans
+   ```
+   This will delete all data in your development database. **Make sure to back up any important data first!**
+
+2. **Rebuild and start the containers:**
+   ```bash
+   docker compose up --build
+   ```
+   This will recreate the database with the new password and initialize it with the default data.
+
+**Note:**
+- The database password is set in `docker-compose.yml` under the `POSTGRES_PASSWORD` environment variable for the `db` service.
+- The application and all configuration files must use the same password as set in the database container.
+- If you change the password, update it everywhere (see `docker-compose.yml`, `.gitlab-ci.yml`, `fair3r_custom_overlay/lib/_config.py`, and deployment scripts).
 
 ## Testing
 
@@ -107,8 +133,9 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-d-01` server
-  - Accessible at `http://serv-ics-fco-d-01:8080/`
-  - Uses Docker for process management
+  - Accessible at `http://serv-ics-fco-d-01/` (HTTP) and `https://serv-ics-fco-d-01/` (HTTPS)
+  - Uses Docker for process management with Nginx reverse proxy
+  - HTTPS enabled with self-signed certificates
 
 ### PROD Environment
 - **Purpose**: Production deployment
@@ -117,8 +144,9 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-p-01` server
-  - Accessible at `http://serv-ics-fco-p-01:8080/`
-  - Uses Docker for process management
+  - Accessible at `http://serv-ics-fco-p-01/` (HTTP) and `https://serv-ics-fco-p-01/` (HTTPS)
+  - Uses Docker for process management with Nginx reverse proxy
+  - HTTPS enabled with self-signed certificates
 
 ## 3. Deployment Process
 

@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     gcc \
     curl \
+    openssl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -32,6 +33,7 @@ RUN groupadd -g 1000 web && useradd -r -g web -u 1000 -m -s /bin/bash web
 
 # Create necessary directories with correct permissions
 RUN mkdir -p /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
+    /etc/ssl/certs /etc/ssl/private \
     && chown -R web:web /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
     && chmod 775 /var/log/fair3r_custom_overlay \
     && touch /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log \
@@ -53,8 +55,11 @@ RUN /opt/env3/fair3r_custom_overlay/bin/pip install --upgrade pip setuptools \
     && /opt/env3/fair3r_custom_overlay/bin/pip install -r deploy/requirements.txt \
     && /opt/env3/fair3r_custom_overlay/bin/pip install -e .
 
-# Expose port
-EXPOSE 8080
+# Make SSL generation script executable
+RUN chmod +x /opt/fair3r_custom_overlay/deploy/generate_ssl_cert.sh
+
+# Expose ports (8080 for dev/test, 80 and 443 for demo/prod)
+EXPOSE 8080 80 443
 
 # Set up entrypoint
 COPY deploy/docker-entrypoint.sh /docker-entrypoint.sh

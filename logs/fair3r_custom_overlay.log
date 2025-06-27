@@ -3027,3 +3027,15 @@ wsgi.version: (1, 0)
 [2025-06-26 14:55:41,997] DEBUG in flask_util: User authenticated: debannen
 [2025-06-26 14:57:41,618] DEBUG in flask_util: User authenticated: debannen
 [2025-06-26 14:57:41,660] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:42,135] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:42,169] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:49,564] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:49,605] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:58,771] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:58,782] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:08:58,815] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:09:00,533] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:09:08,901] DEBUG in auth: User logged in successfully: debannen
+[2025-06-27 09:09:08,920] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 09:09:08,963] DEBUG in flask_util: User authenticated: debannen
+[2025-06-27 11:13:05,281] INFO in user: Created admin user with username 'admin' and password 'admin'

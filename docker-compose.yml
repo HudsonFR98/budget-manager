@@ -21,7 +21,7 @@ services:
     image: postgres:16
     environment:
       - POSTGRES_USER=web
-      - POSTGRES_PASSWORD=ph2013_x
+      - POSTGRES_PASSWORD=fco2025_x
       - POSTGRES_DB=postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data

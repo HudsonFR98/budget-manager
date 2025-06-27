@@ -17,7 +17,7 @@ echo "Waiting for fco database to be ready..."
 max_retries=30
 retries=0
 while [ $retries -lt $max_retries ]; do
-    if PGPASSWORD=ph2013_x psql -h db -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
+    if PGPASSWORD=fco2025_x psql -h db -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
         echo "Database fco is ready!"
         break
     fi
@@ -39,17 +39,40 @@ fi
 echo "Running database migrations..."
 run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=db /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"
 
-# Start Nginx if needed
-echo "Starting Nginx..."
-nginx -g "daemon off;" &
-
-# Determine which server to use based on context
-if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "dev" ]; then
-    echo "Starting Flask development server with hot reloading..."
-    # Use Flask development server for hot reloading in dev mode
-    exec /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay_app.py
-else
+# Handle Nginx configuration based on environment
+if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "demo" ] || [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "prod" ]; then
+    echo "Setting up Nginx with HTTPS for $FAIR3R_CUSTOM_OVERLAY_CONTEXT environment..."
+    
+    # Generate SSL certificate
+    echo "Generating SSL certificate..."
+    /opt/fair3r_custom_overlay/deploy/generate_ssl_cert.sh
+    
+    # Copy appropriate Nginx configuration
+    if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "demo" ]; then
+        cp /opt/fair3r_custom_overlay/deploy/nginx_demo /etc/nginx/sites-available/default
+    else
+        cp /opt/fair3r_custom_overlay/deploy/nginx_prod /etc/nginx/sites-available/default
+    fi
+    
+    # Test Nginx configuration
+    nginx -t
+    
+    # Start Nginx in background
+    echo "Starting Nginx..."
+    nginx -g "daemon off;" &
+    
+    # Start Gunicorn for production/demo
     echo "Starting Gunicorn production server..."
-    # Use Gunicorn for production/demo/test modes
-    exec /opt/env3/fair3r_custom_overlay/bin/gunicorn --bind 0.0.0.0:8080 --log-level=debug --capture-output --enable-stdio-inheritance fair3r_custom_overlay_app:app
+    exec /opt/env3/fair3r_custom_overlay/bin/gunicorn --bind 127.0.0.1:8080 --workers 4 --worker-class sync --log-level=info --capture-output --enable-stdio-inheritance fair3r_custom_overlay_app:app
+else
+    # For dev and test environments, use simple Nginx or no Nginx
+    if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "dev" ]; then
+        echo "Starting Flask development server with hot reloading..."
+        # Use Flask development server for hot reloading in dev mode
+        exec /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay_app.py
+    else
+        echo "Starting Gunicorn test server..."
+        # Use Gunicorn for test mode (no Nginx)
+        exec /opt/env3/fair3r_custom_overlay/bin/gunicorn --bind 0.0.0.0:8080 --log-level=debug --capture-output --enable-stdio-inheritance fair3r_custom_overlay_app:app
+    fi
 fi
