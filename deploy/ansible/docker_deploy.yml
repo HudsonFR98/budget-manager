@@ -188,15 +188,26 @@
         source: pull
         force_source: yes
 
+    - name: Set ports for demo/prod environments
+      set_fact:
+        app_ports:
+          - "80:80"
+          - "443:443"
+      when: context in ['demo', 'prod']
+
+    - name: Set ports for test environment
+      set_fact:
+        app_ports:
+          - "8080:8080"
+      when: context == 'test'
+
     - name: Run App Docker container
       docker_container:
         name: "{{ container_name }}"
         image: "{{ docker_image }}"
         state: started
         restart_policy: always
-        ports:
-          - "{{ '80:80' if context in ['demo', 'prod'] else '8080:8080' }}"
-          - "{{ '443:443' if context in ['demo', 'prod'] else '' }}"
+        ports: "{{ app_ports }}"
         env:
           FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
           DB_IP: db
