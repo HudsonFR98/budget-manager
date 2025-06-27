@@ -267,10 +267,21 @@
       command: >
         certbot certonly --webroot 
         --webroot-path=/var/www/html 
-        --email debannnen@igbmc.fr 
+        --email debannen@igbmc.fr 
         --agree-tos --no-eff-email 
         --domains serv-ics-fco-d-01
       when: context == 'demo' and action == 'deploy'
+      register: certbot_result
+      ignore_errors: yes
+
+    - name: Obtain SSL certificate for test environment
+      command: >
+        certbot certonly --webroot 
+        --webroot-path=/var/www/html 
+        --email debannen@igbmc.fr 
+        --agree-tos --no-eff-email 
+        --domains serv-ics-fco-t-01
+      when: context == 'test' and action == 'deploy'
       register: certbot_result
       ignore_errors: yes
 
@@ -278,7 +289,7 @@
       command: >
         certbot certonly --webroot 
         --webroot-path=/var/www/html 
-        --email debannnen@igbmc.fr 
+        --email debannen@igbmc.fr 
         --agree-tos --no-eff-email 
         --domains serv-ics-fco-p-01
       when: context == 'prod' and action == 'deploy'

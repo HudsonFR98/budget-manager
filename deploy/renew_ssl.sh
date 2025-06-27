@@ -2,18 +2,21 @@
 set -e
 
 # Script to renew SSL certificates for FAIR3R Custom Overlay
-# Usage: ./renew_ssl.sh [demo|prod]
+# Usage: ./renew_ssl.sh [test|demo|prod]
 
 ENVIRONMENT=${1:-demo}
 
-if [[ "$ENVIRONMENT" != "demo" && "$ENVIRONMENT" != "prod" ]]; then
-    echo "Error: Environment must be 'demo' or 'prod'"
-    echo "Usage: $0 [demo|prod]"
+if [[ "$ENVIRONMENT" != "test" && "$ENVIRONMENT" != "demo" && "$ENVIRONMENT" != "prod" ]]; then
+    echo "Error: Environment must be 'test', 'demo', or 'prod'"
+    echo "Usage: $0 [test|demo|prod]"
     exit 1
 fi
 
 # Set server name based on environment
-if [[ "$ENVIRONMENT" == "demo" ]]; then
+if [[ "$ENVIRONMENT" == "test" ]]; then
+    SERVER_NAME="serv-ics-fco-t-01"
+    CONTAINER_NAME="nginx_test"
+elif [[ "$ENVIRONMENT" == "demo" ]]; then
     SERVER_NAME="serv-ics-fco-d-01"
     CONTAINER_NAME="nginx_demo"
 else

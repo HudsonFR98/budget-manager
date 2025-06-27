@@ -3067,3 +3067,31 @@ wsgi.version: (1, 0)
 [2025-06-27 13:05:05,415] DEBUG in auth: User logged in successfully: customuser
 [2025-06-27 13:05:05,430] DEBUG in flask_util: User authenticated: customuser
 [2025-06-27 13:05:05,453] DEBUG in flask_util: User authenticated: customuser
+[2025-06-27 14:29:18,758] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-27 14:29:18,798] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-27 14:29:18,803] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-27 14:29:18,807] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-27 14:29:18,810] WARNING in auth: Authentication failed: Invalid username or password
+[2025-06-27 14:29:18,866] DEBUG in auth: User logged in successfully: selloum
+[2025-06-27 14:29:18,885] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,912] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,919] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,926] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,929] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,935] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,940] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,944] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,949] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,955] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:18,959] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,060] DEBUG in auth: User logged in successfully: selloum
+[2025-06-27 14:29:19,077] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,103] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,108] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,171] DEBUG in auth: User logged in successfully: selloum
+[2025-06-27 14:29:19,187] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,212] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,219] DEBUG in flask_util: User authenticated: selloum
+[2025-06-27 14:29:19,414] DEBUG in auth: User logged in successfully: customuser
+[2025-06-27 14:29:19,431] DEBUG in flask_util: User authenticated: customuser
+[2025-06-27 14:29:19,456] DEBUG in flask_util: User authenticated: customuser

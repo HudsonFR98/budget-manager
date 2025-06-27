@@ -173,9 +173,9 @@ Updates to existing installations are handled by:
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
 
-## Nginx and HTTPS Setup (Demo and Production)
+## Nginx and HTTPS Setup (Test, Demo and Production)
 
-The demo and production environments now use a modern Nginx reverse proxy with HTTPS support:
+The test, demo, and production environments now use a modern Nginx reverse proxy with HTTPS support:
 
 ### Architecture
 - **Nginx Container**: Handles HTTP/HTTPS traffic on ports 80/443
@@ -196,6 +196,7 @@ SSL certificates are automatically obtained during deployment using Let's Encryp
 
 ```bash
 # Manual certificate renewal (if needed)
+./deploy/renew_ssl.sh test
 ./deploy/renew_ssl.sh demo
 ./deploy/renew_ssl.sh prod
 ```
@@ -203,15 +204,17 @@ SSL certificates are automatically obtained during deployment using Let's Encryp
 Certificates are automatically renewed every 60 days by Let's Encrypt.
 
 ### Access URLs
+- **Test**: https://serv-ics-fco-t-01
 - **Demo**: https://serv-ics-fco-d-01
 - **Production**: https://serv-ics-fco-p-01
 
 ### Configuration Files
+- **Test**: `deploy/nginx_test.conf`
 - **Demo**: `deploy/nginx_demo.conf`
 - **Production**: `deploy/nginx_prod.conf`
 
 ### Session Security
-Demo and production environments now use secure session cookies:
+Test, demo, and production environments now use secure session cookies:
 - `SESSION_COOKIE_SECURE = True` (HTTPS only)
 - `SESSION_COOKIE_HTTPONLY = True` (No JavaScript access)
 - `SESSION_COOKIE_SAMESITE = 'Lax'` (CSRF protection)

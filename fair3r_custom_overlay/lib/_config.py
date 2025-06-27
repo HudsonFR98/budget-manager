@@ -113,7 +113,7 @@ class Config(object):
 
     REST_USER = 'icsws'
     REST_PASSWORD = 'Yqa6Pdyg'
-    EMAIL_DEV = 'debannnen@igbmc.fr'
+    EMAIL_DEV = 'debannen@igbmc.fr'
     SETTINGS = None
     STATIC_URI = '/static'
     SECRET_KEY = '5#yqsj4de85s6zzjkncwhjciksd'
@@ -190,9 +190,10 @@ class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
     
-    SESSION_COOKIE_SECURE = False
+    # Session settings for test (HTTPS environment)
+    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
 
 if 'FAIR3R_CUSTOM_OVERLAY_CONTEXT' not in os.environ:
