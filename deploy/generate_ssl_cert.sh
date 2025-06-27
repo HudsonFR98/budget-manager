@@ -4,12 +4,12 @@ set -e
 # Script to generate SSL certificates for fair3r_custom_overlay
 # This creates self-signed certificates for demo and prod environments
 
-CERT_DIR="/etc/ssl/certs"
-KEY_DIR="/etc/ssl/private"
+CERT_DIR="/opt/fair3r_custom_overlay/ssl/certs"
+KEY_DIR="/opt/fair3r_custom_overlay/ssl/private"
 CERT_FILE="fair3r_custom_overlay.crt"
 KEY_FILE="fair3r_custom_overlay.key"
 
-# Create directories if they don't exist
+# Create directories for certificate storage
 mkdir -p "$CERT_DIR" "$KEY_DIR"
 
 # Function to generate certificate for a specific hostname
