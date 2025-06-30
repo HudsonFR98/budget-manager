@@ -173,40 +173,25 @@ Updates to existing installations are handled by:
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
 
-## Nginx and HTTPS Setup (Test, Demo and Production)
+## Nginx Setup (Test, Demo and Production)
 
-The test, demo, and production environments now use a modern Nginx reverse proxy with HTTPS support:
+The test, demo, and production environments now use a modern Nginx reverse proxy:
 
 ### Architecture
-- **Nginx Container**: Handles HTTP/HTTPS traffic on ports 80/443
+- **Nginx Container**: Handles HTTP traffic on port 80
 - **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally)
 - **Database Container**: PostgreSQL 16 on internal port 5432
-- **SSL Certificates**: Automatically managed with Let's Encrypt
 
 ### Features
-- **HTTPS Only**: All HTTP traffic is redirected to HTTPS
-- **Modern Security Headers**: HSTS, CSP, X-Frame-Options, etc.
-- **Rate Limiting**: Different limits for API, login, and general traffic
-- **Gzip Compression**: Optimized for performance
+- **Modern Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
 - **Static File Caching**: Aggressive caching for static assets
 - **Health Checks**: Built-in health check endpoints
-
-### SSL Certificate Management
-SSL certificates are automatically obtained during deployment using Let's Encrypt:
-
-```bash
-# Manual certificate renewal (if needed)
-./deploy/renew_ssl.sh test
-./deploy/renew_ssl.sh demo
-./deploy/renew_ssl.sh prod
-```
-
-Certificates are automatically renewed every 60 days by Let's Encrypt.
+- **Clean Proxy Configuration**: Proper forwarding of headers and protocols
 
 ### Access URLs
-- **Test**: https://serv-ics-fco-t-01
-- **Demo**: https://serv-ics-fco-d-01
-- **Production**: https://serv-ics-fco-p-01
+- **Test**: http://serv-ics-fco-t-01
+- **Demo**: http://serv-ics-fco-d-01
+- **Production**: http://serv-ics-fco-p-01
 
 ### Configuration Files
 - **Test**: `deploy/nginx_test.conf`
@@ -214,7 +199,9 @@ Certificates are automatically renewed every 60 days by Let's Encrypt.
 - **Production**: `deploy/nginx_prod.conf`
 
 ### Session Security
-Test, demo, and production environments now use secure session cookies:
-- `SESSION_COOKIE_SECURE = True` (HTTPS only)
+Test, demo, and production environments use standard HTTP session cookies:
+- `SESSION_COOKIE_SECURE = False` (HTTP compatible)
 - `SESSION_COOKIE_HTTPONLY = True` (No JavaScript access)
 - `SESSION_COOKIE_SAMESITE = 'Lax'` (CSRF protection)
+
+**Note**: HTTPS and SSL certificates can be added later by re-enabling the certbot steps in the Ansible deployment and updating the Nginx configurations.

@@ -142,8 +142,8 @@ class ProdConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
-    # Session settings for production (HTTPS environment)
-    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
+    # Session settings for production (HTTP environment)
+    SESSION_COOKIE_SECURE = False  # Disabled for HTTP
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
@@ -175,8 +175,8 @@ class DemoConfig(Config):
     SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
     LOG_LEVEL = logging.ERROR
     
-    # Session settings for demo (HTTPS environment)
-    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
+    # Session settings for demo (HTTP environment)
+    SESSION_COOKIE_SECURE = False  # Disabled for HTTP
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
@@ -190,8 +190,8 @@ class TestConfig(Config):
     SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
     
-    # Session settings for test (HTTPS environment)
-    SESSION_COOKIE_SECURE = True  # Enable for HTTPS
+    # Session settings for test (HTTP environment)
+    SESSION_COOKIE_SECURE = False  # Disabled for HTTP
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
