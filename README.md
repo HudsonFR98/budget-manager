@@ -184,7 +184,7 @@ The test, demo, and production environments now use a modern Nginx reverse proxy
 
 ### Features
 - **Modern Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
-- **Static File Caching**: Aggressive caching for static assets
+- **Static File Serving**: Flask application serves static files (CSS, JS, images)
 - **Health Checks**: Built-in health check endpoints
 - **Clean Proxy Configuration**: Proper forwarding of headers and protocols
 
