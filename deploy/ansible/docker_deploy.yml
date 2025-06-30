@@ -264,7 +264,7 @@
 
     - name: Create certificate directory
       file:
-        path: /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01
+        path: /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01.igbmc.u-strasbg.fr
         state: directory
         mode: '0755'
       when: action == 'deploy'
@@ -275,19 +275,17 @@
         --webroot-path=/var/www/html 
         --email debannen@igbmc.fr 
         --agree-tos --no-eff-email 
-        --domains serv-ics-fco-{{ context[0] }}-01
+        --domains serv-ics-fco-{{ context[0] }}-01.igbmc.u-strasbg.fr
       when: action == 'deploy'
       register: certbot_result
-      ignore_errors: yes
 
     - name: Create self-signed certificate (fallback for test)
       command: >
         openssl req -x509 -nodes -days 365 -newkey rsa:2048
-        -keyout /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01/privkey.pem
-        -out /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01/fullchain.pem
-        -subj "/C=FR/ST=Alsace/L=Strasbourg/O=ICS/CN=serv-ics-fco-{{ context[0] }}-01"
+        -keyout /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01.igbmc.u-strasbg.fr/privkey.pem
+        -out /etc/letsencrypt/live/serv-ics-fco-{{ context[0] }}-01.igbmc.u-strasbg.fr/fullchain.pem
+        -subj "/C=FR/ST=Alsace/L=Strasbourg/O=IGBMC/CN=serv-ics-fco-{{ context[0] }}-01.igbmc.u-strasbg.fr"
       when: context == 'test' and action == 'deploy' and certbot_result.rc != 0
-      ignore_errors: yes
 
     - name: Show certbot result
       debug:
