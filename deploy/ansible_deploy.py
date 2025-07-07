@@ -12,6 +12,9 @@ def main():
     parser.add_argument('--docker-registry', default='registry.gitlab.com', help='Docker registry')
     parser.add_argument('--registry-username', help='Docker registry username')
     parser.add_argument('--registry-password', help='Docker registry password')
+    parser.add_argument('--dependency-proxy-server', help='Dependency proxy server URL')
+    parser.add_argument('--dependency-proxy-username', help='Dependency proxy username')
+    parser.add_argument('--dependency-proxy-password', help='Dependency proxy password')
     parser.add_argument('--db-host', default='localhost', help='Database host')
     args = parser.parse_args()
 
@@ -42,6 +45,15 @@ def main():
 
     if args.registry_password:
         cmd.extend(['-e', f'registry_password={args.registry_password}'])
+
+    if args.dependency_proxy_server:
+        cmd.extend(['-e', f'dependency_proxy_server={args.dependency_proxy_server}'])
+
+    if args.dependency_proxy_username:
+        cmd.extend(['-e', f'dependency_proxy_username={args.dependency_proxy_username}'])
+
+    if args.dependency_proxy_password:
+        cmd.extend(['-e', f'dependency_proxy_password={args.dependency_proxy_password}'])
 
     # Install Ansible collection
     try:
