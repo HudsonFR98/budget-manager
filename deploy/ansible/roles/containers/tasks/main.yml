@@ -22,6 +22,16 @@
     name: fair3r_custom_overlay_network
     state: present
 
+- name: Debug docker registry info
+  debug:
+    msg: "Using docker registry: {{ docker_registry }}"
+
+- name: Pull PostgreSQL Docker image
+  docker_image:
+    name: "{{ docker_registry }}/postgres:16"
+    source: pull
+    force_source: yes
+
 - name: Run PostgreSQL Docker container
   docker_container:
     name: db
@@ -110,6 +120,12 @@
   until: app_info.container.State.Status == "running"
   retries: 10
   delay: 3
+
+- name: Pull Nginx Docker image
+  docker_image:
+    name: "{{ docker_registry }}/nginx:alpine"
+    source: pull
+    force_source: yes
 
 - name: Run Nginx container
   docker_container:

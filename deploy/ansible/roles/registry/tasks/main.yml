@@ -6,4 +6,5 @@
     registry: "{{ docker_registry }}"
     username: "{{ registry_username }}"
     password: "{{ registry_password }}"
-    state: present 
+    state: present
+    reauthorize: yes 
