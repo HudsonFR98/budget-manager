@@ -3095,3 +3095,29 @@ wsgi.version: (1, 0)
 [2025-06-27 14:29:19,414] DEBUG in auth: User logged in successfully: customuser
 [2025-06-27 14:29:19,431] DEBUG in flask_util: User authenticated: customuser
 [2025-06-27 14:29:19,456] DEBUG in flask_util: User authenticated: customuser
+[2025-07-07 12:42:21,761] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-07 12:42:26,748] DEBUG in auth: User logged in successfully: admin
+[2025-07-07 12:42:26,755] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:42:26,801] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:43:24,052] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:43:24,087] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:02,725] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:02,754] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:13,203] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:13,235] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:25,192] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:25,218] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:37,878] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:37,909] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:38,779] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:38,800] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:43,110] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:43,136] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:47,803] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:44:47,842] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:02,788] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:02,859] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:14,516] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:14,540] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:22,756] DEBUG in flask_util: User authenticated: admin
+[2025-07-07 12:45:22,826] DEBUG in flask_util: User authenticated: admin

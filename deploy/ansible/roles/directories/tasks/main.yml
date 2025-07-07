@@ -1,0 +1,51 @@
+---
+# Directory and permission setup tasks
+
+- name: Create necessary directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: devics
+    group: devics
+    mode: '0755'
+  with_items:
+    - /var/log/fair3r_custom_overlay
+    - /opt/fair3r_custom_overlay_data
+    - /var/log/nginx
+    - /etc/letsencrypt
+    - /var/www/html
+
+- name: Set log directory permissions for Docker container
+  file:
+    path: /var/log/fair3r_custom_overlay
+    state: directory
+    owner: "1000"  # UID of web user in container
+    group: "1000"  # GID of web user in container
+    mode: '0775'
+    recurse: yes
+
+- name: Create log file with correct permissions
+  file:
+    path: /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log
+    state: touch
+    owner: "1000"
+    group: "1000"
+    mode: '0664'
+
+- name: Set data directory permissions for Docker container
+  file:
+    path: /opt/fair3r_custom_overlay_data
+    state: directory
+    owner: "1000"  # UID of web user in container
+    group: "1000"  # GID of web user in container
+    mode: '0775'
+    recurse: yes
+
+- name: Set Nginx log directory permissions
+  file:
+    path: /var/log/nginx
+    state: directory
+    owner: "101"  # Nginx user
+    group: "101"  # Nginx group
+    mode: '0775'
+    recurse: yes 
