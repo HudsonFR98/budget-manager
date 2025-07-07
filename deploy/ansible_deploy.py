@@ -12,6 +12,7 @@ def main():
     parser.add_argument('--docker-registry', default='registry.gitlab.com', help='Docker registry')
     parser.add_argument('--registry-username', help='Docker registry username')
     parser.add_argument('--registry-password', help='Docker registry password')
+    parser.add_argument('--container-registry-server', help='Container registry server URL')
     parser.add_argument('--dependency-proxy-server', help='Dependency proxy server URL')
     parser.add_argument('--dependency-proxy-username', help='Dependency proxy username')
     parser.add_argument('--dependency-proxy-password', help='Dependency proxy password')
@@ -45,6 +46,9 @@ def main():
 
     if args.registry_password:
         cmd.extend(['-e', f'registry_password={args.registry_password}'])
+
+    if args.container_registry_server:
+        cmd.extend(['-e', f'container_registry_server={args.container_registry_server}'])
 
     if args.dependency_proxy_server:
         cmd.extend(['-e', f'dependency_proxy_server={args.dependency_proxy_server}'])
