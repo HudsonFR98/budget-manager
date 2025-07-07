@@ -131,6 +131,15 @@ class Config(object):
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = 'Lax'
 
+    # Babel configuration for internationalization
+    BABEL_DEFAULT_LOCALE = 'en'
+    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    BABEL_TRANSLATION_DIRECTORIES = 'translations'
+    LANGUAGES = {
+        'en': 'English',
+        'fr': 'Français'
+    }
+
     # docs paths
     DOC_DIR = '/opt/fair3r_custom_overlay_docs'
 

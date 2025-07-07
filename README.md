@@ -205,3 +205,100 @@ Test, demo, and production environments use standard HTTP session cookies:
 - `SESSION_COOKIE_SAMESITE = 'Lax'` (CSRF protection)
 
 **Note**: HTTPS and SSL certificates can be added later by re-enabling the certbot steps in the Ansible deployment and updating the Nginx configurations.
+
+## Internationalization (i18n) Support
+
+The application now supports internationalization with English and French translations. Users can switch between languages using the language selector in the navigation bar.
+
+### Translation Management
+
+The application uses Flask-Babel for internationalization. Translation files are located in `fair3r_custom_overlay/translations/`.
+
+#### Adding New Translations
+
+When you add new translatable strings to the application:
+
+1. **Mark strings for translation** in your Python code:
+   ```python
+   from flask_babel import gettext as _
+   
+   message = _('Your translatable string')
+   ```
+
+2. **Mark strings for translation** in your Jinja2 templates:
+   ```html
+   <h1>{{ _('Welcome to the Dashboard') }}</h1>
+   ```
+
+3. **Extract translatable strings**:
+   ```bash
+   python manage_translations.py extract
+   ```
+
+4. **Update existing translation files**:
+   ```bash
+   python manage_translations.py update
+   ```
+
+5. **Edit the translation files**:
+   - English: `fair3r_custom_overlay/translations/en/LC_MESSAGES/messages.po`
+   - French: `fair3r_custom_overlay/translations/fr/LC_MESSAGES/messages.po`
+
+6. **Compile the translations**:
+   ```bash
+   python manage_translations.py compile
+   ```
+
+#### Adding a New Language
+
+To add support for a new language (e.g., Spanish):
+
+1. **Initialize the new language**:
+   ```bash
+   python manage_translations.py init es
+   ```
+
+2. **Add the language to the configuration** in `fair3r_custom_overlay/lib/_config.py`:
+   ```python
+   LANGUAGES = {
+       'en': 'English',
+       'fr': 'Français',
+       'es': 'Español'
+   }
+   ```
+
+3. **Add the language to the navbar** in `fair3r_custom_overlay/templates/base.html`:
+   ```html
+   <a class="dropdown-item" href="{{ url_for('i18n.set_language', language='es') }}">Español</a>
+   ```
+
+4. **Translate the strings** in `fair3r_custom_overlay/translations/es/LC_MESSAGES/messages.po`
+
+5. **Compile the translations**:
+   ```bash
+   python manage_translations.py compile
+   ```
+
+#### Translation Management Script
+
+The `manage_translations.py` script provides convenient commands for translation management:
+
+- `python manage_translations.py extract` - Extract translatable strings
+- `python manage_translations.py update` - Update existing translation files
+- `python manage_translations.py compile` - Compile all translation files
+- `python manage_translations.py init <lang>` - Initialize new language
+- `python manage_translations.py all` - Run extract, update, and compile
+
+#### Translation Workflow
+
+1. **Development**: Add translatable strings using `_()` function
+2. **Extraction**: Run `python manage_translations.py extract` to create/update `messages.pot`
+3. **Update**: Run `python manage_translations.py update` to update existing `.po` files
+4. **Translation**: Edit the `.po` files with translations
+5. **Compilation**: Run `python manage_translations.py compile` to create `.mo` files
+6. **Testing**: Test the translations in the application
+
+### Current Supported Languages
+
+- **English (en)**: Default language
+- **French (fr)**: Full translation available

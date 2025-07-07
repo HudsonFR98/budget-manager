@@ -81,7 +81,7 @@ pytest:
     SSH_HOST: serv-ics-fco-t-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_SERVER --registry-username $CI_DEPENDENCY_PROXY_USER --registry-password $CI_DEPENDENCY_PROXY_PASSWORD
   environment:
     name: test
     url: http://serv-ics-fco-t-01:8080/
@@ -111,7 +111,7 @@ deploy_demo:
     SSH_HOST: serv-ics-fco-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_SERVER --registry-username $CI_DEPENDENCY_PROXY_USER --registry-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
@@ -128,7 +128,7 @@ update_demo:
     SSH_HOST: serv-ics-fco-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
-    - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_SERVER --registry-username $CI_DEPENDENCY_PROXY_USER --registry-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
@@ -145,7 +145,7 @@ deploy_prod:
     SSH_HOST: serv-ics-fco-p-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
-    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_SERVER --registry-username $CI_DEPENDENCY_PROXY_USER --registry-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod
@@ -162,7 +162,7 @@ update_prod:
     SSH_HOST: serv-ics-fco-p-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
-    - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_REGISTRY --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD
+    - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_SERVER --registry-username $CI_DEPENDENCY_PROXY_USER --registry-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod

@@ -6,12 +6,12 @@
 <form class="form-signin" method="POST" action="{{ url_for('.login') }}">
 <div class="container">
     <div class="card card-container">
-            <input id="usr" name="USR" class="form-control" placeholder="id"
+            <input id="usr" name="USR" class="form-control" placeholder="{{ _('User ID') }}"
                 required autofocus
                 style="margin-bottom: 5px">
             <input type="password" id="pwd" name="PWD" class="form-control"
-                placeholder="mot de passe" required style="margin-bottom: 5px">
-            <button class="btn btn-primary" type="submit">connexion</button>
+                placeholder="{{ _('Password') }}" required style="margin-bottom: 5px">
+            <button class="btn btn-primary" type="submit">{{ _('Login') }}</button>
     </div>
 </div>
 </form>

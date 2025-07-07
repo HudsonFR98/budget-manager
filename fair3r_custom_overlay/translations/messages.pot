@@ -1,0 +1,193 @@
+# Translations template for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-07 16:11+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: fair3r_custom_overlay/templates/base.html:18
+#: fair3r_custom_overlay/templates/base.html:22
+msgid "FAIR3R Custom Overlay"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:44
+msgid "Example"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:47
+#: fair3r_custom_overlay/templates/login.html:14
+msgid "Login"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:54
+msgid "Tests"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:57
+msgid "Coverage"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:58
+msgid "Test Output"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:65
+msgid "Logout"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:69
+msgid "Help"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/base.html:76
+msgid "Language"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/login.html:9
+msgid "User ID"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/login.html:13
+msgid "Password"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/dashboard/home.html:5
+msgid "Welcome to the Dashboard"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:70
+msgid "Documentation"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:81
+msgid "Search documentation..."
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:91
+msgid "Overview"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:94
+#: fair3r_custom_overlay/templates/doc/index.html:129
+msgid "User Management"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:97
+#: fair3r_custom_overlay/templates/doc/index.html:140
+msgid "Database"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:100
+#: fair3r_custom_overlay/templates/doc/index.html:151
+msgid "Configuration"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:103
+#: fair3r_custom_overlay/templates/doc/index.html:163
+msgid "Deployment"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:117
+msgid "Welcome to the Fair3r Custom Overlay Documentation"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:119
+msgid ""
+"This documentation provides information about the Fair3r Custom Overlay "
+"application, its features, and how to use it."
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:122
+msgid "Note"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:123
+msgid ""
+"This documentation is customizable and can be edited to include specific "
+"information about your implementation."
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:130
+msgid ""
+"The application includes a comprehensive user management system with "
+"role-based permissions:"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:132
+msgid "User authentication and authorization"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:133
+msgid "Role-based access control"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:134
+msgid "Permission management"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:141
+msgid ""
+"The application uses PostgreSQL as its database with Alembic for "
+"migrations:"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:143
+msgid "Automatic database migrations"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:144
+msgid "SQLAlchemy ORM for database access"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:145
+msgid "Efficient data management"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:152
+msgid "The application supports multiple environments:"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:154
+msgid "Development"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:155
+msgid "Testing"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:156
+msgid "Demo"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:157
+msgid "Production"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:164
+msgid "The application can be deployed using Docker:"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:166
+msgid "Docker Compose for local development"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:167
+msgid "Ansible for production deployment"
+msgstr ""
+
+#: fair3r_custom_overlay/templates/doc/index.html:168
+msgid "CI/CD pipeline integration"
+msgstr ""
+

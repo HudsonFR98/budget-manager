@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_login import LoginManager
+from flask_babel import Babel, gettext as _
 
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay.lib import flask_util
@@ -13,6 +14,7 @@ from .blueprints.dashboard import dashboard
 from .blueprints.doc import doc
 from .blueprints.coverage import coverage
 from .blueprints.tests import test_output
+from .blueprints.i18n import i18n
 # from .blueprints.rest import rest
 
 
@@ -20,6 +22,18 @@ def create_app():
 
     app = Flask(__name__)
     app.config.from_object(config)
+    
+    def get_locale():
+        """Get the locale for the current request"""
+        # Check if user has set a language preference
+        if 'language' in session:
+            return session['language']
+        # Otherwise, try to guess the language from the user accept
+        # header the browser transmits. The best match wins.
+        return request.accept_languages.best_match(config.LANGUAGES.keys())
+    
+    # Initialize Flask-Babel with locale selector
+    babel = Babel(app, locale_selector=get_locale)
     
     # Session configuration is now handled in the config file
     # The app.config.from_object(config) above loads all the session settings
@@ -166,11 +180,12 @@ def create_app():
 
     @app.context_processor
     def inject_ui():
-        return dict(CONTEXT=config.CONTEXT, VERSION=version.get_version())
+        return dict(CONTEXT=config.CONTEXT, VERSION=version.get_version(), get_locale=get_locale, _=_)
 
     app.register_blueprint(auth)
     app.register_blueprint(dashboard)
     app.register_blueprint(doc, url_prefix='/doc/')
+    app.register_blueprint(i18n, url_prefix='/i18n/')
     # Register coverage blueprint only in test context
     if config.CONTEXT == 'test':
         app.register_blueprint(coverage, url_prefix='/coverage/')

@@ -1,0 +1,140 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-07-07 16:00+0200\n"
+"PO-Revision-Date: 2025-07-07 15:40+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+msgid "FAIR3R Custom Overlay"
+msgstr "FAIR3R Superposition Personnalisée"
+
+msgid "Example"
+msgstr "Exemple"
+
+msgid "Login"
+msgstr "Connexion"
+
+msgid "Tests"
+msgstr "Tests"
+
+msgid "Coverage"
+msgstr "Couverture"
+
+msgid "Test Output"
+msgstr "Sortie des Tests"
+
+msgid "Logout"
+msgstr "Déconnexion"
+
+msgid "Help"
+msgstr "Aide"
+
+msgid "Language"
+msgstr "Langue"
+
+msgid "User ID"
+msgstr "Identifiant"
+
+msgid "Password"
+msgstr "Mot de passe"
+
+msgid "Welcome to the Dashboard"
+msgstr "Bienvenue sur le Tableau de Bord"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Search documentation..."
+msgstr "Rechercher dans la documentation..."
+
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+msgid "User Management"
+msgstr "Gestion des utilisateurs"
+
+msgid "Database"
+msgstr "Base de données"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Deployment"
+msgstr "Déploiement"
+
+msgid "Welcome to the Fair3r Custom Overlay Documentation"
+msgstr "Bienvenue dans la documentation de FAIR3R Custom Overlay"
+
+msgid "This documentation provides information about the Fair3r Custom Overlay application, its features, and how to use it."
+msgstr "Cette documentation fournit des informations sur l'application FAIR3R Custom Overlay, ses fonctionnalités et son utilisation."
+
+msgid "Note"
+msgstr "Remarque"
+
+msgid "This documentation is customizable and can be edited to include specific information about your implementation."
+msgstr "Cette documentation est personnalisable et peut être modifiée pour inclure des informations spécifiques à votre implémentation."
+
+msgid "The application includes a comprehensive user management system with role-based permissions:"
+msgstr "L'application inclut un système complet de gestion des utilisateurs avec des permissions basées sur les rôles :"
+
+msgid "User authentication and authorization"
+msgstr "Authentification et autorisation des utilisateurs"
+
+msgid "Role-based access control"
+msgstr "Contrôle d'accès basé sur les rôles"
+
+msgid "Permission management"
+msgstr "Gestion des permissions"
+
+msgid "The application uses PostgreSQL as its database with Alembic for migrations:"
+msgstr "L'application utilise PostgreSQL comme base de données avec Alembic pour les migrations :"
+
+msgid "Automatic database migrations"
+msgstr "Migrations automatiques de la base de données"
+
+msgid "SQLAlchemy ORM for database access"
+msgstr "SQLAlchemy ORM pour l'accès à la base de données"
+
+msgid "Efficient data management"
+msgstr "Gestion efficace des données"
+
+msgid "The application supports multiple environments:"
+msgstr "L'application prend en charge plusieurs environnements :"
+
+msgid "Development"
+msgstr "Développement"
+
+msgid "Testing"
+msgstr "Test"
+
+msgid "Demo"
+msgstr "Démo"
+
+msgid "Production"
+msgstr "Production"
+
+msgid "The application can be deployed using Docker:"
+msgstr "L'application peut être déployée avec Docker :"
+
+msgid "Docker Compose for local development"
+msgstr "Docker Compose pour le développement local"
+
+msgid "Ansible for production deployment"
+msgstr "Ansible pour le déploiement en production"
+
+msgid "CI/CD pipeline integration"
+msgstr "Intégration de la chaîne CI/CD"
+

@@ -25,7 +25,7 @@
 - name: Run PostgreSQL Docker container
   docker_container:
     name: db
-    image: postgres:16
+    image: "{{ docker_registry }}/postgres:16"
     state: started
     restart_policy: always
     ports:
@@ -114,7 +114,7 @@
 - name: Run Nginx container
   docker_container:
     name: "{{ nginx_container_name }}"
-    image: nginx:alpine
+    image: "{{ docker_registry }}/nginx:alpine"
     state: started
     restart_policy: always
     ports:
