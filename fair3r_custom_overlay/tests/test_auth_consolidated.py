@@ -107,7 +107,7 @@ def test_login_failures(app, test_users):
     
     Note: Error messages differ by context:
     - Dev context: Shows actual error details
-    - Test/Prod context: Shows generic "mauvais utilisateur ou mot de passe" message
+    - Test/Prod context: Shows generic "Invalid username or password" message
     
     Args:
         app: Flask application fixture
@@ -116,7 +116,7 @@ def test_login_failures(app, test_users):
     Assertions:
         - Each invalid login attempt should return an error message
         - In dev context: Should contain actual error details
-        - In test/prod context: Should contain 'mauvais utilisateur ou mot de passe'
+        - In test/prod context: Should contain 'Invalid username or password'
     """
     with app.test_client() as client:
         for username, password, description in LOGIN_FAILURE_CASES:
@@ -129,12 +129,12 @@ def test_login_failures(app, test_users):
                 # The error message should contain some indication of failure
                 assert len(rv.data) > 0, f"Login should fail for {description}"
                 # Check that we're still on the login page (not redirected to dashboard)
-                assert b'connexion' in rv.data, f"Should remain on login page for {description}"
+                assert b'name="USR"' in rv.data, f"Should remain on login page for {description}"
                 # In dev context, we should see some error indication (could be in flash message)
                 # The page should not redirect to dashboard, so we're still on login page
             else:
                 # In test/prod context, we expect the generic error message
-                assert b'mauvais utilisateur ou mot de passe' in rv.data, \
+                assert b'Invalid username or password' in rv.data, \
                     f"Login should fail for {description}"
 
 
@@ -173,12 +173,12 @@ def test_login_successes(app, test_users):
             # to a protected route and verifying we're not redirected to login
             dashboard_rv = client.get('/home')
             assert dashboard_rv.status_code == 200, f"Should access dashboard for {username}"
-            assert b'connexion' not in dashboard_rv.data, f"Should not see login page for {username}"
+            assert b'name="USR"' not in dashboard_rv.data, f"Should not see login page for {username}"
             
             # Test that we can access a protected route without being redirected to login
             doc_rv = client.get('/doc/')
             assert doc_rv.status_code == 200, f"Should access protected route for {username}"
-            assert b'connexion' not in doc_rv.data, f"Should not be redirected to login for {username}"
+            assert b'name="USR"' not in doc_rv.data, f"Should not be redirected to login for {username}"
 
 
 def test_logout(app, test_users):
@@ -212,12 +212,12 @@ def test_logout(app, test_users):
         # Verify user is logged in by accessing a protected route
         dashboard_rv = client.get('/home')
         assert dashboard_rv.status_code == 200, "Should access dashboard after login"
-        assert b'connexion' not in dashboard_rv.data, "Should not see login page after login"
+        assert b'name="USR"' not in dashboard_rv.data, "Should not see login page after login"
         
         # Step 2: Logout
         rv = logout(client)
         # Verify logout was successful
-        assert b'veuillez vous signer a nouveau' in rv.data, "Should show login message after logout"
+        assert b'Please sign in again' in rv.data, "Should show login message after logout"
         
         # Step 3: Verify user is no longer authenticated
         # Try to access a protected route - should redirect to login
@@ -225,7 +225,7 @@ def test_logout(app, test_users):
         assert protected_rv.status_code == 302, "Should redirect to login after logout"
         # Follow the redirect to verify we end up on login page
         login_redirect_rv = client.get('/home', follow_redirects=True)
-        assert b'connexion' in login_redirect_rv.data, "Should be redirected to login page after logout"
+        assert b'name="USR"' in login_redirect_rv.data, "Should be redirected to login page after logout"
 
 
 def test_session_persistence(app, test_users):
@@ -258,12 +258,12 @@ def test_session_persistence(app, test_users):
         rv = client.get('/home')
         # Step 3: Verify user is still authenticated
         assert rv.status_code == 200, "Should access protected page after login"
-        assert b"connexion" not in rv.data, "Should not be redirected to login after login"
+        assert b"name=\"USR\"" not in rv.data, "Should not be redirected to login after login"
         
         # Step 4: Test another protected route to ensure persistence
         doc_rv = client.get('/doc/')
         assert doc_rv.status_code == 200, "Should access another protected page"
-        assert b"connexion" not in doc_rv.data, "Should not be redirected to login for second page"
+        assert b"name=\"USR\"" not in doc_rv.data, "Should not be redirected to login for second page"
 
 
 def test_invalid_session(app, test_users):
@@ -440,7 +440,7 @@ def test_custom_user_login(app):
             # Verify user is authenticated by accessing a protected route
             dashboard_rv = client.get('/home')
             assert dashboard_rv.status_code == 200, "Should access dashboard after login"
-            assert b'connexion' not in dashboard_rv.data, "Should not see login page after login"
+            assert b'name="USR"' not in dashboard_rv.data, "Should not see login page after login"
             
     finally:
         # Step 3: Clean up the custom user

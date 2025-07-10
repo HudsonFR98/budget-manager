@@ -119,6 +119,7 @@ deploy_demo:
     url: http://serv-ics-fco-d-01:8080/
   needs:
     - build_docker
+    - pytest
   tags:
     - ics-docker
 
@@ -136,6 +137,7 @@ update_demo:
     url: http://serv-ics-fco-d-01:8080/
   needs:
     - build_docker
+    - pytest
   tags:
     - ics-docker
 
@@ -153,6 +155,7 @@ deploy_prod:
     url: http://serv-ics-fco-p-01:8080/
   needs:
     - build_docker
+    - pytest
   tags:
     - ics-docker
 
@@ -170,5 +173,6 @@ update_prod:
     url: http://serv-ics-fco-p-01:8080/
   needs:
     - build_docker
+    - pytest
   tags:
     - ics-docker

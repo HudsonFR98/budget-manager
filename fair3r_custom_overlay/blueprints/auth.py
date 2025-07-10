@@ -35,7 +35,7 @@ def login():
             if config.CONTEXT == 'dev':
                 flash(str(e), 'error')
             else:
-                flash('mauvais utilisateur ou mot de passe', 'error')
+                flash('Invalid username or password', 'error')
 
     return render_template('login.html')
 
@@ -45,7 +45,7 @@ def login():
 def logout():
     """Handle user logout"""
     logout_user()
-    flash('veuillez vous signer a nouveau')
+    flash('Please sign in again')
     response = make_response(redirect(url_for('.login')))
     response.delete_cookie('ics_signature')
     return response

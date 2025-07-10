@@ -3222,3 +3222,210 @@ wsgi.version: (1, 0)
 [2025-07-07 14:14:53,763] DEBUG in flask_util: User authenticated: admin
 [2025-07-07 14:14:53,803] DEBUG in flask_util: User authenticated: admin
 [2025-07-07 14:14:53,833] DEBUG in flask_util: User authenticated: admin
+[2025-07-10 12:34:21,307] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:34:21,353] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:34:21,425] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,420] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:36:03,717] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:03,745] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,795] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,804] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,838] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,844] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,852] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,862] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,872] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,879] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,888] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,896] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:03,998] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:04,026] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,076] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,084] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,210] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:04,237] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,289] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,297] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:04,670] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:36:04,697] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:36:04,747] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:36:36,617] DEBUG in flask_util: User authenticated: admin
+[2025-07-10 12:36:47,094] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:36:47,370] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:47,396] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,444] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,452] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,484] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,490] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,497] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,506] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,516] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,522] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,529] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,537] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,627] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:47,651] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,698] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,706] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,834] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:36:47,865] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,914] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:47,922] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:36:48,279] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:36:48,304] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:36:48,352] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:37:38,635] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:37:38,942] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:37:38,969] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,018] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,025] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,069] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,076] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,085] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,094] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,104] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,110] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,119] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,127] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,221] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:37:39,248] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,298] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,306] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,434] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:37:39,461] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,511] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,519] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:37:39,902] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:37:39,928] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:37:39,977] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:39:37,142] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:39:37,679] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:39:37,736] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:37,834] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:38,049] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:39:38,106] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:38,206] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:38,396] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:39:38,450] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:38,542] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:39:39,211] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:39:39,265] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:39:39,358] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:40:49,718] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:40:49,962] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:40:49,979] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:40:49,995] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:40:50,010] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:40:50,209] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:40:50,265] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:50,342] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:50,638] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:40:50,681] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:50,764] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:50,940] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:40:50,988] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:51,065] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:40:51,661] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:40:51,706] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:40:51,796] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:45:05,204] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:45:05,280] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:45:05,326] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:45:05,339] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:45:05,349] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:45:05,450] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:45:05,478] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:05,527] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:05,688] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:45:05,716] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:05,767] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:05,865] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:45:05,891] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:05,940] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:45:06,279] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:45:06,304] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:45:06,354] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:48:30,568] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:30,697] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:30,793] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:30,814] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:30,834] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:31,043] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:31,093] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,188] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,200] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,260] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,271] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,286] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,301] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,323] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,337] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,354] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,373] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,551] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:31,602] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,696] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,710] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:31,936] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:31,990] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:32,083] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:32,097] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:32,781] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:48:32,838] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:48:32,943] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:48:56,197] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:56,315] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:56,406] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:56,428] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:56,447] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:48:56,649] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:56,699] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,783] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,797] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,863] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,876] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,892] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,908] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,928] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,941] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,959] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:56,976] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,160] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:57,211] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,305] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,319] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,525] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:48:57,575] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,667] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:57,680] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:48:58,293] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:48:58,349] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:48:58,442] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:49:15,346] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:49:15,424] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:49:15,480] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:49:15,493] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:49:15,503] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-10 12:49:15,602] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:49:15,629] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,678] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,685] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,720] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,726] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,734] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,743] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,754] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,761] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,770] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,778] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,873] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:49:15,904] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,957] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:15,966] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:16,078] DEBUG in auth: User logged in successfully: selloum
+[2025-07-10 12:49:16,104] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:16,154] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:16,163] DEBUG in flask_util: User authenticated: selloum
+[2025-07-10 12:49:16,529] DEBUG in auth: User logged in successfully: customuser
+[2025-07-10 12:49:16,562] DEBUG in flask_util: User authenticated: customuser
+[2025-07-10 12:49:16,612] DEBUG in flask_util: User authenticated: customuser

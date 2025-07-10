@@ -138,3 +138,4 @@ msgstr "Ansible pour le déploiement en production"
 msgid "CI/CD pipeline integration"
 msgstr "Intégration de la chaîne CI/CD"
 
+ 
