@@ -1,11 +1,16 @@
 import logging
 import os
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, jsonify
 from fair3r_custom_overlay.lib import config
 from fair3r_custom_overlay.lib.flask_util import login_required
 
 test_output = Blueprint('test_output', __name__)
 log = logging.getLogger(__name__)
+
+
+@test_output.route('/simple')
+def simple():
+    return jsonify({'message': 'Hello, World!'})
 
 
 @test_output.route('/output')
@@ -26,7 +31,7 @@ def output():
         HTML page with test output or 404 if not in test context
     """
     # Only allow access in test context
-    if config.CONTEXT != 'test':
+    if config.CONTEXT not in ['test', 'dev']:
         abort(404)
     
     # Try to read the last test output from various possible locations

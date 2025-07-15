@@ -59,6 +59,17 @@
             </div>
           </li>
           {% endif %}
+          {% if current_user.is_authenticated and current_user.has_permission('admin') %}
+          <li class="nav-item dropdown active">
+            <a class="nav-link dropdown-toggle" href="#" id="adminDropdown"
+              role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{ _('Administration') }}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="adminDropdown">
+              <a class="dropdown-item" href="{{ url_for('admin.tasks') }}"><i class="fas fa-tasks"></i> {{ _('Async Tasks') }}</a>
+            </div>
+          </li>
+          {% endif %}
         </ul>
         <span class="navbar-text" style="margin-right: 10px">
           {% if current_user.is_authenticated %}

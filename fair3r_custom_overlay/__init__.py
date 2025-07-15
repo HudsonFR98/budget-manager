@@ -15,6 +15,7 @@ from .blueprints.doc import doc
 from .blueprints.coverage import coverage
 from .blueprints.tests import test_output
 from .blueprints.i18n import i18n
+from .blueprints.admin import admin
 # from .blueprints.rest import rest
 
 
@@ -54,6 +55,15 @@ def create_app():
 
     # Create admin user if no users exist
     User.create_admin_if_not_exists()
+
+    # Initialize task scheduler
+    from fair3r_custom_overlay.lib.task_scheduler import task_scheduler
+    
+    # Start the task scheduler only in the main process
+    # In development mode with reloader, this prevents duplicate schedulers
+    import os
+    if not os.environ.get('WERKZEUG_RUN_MAIN'):
+        task_scheduler.start()
 
     # Register error handlers for common HTTP errors
     # In development mode, let Flask handle errors natively for better debugging
@@ -186,8 +196,9 @@ def create_app():
     app.register_blueprint(dashboard)
     app.register_blueprint(doc, url_prefix='/doc/')
     app.register_blueprint(i18n, url_prefix='/i18n/')
+    app.register_blueprint(admin, url_prefix='/admin/')
     # Register coverage blueprint only in test context
-    if config.CONTEXT == 'test':
+    if config.CONTEXT in ['test', 'dev']:
         app.register_blueprint(coverage, url_prefix='/coverage/')
         app.register_blueprint(test_output, url_prefix='/tests/')
     # app.register_blueprint(rest, url_prefix='/rest')

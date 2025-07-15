@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Application Logs') }} - {{ _('Admin') }}{% endblock %}
+
+{% block body %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h3 mb-4">{{ _('Application Logs') }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ _('Application Logs') }}</h6>
+                    <div>
+                        <button class="btn btn-sm btn-primary" onclick="location.reload()">
+                            <i class="fas fa-sync-alt"></i> {{ _('Refresh') }}
+                        </button>
+                        <button class="btn btn-sm btn-secondary" onclick="clearLogs()">
+                            <i class="fas fa-trash"></i> {{ _('Clear Display') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="log-container" style="max-height: 600px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; font-family: 'Courier New', monospace; font-size: 12px;">
+                        {% if log_lines %}
+                            {% for line in log_lines %}
+                                <div class="log-line">
+                                    {% if 'ERROR' in line %}
+                                        <span class="text-danger">{{ line }}</span>
+                                    {% elif 'WARNING' in line %}
+                                        <span class="text-warning">{{ line }}</span>
+                                    {% elif 'INFO' in line %}
+                                        <span class="text-info">{{ line }}</span>
+                                    {% elif 'DEBUG' in line %}
+                                        <span class="text-muted">{{ line }}</span>
+                                    {% else %}
+                                        {{ line }}
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-muted">{{ _('No logs available') }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function clearLogs() {
+    document.querySelector('.log-container').innerHTML = '<div class="text-muted">Logs cleared</div>';
+}
+
+// Auto-refresh logs every 30 seconds
+setInterval(function() {
+    // Only refresh if the page is visible
+    if (!document.hidden) {
+        location.reload();
+    }
+}, 30000);
+
+// Auto-scroll to bottom on page load
+document.addEventListener('DOMContentLoaded', function() {
+    var logContainer = document.querySelector('.log-container');
+    logContainer.scrollTop = logContainer.scrollHeight;
+});
+</script>
+
+<style>
+.log-line {
+    margin-bottom: 2px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.log-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+</style>
+{% endblock %} 

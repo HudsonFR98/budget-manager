@@ -143,6 +143,9 @@ class Config(object):
     # docs paths
     DOC_DIR = '/opt/fair3r_custom_overlay_docs'
 
+    # Base URL for task execution (used by test_simple_route task)
+    BASE_URL = 'http://localhost:8080'
+
 
 class ProdConfig(Config):
 

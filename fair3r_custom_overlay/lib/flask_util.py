@@ -27,3 +27,18 @@ def after_request():
     """ launched after each request """
 
     DBSession.remove()
+
+
+def admin_required(f):
+    """Decorator to require admin permissions"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not current_user.is_authenticated:
+            return login_required(f)(*args, **kwargs)
+        
+        if not current_user.has_permission('admin'):
+            from flask import abort
+            abort(403)
+        
+        return f(*args, **kwargs)
+    return decorated_function
