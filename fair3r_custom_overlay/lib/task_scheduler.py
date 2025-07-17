@@ -352,7 +352,7 @@ def scheduled_task(cron_expression, description=None):
 
 
 # Example task: Test the /test/simple route
-@scheduled_task('* * * * *', 'Test the /test/simple route every day at 4:00 AM to ensure service is working')
+@scheduled_task('* 4 * * *', 'Test the /test/simple route every day at 4:00 AM to ensure service is working')
 def test_simple_route():
     """Test the /test/simple route to ensure it's working"""
     try:
