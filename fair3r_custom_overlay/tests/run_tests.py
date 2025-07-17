@@ -22,6 +22,24 @@ import subprocess
 import tempfile
 
 
+def get_database_host(context):
+    """
+    Get the appropriate database host based on the environment context.
+    
+    Args:
+        context (str): The environment context (dev, test, demo, prod)
+    
+    Returns:
+        str: Database host name following the new naming scheme
+    """
+    if context == 'dev':
+        # Development environment uses external database specified by DB_IP
+        return os.environ.get('DB_IP', 'fco_db_dev')
+    else:
+        # Test, demo, and prod environments use the new container naming scheme
+        return f'fco_db_{context}'
+
+
 def main():
     """
     Run the tests with proper environment setup and cleanup.
@@ -44,7 +62,7 @@ def main():
     
     Environment Variables Set:
         FAIR3R_CUSTOM_OVERLAY_CONTEXT: Set to 'test' for test environment
-        DB_IP: Set to 'db' for database connection
+        DB_IP: Set to appropriate database host based on context
         COVERAGE_FILE: Points to temporary coverage data file
         PYTEST_CACHE_DIR: Points to temporary pytest cache directory
     """
@@ -54,7 +72,10 @@ def main():
     
     # Step 2: Set environment variables for test execution
     os.environ['FAIR3R_CUSTOM_OVERLAY_CONTEXT'] = context
-    os.environ['DB_IP'] = 'db'
+    
+    # Get the appropriate database host for this context
+    db_host = get_database_host(context)
+    os.environ['DB_IP'] = db_host
     
     # Step 3: Create temporary directories to avoid permission issues
     temp_dir = tempfile.mkdtemp(prefix='fair3r_test_')

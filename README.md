@@ -51,7 +51,7 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 
 **Run test in development**
    ```
-   docker exec -it fair3r-custom-overlay-app-1 bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py"
+   docker exec -it fco_app_dev bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev /opt/env3/fair3r_custom_overlay/bin/python fair3r_custom_overlay/tests/run_tests.py"
    ```
 
 ### Resetting Development Database or Changing Database Password
@@ -111,35 +111,35 @@ These configurations are defined in `fair3r_custom_overlay/lib/_config.py` with 
 ### DEV Environment
 - **Purpose**: Local development
 - **Configuration**: `DevConfig` class
-- **Database**: Uses a local database specified by `DB_IP` environment variable
+- **Database**: Uses a local database specified by `DB_IP` environment variable (defaults to `fco_db_dev`)
 - **Run Command**: `docker compose up --build`
 - **Deployment**: Docker containers with volume mounts for development
 
 ### TEST Environment
 - **Purpose**: Automated testing in CI/CD pipeline
 - **Configuration**: `TestConfig` class
-- **Database**: Uses a test database (`fco`) on the `db` container
+- **Database**: Uses a test database (`fco`) on the `fco_db_test` container
 - **Run Command**: Automated through GitLab CI
 - **Special Features**: Has `TESTING=True` flag and reduced logging level
 
 ### DEMO Environment (Integration)
 - **Purpose**: Staging/integration testing
 - **Configuration**: `DemoConfig` class
-- **Database**: Uses `serv-ics-fco-d-01/fco` database
+- **Database**: Uses a demo database (`fco`) on the `fco_db_demo` container
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-d-01` server
-  - Accessible at `http://serv-ics-fco-d-01:8080/`
+  - Accessible at `http://serv-ics-fco-d-01`
   - Uses Docker for process management
 
 ### PROD Environment
 - **Purpose**: Production deployment
 - **Configuration**: `ProdConfig` class
-- **Database**: Uses `serv-ics-db2/mci` database
+- **Database**: Uses a prod database (`fco`) on the `fco_db_prod` container
 - **Deployment**:
   - Triggered manually in GitLab CI
   - Uses Ansible to deploy Docker containers to `serv-ics-fco-p-01` server
-  - Accessible at `http://serv-ics-fco-p-01:8080/`
+  - Accessible at `http://serv-ics-fco-p-01`
   - Uses Docker for process management
 
 ## 3. Deployment Process

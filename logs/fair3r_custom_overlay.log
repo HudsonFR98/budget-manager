@@ -7084,3 +7084,180 @@ Exception: Test exception
 [2025-07-17 14:00:07,985] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 14:00:18,563] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 14:00:18,596] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 14:55:33,921] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 14:55:34,686] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 14:55:34,968] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 14:55:34,969] INFO in task_scheduler: Task scheduler started
+[2025-07-17 14:55:34,973] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 14:55:34,981] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 14:55:35,007] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 14:55:35,022] INFO in task_scheduler: Task scheduler started
+[2025-07-17 14:55:35,025] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 14:55:35,030] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 14:55:35,052] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 14:55:35,058] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 14:55:35,062] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 14:55:35,067] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 14:55:35,102] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:35,127] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 14:55:35,142] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,171] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,176] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,194] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,198] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,202] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,206] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,212] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,215] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,220] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,225] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,264] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:35,289] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 14:55:35,304] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,334] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,338] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,381] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:35,405] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 14:55:35,420] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,449] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,453] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 14:55:35,495] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:35,585] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:35,653] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:36,163] DEBUG in auth: User logged in successfully: customuser
+[2025-07-17 14:55:36,177] DEBUG in flask_util: User authenticated: customuser
+[2025-07-17 14:55:36,206] DEBUG in flask_util: User authenticated: customuser
+[2025-07-17 14:55:36,290] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 14:55:36,527] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 14:55:36,570] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,576] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,587] INFO in task_scheduler: Added job 'test_task' to scheduler
+[2025-07-17 14:55:36,588] INFO in task_scheduler: Scheduled task 'test_task' with cron: 0 4 * * *
+[2025-07-17 14:55:36,596] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,608] INFO in task_scheduler: Executing task 'test_task' (ID: 86e5e888-aaad-4889-88a2-dd234a480d4d)
+[2025-07-17 14:55:36,616] INFO in task_scheduler: Task 'test_task' completed successfully (ID: 86e5e888-aaad-4889-88a2-dd234a480d4d)
+[2025-07-17 14:55:36,626] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,632] INFO in task_scheduler: Executing task 'test_task' (ID: 2e847f5a-6a1e-4a72-b462-78944d38c8d0)
+[2025-07-17 14:55:36,632] ERROR in task_scheduler: Task 'test_task' failed (ID: 2e847f5a-6a1e-4a72-b462-78944d38c8d0): Task failed
+[2025-07-17 14:55:36,933] INFO in emails: Email sent successfully to debannen@igbmc.fr
+[2025-07-17 14:55:36,934] INFO in task_scheduler: Sent error notification for task 'test_task'
+[2025-07-17 14:55:36,956] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,963] INFO in task_scheduler: Executing task 'test_task' (ID: 2e95aada-13dc-4eec-92db-7d76efc921c5)
+[2025-07-17 14:55:36,963] ERROR in task_scheduler: Task 'test_task' failed (ID: 2e95aada-13dc-4eec-92db-7d76efc921c5): Task failed
+[2025-07-17 14:55:36,970] INFO in task_scheduler: Sent error notification for task 'test_task'
+[2025-07-17 14:55:36,976] DEBUG in task_scheduler: Registered task: decorated_task
+[2025-07-17 14:55:36,982] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:36,987] INFO in task_scheduler: Added job 'test_task' to scheduler
+[2025-07-17 14:55:36,988] INFO in task_scheduler: Scheduled task 'test_task' with cron: 0 4 * * *
+[2025-07-17 14:55:36,995] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 14:55:37,001] INFO in task_scheduler: Executing task 'test_task' (ID: 3164d675-5dfa-4576-9a90-cc81917d0ee7)
+[2025-07-17 14:55:37,005] INFO in task_scheduler: Task 'test_task' completed successfully (ID: 3164d675-5dfa-4576-9a90-cc81917d0ee7)
+[2025-07-17 15:05:29,898] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:06:42,895] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:06:43,935] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:06:43,999] INFO in task_scheduler: Task scheduler started
+[2025-07-17 15:06:44,013] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 15:06:44,016] INFO in task_scheduler: Scheduled task 'test_simple_route' with cron: * 4 * * *
+[2025-07-17 15:06:44,909] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:06:45,020] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:06:45,096] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:01,272] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:08:02,361] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:08:02,434] INFO in user: Created admin user with username 'admin' and password 'admin'
+[2025-07-17 15:08:02,437] INFO in task_scheduler: Task scheduler started
+[2025-07-17 15:08:02,448] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 15:08:02,451] INFO in task_scheduler: Scheduled task 'test_simple_route' with cron: * 4 * * *
+[2025-07-17 15:08:03,338] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:08:05,730] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:05,816] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:06,625] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:06,682] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:06,761] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:09,206] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:09,262] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:11,819] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:11,846] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:13,388] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:13,443] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:14,653] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:14,714] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:43,042] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:08:43,081] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:09:40,466] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:43,214] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:09:43,303] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:09:48,666] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:50,469] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:51,550] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:53,339] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:54,393] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:09:54,450] INFO in task_scheduler: Task scheduler started
+[2025-07-17 15:09:54,454] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 15:09:54,461] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 15:09:55,436] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:10:18,961] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:13:09,057] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:16:14,136] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:16:14,205] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 15:16:26,014] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 15:16:26,294] INFO in task_scheduler: Task scheduler started
+[2025-07-17 15:16:26,298] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 15:16:26,306] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 15:16:26,333] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 15:16:26,376] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 15:16:26,380] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 15:16:26,383] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 15:16:26,387] WARNING in auth: Authentication failed: Invalid username or password
+[2025-07-17 15:16:26,423] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:26,453] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 15:16:26,467] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,496] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,501] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,519] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,523] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,527] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,531] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,537] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,541] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,545] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,549] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,583] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:26,612] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 15:16:26,627] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,656] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,661] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,703] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:26,730] DEBUG in auth: User logged in successfully: selloum
+[2025-07-17 15:16:26,745] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,776] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,780] DEBUG in flask_util: User authenticated: selloum
+[2025-07-17 15:16:26,824] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:26,924] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:26,993] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:27,013] DEBUG in auth: User logged in successfully: customuser
+[2025-07-17 15:16:27,027] DEBUG in flask_util: User authenticated: customuser
+[2025-07-17 15:16:27,055] DEBUG in flask_util: User authenticated: customuser
+[2025-07-17 15:16:27,111] DEBUG in task_scheduler: Task scheduler already started, skipping
+[2025-07-17 15:16:27,185] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,191] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,200] INFO in task_scheduler: Added job 'test_task' to scheduler
+[2025-07-17 15:16:27,201] INFO in task_scheduler: Scheduled task 'test_task' with cron: 0 4 * * *
+[2025-07-17 15:16:27,209] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,220] INFO in task_scheduler: Executing task 'test_task' (ID: a631c7de-e437-42e3-a9c6-ebae0711b83c)
+[2025-07-17 15:16:27,226] INFO in task_scheduler: Task 'test_task' completed successfully (ID: a631c7de-e437-42e3-a9c6-ebae0711b83c)
+[2025-07-17 15:16:27,234] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,241] INFO in task_scheduler: Executing task 'test_task' (ID: d65a24ed-e79f-4357-bda3-1f5464ce2027)
+[2025-07-17 15:16:27,241] ERROR in task_scheduler: Task 'test_task' failed (ID: d65a24ed-e79f-4357-bda3-1f5464ce2027): Task failed
+[2025-07-17 15:16:27,583] INFO in emails: Email sent successfully to debannen@igbmc.fr
+[2025-07-17 15:16:27,584] INFO in task_scheduler: Sent error notification for task 'test_task'
+[2025-07-17 15:16:27,606] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,620] INFO in task_scheduler: Executing task 'test_task' (ID: 3d8ab72d-e902-4936-814d-31f0b3a54a06)
+[2025-07-17 15:16:27,621] ERROR in task_scheduler: Task 'test_task' failed (ID: 3d8ab72d-e902-4936-814d-31f0b3a54a06): Task failed
+[2025-07-17 15:16:27,632] INFO in task_scheduler: Sent error notification for task 'test_task'
+[2025-07-17 15:16:27,640] DEBUG in task_scheduler: Registered task: decorated_task
+[2025-07-17 15:16:27,645] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,651] INFO in task_scheduler: Added job 'test_task' to scheduler
+[2025-07-17 15:16:27,653] INFO in task_scheduler: Scheduled task 'test_task' with cron: 0 4 * * *
+[2025-07-17 15:16:27,660] DEBUG in task_scheduler: Registered task: test_task
+[2025-07-17 15:16:27,665] INFO in task_scheduler: Executing task 'test_task' (ID: 38d3b8b1-d45b-4f72-b9ff-581055fd4691)
+[2025-07-17 15:16:27,670] INFO in task_scheduler: Task 'test_task' completed successfully (ID: 38d3b8b1-d45b-4f72-b9ff-581055fd4691)

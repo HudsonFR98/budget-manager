@@ -12,7 +12,7 @@ When you make changes to your models (add/modify/remove tables, columns, etc.), 
 
 1. Connect to the running application container:
    ```bash
-   docker exec -it fair3r-custom-overlay-app-1 bash
+   docker exec -it fco_app_dev bash
    ```
 
 2. Navigate to the application directory:
@@ -22,7 +22,7 @@ When you make changes to your models (add/modify/remove tables, columns, etc.), 
 
 3. Generate a new migration script:
    ```bash
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=db alembic revision --autogenerate -m "Description of your changes"
+   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic revision --autogenerate -m "Description of your changes"
    ```
 
    This command will:
@@ -38,7 +38,7 @@ Migrations are automatically applied when the application container starts, than
 
 1. Connect to the running application container:
    ```bash
-   docker exec -it fair3r-custom-overlay-app-1 bash
+   docker exec -it fco_app_dev bash
    ```
 
 2. Navigate to the application directory:
@@ -48,7 +48,7 @@ Migrations are automatically applied when the application container starts, than
 
 3. Apply all pending migrations:
    ```bash
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=db alembic upgrade head
+   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic upgrade head
    ```
 
 ## Initial Database Setup
@@ -70,7 +70,7 @@ If you encounter issues with migrations:
 
 1. Check the application logs:
    ```bash
-   docker logs fair3r-custom-overlay-app-1
+   docker logs fco_app_dev
    ```
 
 2. Ensure the database container is running and accessible:
@@ -82,9 +82,9 @@ If you encounter issues with migrations:
 
 4. If migrations fail, you can try to run them manually with more verbose output:
    ```bash
-   docker exec -it fair3r-custom-overlay-app-1 bash
+   docker exec -it fco_app_dev bash
    cd /opt/fair3r-custom-overlay
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=db alembic upgrade head --verbose
+   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic upgrade head --verbose
    ```
 
 ## Best Practices

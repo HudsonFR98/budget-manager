@@ -10,7 +10,7 @@ Configuration module for fair3r_custom_overlay application.
 Deployment Architecture:
 - DEV: Uses external database specified by DB_IP environment variable
 - TEST/DEMO/PROD: Use Docker containers with local PostgreSQL databases
-  - Database container name: 'db'
+  - Database container name: 'fco_db_{context}' (e.g., 'fco_db_test', 'fco_db_demo', 'fco_db_prod')
   - Database name: 'fco'
   - All environments accessible on port 8080
   - Deploy vs Update operations supported (data preservation during updates)
@@ -150,8 +150,8 @@ class Config(object):
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
-    DB_URI = "postgresql://web:fco2025_x@db/fco"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
+    DB_URI = "postgresql://web:fco2025_x@fco_db_prod/fco"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@fco_db_prod/fco"
     LOG_LEVEL = logging.ERROR
     
     # Session settings for production (HTTP environment)
@@ -166,9 +166,8 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = False
     LOG_LEVEL = logging.DEBUG
-    DB_URI = "postgresql://web:fco2025_x@%s/fco" % os.environ.get('DB_IP', '')
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@%s/fco" \
-        % os.environ.get('DB_IP', '')
+    DB_URI = "postgresql://web:fco2025_x@fco_db_dev/fco"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@fco_db_dev/fco"
     PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
     
     # Enable Flask's debug toolbar
@@ -183,8 +182,8 @@ class DevConfig(Config):
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
-    DB_URI = "postgresql://web:fco2025_x@db/fco"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@db/fco"
+    DB_URI = "postgresql://web:fco2025_x@fco_db_demo/fco"
+    SQLALCHEMY_DATABASE_URI = "postgresql://web:fco2025_x@fco_db_demo/fco"
     LOG_LEVEL = logging.ERROR
     
     # Session settings for demo (HTTP environment)
@@ -198,7 +197,7 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    DB_URI = "postgresql://web:fco2025_x@%s/fco" % os.environ.get('DB_IP', 'db')
+    DB_URI = "postgresql://web:fco2025_x@fco_db_test/fco"
     SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
     
