@@ -29,8 +29,10 @@ The application's CI/CD pipeline is organized through GitLab CI/CD, with distinc
 4. Access the application at http://localhost:8080
 
 ### Development Environment Details
-- **Database**: PostgreSQL 16 on port 5431
-- **Application**: Flask app on port 8080
+- **Database**: PostgreSQL 16 on port 5431 (container: `fco_db_dev`)
+- **Application**: Flask app on port 8080 (container: `fco_app_dev`)
+- **Redis**: Redis on port 6380 (container: `fco_redis_dev`)
+- **Network**: `fco_network_dev`
 - **Logs**: Stored in `./logs/` directory
 - **User**: Container runs as UID 1000 for proper file permissions
 
@@ -173,14 +175,17 @@ Updates to existing installations are handled by:
 
 This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
 
+
 ## Nginx Setup (Test, Demo and Production)
 
 The test, demo, and production environments now use a modern Nginx reverse proxy:
 
 ### Architecture
-- **Nginx Container**: Handles HTTP traffic on port 80
-- **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally)
-- **Database Container**: PostgreSQL 16 on internal port 5432
+- **Nginx Container**: Handles HTTP traffic on port 80 (e.g., `fco_nginx_test`)
+- **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally) (e.g., `fco_app_test`)
+- **Database Container**: PostgreSQL 16 on internal port 5432 (e.g., `fco_db_test`)
+- **Redis Container**: Redis cache on internal port 6379 (e.g., `fco_redis_test`)
+- **Network**: Isolated Docker network per environment (e.g., `fco_network_test`)
 
 ### Features
 - **Modern Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection

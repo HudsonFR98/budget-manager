@@ -26,13 +26,14 @@ def tasks():
         # Get active scheduled tasks
         active_tasks = ScheduledTask.query.filter_by(is_active=True).all()
         
-        # Get task execution history
+        # Get task execution history for display (last 100)
         executions = TaskExecution.query.order_by(desc(TaskExecution.created_at)).limit(100).all()
         
-        # Calculate statistics
-        total_executions = len(executions)
-        success_count = len([e for e in executions if e.status == 'completed'])
-        failed_count = len([e for e in executions if e.status == 'failed'])
+        # Calculate statistics from entire database
+        from sqlalchemy import func
+        total_executions = TaskExecution.query.count()
+        success_count = TaskExecution.query.filter_by(status='completed').count()
+        failed_count = TaskExecution.query.filter_by(status='failed').count()
         success_rate = (success_count / total_executions * 100) if total_executions > 0 else 0
         
         return render_template('admin/tasks.html',
@@ -212,8 +213,8 @@ def logs():
         try:
             with open(log_file, 'r') as f:
                 lines = f.readlines()
-                # Get last 1000 lines
-                log_lines = lines[-1000:] if len(lines) > 1000 else lines
+                # Get last 1000 lines and strip newline characters
+                log_lines = [line.rstrip('\n') for line in (lines[-1000:] if len(lines) > 1000 else lines)]
         except FileNotFoundError:
             log_lines = ["Log file not found"]
         except Exception as e:

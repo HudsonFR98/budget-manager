@@ -26,27 +26,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="log-container" style="max-height: 600px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; font-family: 'Courier New', monospace; font-size: 12px;">
-                        {% if log_lines %}
-                            {% for line in log_lines %}
-                                <div class="log-line">
-                                    {% if 'ERROR' in line %}
-                                        <span class="text-danger">{{ line }}</span>
-                                    {% elif 'WARNING' in line %}
-                                        <span class="text-warning">{{ line }}</span>
-                                    {% elif 'INFO' in line %}
-                                        <span class="text-info">{{ line }}</span>
-                                    {% elif 'DEBUG' in line %}
-                                        <span class="text-muted">{{ line }}</span>
-                                    {% else %}
-                                        {{ line }}
-                                    {% endif %}
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <div class="text-muted">{{ _('No logs available') }}</div>
-                        {% endif %}
-                    </div>
+                    <div class="log-container" style="max-height: 600px; overflow-y: auto; background-color: #f8f9fa; border: 1px solid #dee2e6; padding: 15px; font-family: 'Courier New', monospace; font-size: 12px;">{% if log_lines %}{% for line in log_lines %}<span class="log-line">{% if 'ERROR' in line %}<span class="text-danger">{{ line }}</span>{% elif 'WARNING' in line %}<span class="text-warning">{{ line }}</span>{% elif 'INFO' in line %}<span class="text-info">{{ line }}</span>{% elif 'DEBUG' in line %}<span class="text-muted">{{ line }}</span>{% else %}{{ line }}{% endif %}</span><br>{% endfor %}{% else %}<div class="text-muted">{{ _('No logs available') }}</div>{% endif %}</div>
                 </div>
             </div>
         </div>
@@ -73,28 +53,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<style>
-.log-line {
-    margin-bottom: 2px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-}
 
-.log-container::-webkit-scrollbar {
-    width: 8px;
-}
-
-.log-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.log-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-.log-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-</style>
 {% endblock %} 

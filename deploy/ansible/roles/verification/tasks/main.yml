@@ -3,7 +3,7 @@
 
 - name: Verify network connectivity
   shell: |
-    docker exec {{ container_name }} curl -I http://db:5432
+    docker exec {{ container_name }} curl -I http://{{ db_container_name }}:5432
   register: curl_result
   changed_when: false
   failed_when: false
@@ -12,7 +12,7 @@
   community.docker.docker_container_exec:
     container: "{{ container_name }}"
     command: >
-      bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP=db
+      bash -c "FAIR3R_CUSTOM_OVERLAY_CONTEXT=test DB_IP={{ db_container_name }}
       /opt/env3/fair3r_custom_overlay/bin/python
       fair3r_custom_overlay/tests/run_tests.py"
   register: pytest_result

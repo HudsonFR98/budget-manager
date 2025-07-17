@@ -4,11 +4,12 @@ version: '3.8'
 services:
   app:
     build: .
+    container_name: fco_app_dev
     ports:
       - "8080:8080"
     environment:
       - FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev
-      - DB_IP=db
+      - DB_IP=fco_db_dev
     depends_on:
       db:
         condition: service_healthy
@@ -18,9 +19,12 @@ services:
       - ./:/opt/fair3r_custom_overlay:cached
       - app_logs:/var/log/fair3r_custom_overlay
     restart: always
+    networks:
+      - fco_network_dev
 
   db:
     image: postgres:16
+    container_name: fco_db_dev
     environment:
       - POSTGRES_USER=web
       - POSTGRES_PASSWORD=fco2025_x
@@ -38,9 +42,12 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - fco_network_dev
 
   redis:
     image: redis:7-alpine
+    container_name: fco_redis_dev
     ports:
       - "6380:6379"
     restart: always
@@ -49,6 +56,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - fco_network_dev
 
 volumes:
   postgres_data:
@@ -58,3 +67,7 @@ volumes:
       type: none
       o: bind
       device: ./logs
+
+networks:
+  fco_network_dev:
+    driver: bridge

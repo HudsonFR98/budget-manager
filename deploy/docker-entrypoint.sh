@@ -12,12 +12,15 @@ run_as_web() {
     fi
 }
 
+# Get database host from environment variable, default to 'db' for backward compatibility
+DB_HOST="${DB_IP:-db}"
+
 # Wait for the fco database to be ready
-echo "Waiting for fco database to be ready..."
+echo "Waiting for fco database to be ready on ${DB_HOST}..."
 max_retries=30
 retries=0
 while [ $retries -lt $max_retries ]; do
-    if PGPASSWORD=fco2025_x psql -h db -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
+    if PGPASSWORD=fco2025_x psql -h "${DB_HOST}" -U web -d fco -c "SELECT 1" > /dev/null 2>&1; then
         echo "Database fco is ready!"
         break
     fi
@@ -27,17 +30,17 @@ while [ $retries -lt $max_retries ]; do
 done
 
 if [ $retries -eq $max_retries ]; then
-    echo "Error: Maximum retries reached. Database fco is not available."
+    echo "Error: Maximum retries reached. Database fco is not available on ${DB_HOST}."
     echo "Checking database container status..."
-    docker ps | grep db
+    docker ps | grep "${DB_HOST}" || echo "No container found with name ${DB_HOST}"
     echo "Checking database logs..."
-    docker logs db
+    docker logs "${DB_HOST}" 2>/dev/null || echo "Could not get logs for ${DB_HOST}"
     exit 1
 fi
 
 # Run database migrations if needed
 echo "Running database migrations..."
-run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=db /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"
+run_as_web "cd /opt/fair3r_custom_overlay && FAIR3R_CUSTOM_OVERLAY_CONTEXT=$FAIR3R_CUSTOM_OVERLAY_CONTEXT DB_IP=${DB_HOST} /opt/env3/fair3r_custom_overlay/bin/alembic upgrade head"
 
 # Determine which server to use based on context
 if [ "$FAIR3R_CUSTOM_OVERLAY_CONTEXT" = "dev" ]; then
