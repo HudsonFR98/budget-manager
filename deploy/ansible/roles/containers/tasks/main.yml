@@ -89,7 +89,6 @@
       interval: 5s
       timeout: 5s
       retries: 5
-  when: action == 'deploy'
 
 - name: Wait for Redis container to be healthy
   docker_container_info:
@@ -98,7 +97,6 @@
   until: redis_info.container.State.Health.Status == "healthy"
   retries: 10
   delay: 3
-  when: action == 'deploy'
 
 - name: Check if database container exists and is running (for updates)
   docker_container_info:
@@ -106,36 +104,16 @@
   register: db_container_info
   when: action == 'update'
 
-- name: Check if redis container exists and is running (for updates)
-  docker_container_info:
-    name: redis
-  register: redis_container_info
-  when: action == 'update'
-
 - name: Fail if database container is not running during update
   fail:
     msg: "Database container 'db' is not running. Please ensure it exists and is healthy before updating."
   when: action == 'update' and (db_container_info.exists is not defined or not db_container_info.exists or db_container_info.container.State.Status != 'running')
-
-- name: Fail if redis container is not running during update
-  fail:
-    msg: "Redis container 'redis' is not running. Please ensure it exists and is healthy before updating."
-  when: action == 'update' and (redis_container_info.exists is not defined or not redis_container_info.exists or redis_container_info.container.State.Status != 'running')
 
 - name: Wait for existing database container to be healthy (for updates)
   docker_container_info:
     name: db
   register: db_info
   until: db_info.container.State.Health.Status == "healthy"
-  retries: 10
-  delay: 3
-  when: action == 'update'
-
-- name: Wait for existing redis container to be healthy (for updates)
-  docker_container_info:
-    name: redis
-  register: redis_info
-  until: redis_info.container.State.Health.Status == "healthy"
   retries: 10
   delay: 3
   when: action == 'update'
