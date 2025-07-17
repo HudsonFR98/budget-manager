@@ -6342,3 +6342,180 @@ Exception: Test exception
 [2025-07-17 12:11:05,641] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 12:11:05,676] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 12:11:17,191] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:17:02,902] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:17:03,923] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:17:03,979] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:17:03,983] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:17:03,990] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:17:04,876] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:17:04,978] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:17:05,042] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:18:00,058] INFO in task_scheduler: Executing task 'test_simple_route' (ID: a508631e-8844-4675-8a0e-e6923f0629b5)
+[2025-07-17 12:18:00,072] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:18:00,087] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:19:00+00:00
+[2025-07-17 12:18:00,092] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:18:00,093] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: a508631e-8844-4675-8a0e-e6923f0629b5)
+[2025-07-17 12:18:00,093] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:19:00,027] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 8af7677b-7fa6-4b3d-921c-37f302e21673)
+[2025-07-17 12:19:00,035] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:19:00,047] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:20:00+00:00
+[2025-07-17 12:19:00,051] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:19:00,052] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 8af7677b-7fa6-4b3d-921c-37f302e21673)
+[2025-07-17 12:19:00,052] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:20:00,012] INFO in task_scheduler: Executing task 'test_simple_route' (ID: cb71e555-470e-4050-a5c0-4ba07e170ee1)
+[2025-07-17 12:20:00,022] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:20:00,034] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:21:00+00:00
+[2025-07-17 12:20:00,038] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:20:00,038] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: cb71e555-470e-4050-a5c0-4ba07e170ee1)
+[2025-07-17 12:20:00,038] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:21:00,006] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 272f35a0-d7cf-4713-bd8d-ac5f1a8620b0)
+[2025-07-17 12:21:00,009] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:21:00,014] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:22:00+00:00
+[2025-07-17 12:21:00,016] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:21:00,017] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 272f35a0-d7cf-4713-bd8d-ac5f1a8620b0)
+[2025-07-17 12:21:00,017] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:21:15,236] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:21:15,277] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:22:00,014] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 34bc39af-d5ff-4758-870b-e9d975285157)
+[2025-07-17 12:22:00,022] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:22:00,026] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:23:00+00:00
+[2025-07-17 12:22:00,029] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:22:00,029] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 34bc39af-d5ff-4758-870b-e9d975285157)
+[2025-07-17 12:22:00,029] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:23:00,027] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 0bf03d41-a978-4883-bcd3-60c02b9f37a4)
+[2025-07-17 12:23:00,033] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:23:00,042] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:24:00+00:00
+[2025-07-17 12:23:00,045] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:23:00,045] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 0bf03d41-a978-4883-bcd3-60c02b9f37a4)
+[2025-07-17 12:23:00,046] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:24:00,013] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 1b070833-0b7a-4a47-bede-faad98339b17)
+[2025-07-17 12:24:00,023] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:24:00,034] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:25:00+00:00
+[2025-07-17 12:24:00,038] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:24:00,038] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 1b070833-0b7a-4a47-bede-faad98339b17)
+[2025-07-17 12:24:00,039] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:24:34,561] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:24:43,819] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:24:54,017] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:25:00,008] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 58135255-62d1-4585-97be-f17d693e5afe)
+[2025-07-17 12:25:00,011] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:25:00,014] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:26:00+00:00
+[2025-07-17 12:25:00,016] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:25:00,017] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 58135255-62d1-4585-97be-f17d693e5afe)
+[2025-07-17 12:25:00,017] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:25:01,278] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:25:01,278] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:25:10,660] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:25:10,660] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:25:20,877] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:25:20,877] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:26:06,201] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:26:06,201] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:26:07,247] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:26:07,247] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:26:07,309] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:26:07,313] INFO in task_scheduler: Database connection test successful. Found 1 existing scheduled tasks
+[2025-07-17 12:26:07,314] INFO in task_scheduler: Registered tasks: ['test_simple_route']
+[2025-07-17 12:26:07,314] INFO in task_scheduler: Pending schedules: 1
+[2025-07-17 12:26:07,315] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:26:07,319] INFO in task_scheduler: Scheduling 1 pending tasks
+[2025-07-17 12:26:07,319] INFO in task_scheduler: Processing pending task: test_simple_route
+[2025-07-17 12:26:07,322] INFO in task_scheduler: Task 'test_simple_route' already exists in database
+[2025-07-17 12:26:08,209] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:26:08,209] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules
+[2025-07-17 12:26:08,319] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:26:08,391] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:26:09,278] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:26:09,304] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:26:13,624] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:26:13,668] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:27:00,017] INFO in task_scheduler: Executing task 'test_simple_route' (ID: a67c9d5a-a3ff-4625-be6c-6aa2213716df)
+[2025-07-17 12:27:00,022] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:27:00,028] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:28:00+00:00
+[2025-07-17 12:27:00,030] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:27:00,030] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: a67c9d5a-a3ff-4625-be6c-6aa2213716df)
+[2025-07-17 12:27:00,030] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:28:00,029] INFO in task_scheduler: Executing task 'test_simple_route' (ID: be334167-8f5d-413b-9c48-1e8ac2c602df)
+[2025-07-17 12:28:00,038] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:28:00,049] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:29:00+00:00
+[2025-07-17 12:28:00,053] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:28:00,053] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: be334167-8f5d-413b-9c48-1e8ac2c602df)
+[2025-07-17 12:28:00,054] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:29:00,028] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 4d1697ed-2b26-4962-b10b-5b61a94db60c)
+[2025-07-17 12:29:00,035] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:29:00,044] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:30:00+00:00
+[2025-07-17 12:29:00,048] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:29:00,048] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 4d1697ed-2b26-4962-b10b-5b61a94db60c)
+[2025-07-17 12:29:00,049] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:29:26,702] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:30:00,006] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 56edb69c-e242-4c73-a116-105a76a62e2e)
+[2025-07-17 12:30:00,011] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:30:00,015] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:31:00+00:00
+[2025-07-17 12:30:00,017] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:30:00,017] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 56edb69c-e242-4c73-a116-105a76a62e2e)
+[2025-07-17 12:30:00,017] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:31:00,005] INFO in task_scheduler: Executing task 'test_simple_route' (ID: eb2e15a1-ca5d-4999-951f-fbd253448f60)
+[2025-07-17 12:31:00,008] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:31:00,013] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:32:00+00:00
+[2025-07-17 12:31:00,016] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:31:00,016] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: eb2e15a1-ca5d-4999-951f-fbd253448f60)
+[2025-07-17 12:31:00,016] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:31:24,233] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:31:33,516] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:31:33,516] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:31:39,786] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:31:39,786] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:31:52,207] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:31:52,208] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:31:59,523] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:31:59,523] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:32:00,008] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 0e0e4ea8-0f4f-41ed-84c0-7d41013ccf31)
+[2025-07-17 12:32:00,011] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:32:00,016] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:33:00+00:00
+[2025-07-17 12:32:00,018] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:32:00,018] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 0e0e4ea8-0f4f-41ed-84c0-7d41013ccf31)
+[2025-07-17 12:32:00,018] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:33:00,013] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 8aa0e0dc-a671-4f23-b356-c740e6a558ce)
+[2025-07-17 12:33:00,024] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:33:00,035] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:34:00+00:00
+[2025-07-17 12:33:00,040] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:33:00,040] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 8aa0e0dc-a671-4f23-b356-c740e6a558ce)
+[2025-07-17 12:33:00,041] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:34:00,015] INFO in task_scheduler: Executing task 'test_simple_route' (ID: ad0f94cc-28ea-4eba-b455-db7f9fdb4314)
+[2025-07-17 12:34:00,027] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:34:00,041] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:35:00+00:00
+[2025-07-17 12:34:00,045] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:34:00,045] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: ad0f94cc-28ea-4eba-b455-db7f9fdb4314)
+[2025-07-17 12:34:00,045] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:34:29,473] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:34:29,473] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:34:30,489] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:34:30,489] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:34:30,543] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:34:30,544] INFO in task_scheduler: Task scheduler initialized with 1 registered tasks and 1 pending schedules
+[2025-07-17 12:34:30,547] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:34:30,552] INFO in task_scheduler: Scheduling 1 pending tasks
+[2025-07-17 12:34:30,554] INFO in task_scheduler: Database tables exist, proceeding with task scheduling
+[2025-07-17 12:34:30,554] INFO in task_scheduler: Processing pending task: test_simple_route
+[2025-07-17 12:34:30,556] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled in database
+[2025-07-17 12:34:30,557] INFO in task_scheduler: Task scheduling completed successfully
+[2025-07-17 12:34:31,435] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:34:31,435] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:34:36,422] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:34:36,495] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:35:00,017] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 4ab86933-b2e2-44f0-8c33-0d1ba8b9f810)
+[2025-07-17 12:35:00,022] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:35:00,028] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:36:00+00:00
+[2025-07-17 12:35:00,032] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:35:00,032] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 4ab86933-b2e2-44f0-8c33-0d1ba8b9f810)
+[2025-07-17 12:35:00,032] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:35:12,553] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:35:12,585] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:35:45,412] INFO in task_scheduler: Registered task: test_simple_route with cron: * * * * *
+[2025-07-17 12:35:45,412] INFO in task_scheduler: Added task 'test_simple_route' to pending schedules (total: 1)
+[2025-07-17 12:36:00,015] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 1e20d76a-b816-4904-b4e7-a5010eab67a2)
+[2025-07-17 12:36:00,027] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:36:00,040] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:37:00+00:00
+[2025-07-17 12:36:00,045] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:36:00,045] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 1e20d76a-b816-4904-b4e7-a5010eab67a2)
+[2025-07-17 12:36:00,046] DEBUG in task_scheduler: Job test_simple_route executed successfully
