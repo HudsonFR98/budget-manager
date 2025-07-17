@@ -61,8 +61,14 @@ def create_app():
     
     # Start the task scheduler only in the main process
     # In development mode with reloader, this prevents duplicate schedulers
+    # In production environments (test, demo, prod), always start the scheduler
     import os
-    if not os.environ.get('WERKZEUG_RUN_MAIN'):
+    if config.CONTEXT == 'dev':
+        # In dev mode, only start if not in reloader process
+        if not os.environ.get('WERKZEUG_RUN_MAIN'):
+            task_scheduler.start()
+    else:
+        # In production environments, always start the scheduler
         task_scheduler.start()
 
     # Register error handlers for common HTTP errors
@@ -200,7 +206,7 @@ def create_app():
     # Register coverage blueprint only in test context
     if config.CONTEXT in ['test', 'dev']:
         app.register_blueprint(coverage, url_prefix='/coverage/')
-        app.register_blueprint(test_output, url_prefix='/tests/')
+    app.register_blueprint(test_output, url_prefix='/tests/')
     # app.register_blueprint(rest, url_prefix='/rest')
 
     return app

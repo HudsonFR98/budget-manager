@@ -6258,3 +6258,87 @@ Exception: Test exception
 [2025-07-17 11:19:53,767] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 11:19:53,843] DEBUG in flask_util: User authenticated: admin
 [2025-07-17 11:19:57,055] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:03:12,160] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:05:36,210] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:05:55,480] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:05:56,545] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:05:57,504] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:05:59,645] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:05:59,723] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:06:36,736] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:06:54,057] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:06:57,229] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:06:57,304] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:08,334] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:09,366] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:10,376] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:10,507] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:10,572] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:12,306] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:12,334] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:40,992] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:50,848] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:51,862] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:51,919] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:07:51,922] INFO in task_scheduler: Updated cron expression for task 'test_simple_route': * 5 * * * -> * * * * *
+[2025-07-17 12:07:51,929] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:07:51,934] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:07:52,819] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:07:54,997] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:07:55,058] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:08:00,041] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 936e8684-9a03-49f6-a5ab-bc187ac09d74)
+[2025-07-17 12:08:00,054] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:08:00,068] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:09:00+00:00
+[2025-07-17 12:08:00,072] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:08:00,072] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 936e8684-9a03-49f6-a5ab-bc187ac09d74)
+[2025-07-17 12:08:00,073] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:08:05,171] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:08:05,201] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:09:00,013] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 2b5875d4-eb3c-4189-a62e-bf8669dd0fc0)
+[2025-07-17 12:09:00,022] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:09:00,035] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:10:00+00:00
+[2025-07-17 12:09:00,039] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:09:00,040] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 2b5875d4-eb3c-4189-a62e-bf8669dd0fc0)
+[2025-07-17 12:09:00,040] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:10:00,016] INFO in task_scheduler: Executing task 'test_simple_route' (ID: a4762f83-a518-40e7-bf80-a93727504934)
+[2025-07-17 12:10:00,024] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:10:00,038] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:11:00+00:00
+[2025-07-17 12:10:00,049] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:10:00,049] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: a4762f83-a518-40e7-bf80-a93727504934)
+[2025-07-17 12:10:00,049] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:10:09,033] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:10:09,061] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:10:33,221] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:10:33,289] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:10:33,293] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:10:33,300] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:10:37,471] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:10:37,533] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:10:37,536] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:10:37,544] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:10:46,668] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:10:47,702] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:10:47,761] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:10:47,765] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:10:47,773] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:10:48,657] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 12:10:48,723] INFO in task_scheduler: Task scheduler started
+[2025-07-17 12:10:48,728] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 12:10:48,734] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 12:10:48,812] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:10:48,881] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:11:00,025] INFO in task_scheduler: Executing task 'test_simple_route' (ID: a8e84e15-e952-4301-8c63-7c5878a3f389)
+[2025-07-17 12:11:00,039] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:11:00,048] INFO in task_scheduler: Executing task 'test_simple_route' (ID: 87f34a15-a2e8-45ac-9ce5-edc77062720b)
+[2025-07-17 12:11:00,050] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:12:00+00:00
+[2025-07-17 12:11:00,053] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:11:00,053] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: a8e84e15-e952-4301-8c63-7c5878a3f389)
+[2025-07-17 12:11:00,053] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:11:00,056] INFO in task_scheduler: Test route successful: {'message': 'Hello, World!'}
+[2025-07-17 12:11:00,065] DEBUG in task_scheduler: Updated next_run for task 'test_simple_route' to 2025-07-17 12:12:00+00:00
+[2025-07-17 12:11:00,069] DEBUG in task_scheduler: Updated last_run for task 'test_simple_route'
+[2025-07-17 12:11:00,069] INFO in task_scheduler: Task 'test_simple_route' completed successfully (ID: 87f34a15-a2e8-45ac-9ce5-edc77062720b)
+[2025-07-17 12:11:00,069] DEBUG in task_scheduler: Job test_simple_route executed successfully
+[2025-07-17 12:11:05,641] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:11:05,676] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 12:11:17,191] DEBUG in task_scheduler: Registered task: test_simple_route
