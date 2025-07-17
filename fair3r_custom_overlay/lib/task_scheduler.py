@@ -38,26 +38,8 @@ class TaskScheduler:
             log.info("Task scheduler started")
             # Import task models to ensure they are registered
             from fair3r_custom_overlay.models.task import TaskExecution, ScheduledTask
-            log.info(f"Task scheduler initialized with {len(self._registered_tasks)} registered tasks and {len(self._pending_schedules)} pending schedules")
-            
-            # Try to load and schedule tasks with retry
-            max_retries = 5
-            retry_delay = 2
-            for attempt in range(max_retries):
-                try:
-                    self._load_scheduled_tasks()
-                    self._schedule_pending_tasks()
-                    log.info("Task scheduling completed successfully")
-                    break
-                except Exception as e:
-                    log.warning(f"Task scheduling attempt {attempt + 1} failed: {e}")
-                    if attempt < max_retries - 1:
-                        log.info(f"Retrying in {retry_delay} seconds...")
-                        import time
-                        time.sleep(retry_delay)
-                        retry_delay *= 2  # Exponential backoff
-                    else:
-                        log.error("Failed to schedule tasks after all retries")
+            self._load_scheduled_tasks()
+            self._schedule_pending_tasks()
     
     def shutdown(self):
         """Shutdown the scheduler"""
@@ -79,7 +61,7 @@ class TaskScheduler:
             'cron_expression': cron_expression,
             'description': description
         }
-        log.info(f"Registered task: {task_name} with cron: {cron_expression}")
+        log.debug(f"Registered task: {task_name}")
         
         # If cron expression provided, schedule the task
         if cron_expression:
@@ -88,7 +70,6 @@ class TaskScheduler:
                 'cron_expression': cron_expression,
                 'description': description
             })
-            log.info(f"Added task '{task_name}' to pending schedules (total: {len(self._pending_schedules)})")
     
     def schedule_task(self, task_name, cron_expression, description=None, 
                      task_args=None, task_kwargs=None):
@@ -129,32 +110,18 @@ class TaskScheduler:
     
     def _schedule_pending_tasks(self):
         """Schedule all pending tasks that were registered with decorator"""
-        log.info(f"Scheduling {len(self._pending_schedules)} pending tasks")
-        
-        # Check if database tables exist
-        try:
-            # Try to query the scheduled_tasks table to see if it exists
-            ScheduledTask.query.first()
-            log.info("Database tables exist, proceeding with task scheduling")
-        except Exception as e:
-            log.error(f"Database tables may not exist or connection failed: {e}")
-            log.error("Skipping task scheduling until database is available")
-            return
-        
         for pending in self._pending_schedules:
             try:
-                log.info(f"Processing pending task: {pending['task_name']}")
                 # Check if task already exists in database
                 existing_task = ScheduledTask.get_task_by_name(pending['task_name'])
                 if not existing_task:
-                    log.info(f"Task '{pending['task_name']}' not found in database, creating new scheduled task")
                     self.schedule_task(
                         task_name=pending['task_name'],
                         cron_expression=pending['cron_expression'],
                         description=pending['description']
                     )
                 else:
-                    log.debug(f"Task '{pending['task_name']}' already scheduled in database")
+                    log.debug(f"Task '{pending['task_name']}' already scheduled")
             except Exception as e:
                 log.error(f"Failed to schedule pending task '{pending['task_name']}': {e}")
         

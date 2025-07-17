@@ -26,8 +26,8 @@ def tasks():
         # Get active scheduled tasks
         active_tasks = ScheduledTask.query.filter_by(is_active=True).all()
         
-        # Get task execution history (limited to 50 entries)
-        executions = TaskExecution.query.order_by(desc(TaskExecution.created_at)).limit(50).all()
+        # Get task execution history
+        executions = TaskExecution.query.order_by(desc(TaskExecution.created_at)).limit(100).all()
         
         # Calculate statistics
         total_executions = len(executions)
