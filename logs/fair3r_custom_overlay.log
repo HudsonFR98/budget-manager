@@ -6207,3 +6207,54 @@ Exception: Test exception
 [2025-07-15 15:10:48,775] DEBUG in task_scheduler: Registered task: test_simple_route
 [2025-07-15 15:10:48,886] DEBUG in flask_util: User authenticated: admin
 [2025-07-15 15:10:48,947] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:20:54,756] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:20:54,793] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:20:55,724] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:20:55,771] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:25:08,767] DEBUG in flask_util: User authenticated: admin
+[2025-07-15 15:25:08,793] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 08:59:41,166] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 08:59:42,397] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 08:59:42,466] INFO in task_scheduler: Task scheduler started
+[2025-07-17 08:59:42,471] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 08:59:42,479] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 08:59:43,517] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 09:02:01,117] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:02:01,586] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:02:02,135] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:05,480] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:05,520] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:18,073] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:18,079] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:18,106] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:21,391] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 09:03:21,428] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:06:33,786] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:06:34,813] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:06:34,885] INFO in task_scheduler: Task scheduler started
+[2025-07-17 11:06:34,889] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 11:06:34,897] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 11:06:35,782] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:06:38,033] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:06:38,109] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:06:38,212] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:06:44,091] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:07:32,732] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:07:48,401] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:07:49,417] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:07:49,472] INFO in task_scheduler: Task scheduler started
+[2025-07-17 11:07:49,475] INFO in task_scheduler: Updated cron expression for task 'test_simple_route': * 4 * * * -> * 5 * * *
+[2025-07-17 11:07:49,483] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 11:07:49,489] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 11:07:50,366] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:07:54,058] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:07:54,131] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:19:50,837] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:19:51,866] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:19:51,928] INFO in task_scheduler: Task scheduler started
+[2025-07-17 11:19:51,932] INFO in task_scheduler: Added job 'test_simple_route' to scheduler
+[2025-07-17 11:19:51,938] DEBUG in task_scheduler: Task 'test_simple_route' already scheduled
+[2025-07-17 11:19:52,816] DEBUG in task_scheduler: Registered task: test_simple_route
+[2025-07-17 11:19:53,767] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:19:53,843] DEBUG in flask_util: User authenticated: admin
+[2025-07-17 11:19:57,055] DEBUG in flask_util: User authenticated: admin

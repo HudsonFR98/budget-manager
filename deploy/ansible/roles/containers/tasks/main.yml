@@ -100,13 +100,16 @@
   delay: 3
   when: action == 'deploy'
 
-- name: Check if database and redis containers exist and are running (for updates)
+- name: Check if database container exists and is running (for updates)
   docker_container_info:
-    name: "{{ item }}"
-  register: "{{ item }}_container_info"
-  with_items:
-    - db
-    - redis
+    name: db
+  register: db_container_info
+  when: action == 'update'
+
+- name: Check if redis container exists and is running (for updates)
+  docker_container_info:
+    name: redis
+  register: redis_container_info
   when: action == 'update'
 
 - name: Fail if database container is not running during update
