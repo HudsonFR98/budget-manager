@@ -1,6 +1,6 @@
 # Database Migrations in a Containerized Environment
 
-This document explains how to manage database migrations for the Fair3r Custom Overlay application when running in Docker containers.
+This document explains how to manage database migrations for the Ics Standalone App Template application when running in Docker containers.
 
 ## Understanding Alembic Migrations
 
@@ -12,17 +12,17 @@ When you make changes to your models (add/modify/remove tables, columns, etc.), 
 
 1. Connect to the running application container:
    ```bash
-   docker exec -it fco_app_dev bash
+   docker exec -it sat_app_dev bash
    ```
 
 2. Navigate to the application directory:
    ```bash
-   cd /opt/fair3r-custom-overlay
+   cd /opt/ics-standalone-app-template
    ```
 
 3. Generate a new migration script:
    ```bash
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic revision --autogenerate -m "Description of your changes"
+   ICS_STANDALONE_APP_TEMPLATE_CONTEXT=dev DB_IP=sat_db_dev alembic revision --autogenerate -m "Description of your changes"
    ```
 
    This command will:
@@ -38,17 +38,17 @@ Migrations are automatically applied when the application container starts, than
 
 1. Connect to the running application container:
    ```bash
-   docker exec -it fco_app_dev bash
+   docker exec -it sat_app_dev bash
    ```
 
 2. Navigate to the application directory:
    ```bash
-   cd /opt/fair3r-custom-overlay
+   cd /opt/ics-standalone-app-template
    ```
 
 3. Apply all pending migrations:
    ```bash
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic upgrade head
+   ICS_STANDALONE_APP_TEMPLATE_CONTEXT=dev DB_IP=sat_db_dev alembic upgrade head
    ```
 
 ## Initial Database Setup
@@ -70,7 +70,7 @@ If you encounter issues with migrations:
 
 1. Check the application logs:
    ```bash
-   docker logs fco_app_dev
+   docker logs sat_app_dev
    ```
 
 2. Ensure the database container is running and accessible:
@@ -82,9 +82,9 @@ If you encounter issues with migrations:
 
 4. If migrations fail, you can try to run them manually with more verbose output:
    ```bash
-   docker exec -it fco_app_dev bash
-   cd /opt/fair3r-custom-overlay
-   FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev DB_IP=fco_db_dev alembic upgrade head --verbose
+   docker exec -it sat_app_dev bash
+   cd /opt/ics-standalone-app-template
+   ICS_STANDALONE_APP_TEMPLATE_CONTEXT=dev DB_IP=sat_db_dev alembic upgrade head --verbose
    ```
 
 ## Best Practices

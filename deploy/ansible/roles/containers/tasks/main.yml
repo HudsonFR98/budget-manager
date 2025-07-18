@@ -46,11 +46,11 @@
       - "5432:5432"
     env:
       POSTGRES_USER: web
-      POSTGRES_PASSWORD: fco2025_x
+      POSTGRES_PASSWORD: sat2025_x
       POSTGRES_DB: postgres
     volumes:
-      - /opt/fair3r_custom_overlay_data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - /opt/fair3r_custom_overlay_data/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+      - /opt/ics_standalone_app_template_data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - /opt/ics_standalone_app_template_data/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     command: postgres -c 'max_connections=100'
     networks:
       - name: "{{ network_name }}"
@@ -132,12 +132,12 @@
     restart_policy: always
     # No external port mapping - only accessible via Nginx
     env:
-      FAIR3R_CUSTOM_OVERLAY_CONTEXT: "{{ context }}"
+      ICS_STANDALONE_APP_TEMPLATE_CONTEXT: "{{ context }}"
       DB_IP: "{{ db_container_name }}"
       BUILD_DATE: "{{ ansible_date_time.iso8601 | regex_replace('T', '.') | regex_replace(':', '.') | regex_replace('-', '.') | regex_replace('Z', '') }}"
     volumes:
-      - /var/log/fair3r_custom_overlay:/var/log/fair3r_custom_overlay
-      - /opt/fair3r_custom_overlay_data:/opt/fair3r_custom_overlay_data
+      - /var/log/ics_standalone_app_template:/var/log/ics_standalone_app_template
+      - /opt/ics_standalone_app_template_data:/opt/ics_standalone_app_template_data
     networks:
       - name: "{{ network_name }}"
     network_mode: bridge
@@ -168,7 +168,7 @@
     ports:
       - "80:80"
     volumes:
-      - /opt/fair3r_custom_overlay_data/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /opt/ics_standalone_app_template_data/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - /var/log/nginx:/var/log/nginx
     networks:
       - name: "{{ network_name }}" 

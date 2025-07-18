@@ -4,15 +4,15 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from fair3r_custom_overlay.lib import config as fair3r_custom_overlay_config
-from fair3r_custom_overlay.models import *
-from fair3r_custom_overlay.lib.database import Base, DBSession
+from ics_standalone_app_template.lib import config as ics_standalone_app_template_config
+from ics_standalone_app_template.models import *
+from ics_standalone_app_template.lib.database import Base, DBSession
 
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option('sqlalchemy.url', fair3r_custom_overlay_config.DB_URI)
+config.set_main_option('sqlalchemy.url', ics_standalone_app_template_config.DB_URI)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

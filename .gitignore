@@ -2,7 +2,7 @@
 .pytest_cache
 .vscode
 .coverage
-fair3r_custom_overlay.egg-info
+ics_standalone_app_template.egg-info
 data
 celerybeat-schedule
 syntax: glob

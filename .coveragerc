@@ -1,2 +1,2 @@
 [run]
-omit = fair3r_custom_overlay/tests/*
+omit = ics_standalone_app_templatecustom_overlay/tests/*

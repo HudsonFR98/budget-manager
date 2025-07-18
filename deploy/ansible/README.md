@@ -1,6 +1,6 @@
 # Ansible Deployment Structure
 
-This directory contains the modularized Ansible deployment configuration for the fair3r_custom_overlay application.
+This directory contains the modularized Ansible deployment configuration for the ics_standalone_app_template application.
 
 ## Structure
 

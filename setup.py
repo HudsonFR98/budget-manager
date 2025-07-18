@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="fair3r_custom_overlay",
+    name="ics_standalone_app_template",
     description='',
     version="1.0.0",
     packages=find_packages(),

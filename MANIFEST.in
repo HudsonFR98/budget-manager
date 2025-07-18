@@ -1,11 +1,11 @@
-recursive-include fair3r_custom_overlay/static *
-recursive-include fair3r_custom_overlay/bin *
-recursive-include fair3r_custom_overlay/templates *
-recursive-include fair3r_custom_overlay/i18n *
+recursive-include ics_standalone_app_template/static *
+recursive-include ics_standalone_app_template/bin *
+recursive-include ics_standalone_app_template/templates *
+recursive-include ics_standalone_app_template/i18n *
 recursive-include migrations *.py
 recursive-include deploy *
 recursive-include docs *
 recursive-include alembic *
 include *.py *.ini
 global-exclude *.pyc *.php
-recursive-exclude fair3r_custom_overlay/tests *
+recursive-exclude ics_standalone_app_template/tests *

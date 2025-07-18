@@ -4,17 +4,17 @@
 - name: Copy init-db.sh script to remote
   copy:
     src: ../init-db.sh
-    dest: /opt/fair3r_custom_overlay_data/init-db.sh
+    dest: /opt/ics_standalone_app_template_data/init-db.sh
     mode: '0755'
 
 - name: Copy reset.sql script to remote
   copy:
-    src: ../../fair3r_custom_overlay/tests/reset.sql
-    dest: /opt/fair3r_custom_overlay_data/init.sql
+    src: ../../ics_standalone_app_template/tests/reset.sql
+    dest: /opt/ics_standalone_app_template_data/init.sql
     mode: '0644'
 
 - name: Copy Nginx configuration
   copy:
     src: "../nginx_{{ context }}.conf"
-    dest: "/opt/fair3r_custom_overlay_data/nginx.conf"
+    dest: "/opt/ics_standalone_app_template_data/nginx.conf"
     mode: '0644' 

@@ -1,11 +1,11 @@
-# Dockerfile for fair3r_custom_overlay
+# Dockerfile for ics_standalone_app_template
 ARG BASE_IMAGE=python:3.11-slim
 FROM ${BASE_IMAGE}
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV FAIR3R_CUSTOM_OVERLAY_CONTEXT=dev
+ENV ICS_STANDALONE_APP_TEMPLATE_CONTEXT=dev
 ENV DB_IP=db
 
 # Install system dependencies
@@ -29,27 +29,27 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN groupadd -g 1000 web && useradd -r -g web -u 1000 -m -s /bin/bash web
 
 # Create necessary directories with correct permissions
-RUN mkdir -p /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
-    && chown -R web:web /var/log/fair3r_custom_overlay /opt/fair3r_custom_overlay_docs \
-    && chmod 775 /var/log/fair3r_custom_overlay \
-    && touch /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log \
-    && chown web:web /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log \
-    && chmod 664 /var/log/fair3r_custom_overlay/fair3r_custom_overlay.log
+RUN mkdir -p /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs \
+    && chown -R web:web /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs \
+    && chmod 775 /var/log/ics_standalone_app_template \
+    && touch /var/log/ics_standalone_app_template/ics_standalone_app_template.log \
+    && chown web:web /var/log/ics_standalone_app_template/ics_standalone_app_template.log \
+    && chmod 664 /var/log/ics_standalone_app_template/ics_standalone_app_template.log
 
 # Set working directory
-WORKDIR /opt/fair3r_custom_overlay
+WORKDIR /opt/ics_standalone_app_template
 
 # Copy application code
-COPY --chown=web:web . /opt/fair3r_custom_overlay/
+COPY --chown=web:web . /opt/ics_standalone_app_template/
 
 # Create and activate virtual environment
-RUN python -m venv /opt/env3/fair3r_custom_overlay \
-    && chown -R web:web /opt/env3/fair3r_custom_overlay
+RUN python -m venv /opt/env3/ics_standalone_app_template \
+    && chown -R web:web /opt/env3/ics_standalone_app_template
 
 # Install Python dependencies
-RUN /opt/env3/fair3r_custom_overlay/bin/pip install --upgrade pip setuptools \
-    && /opt/env3/fair3r_custom_overlay/bin/pip install -r deploy/requirements.txt \
-    && /opt/env3/fair3r_custom_overlay/bin/pip install -e .
+RUN /opt/env3/ics_standalone_app_template/bin/pip install --upgrade pip setuptools \
+    && /opt/env3/ics_standalone_app_template/bin/pip install -r deploy/requirements.txt \
+    && /opt/env3/ics_standalone_app_template/bin/pip install -e .
 
 # Expose port
 EXPOSE 8080

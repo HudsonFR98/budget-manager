@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Translation management script for FAIR3R Custom Overlay application.
+Translation management script for Ics Standalone App Template application.
 
 This script helps with:
 1. Extracting translatable strings from the codebase
@@ -38,7 +38,7 @@ def run_command(cmd, description):
 def extract_strings():
     """Extract translatable strings from the codebase"""
     return run_command(
-        "pybabel extract -F babel.cfg -k _ -o fair3r_custom_overlay/translations/messages.pot fair3r_custom_overlay",
+        "pybabel extract -F babel.cfg -k _ -o ics_standalone_app_template/translations/messages.pot ics_standalone_app_template",
         "Extracting translatable strings"
     )
 
@@ -47,10 +47,10 @@ def update_translations():
     """Update existing translation files with new strings"""
     success = True
     for lang in ['en', 'fr']:
-        lang_dir = f"fair3r_custom_overlay/translations/{lang}/LC_MESSAGES"
+        lang_dir = f"ics_standalone_app_template/translations/{lang}/LC_MESSAGES"
         if os.path.exists(lang_dir):
             success &= run_command(
-                f"pybabel update -i fair3r_custom_overlay/translations/messages.pot -d fair3r_custom_overlay/translations -l {lang}",
+                f"pybabel update -i ics_standalone_app_template/translations/messages.pot -d ics_standalone_app_template/translations -l {lang}",
                 f"Updating {lang} translations"
             )
     return success
@@ -59,7 +59,7 @@ def update_translations():
 def compile_translations():
     """Compile all translation files"""
     return run_command(
-        "pybabel compile -d fair3r_custom_overlay/translations",
+        "pybabel compile -d ics_standalone_app_template/translations",
         "Compiling translation files"
     )
 
@@ -71,12 +71,12 @@ def init_language(lang):
         return False
     
     # Create language directory
-    lang_dir = f"fair3r_custom_overlay/translations/{lang}/LC_MESSAGES"
+    lang_dir = f"ics_standalone_app_template/translations/{lang}/LC_MESSAGES"
     os.makedirs(lang_dir, exist_ok=True)
     
     # Initialize translation file
     return run_command(
-        f"pybabel init -i fair3r_custom_overlay/translations/messages.pot -d fair3r_custom_overlay/translations -l {lang}",
+        f"pybabel init -i ics_standalone_app_template/translations/messages.pot -d ics_standalone_app_template/translations -l {lang}",
         f"Initializing {lang} translation file"
     )
 

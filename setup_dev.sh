@@ -6,8 +6,8 @@ echo "Setting up development environment..."
 # Create logs directory with proper permissions
 mkdir -p logs
 chmod 775 logs
-touch logs/fair3r_custom_overlay.log
-chmod 664 logs/fair3r_custom_overlay.log
+touch logs/ics_standalone_app_template.log
+chmod 664 logs/ics_standalone_app_template.log
 
 # Set ownership to match the container user (UID 1000)
 if command -v sudo >/dev/null 2>&1; then
