@@ -2,7 +2,7 @@ FAIR3R_CUSTOM_OVERLAY
 ============================
 
 
-# CI/CD Pipeline Organization for the Fair3r Custom Overlay Application
+# CI / CD Pipeline Organization for the Fair3r Custom Overlay Application
 
 The application's CI/CD pipeline is organized through GitLab CI/CD, with distinct stages for different environments. Here's a step-by-step breakdown of how it works:
 
