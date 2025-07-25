@@ -38,9 +38,14 @@ if [ $retries -eq $max_retries ]; then
     exit 1
 fi
 
-# Run database migrations if needed
-echo "Running database migrations..."
-run_as_web "cd /opt/ics_standalone_app_template && ICS_STANDALONE_APP_TEMPLATE_CONTEXT=$ICS_STANDALONE_APP_TEMPLATE_CONTEXT DB_IP=${DB_HOST} /opt/env3/ics_standalone_app_template/bin/alembic upgrade head"
+# Install requirements and run database migrations
+echo "Setting up application..."
+run_as_web "cd /opt/ics_standalone_app_template && \
+    ICS_STANDALONE_APP_TEMPLATE_CONTEXT=$ICS_STANDALONE_APP_TEMPLATE_CONTEXT \
+    DB_IP=${DB_HOST} \
+    /opt/env3/ics_standalone_app_template/bin/pip install -r deploy/requirements.txt && \
+    /opt/env3/ics_standalone_app_template/bin/alembic upgrade head"
+
 
 # Determine which server to use based on context
 if [ "$ICS_STANDALONE_APP_TEMPLATE_CONTEXT" = "dev" ]; then
