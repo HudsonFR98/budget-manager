@@ -96,6 +96,51 @@ If you need to reset all development data (for example, after changing the datab
 - The application and all configuration files must use the same password as set in the database container.
 - If you change the password, update it everywhere (see `docker-compose.yml`, `.gitlab-ci.yml`, `ics_standalone_app_template/lib/_config.py`, and deployment scripts).
 
+### Restoring Database from Backup
+If you need to restore your development database from a backup file in the `backups` directory:
+
+1. **Stop your application container to prevent data corruption:**
+   ```bash
+   docker compose stop app
+   ```
+
+2. **Stop and remove the database container:**
+   ```bash
+   docker compose stop db
+   docker compose rm -f db
+   ```
+
+3. **Remove the database volume to ensure a clean restore:**
+   ```bash
+   docker volume rm ics-standalone-app-template_postgres_data
+   ```
+
+4. **Start the database container fresh:**
+   ```bash
+   docker compose up -d db
+   ```
+
+5. **Wait for the database to be ready (check health status):**
+   ```bash
+   docker compose ps db
+   ```
+
+6. **Restore from your chosen backup file. For example, to restore from the most recent backup:**
+   ```bash
+   docker exec -i sat_db_dev psql -U web -d sat < backups/sat_backup_YYYYMMDD_HHMMSS.sql
+   ```
+
+   Or if you want to restore to the `postgres` database (which is the default):
+   ```bash
+   docker exec -i sat_db_dev psql -U web -d postgres < backups/sat_backup_YYYYMMDD_HHMMSS.sql
+   ```
+
+7. **Start your application container:**
+   ```bash
+   docker compose up -d app
+   ```
+
+
 ## Testing
 
 The application uses a consolidated testing approach with organized, easily editable test data.
