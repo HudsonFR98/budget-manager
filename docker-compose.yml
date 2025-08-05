@@ -18,12 +18,13 @@ services:
     volumes:
       - ./:/opt/ics_standalone_app_template:cached
       - app_logs:/var/log/ics_standalone_app_template
+      - backup_data:/var/backup
     restart: always
     networks:
       - sat_network_dev
 
   db:
-    image: postgres:16
+    image: postgres:15
     container_name: sat_db_dev
     environment:
       - POSTGRES_USER=web
@@ -67,7 +68,12 @@ volumes:
       type: none
       o: bind
       device: ./logs
-
+  backup_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./backups
 networks:
   sat_network_dev:
     driver: bridge

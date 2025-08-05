@@ -19,3 +19,4 @@ docs/_build/doctrees/**
 .coverage
 docs/_build/html/.buildinfo
 logs/**
+backups/**

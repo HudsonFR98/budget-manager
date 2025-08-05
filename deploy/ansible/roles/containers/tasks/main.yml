@@ -32,14 +32,14 @@
 
 - name: Pull PostgreSQL Docker image
   docker_image:
-    name: "{{ docker_registry }}/postgres:16"
+    name: "{{ docker_registry }}/postgres:15"
     source: pull
     force_source: yes
 
 - name: Run PostgreSQL Docker container
   docker_container:
     name: "{{ db_container_name }}"
-    image: "{{ docker_registry }}/postgres:16"
+    image: "{{ docker_registry }}/postgres:15"
     state: started
     restart_policy: always
     ports:
@@ -138,6 +138,7 @@
     volumes:
       - /var/log/ics_standalone_app_template:/var/log/ics_standalone_app_template
       - /opt/ics_standalone_app_template_data:/opt/ics_standalone_app_template_data
+      - /var/backup:/var/backup
     networks:
       - name: "{{ network_name }}"
     network_mode: bridge

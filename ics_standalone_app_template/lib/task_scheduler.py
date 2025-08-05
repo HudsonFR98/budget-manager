@@ -9,6 +9,7 @@ from flask import current_app
 
 from ics_standalone_app_template.lib import config
 from ics_standalone_app_template.lib import emails
+from ics_standalone_app_template.lib.backup import create_backup, cleanup_old_backups, list_backups
 from ics_standalone_app_template.models.task import TaskExecution, ScheduledTask
 from ics_standalone_app_template.lib.database import DBSession
 
@@ -369,4 +370,22 @@ def test_simple_route():
             
     except Exception as e:
         log.error(f"Test route failed: {e}")
+        raise
+
+
+# Database backup task
+@scheduled_task('0 3 * * *', 'Create database backup every day at 3:00 AM and clean up old backups')
+def database_backup():
+    """Create database backup and clean up old backups"""
+    try:
+        # Create backup using the backup library
+        backup_path = create_backup()
+        
+        # Clean up old backups (older than 1 week)
+        deleted_count = cleanup_old_backups(days_to_keep=7)
+        
+        return f"Backup created: {backup_path}, cleaned up {deleted_count} old backups"
+        
+    except Exception as e:
+        log.error(f"Database backup failed: {e}")
         raise

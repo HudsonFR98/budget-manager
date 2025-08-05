@@ -26,9 +26,6 @@ def tasks():
         # Get active scheduled tasks
         active_tasks = ScheduledTask.query.filter_by(is_active=True).all()
         
-        # Get task execution history for display (last 100)
-        executions = TaskExecution.query.order_by(desc(TaskExecution.created_at)).limit(100).all()
-        
         # Calculate statistics from entire database
         from sqlalchemy import func
         total_executions = TaskExecution.query.count()
@@ -38,7 +35,6 @@ def tasks():
         
         return render_template('admin/tasks.html',
                               active_tasks=active_tasks,
-                              executions=executions,
                               total_executions=total_executions,
                               success_count=success_count,
                               failed_count=failed_count,
@@ -49,8 +45,6 @@ def tasks():
         flash(_('Error loading tasks data. Please check database connection.'), 'error')
         return render_template('admin/tasks.html',
                               active_tasks=[],
-                              removed_tasks=[],
-                              executions=[],
                               total_executions=0,
                               success_count=0,
                               failed_count=0,

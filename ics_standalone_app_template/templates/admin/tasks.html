@@ -154,7 +154,7 @@
         <div class="col-12">
             <div class="card shadow mb-4">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">{{ _('Task Execution History') }}</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">{{ _('Task Execution History') }} <span id="resultCount" class="text-muted small"></span></h6>
                     <div>
                         <select id="statusFilter" class="form-control form-control-sm d-inline-block" style="width: auto;">
                             <option value="">{{ _('All Status') }}</option>
@@ -169,6 +169,9 @@
                                 <option value="{{ task.task_name }}">{{ task.task_name }}</option>
                             {% endfor %}
                         </select>
+                        <button id="refreshBtn" class="btn btn-sm btn-outline-primary ms-2">
+                            <i class="fas fa-sync-alt" id="refreshIcon"></i> {{ _('Refresh') }}
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -185,46 +188,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for execution in executions %}
                                 <tr>
-                                    <td>{{ execution.task_name }}</td>
-                                    <td>
-                                        {% if execution.status == 'completed' %}
-                                            <span class="badge bg-success">{{ _('Success') }}</span>
-                                        {% elif execution.status == 'failed' %}
-                                            <span class="badge bg-danger">{{ _('Failed') }}</span>
-                                        {% elif execution.status == 'running' %}
-                                            <span class="badge bg-warning text-dark">{{ _('Running') }}</span>
-                                        {% else %}
-                                            <span class="badge bg-secondary">{{ execution.status }}</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>{{ execution.started_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-                                    <td>
-                                        {% if execution.completed_at %}
-                                            {{ execution.completed_at.strftime('%Y-%m-%d %H:%M:%S') }}
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if execution.execution_time %}
-                                            {{ execution.execution_time }}s
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if execution.status == 'failed' and execution.error_message %}
-                                            <small class="text-danger">{{ execution.error_message[:100] }}{% if execution.error_message|length > 100 %}...{% endif %}</small>
-                                        {% elif execution.status == 'completed' and execution.result %}
-                                            <small class="text-success">{{ execution.result[:100] }}{% if execution.result|length > 100 %}...{% endif %}</small>
-                                        {% else %}
-                                            -
-                                        {% endif %}
-                                    </td>
+                                    <td colspan="6" class="text-center">Loading...</td>
                                 </tr>
-                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -314,44 +280,166 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Filter functionality
-    document.getElementById('statusFilter').addEventListener('change', filterExecutions);
-    document.getElementById('taskFilter').addEventListener('change', filterExecutions);
+    document.getElementById('statusFilter').addEventListener('change', loadFilteredExecutions);
+    document.getElementById('taskFilter').addEventListener('change', loadFilteredExecutions);
+    document.getElementById('refreshBtn').addEventListener('click', loadFilteredExecutions);
     
-    function filterExecutions() {
+    // Load initial data
+    loadFilteredExecutions();
+    
+    function loadFilteredExecutions() {
         var statusFilter = document.getElementById('statusFilter').value;
         var taskFilter = document.getElementById('taskFilter').value;
-        var rows = document.querySelectorAll('#executionsTable tbody tr');
+        var refreshBtn = document.getElementById('refreshBtn');
+        var refreshIcon = document.getElementById('refreshIcon');
         
-        rows.forEach(function(row) {
-            var status = row.querySelector('td:nth-child(2) .badge').textContent.toLowerCase();
-            var task = row.querySelector('td:nth-child(1)').textContent;
-            
-            var showRow = true;
-            
-            if (statusFilter) {
-                // Map filter values to badge text
-                var statusMap = {
-                    'completed': '{{ _("Success") }}',
-                    'failed': '{{ _("Failed") }}',
-                    'running': '{{ _("Running") }}',
-                    'pending': 'pending'
-                };
-                
-                var expectedStatus = statusMap[statusFilter];
-                if (status !== expectedStatus) {
-                    showRow = false;
+        // Disable refresh button and show spinning icon
+        refreshBtn.disabled = true;
+        refreshIcon.className = 'fas fa-spinner fa-spin';
+        
+        // Build query parameters
+        var params = new URLSearchParams();
+        if (statusFilter) {
+            params.append('status', statusFilter);
+        }
+        if (taskFilter) {
+            params.append('task_name', taskFilter);
+        }
+        params.append('limit', '100');
+        
+        // Show loading state
+        var tbody = document.querySelector('#executionsTable tbody');
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+        
+        // Fetch filtered data from server
+        fetch('/admin/api/executions?' + params.toString())
+            .then(function(response) {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
                 }
-            }
+                return response.json();
+            })
+            .then(function(data) {
+                updateExecutionsTable(data.executions);
+                // Update result count
+                var resultCount = document.getElementById('resultCount');
+                if (data.executions) {
+                    resultCount.textContent = '(' + data.executions.length + ' results)';
+                } else {
+                    resultCount.textContent = '';
+                }
+            })
+            .catch(function(error) {
+                console.error('Error loading filtered executions:', error);
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger"><i class="fas fa-exclamation-triangle"></i> Error loading data</td></tr>';
+            })
+            .finally(function() {
+                // Re-enable refresh button and restore icon
+                refreshBtn.disabled = false;
+                refreshIcon.className = 'fas fa-sync-alt';
+            });
+    }
+    
+    function updateExecutionsTable(executions) {
+        var tbody = document.querySelector('#executionsTable tbody');
+        tbody.innerHTML = '';
+        
+        if (executions.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No executions found</td></tr>';
+            return;
+        }
+        
+        executions.forEach(function(execution) {
+            var row = document.createElement('tr');
             
-            if (taskFilter && task !== taskFilter) {
-                showRow = false;
-            }
+            // Task name
+            var taskNameCell = document.createElement('td');
+            taskNameCell.textContent = execution.task_name;
+            row.appendChild(taskNameCell);
             
-            if (showRow) {
-                row.style.display = '';
+            // Status
+            var statusCell = document.createElement('td');
+            var badge = document.createElement('span');
+            badge.className = 'badge';
+            
+            if (execution.status === 'completed') {
+                badge.className += ' bg-success';
+                badge.textContent = '{{ _("Success") }}';
+            } else if (execution.status === 'failed') {
+                badge.className += ' bg-danger';
+                badge.textContent = '{{ _("Failed") }}';
+            } else if (execution.status === 'running') {
+                badge.className += ' bg-warning text-dark';
+                badge.textContent = '{{ _("Running") }}';
             } else {
-                row.style.display = 'none';
+                badge.className += ' bg-secondary';
+                badge.textContent = execution.status;
             }
+            
+            statusCell.appendChild(badge);
+            row.appendChild(statusCell);
+            
+            // Started at
+            var startedCell = document.createElement('td');
+            if (execution.started_at) {
+                var startedDate = new Date(execution.started_at);
+                startedCell.textContent = startedDate.getFullYear() + '-' + 
+                    String(startedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(startedDate.getDate()).padStart(2, '0') + ' ' + 
+                    String(startedDate.getHours()).padStart(2, '0') + ':' + 
+                    String(startedDate.getMinutes()).padStart(2, '0') + ':' + 
+                    String(startedDate.getSeconds()).padStart(2, '0');
+            } else {
+                startedCell.textContent = '-';
+            }
+            row.appendChild(startedCell);
+            
+            // Completed at
+            var completedCell = document.createElement('td');
+            if (execution.completed_at) {
+                var completedDate = new Date(execution.completed_at);
+                completedCell.textContent = completedDate.getFullYear() + '-' + 
+                    String(completedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+                    String(completedDate.getDate()).padStart(2, '0') + ' ' + 
+                    String(completedDate.getHours()).padStart(2, '0') + ':' + 
+                    String(completedDate.getMinutes()).padStart(2, '0') + ':' + 
+                    String(completedDate.getSeconds()).padStart(2, '0');
+            } else {
+                completedCell.textContent = '-';
+            }
+            row.appendChild(completedCell);
+            
+            // Duration
+            var durationCell = document.createElement('td');
+            if (execution.execution_time) {
+                durationCell.textContent = execution.execution_time + 's';
+            } else {
+                durationCell.textContent = '-';
+            }
+            row.appendChild(durationCell);
+            
+            // Result/Error
+            var resultCell = document.createElement('td');
+            if (execution.status === 'failed' && execution.error_message) {
+                var errorText = document.createElement('small');
+                errorText.className = 'text-danger';
+                errorText.textContent = execution.error_message.length > 100 ? 
+                    execution.error_message.substring(0, 100) + '...' : 
+                    execution.error_message;
+                resultCell.appendChild(errorText);
+            } else if (execution.status === 'completed' && execution.result) {
+                var resultText = document.createElement('small');
+                resultText.className = 'text-success';
+                resultText.textContent = execution.result.length > 100 ? 
+                    execution.result.substring(0, 100) + '...' : 
+                    execution.result;
+                resultCell.appendChild(resultText);
+            } else {
+                resultCell.textContent = '-';
+            }
+            row.appendChild(resultCell);
+            
+            tbody.appendChild(row);
         });
     }
 });

@@ -20,6 +20,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     nano \
     git \
     build-essential \
+    wget \
+    gnupg \
     gcc \
     curl \
     && apt-get clean \
@@ -29,9 +31,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN groupadd -g 1000 web && useradd -r -g web -u 1000 -m -s /bin/bash web
 
 # Create necessary directories with correct permissions
-RUN mkdir -p /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs \
-    && chown -R web:web /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs \
-    && chmod 775 /var/log/ics_standalone_app_template \
+RUN mkdir -p /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs /var/backup \
+    && chown -R web:web /var/log/ics_standalone_app_template /opt/ics_standalone_app_template_docs /var/backup \
+    && chmod 775 /var/log/ics_standalone_app_template /var/backup \
     && touch /var/log/ics_standalone_app_template/ics_standalone_app_template.log \
     && chown web:web /var/log/ics_standalone_app_template/ics_standalone_app_template.log \
     && chmod 664 /var/log/ics_standalone_app_template/ics_standalone_app_template.log
