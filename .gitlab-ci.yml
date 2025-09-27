@@ -30,12 +30,13 @@ populate_dependency_proxy:
   stage: populate-proxy
   image: docker:28.1.1
   services:
-    - docker:28.1.1-dind
+    - name: docker:28.1.1-dind
+      alias: docker
+      command: ["--insecure-registry=nath-server.local:8124"]
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   before_script:
-    - echo '{"insecure-registries": ["nath-server.local:8124"]}' > /etc/docker/daemon.json
     - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
   script:
     - echo "Populating dependency proxy with nath used images..."
@@ -57,10 +58,12 @@ populate_dependency_proxy:
 
 build_docker:
   stage: docker
+  # Option A (requires step 1): keep pulling job image via Dependency Proxy
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1
   services:
     - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1-dind
       alias: docker
+      command: ["--insecure-registry=nath-server.local:8124"]
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
