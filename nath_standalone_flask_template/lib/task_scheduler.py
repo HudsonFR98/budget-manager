@@ -8,7 +8,7 @@ from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 from flask import current_app
 
 from nath_standalone_flask_template.lib import config
-from nath_standalone_flask_template.lib import emails
+from nath_standalone_flask_template.lib.telegram import send_error_notification_telegram
 from nath_standalone_flask_template.lib.backup import create_backup, cleanup_old_backups, list_backups
 from nath_standalone_flask_template.models.task import TaskExecution, ScheduledTask
 from nath_standalone_flask_template.lib.database import DBSession
@@ -280,30 +280,24 @@ class TaskScheduler:
             
             DBSession.commit()
             
-            # Send error notification email
+            # Send error notification via Telegram
             self._send_task_error_notification(task_name, task_id, str(e), task_args, task_kwargs)
     
     def _send_task_error_notification(self, task_name, task_id, error_message, task_args, task_kwargs):
-        """Send error notification email for failed tasks"""
+        """Send error notification via Telegram for failed tasks"""
         try:
-            subject = f"Task Execution Failed: {task_name}"
-            
-            body = f"""
-                Task Execution Failed
-
-                Task Name: {task_name}
-                Task ID: {task_id}
-                Error: {error_message}
-                Arguments: {task_args}
-                Keyword Arguments: {task_kwargs}
-                Timestamp: {datetime.utcnow()}
-                Environment: {config.CONTEXT}
-            """
-            
-            emails.send_simple_email(
-                to_email=config.ERROR_EMAIL_TO,
-                subject=subject,
-                body=body
+            details = {
+                'Event': 'Task Execution Failed',
+                'Task Name': task_name,
+                'Task ID': task_id,
+                'Error': error_message,
+                'Arguments': task_args,
+                'Keyword Arguments': task_kwargs,
+                'Environment': config.CONTEXT,
+            }
+            send_error_notification_telegram(
+                title=f"Task Failure: {task_name}",
+                details=details
             )
             
             log.info(f"Sent error notification for task '{task_name}'")
@@ -352,29 +346,8 @@ def scheduled_task(cron_expression, description=None):
     return decorator
 
 
-# Example task: Test the /test/simple route
-@scheduled_task('0 4 * * *', 'Test the /test/simple route every day at 4:00 AM to ensure service is working')
-def test_simple_route():
-    """Test the /test/simple route to ensure it's working"""
-    try:
-        # Get the base URL from config or use localhost
-        base_url = getattr(config, 'BASE_URL', 'http://localhost:8080')
-        response = requests.get(f"{base_url}/tests/simple", timeout=30)
-        
-        if response.status_code == 200:
-            result = response.json()
-            log.info(f"Test route successful: {result}")
-            return f"Success: {result}"
-        else:
-            raise Exception(f"HTTP {response.status_code}: {response.text}")
-            
-    except Exception as e:
-        log.error(f"Test route failed: {e}")
-        raise
-
-
 # Database backup task
-@scheduled_task('0 3 * * *', 'Create database backup every day at 3:00 AM and clean up old backups')
+@scheduled_task('* * * * *', 'Create database backup every day at 4:00 AM and clean up old backups')
 def database_backup():
     """Create database backup and clean up old backups"""
     try:

@@ -101,9 +101,9 @@ class TestTaskScheduler:
         assert execution.error_message == 'Task failed'
         assert execution.execution_time is not None
     
-    @patch('nath_standalone_flask_template.lib.task_scheduler.emails.send_simple_email')
-    def test_error_notification_email(self, mock_send_email):
-        """Test error notification email sending"""
+    @patch('nath_standalone_flask_template.lib.task_scheduler.send_error_notification_telegram')
+    def test_error_notification_telegram(self, mock_send_tg):
+        """Test error notification sending via Telegram"""
         def test_task():
             raise Exception("Task failed")
         
@@ -112,11 +112,11 @@ class TestTaskScheduler:
         # Execute task
         self.scheduler._execute_task('test_task', [], {})
         
-        # Check if email was sent
-        mock_send_email.assert_called_once()
-        call_args = mock_send_email.call_args
-        assert 'Task Execution Failed: test_task' in call_args[1]['subject']
-        assert 'Task failed' in call_args[1]['body']
+        # Check if Telegram notification was sent
+        mock_send_tg.assert_called_once()
+        call_kwargs = mock_send_tg.call_args.kwargs
+        assert 'title' in call_kwargs and 'Task Failure: test_task' in call_kwargs['title']
+        assert 'details' in call_kwargs and call_kwargs['details'].get('Error') == 'Task failed'
     
     def test_task_decorator(self):
         """Test the @scheduled_task decorator"""

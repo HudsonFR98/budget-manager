@@ -147,7 +147,9 @@ class DatabaseBackup:
                     # Extract timestamp from filename (format: nsft_backup_YYYYMMDD_HHMMSS.sql)
                     filename = os.path.basename(backup_file)
                     if filename.startswith('nsft_backup_') and filename.endswith('.sql'):
-                        timestamp_str = filename[11:-4]  # Remove 'nsft_backup_' prefix and '.sql' suffix
+                        # Remove 'nsft_backup_' prefix and '.sql' suffix
+                        # 'nsft_backup_' is 12 characters long
+                        timestamp_str = filename[len('nsft_backup_'):-4]
                         file_date = datetime.strptime(timestamp_str, '%Y%m%d_%H%M%S')
                         
                         if file_date < cutoff_date:
@@ -205,7 +207,8 @@ class DatabaseBackup:
             # Extract timestamp from filename
             creation_time = None
             if filename.startswith('nsft_backup_') and filename.endswith('.sql'):
-                timestamp_str = filename[11:-4]
+                # 'nsft_backup_' is 12 characters long
+                timestamp_str = filename[len('nsft_backup_'):-4]
                 try:
                     creation_time = datetime.strptime(timestamp_str, '%Y%m%d_%H%M%S')
                 except ValueError:

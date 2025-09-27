@@ -5,7 +5,7 @@ from flask_babel import Babel, gettext as _
 from nath_standalone_flask_template.lib import config
 from nath_standalone_flask_template.lib import flask_util
 from nath_standalone_flask_template.lib import database
-from nath_standalone_flask_template.lib import emails
+from nath_standalone_flask_template.lib.telegram import send_error_notification_telegram
 from nath_standalone_flask_template.lib import version
 from nath_standalone_flask_template.models import User
 
@@ -99,7 +99,7 @@ def create_app():
         def internal_server_error(e):
             app.logger.error(f"Internal server error: {str(e)}")
             
-            # Send error notification email
+            # Send error notification via Telegram
             try:
                 # Collect request information
                 request_info = {
@@ -118,8 +118,17 @@ def create_app():
                     'Testing Mode': getattr(config, 'TESTING', False)
                 }
                 
-                # Send error notification email
-                emails.send_error_notification(e, request_info, context_info)
+                # Build details
+                details = {
+                    **request_info,
+                    **context_info,
+                    'Exception Type': type(e).__name__,
+                    'Exception Message': str(e)
+                }
+                send_error_notification_telegram(
+                    title="Internal Server Error",
+                    details=details
+                )
                 
             except Exception as email_error:
                 # Log email sending failure but don't let it break the error handling
@@ -144,7 +153,7 @@ def create_app():
         def unhandled_exception(e):
             app.logger.error(f"Unhandled exception: {str(e)}")
             
-            # Send error notification email
+            # Send error notification via Telegram
             try:
                 # Collect request information
                 request_info = {
@@ -163,8 +172,16 @@ def create_app():
                     'Testing Mode': getattr(config, 'TESTING', False)
                 }
                 
-                # Send error notification email
-                emails.send_error_notification(e, request_info, context_info)
+                details = {
+                    **request_info,
+                    **context_info,
+                    'Exception Type': type(e).__name__,
+                    'Exception Message': str(e)
+                }
+                send_error_notification_telegram(
+                    title="Unhandled Exception",
+                    details=details
+                )
                 
             except Exception as email_error:
                 # Log email sending failure but don't let it break the error handling

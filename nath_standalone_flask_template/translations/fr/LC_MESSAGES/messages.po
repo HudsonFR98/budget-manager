@@ -21,7 +21,7 @@ msgstr ""
 #: nath_standalone_flask_template/templates/base.html:18
 #: nath_standalone_flask_template/templates/base.html:22
 msgid "Nath Standalone Flask Template"
-msgstr "Projet de reference autonome de l'ICS"
+msgstr "Projet de reference flask de Nath"
 
 #: nath_standalone_flask_template/templates/base.html:44
 msgid "Example"

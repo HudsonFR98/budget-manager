@@ -182,31 +182,14 @@ These configurations are defined in `nath_standalone_flask_template/lib/_config.
 - **Run Command**: `docker compose up --build`
 - **Deployment**: Docker containers with volume mounts for development
 
-### TEST Environment
-- **Purpose**: Automated testing in CI/CD pipeline
-- **Configuration**: `TestConfig` class
-- **Database**: Uses a test database (`nsft`) on the `nsft_db_test` container
-- **Run Command**: Automated through GitLab CI
-- **Special Features**: Has `TESTING=True` flag and reduced logging level
-
-### DEMO Environment (Integration)
-- **Purpose**: Staging/integration testing
-- **Configuration**: `DemoConfig` class
-- **Database**: Uses a demo database (`nsft`) on the `nsft_db_demo` container
-- **Deployment**:
-  - Triggered manually in GitLab CI
-  - Uses Ansible to deploy Docker containers to `serv-ics-nsft-d-01` server
-  - Accessible at `http://serv-ics-nsft-d-01`
-  - Uses Docker for process management
-
 ### PROD Environment
 - **Purpose**: Production deployment
 - **Configuration**: `ProdConfig` class
 - **Database**: Uses a prod database (`nsft`) on the `nsft_db_prod` container
 - **Deployment**:
   - Triggered manually in GitLab CI
-  - Uses Ansible to deploy Docker containers to `serv-ics-nsft-p-01` server
-  - Accessible at `http://serv-ics-nsft-p-01`
+  - Uses Ansible to deploy Docker containers to `nath-server.local` server
+  - Accessible at `http://nath-server.local`
   - Uses Docker for process management
 
 ## 3. Deployment Process
@@ -261,9 +244,7 @@ The test, demo, and production environments now use a modern Nginx reverse proxy
 - **Clean Proxy Configuration**: Proper forwarding of headers and protocols
 
 ### Access URLs
-- **Test**: http://serv-ics-nsft-t-01
-- **Demo**: http://serv-ics-nsft-d-01
-- **Production**: http://serv-ics-nsft-p-01
+- **Production**: http://nath-server.local
 
 ### Configuration Files
 - **Test**: `deploy/nginx_test.conf`

@@ -24,7 +24,7 @@ stages:
     - ssh-keyscan $SSH_HOST >> ~/.ssh/known_hosts
     - pip install ansible
   tags:
-    - ics-docker
+    - docker-runner
 
 populate_dependency_proxy:
   stage: populate-proxy
@@ -37,7 +37,7 @@ populate_dependency_proxy:
   before_script:
     - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
   script:
-    - echo "Populating dependency proxy with ics used images..."
+    - echo "Populating dependency proxy with nath used images..."
     - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.11-slim
     - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
     - docker pull ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1
@@ -52,7 +52,7 @@ populate_dependency_proxy:
     - tags
   when: manual
   tags:
-    - ics-docker
+    - docker-runner
 
 build_docker:
   stage: docker
@@ -74,23 +74,24 @@ build_docker:
     - master
     - tags
   tags:
-    - ics-docker
+    - docker-runner
 
 pytest:
   stage: test
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-nsft-t-01
+    SSH_HOST: serv-nsft-t-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   environment:
     name: test
-    url: http://serv-ics-nsft-t-01:8080/
+    url: http://serv-nsft-t-01:8080/
   needs:
     - build_docker
+  when: manual
   tags:
-    - ics-docker
+    - docker-runner
 
 pep8:
   stage: test
@@ -103,77 +104,78 @@ pep8:
     paths:
       - pep8.out
     expire_in: 1 week
+  when: manual
   tags:
-    - ics-docker
+    - docker-runner
 
 deploy_demo:
   stage: demo
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-nsft-d-01
+    SSH_HOST: serv-nsft-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-nsft-d-01:8080/
+    url: http://serv-nsft-d-01:8080/
   needs:
     - build_docker
     - pytest
+  when: manual
   tags:
-    - ics-docker
+    - docker-runner
 
 update_demo:
   stage: demo
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-nsft-d-01
+    SSH_HOST: serv-nsft-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-nsft-d-01:8080/
+    url: http://serv-nsft-d-01:8080/
   needs:
     - build_docker
     - pytest
+  when: manual
   tags:
-    - ics-docker
+    - docker-runner
 
 deploy_prod:
   stage: prod
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-nsft-p-01
+    SSH_HOST: nath-server.local
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-nsft-p-01:8080/
+    url: http://nath-server.local:8080/
   needs:
-    - build_docker
-    - pytest
+    - build_docker #could also need pytest
   tags:
-    - ics-docker
+    - docker-runner
 
 update_prod:
   stage: prod
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-nsft-p-01
+    SSH_HOST: nath-server.local
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-nsft-p-01:8080/
+    url: http://nath-server.local:8080/
   needs:
-    - build_docker
-    - pytest
+    - build_docker #could also need pytest
   tags:
-    - ics-docker
+    - docker-runner

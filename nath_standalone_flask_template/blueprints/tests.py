@@ -10,6 +10,7 @@ log = logging.getLogger(__name__)
 
 @test_output.route('/simple')
 def simple():
+    raise Exception('Test exception')
     return jsonify({'message': 'Hello, World!'})
 
 

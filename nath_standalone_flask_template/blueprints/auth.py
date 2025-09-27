@@ -26,7 +26,7 @@ def login():
                 login_user(user, remember=True)
                 log.debug(f"User logged in successfully: {user.ide}")
                 response = make_response(redirect(url_for("dashboard.home")))
-                response.set_cookie('ics_signature', value='signed !!')
+                response.set_cookie('nath_signature', value='signed !!')
                 return response
             else:
                 flash('User account is inactive', 'error')
@@ -47,7 +47,7 @@ def logout():
     logout_user()
     flash('Please sign in again')
     response = make_response(redirect(url_for('.login')))
-    response.delete_cookie('ics_signature')
+    response.delete_cookie('nath_signature')
     return response
 
 

@@ -9,8 +9,6 @@ from datetime import datetime
 
 from nath_standalone_flask_template.lib import config
 
-ICS = 'ics@igbmc.fr'
-
 logger = logging.getLogger(__name__)
 
 

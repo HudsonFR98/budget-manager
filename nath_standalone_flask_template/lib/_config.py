@@ -111,14 +111,17 @@ class Config(object):
     - When HTTPS is enabled, update SESSION_COOKIE_SECURE to True
     """
 
-    REST_USER = 'icsws'
-    REST_PASSWORD = 'Yqa6Pdyg'
     EMAIL_DEV = 'debannen@igbmc.fr'
     SETTINGS = None
     STATIC_URI = '/static'
-    SECRET_KEY = '5#yqsj4de85s6zzjkncwhjciksd'
+    SECRET_KEY = 'rzfrfr55eeee85s6zzjkncw###hjciksd'
+    APP_NAME = 'Nath Standalone Flask Template'
 
-    # Error notification email settings
+    # Telegram notification settings
+    TELEGRAM_BOT_TOKEN = "7237344537:AAF2dpUWEChJZz9q2X36smwX-5-7xsk51gw"
+    TELEGRAM_CHAT_ID = "6440591299"
+
+    # (Legacy) Email settings kept for backward compatibility, no longer used for errors
     ERROR_EMAIL_FROM = 'ics@igbmc.fr'
     ERROR_EMAIL_TO = EMAIL_DEV
     ERROR_EMAIL_SMTP_SERVER = 'serv-hub.igbmc.u-strasbg.fr'
