@@ -65,7 +65,7 @@ build_docker:
       alias: docker
       command:
         - "--insecure-registry=nath-server.local:8124"
-        - "--insecure-registry=nath-server.local:8125"
+        - "--insecure-registry=nath-server.local:8127"
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
