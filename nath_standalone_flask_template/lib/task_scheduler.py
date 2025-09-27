@@ -347,7 +347,7 @@ def scheduled_task(cron_expression, description=None):
 
 
 # Database backup task
-@scheduled_task('* * * * *', 'Create database backup every day at 4:00 AM and clean up old backups')
+@scheduled_task('0 4 * * *', 'Create database backup every day at 4:00 AM and clean up old backups')
 def database_backup():
     """Create database backup and clean up old backups"""
     try:
