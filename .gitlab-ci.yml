@@ -61,7 +61,7 @@ build_docker:
   # Option A (requires step 1): keep pulling job image via Dependency Proxy
   image: docker:28.1.1
   services:
-    - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1-dind
+    - name: docker:28.1.1-dind
       alias: docker
       command:
         - "--insecure-registry=nath-server.local:8124"
