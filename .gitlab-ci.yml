@@ -63,7 +63,9 @@ build_docker:
   services:
     - name: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/docker:28.1.1-dind
       alias: docker
-      command: ["--insecure-registry=nath-server.local:8124"]
+      command:
+        - "--insecure-registry=nath-server.local:8124"
+        - "--insecure-registry=nath-server.local:8125"
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
