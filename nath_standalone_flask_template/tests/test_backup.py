@@ -28,12 +28,12 @@ class TestDatabaseBackup:
     
     def test_parse_database_uri_valid(self):
         """Test parsing valid database URI"""
-        uri = "postgresql://user:pass@localhost:5432/database"
+        uri = "postgresql://user:pass@localhost:5433/database"
         result = self.backup._parse_database_uri(uri)
         
         expected = {
             'host': 'localhost',
-            'port': '5432',
+            'port': '5433',
             'user': 'user',
             'password': 'pass',
             'database': 'database'
@@ -68,7 +68,7 @@ class TestDatabaseBackup:
         
         # Mock config
         with patch('nath_standalone_flask_template.lib.backup.config') as mock_config:
-            mock_config.SQLALCHEMY_DATABASE_URI = "postgresql://user:pass@localhost:5432/database"
+            mock_config.SQLALCHEMY_DATABASE_URI = "postgresql://user:pass@localhost:5433/database"
             
             result = self.backup.create_backup()
             
@@ -87,7 +87,7 @@ class TestDatabaseBackup:
         
         # Mock config
         with patch('nath_standalone_flask_template.lib.backup.config') as mock_config:
-            mock_config.SQLALCHEMY_DATABASE_URI = "postgresql://user:pass@localhost:5432/database"
+            mock_config.SQLALCHEMY_DATABASE_URI = "postgresql://user:pass@localhost:5433/database"
             
             with pytest.raises(Exception, match="pg_dump failed"):
                 self.backup.create_backup()

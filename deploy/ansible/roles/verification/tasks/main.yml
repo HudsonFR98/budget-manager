@@ -3,7 +3,7 @@
 
 - name: Verify network connectivity
   shell: |
-    docker exec {{ container_name }} curl -I http://{{ db_container_name }}:5432
+    docker exec {{ container_name }} curl -I http://{{ db_container_name }}:5433
   register: curl_result
   changed_when: false
   failed_when: false

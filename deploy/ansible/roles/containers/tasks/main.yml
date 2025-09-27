@@ -43,7 +43,7 @@
     state: started
     restart_policy: always
     ports:
-      - "5432:5432"
+      - "5433:5433"
     env:
       POSTGRES_USER: web
       POSTGRES_PASSWORD: nsft2025_x

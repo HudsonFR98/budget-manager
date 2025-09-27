@@ -233,7 +233,7 @@ The test, demo, and production environments now use a modern Nginx reverse proxy
 ### Architecture
 - **Nginx Container**: Handles HTTP traffic on port 80 (e.g., `nsft_nginx_test`)
 - **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally) (e.g., `nsft_app_test`)
-- **Database Container**: PostgreSQL 15 on internal port 5432 (e.g., `nsft_db_test`)
+- **Database Container**: PostgreSQL 15 on internal port 5433 (e.g., `nsft_db_test`)
 - **Redis Container**: Redis cache on internal port 6379 (e.g., `nsft_redis_test`)
 - **Network**: Isolated Docker network per environment (e.g., `nsft_network_test`)
 

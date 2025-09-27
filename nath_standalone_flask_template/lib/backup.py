@@ -54,11 +54,11 @@ class DatabaseBackup:
         if ':' in host_port:
             host, port = host_port.split(':', 1)
         else:
-            host, port = host_port, '5432'
+            host, port = host_port, '5433'
         
         # For development environment, use the correct port
         if config.CONTEXT == 'dev':
-            port = '5432'
+            port = '5433'
         
         return {
             'host': host,
