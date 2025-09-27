@@ -35,6 +35,7 @@ populate_dependency_proxy:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   before_script:
+    - echo '{"insecure-registries": ["nath-server.local:8124"]}' > /etc/docker/daemon.json
     - echo "$CI_DEPENDENCY_PROXY_PASSWORD" | docker login $CI_DEPENDENCY_PROXY_SERVER -u $CI_DEPENDENCY_PROXY_USER --password-stdin
   script:
     - echo "Populating dependency proxy with nath used images..."
