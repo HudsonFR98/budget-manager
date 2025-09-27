@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="ics_standalone_app_template",
+    name="nath_standalone_flask_template",
     description='',
     version="1.0.0",
     packages=find_packages(),

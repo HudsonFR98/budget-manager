@@ -4,15 +4,15 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from ics_standalone_app_template.lib import config as ics_standalone_app_template_config
-from ics_standalone_app_template.models import *
-from ics_standalone_app_template.lib.database import Base, DBSession
+from nath_standalone_flask_template.lib import config as nath_standalone_flask_template_config
+from nath_standalone_flask_template.models import *
+from nath_standalone_flask_template.lib.database import Base, DBSession
 
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option('sqlalchemy.url', ics_standalone_app_template_config.DB_URI)
+config.set_main_option('sqlalchemy.url', nath_standalone_flask_template_config.DB_URI)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

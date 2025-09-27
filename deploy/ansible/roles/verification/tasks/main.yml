@@ -12,9 +12,9 @@
   community.docker.docker_container_exec:
     container: "{{ container_name }}"
     command: >
-      bash -c "ICS_STANDALONE_APP_TEMPLATE_CONTEXT=test DB_IP={{ db_container_name }}
-      /opt/env3/ics_standalone_app_template/bin/python
-      ics_standalone_app_template/tests/run_tests.py"
+      bash -c "NATH_STANDALONE_FLASK_TEMPLATE_CONTEXT=test DB_IP={{ db_container_name }}
+      /opt/env3/nath_standalone_flask_template/bin/python
+      nath_standalone_flask_template/tests/run_tests.py"
   register: pytest_result
   when: context == 'test'
 

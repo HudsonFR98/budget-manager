@@ -1,2 +1,2 @@
 [run]
-omit = ics_standalone_app_templatecustom_overlay/tests/*
+omit = nath_standalone_flask_template/tests/*

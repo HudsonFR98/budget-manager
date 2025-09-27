@@ -1,7 +1,7 @@
 variables:
-  ICS_STANDALONE_APP_TEMPLATE_CONTEXT: test
+  NATH_STANDALONE_FLASK_TEMPLATE_CONTEXT: test
   DB_IP: localhost
-  PGPASSWORD: sat2025_x
+  PGPASSWORD: nsft2025_x
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
 
 stages:
@@ -80,13 +80,13 @@ pytest:
   stage: test
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-sat-t-01
+    SSH_HOST: serv-ics-nsft-t-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env test --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   environment:
     name: test
-    url: http://serv-ics-sat-t-01:8080/
+    url: http://serv-ics-nsft-t-01:8080/
   needs:
     - build_docker
   tags:
@@ -97,7 +97,7 @@ pep8:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/python:3.10
   script:
     - pip install flake8
-    - flake8 ics_standalone_app_template | tee pep8.out || true
+    - flake8 nath_standalone_flask_template | tee pep8.out || true
   allow_failure: true
   artifacts:
     paths:
@@ -110,14 +110,14 @@ deploy_demo:
   stage: demo
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-sat-d-01
+    SSH_HOST: serv-ics-nsft-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-sat-d-01:8080/
+    url: http://serv-ics-nsft-d-01:8080/
   needs:
     - build_docker
     - pytest
@@ -128,14 +128,14 @@ update_demo:
   stage: demo
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-sat-d-01
+    SSH_HOST: serv-ics-nsft-d-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env demo --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: staging
-    url: http://serv-ics-sat-d-01:8080/
+    url: http://serv-ics-nsft-d-01:8080/
   needs:
     - build_docker
     - pytest
@@ -146,14 +146,14 @@ deploy_prod:
   stage: prod
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-sat-p-01
+    SSH_HOST: serv-ics-nsft-p-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action deploy --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-sat-p-01:8080/
+    url: http://serv-ics-nsft-p-01:8080/
   needs:
     - build_docker
     - pytest
@@ -164,14 +164,14 @@ update_prod:
   stage: prod
   <<: *ssh_setup_template
   variables:
-    SSH_HOST: serv-ics-sat-p-01
+    SSH_HOST: serv-ics-nsft-p-01
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
   script:
     - python3 deploy/ansible_deploy.py --action update --env prod --docker-image $DOCKER_IMAGE --docker-registry $CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX --registry-username $CI_REGISTRY_USER --registry-password $CI_REGISTRY_PASSWORD --container-registry-server $CI_REGISTRY --dependency-proxy-server $CI_DEPENDENCY_PROXY_SERVER --dependency-proxy-username $CI_DEPENDENCY_PROXY_USER --dependency-proxy-password $CI_DEPENDENCY_PROXY_PASSWORD
   when: manual
   environment:
     name: prod
-    url: http://serv-ics-sat-p-01:8080/
+    url: http://serv-ics-nsft-p-01:8080/
   needs:
     - build_docker
     - pytest

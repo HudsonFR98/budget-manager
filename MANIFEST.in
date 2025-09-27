@@ -1,11 +1,11 @@
-recursive-include ics_standalone_app_template/static *
-recursive-include ics_standalone_app_template/bin *
-recursive-include ics_standalone_app_template/templates *
-recursive-include ics_standalone_app_template/i18n *
+recursive-include nath_standalone_flask_template/static *
+recursive-include nath_standalone_flask_template/bin *
+recursive-include nath_standalone_flask_template/templates *
+recursive-include nath_standalone_flask_template/i18n *
 recursive-include migrations *.py
 recursive-include deploy *
 recursive-include docs *
 recursive-include alembic *
 include *.py *.ini
 global-exclude *.pyc *.php
-recursive-exclude ics_standalone_app_template/tests *
+recursive-exclude nath_standalone_flask_template/tests *
