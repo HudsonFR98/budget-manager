@@ -22,8 +22,7 @@ def send_telegram_message(text: str) -> bool:
         url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
         payload = {
             "chat_id": config.TELEGRAM_CHAT_ID,
-            "text": text,
-            "parse_mode": "Markdown"
+            "text": text
         }
         resp = requests.post(url, json=payload, timeout=10)
         if resp.status_code != 200:
