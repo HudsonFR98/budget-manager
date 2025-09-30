@@ -62,7 +62,7 @@ def task_status(task_name):
         
         next_run = job_status.get('next_run')
         next_run_str = None
-        if next_run is not None and hansfttr(next_run, 'isoformat'):
+        if next_run is not None and hasattr(next_run, 'isoformat'):
             try:
                 next_run_str = next_run.isoformat()
             except (AttributeError, TypeError):
