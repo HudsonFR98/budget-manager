@@ -54,7 +54,7 @@ RUN /opt/env3/budget_manager/bin/pip install --upgrade pip setuptools \
     && /opt/env3/budget_manager/bin/pip install -e .
 
 # Expose port
-EXPOSE 8081
+EXPOSE 8080
 
 # Set up entrypoint
 COPY deploy/docker-entrypoint.sh /docker-entrypoint.sh

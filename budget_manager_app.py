@@ -19,6 +19,6 @@ if __name__ == '__main__':
     app.run(
         debug=debug_mode, 
         host='0.0.0.0', 
-        port=8081, 
+        port=8080, 
         use_reloader=debug_mode
     )
