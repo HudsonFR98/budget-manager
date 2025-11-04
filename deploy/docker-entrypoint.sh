@@ -55,5 +55,5 @@ if [ "$BUDGET_MANAGER_CONTEXT" = "dev" ]; then
 else
     echo "Starting Gunicorn production server..."
     # Use Gunicorn for production/demo/test modes
-    exec /opt/env3/budget_manager/bin/gunicorn --bind 0.0.0.0:8081 --log-level=debug --capture-output --enable-stdio-inheritance budget_manager_app:app
+    exec /opt/env3/budget_manager/bin/gunicorn --bind 0.0.0.0:8080 --log-level=debug --capture-output --enable-stdio-inheritance budget_manager_app:app
 fi

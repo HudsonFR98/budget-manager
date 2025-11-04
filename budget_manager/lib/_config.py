@@ -147,7 +147,7 @@ class Config(object):
     DOC_DIR = '/opt/budget_manager_docs'
 
     # Base URL for task execution (used by test_simple_route task)
-    BASE_URL = 'http://localhost:8081'
+    BASE_URL = 'http://localhost:8080'
 
 
 class ProdConfig(Config):
