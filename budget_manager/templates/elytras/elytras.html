@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h4>Analyse de la rentabilité - <b>elytras.fr</b></h4>
+<br>
+<div class="row">
+  <div class="col">
+    <table class="table table-striped table-hover table-grey table-bordered">
+      <thead>
+        <tr>
+          <th>Année {{ year }}</th>
+          <th scope="col">TRIM 1</th>
+          <th scope="col">TRIM 2</th>
+          <th scope="col">TRIM 3</th>
+          <th scope="col">TRIM 4</th>
+          <th scope="col">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for title, values in header.items() %}
+        <tr>
+          <td>{{ title }}</td>
+          {% for value in values %}
+          <td><b><span style="color: {% if value <= 0 %}red{% else %}forestgreen{% endif %};">{{ value }} €</span></b>
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="col">
+    <div class="card">
+      <h5 class="card-header">Rentabilité depuis avril 2022</h5>
+      <div class="card-body">
+        <p style="font-size:55px; color: {% if profitability < 0 %}red{% else %}forestgreen{% endif %}"
+          class="card-title">{{ profitability }} €</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <svg id="chart" height="500"></svg>
+</div>
+<div class="row">
+  {% for trim, transactions in current_year_transactions.items() %}
+  <div class="col-3">
+    <h4><span style="color: gray">Trimestre {{ trim }}</span></h4>
+    <table class="table table-striped table-hover table-grey table-bordered">
+      <thead>
+        <tr>
+          <th>Description</th>
+          <th>Montant</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in transactions %}
+        <tr>
+          <td>{{ t.note }}</td>
+          <td><span style="color: {% if t.amount <= 0 %}red{% else %}forestgreen{% endif %};">{{ t.amount }} €</span>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+  (function () {
+    if (!window.d3) { return; }
+    var turnoverData = {{ turnover_data| safe
+  }};
+  var spendingData = {{ spending_data| safe }};
+
+  function drawChart() {
+    var parseDate = d3.timeParse("%Y/%m");
+    var formatTime = d3.timeFormat("%Y/%m");
+
+    var svg = d3.select("#chart");
+    svg.selectAll("*").remove();
+
+    var margin = { top: 50, right: 80, bottom: 70, left: 70 };
+    var width = +svg.node().getBoundingClientRect().width - margin.left - margin.right;
+    var height = +svg.attr("height") - margin.top - margin.bottom;
+    var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var styles = getComputedStyle(document.body);
+    var bodyColor = styles.getPropertyValue('--bs-body-color').trim() || '#212529';
+    var borderColor = styles.getPropertyValue('--bs-border-color').trim() || '#dee2e6';
+    var isDark = (document.documentElement.getAttribute('data-bs-theme') === 'dark');
+
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().range([height, 0]);
+
+    var line1 = d3.line()
+      .x(function (d) { return x(parseDate(d.year + "/" + d.month)); })
+      .y(function (d) { return y(d.amount); });
+
+    var line2 = d3.line()
+      .x(function (d) { return x(parseDate(d.year + "/" + d.month)); })
+      .y(function (d) { return y(d.amount); });
+
+    var yMin = d3.min(turnoverData.concat(spendingData), function (d) { return d.amount; });
+    var yMax = d3.max(turnoverData.concat(spendingData), function (d) { return d.amount; });
+    y.domain([yMin, yMax]);
+
+    var xMin = d3.min(turnoverData.concat(spendingData), function (d) { return parseDate(d.year + "/" + d.month); });
+    var xMax = d3.max(turnoverData.concat(spendingData), function (d) { return parseDate(d.year + "/" + d.month); });
+    x.domain([xMin, xMax]);
+
+    g.append("g")
+      .attr("class", "grid")
+      .call(d3.axisLeft(y).tickSize(-width).tickFormat(""))
+      .selectAll(".tick line")
+      .attr("stroke", borderColor)
+      .attr("stroke-opacity", 0.4);
+
+    g.append("g")
+      .attr("class", "grid")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).tickSize(-height).tickFormat(""))
+      .selectAll(".tick line")
+      .attr("stroke", borderColor)
+      .attr("stroke-opacity", 0.4);
+
+    g.append("path")
+      .data([turnoverData])
+      .attr("class", "line")
+      .style("stroke", "green")
+      .style("fill", "none")
+      .style("stroke-width", 3)
+      .attr("d", line1);
+
+    g.append("path")
+      .data([spendingData])
+      .attr("class", "line")
+      .style("stroke", "red")
+      .style("fill", "none")
+      .style("stroke-width", 3)
+      .attr("d", line2);
+
+    g.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x)
+        .tickFormat(formatTime)
+        .ticks(d3.timeMonth.every(1))
+        .tickSizeOuter(0)
+        .tickSize(10)
+        .tickPadding(10)
+      )
+      .call(function (gAxis) { gAxis.selectAll("text").attr("fill", bodyColor); gAxis.selectAll("path,line").attr("stroke", borderColor); })
+      .append("text")
+      .attr("x", width)
+      .attr("y", -10)
+      .style("font-size", "16px")
+      .attr("fill", bodyColor)
+      .text("Temps");
+
+    g.append("g")
+      .call(d3.axisLeft(y))
+      .call(function (gAxis) { gAxis.selectAll("text").attr("fill", bodyColor); gAxis.selectAll("path,line").attr("stroke", borderColor); })
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("fill", bodyColor)
+      .style("font-size", "16px")
+      .text("Montant");
+
+    g.selectAll(".tick text").style("font-size", "15px");
+
+    var legendBackground = g.append("rect")
+      .attr("class", "legend-background")
+      .attr("x", 25)
+      .attr("y", -13)
+      .attr("width", 160)
+      .attr("height", 60)
+      .attr("fill", isDark ? "transparent" : "#ffffff")
+      .attr("stroke", borderColor);
+
+    var legend = g.append("g").attr("class", "legend").attr("x", 10).attr("y", -30);
+    legend.append("rect").attr("width", 10).attr("height", 10).attr("x", 40).attr("class", "turnover").attr("fill", "green");
+    legend.append("text").attr("x", 60).attr("y", 9).attr("dy", ".35em").attr("fill", bodyColor).text("Chiffre d'affaire");
+    legend.append("rect").attr("width", 10).attr("height", 10).attr("y", 20).attr("x", 40).attr("class", "spending").attr("fill", "red");
+    legend.append("text").attr("x", 60).attr("y", 29).attr("dy", ".35em").attr("fill", bodyColor).text("Dépenses");
+  }
+
+  drawChart();
+
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (m) {
+      if (m.attributeName === 'data-bs-theme') {
+        drawChart();
+      }
+    });
+  });
+  observer.observe(document.documentElement, { attributes: true });
+
+  window.addEventListener('resize', function () { drawChart(); });
+        }) ();
+</script>
+{% endblock %}

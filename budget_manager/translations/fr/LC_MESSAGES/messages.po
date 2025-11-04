@@ -1,0 +1,567 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-10-15 19:33+0200\n"
+"PO-Revision-Date: 2025-07-07 15:40+0200\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: budget_manager/templates/base.html:19 budget_manager/templates/base.html:26
+msgid "Budget Manager"
+msgstr "Gestion de mon budget"
+
+#: budget_manager/templates/base.html:43
+#, fuzzy
+msgid "Transactions"
+msgstr "Actions"
+
+#: budget_manager/templates/base.html:46
+msgid "Categories"
+msgstr "Catégories"
+
+#: budget_manager/templates/base.html:49
+#, fuzzy
+msgid "Statistics"
+msgstr "Statut"
+
+#: budget_manager/templates/base.html:52
+msgid "Elytras"
+msgstr "Elytras"
+
+#: budget_manager/templates/base.html:55
+msgid "PayPal"
+msgstr "PayPal"
+
+#: budget_manager/templates/base.html:62
+msgid "Administration"
+msgstr "Administration"
+
+#: budget_manager/templates/base.html:65
+msgid "Users"
+msgstr "Utilisateurs"
+
+#: budget_manager/templates/admin/tasks.html:3
+#: budget_manager/templates/base.html:66
+msgid "Async Tasks"
+msgstr "Tâches Asynchrones"
+
+#: budget_manager/templates/base.html:67
+#, fuzzy
+msgid "Logs"
+msgstr "Connexion"
+
+#: budget_manager/templates/base.html:79
+msgid "Tests"
+msgstr "Tests"
+
+#: budget_manager/templates/base.html:82
+msgid "Coverage"
+msgstr "Couverture"
+
+#: budget_manager/templates/base.html:83
+msgid "Test Output"
+msgstr "Sortie des Tests"
+
+#: budget_manager/templates/base.html:106
+msgid "Help"
+msgstr "Aide"
+
+#: budget_manager/templates/base.html:108
+msgid "Toggle theme"
+msgstr "Basculer le thème"
+
+#: budget_manager/templates/base.html:114
+msgid "Language"
+msgstr "Langue"
+
+#: budget_manager/templates/base.html:127
+#: budget_manager/templates/login.html:14
+msgid "Login"
+msgstr "Connexion"
+
+#: budget_manager/templates/base.html:130
+#, fuzzy
+msgid "Register"
+msgstr "Résultat/Erreur"
+
+#: budget_manager/templates/base.html:213
+msgid "Switch to light mode"
+msgstr "Passer en mode clair"
+
+#: budget_manager/templates/base.html:216
+msgid "Switch to dark mode"
+msgstr "Passer en mode sombre"
+
+#: budget_manager/templates/login.html:9
+msgid "User ID"
+msgstr "Identifiant"
+
+#: budget_manager/templates/admin/users.html:110
+#: budget_manager/templates/login.html:13
+msgid "Password"
+msgstr "Mot de passe"
+
+#: budget_manager/templates/admin/logs.html:3
+#: budget_manager/templates/admin/logs.html:10
+#: budget_manager/templates/admin/logs.html:18
+msgid "Application Logs"
+msgstr "Journaux d'Application"
+
+#: budget_manager/templates/admin/logs.html:3
+#: budget_manager/templates/admin/tasks.html:3
+#: budget_manager/templates/admin/users.html:3
+msgid "Admin"
+msgstr "Admin"
+
+#: budget_manager/templates/admin/logs.html:21
+#: budget_manager/templates/admin/tasks.html:177
+msgid "Refresh"
+msgstr "Actualiser"
+
+#: budget_manager/templates/admin/logs.html:24
+msgid "Clear Display"
+msgstr "Effacer l'Affichage"
+
+#: budget_manager/templates/admin/logs.html:36
+msgid "No logs available"
+msgstr "Aucun journal disponible"
+
+#: budget_manager/templates/admin/tasks.html:10
+msgid "Async Tasks Management"
+msgstr "Gestion des Tâches Asynchrones"
+
+#: budget_manager/templates/admin/tasks.html:22
+msgid "Total Executions"
+msgstr "Total des Exécutions"
+
+#: budget_manager/templates/admin/tasks.html:39
+msgid "Successful"
+msgstr "Réussies"
+
+#: budget_manager/templates/admin/tasks.html:56
+#: budget_manager/templates/admin/tasks.html:165
+#: budget_manager/templates/admin/tasks.html:374
+msgid "Failed"
+msgstr "Échouées"
+
+#: budget_manager/templates/admin/tasks.html:73
+msgid "Success Rate"
+msgstr "Taux de Réussite"
+
+#: budget_manager/templates/admin/tasks.html:90
+msgid "Active Scheduled Tasks"
+msgstr "Tâches Planifiées Actives"
+
+#: budget_manager/templates/admin/tasks.html:98
+#: budget_manager/templates/admin/tasks.html:186
+msgid "Task Name"
+msgstr "Nom de la Tâche"
+
+#: budget_manager/templates/admin/tasks.html:99
+msgid "Description"
+msgstr "Description"
+
+#: budget_manager/templates/admin/tasks.html:100
+msgid "Schedule"
+msgstr "Planification"
+
+#: budget_manager/templates/admin/tasks.html:101
+#: budget_manager/templates/admin/tasks.html:134
+#: budget_manager/templates/admin/tasks.html:187
+#: budget_manager/templates/admin/users.html:40
+msgid "Status"
+msgstr "Statut"
+
+#: budget_manager/templates/admin/tasks.html:102
+msgid "Last Run"
+msgstr "Dernière Exécution"
+
+#: budget_manager/templates/admin/tasks.html:103
+msgid "Next Run"
+msgstr "Prochaine Exécution"
+
+#: budget_manager/templates/admin/tasks.html:104
+#: budget_manager/templates/admin/users.html:41
+msgid "Actions"
+msgstr "Actions"
+
+#: budget_manager/templates/admin/tasks.html:114
+#: budget_manager/templates/admin/users.html:58
+msgid "Active"
+msgstr "Actif"
+
+#: budget_manager/templates/admin/tasks.html:120
+msgid "Never"
+msgstr "Jamais"
+
+#: budget_manager/templates/admin/tasks.html:144
+msgid "No active scheduled tasks found."
+msgstr "Aucune tâche planifiée active trouvée."
+
+#: budget_manager/templates/admin/tasks.html:158
+msgid "Task Execution History"
+msgstr "Historique d'Exécution des Tâches"
+
+#: budget_manager/templates/admin/tasks.html:163
+msgid "All Status"
+msgstr "Tous les Statuts"
+
+#: budget_manager/templates/admin/tasks.html:164
+#: budget_manager/templates/admin/tasks.html:189
+msgid "Completed"
+msgstr "Terminé"
+
+#: budget_manager/templates/admin/tasks.html:166
+#: budget_manager/templates/admin/tasks.html:377
+msgid "Running"
+msgstr "En Cours"
+
+#: budget_manager/templates/admin/tasks.html:167
+msgid "Pending"
+msgstr "En Attente"
+
+#: budget_manager/templates/admin/tasks.html:171
+msgid "All Tasks"
+msgstr "Toutes les Tâches"
+
+#: budget_manager/templates/admin/tasks.html:188
+msgid "Started"
+msgstr "Démarré"
+
+#: budget_manager/templates/admin/tasks.html:190
+msgid "Duration"
+msgstr "Durée"
+
+#: budget_manager/templates/admin/tasks.html:191
+msgid "Result/Error"
+msgstr "Résultat/Erreur"
+
+#: budget_manager/templates/admin/tasks.html:212
+msgid "Task Status"
+msgstr "Statut de la Tâche"
+
+#: budget_manager/templates/admin/tasks.html:217
+#: budget_manager/templates/admin/tasks.html:236
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: budget_manager/templates/admin/tasks.html:221
+msgid "Close"
+msgstr "Fermer"
+
+#: budget_manager/templates/admin/tasks.html:281
+msgid "Failed to load task status"
+msgstr "Échec du chargement du statut de la tâche"
+
+#: budget_manager/templates/admin/tasks.html:371
+msgid "Success"
+msgstr "Succès"
+
+#: budget_manager/templates/admin/users.html:3
+#: budget_manager/templates/admin/users.html:10
+msgid "Users Management"
+msgstr "Gestion des Utilisateurs"
+
+#: budget_manager/templates/admin/users.html:18
+#: budget_manager/templates/admin/users.html:100
+msgid "Create New User"
+msgstr "Créer un Nouvel Utilisateur"
+
+#: budget_manager/templates/admin/users.html:28
+msgid "Users List"
+msgstr "Liste des Utilisateurs"
+
+#: budget_manager/templates/admin/users.html:35
+#: budget_manager/templates/admin/users.html:105
+#: budget_manager/templates/admin/users.html:157
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: budget_manager/templates/admin/users.html:36
+#: budget_manager/templates/admin/users.html:115
+#: budget_manager/templates/admin/users.html:167
+msgid "First Name"
+msgstr "Prénom"
+
+#: budget_manager/templates/admin/users.html:37
+#: budget_manager/templates/admin/users.html:119
+#: budget_manager/templates/admin/users.html:171
+msgid "Last Name"
+msgstr "Nom de famille"
+
+#: budget_manager/templates/admin/users.html:38
+#: budget_manager/templates/admin/users.html:123
+#: budget_manager/templates/admin/users.html:175
+msgid "Email"
+msgstr "Email"
+
+#: budget_manager/templates/admin/users.html:39
+#: budget_manager/templates/admin/users.html:127
+#: budget_manager/templates/admin/users.html:179
+msgid "Roles"
+msgstr "Rôles"
+
+#: budget_manager/templates/admin/users.html:60
+msgid "Left"
+msgstr "Parti"
+
+#: budget_manager/templates/admin/users.html:62
+msgid "Inactive"
+msgstr "Inactif"
+
+#: budget_manager/templates/admin/users.html:69
+msgid "Edit"
+msgstr "Modifier"
+
+#: budget_manager/templates/admin/users.html:75
+msgid "Deactivate"
+msgstr "Désactiver"
+
+#: budget_manager/templates/admin/users.html:77
+msgid "Activate"
+msgstr "Activer"
+
+#: budget_manager/templates/admin/users.html:133
+#: budget_manager/templates/admin/users.html:185
+msgid "Hold Ctrl/Cmd to select multiple roles"
+msgstr "Maintenez Ctrl/Cmd pour sélectionner plusieurs rôles"
+
+#: budget_manager/templates/admin/users.html:137
+#: budget_manager/templates/admin/users.html:189
+msgid "Cancel"
+msgstr "Annuler"
+
+#: budget_manager/templates/admin/users.html:138
+msgid "Create User"
+msgstr "Créer l'Utilisateur"
+
+#: budget_manager/templates/admin/users.html:151
+msgid "Edit User"
+msgstr "Modifier l'Utilisateur"
+
+#: budget_manager/templates/admin/users.html:162
+msgid "New Password"
+msgstr "Nouveau Mot de passe"
+
+#: budget_manager/templates/admin/users.html:164
+msgid "Leave blank to keep current password"
+msgstr "Laisser vide pour conserver le mot de passe actuel"
+
+#: budget_manager/templates/admin/users.html:190
+msgid "Update User"
+msgstr "Mettre à jour l'Utilisateur"
+
+#: budget_manager/templates/admin/users.html:235
+msgid "Failed to load user data"
+msgstr "Échec du chargement des données utilisateur"
+
+#: budget_manager/templates/admin/users.html:246
+msgid "Are you sure you want to deactivate this user?"
+msgstr "Êtes-vous sûr de vouloir désactiver cet utilisateur ?"
+
+#: budget_manager/templates/admin/users.html:246
+msgid "Are you sure you want to activate this user?"
+msgstr "Êtes-vous sûr de vouloir activer cet utilisateur ?"
+
+#: budget_manager/templates/admin/users.html:265
+#: budget_manager/templates/admin/users.html:270
+msgid "Failed to update user status"
+msgstr "Échec de la mise à jour du statut utilisateur"
+
+#: budget_manager/templates/dashboard/home.html:5
+msgid "Welcome to the Dashboard"
+msgstr "Bienvenue sur le Tableau de Bord"
+
+#: budget_manager/templates/doc/index.html:80
+msgid "Search documentation..."
+msgstr "Rechercher dans la documentation..."
+
+#: budget_manager/templates/doc/index.html:88
+msgid "Overview"
+msgstr "Vue d'ensemble"
+
+#: budget_manager/templates/doc/index.html:91
+msgid ""
+"User\n"
+"                                Management"
+msgstr "Gestion des utilisateurs"
+
+#: budget_manager/templates/doc/index.html:95
+#: budget_manager/templates/doc/index.html:143
+msgid "Database"
+msgstr "Base de données"
+
+#: budget_manager/templates/doc/index.html:98
+#: budget_manager/templates/doc/index.html:154
+msgid "Configuration"
+msgstr "Configuration"
+
+#: budget_manager/templates/doc/index.html:102
+#: budget_manager/templates/doc/index.html:166
+msgid "Deployment"
+msgstr "Déploiement"
+
+#: budget_manager/templates/doc/index.html:117
+msgid "Welcome to the Budget Manager Documentation"
+msgstr "Bienvenue dans la documentation de Budget Manager"
+
+#: budget_manager/templates/doc/index.html:119
+#, fuzzy
+msgid ""
+"This documentation provides information about the Budget Manager "
+"application, its\n"
+"                        features, and how to use it."
+msgstr ""
+"Cette documentation fournit des informations sur l'application Fair3r "
+"Custom Overlay, ses fonctionnalités et son utilibudmanion."
+
+#: budget_manager/templates/doc/index.html:123
+msgid "Note"
+msgstr "Remarque"
+
+#: budget_manager/templates/doc/index.html:124
+#, fuzzy
+msgid ""
+"This documentation is customizable and can be edited to include specific "
+"information\n"
+"                            about your implementation."
+msgstr ""
+"Cette documentation est personnalisable et peut être modifiée pour "
+"inclure des informations spécifiques à votre implémentation."
+
+#: budget_manager/templates/doc/index.html:131
+msgid "User Management"
+msgstr "Gestion des utilibudmaneurs"
+
+#: budget_manager/templates/doc/index.html:132
+#, fuzzy
+msgid ""
+"The application includes a comprehensive user management system with "
+"role-based\n"
+"                        permissions:"
+msgstr ""
+"L'application inclut un système complet de gestion des utilibudmaneurs "
+"avec des permissions basées sur les rôles :"
+
+#: budget_manager/templates/doc/index.html:135
+msgid "User authentication and authorization"
+msgstr "Authentification et autoribudmanion des utilibudmaneurs"
+
+#: budget_manager/templates/doc/index.html:136
+msgid "Role-based access control"
+msgstr "Contrôle d'accès basé sur les rôles"
+
+#: budget_manager/templates/doc/index.html:137
+msgid "Permission management"
+msgstr "Gestion des permissions"
+
+#: budget_manager/templates/doc/index.html:144
+msgid ""
+"The application uses PostgreSQL as its database with Alembic for "
+"migrations:"
+msgstr ""
+"L'application utilise PostgreSQL comme base de données avec Alembic pour "
+"les migrations :"
+
+#: budget_manager/templates/doc/index.html:146
+msgid "Automatic database migrations"
+msgstr "Migrations automatiques de la base de données"
+
+#: budget_manager/templates/doc/index.html:147
+msgid "SQLAlchemy ORM for database access"
+msgstr "SQLAlchemy ORM pour l'accès à la base de données"
+
+#: budget_manager/templates/doc/index.html:148
+msgid "Efficient data management"
+msgstr "Gestion efficace des données"
+
+#: budget_manager/templates/doc/index.html:155
+msgid "The application supports multiple environments:"
+msgstr "L'application prend en charge plusieurs environnements :"
+
+#: budget_manager/templates/doc/index.html:157
+msgid "Development"
+msgstr "Développement"
+
+#: budget_manager/templates/doc/index.html:158
+msgid "Testing"
+msgstr "Test"
+
+#: budget_manager/templates/doc/index.html:159
+msgid "Demo"
+msgstr "Démo"
+
+#: budget_manager/templates/doc/index.html:160
+msgid "Production"
+msgstr "Production"
+
+#: budget_manager/templates/doc/index.html:167
+msgid "The application can be deployed using Docker:"
+msgstr "L'application peut être déployée avec Docker :"
+
+#: budget_manager/templates/doc/index.html:169
+msgid "Docker Compose for local development"
+msgstr "Docker Compose pour le développement local"
+
+#: budget_manager/templates/doc/index.html:170
+msgid "Ansible for production deployment"
+msgstr "Ansible pour le déploiement en production"
+
+#: budget_manager/templates/doc/index.html:171
+msgid "CI/CD pipeline integration"
+msgstr "Intégration de la chaîne CI/CD"
+
+#~ msgid "Example"
+#~ msgstr "Exemple"
+
+#~ msgid "Logout"
+#~ msgstr "Déconnexion"
+
+#~ msgid "Username and password are required."
+#~ msgstr "Le nom d'utilisateur et le mot de passe sont requis."
+
+#~ msgid "Username already exists."
+#~ msgstr "Le nom d'utilisateur existe déjà."
+
+#~ msgid "User created successfully."
+#~ msgstr "Utilisateur créé avec succès."
+
+#~ msgid "Error creating user. Please try again."
+#~ msgstr "Erreur lors de la création de l'utilisateur. Veuillez réessayer."
+
+#~ msgid "User ID is required."
+#~ msgstr "L'ID utilisateur est requis."
+
+#~ msgid "User not found."
+#~ msgstr "Utilisateur non trouvé."
+
+#~ msgid "Username is required."
+#~ msgstr "Le nom d'utilisateur est requis."
+
+#~ msgid "User updated successfully."
+#~ msgstr "Utilisateur mis à jour avec succès."
+
+#~ msgid "Error updating user. Please try again."
+#~ msgstr "Erreur lors de la mise à jour de l'utilisateur. Veuillez réessayer."
+
+#~ msgid "Error loading users data. Please check database connection."
+#~ msgstr ""
+#~ "Erreur lors du chargement des données"
+#~ " utilisateur. Veuillez vérifier la "
+#~ "connexion à la base de données."
+
+#~ msgid "Password hashing uses secure PBKDF2 with SHA256"
+#~ msgstr "Le hachage des mots de passe utilise PBKDF2 sécurisé avec SHA256"
+

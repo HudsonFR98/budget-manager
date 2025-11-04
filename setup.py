@@ -1,9 +1,9 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="nath_standalone_flask_template",
+    name="budget_manager",
     description='',
-    version="1.0.0",
+    version="2.0.0",
     packages=find_packages(),
     include_package_data=True,
 )

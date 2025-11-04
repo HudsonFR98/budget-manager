@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4>Modifier une transaction paypal</h4>
+<br>
+<form method="POST" action="/paypal/edit/{{transac.id}}">
+    <div class="form-group">
+        <label for="type-select">Catégorie</label>
+        <select class="form-control" id="type-select" name="category">
+            {% for c in categories %}
+            <option {% if transac.category.id==c.id %}selected{% endif %} value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="name">Date</label>
+        <input type="date" class="form-control" id="date" name="date" value="{{ transac.get_datetime }}" required>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="name">Montant</label>
+        <input type="number" step="0.01" class="form-control" id="amount" name="amount" value="{{ transac.amount }}"
+            required>
+    </div>
+    <br>
+    <div class="form-group">
+        <label for="name">Note</label>
+        <input type="text" class="form-control" id="note" name="note" value="{{ transac.note }}" required>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+</form>
+
+{% endblock %}

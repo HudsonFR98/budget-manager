@@ -1,11 +1,11 @@
-# Dockerfile for nath_standalone_flask_template
+# Dockerfile for budget_manager
 ARG BASE_IMAGE=python:3.11-slim
 FROM ${BASE_IMAGE}
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-ENV NATH_STANDALONE_FLASK_TEMPLATE_CONTEXT=dev
+ENV BUDGET_MANAGER_CONTEXT=dev
 ENV DB_IP=db
 
 # Install system dependencies
@@ -31,30 +31,30 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN groupadd -g 1000 web && useradd -r -g web -u 1000 -m -s /bin/bash web
 
 # Create necessary directories with correct permissions
-RUN mkdir -p /var/log/nath_standalone_flask_template /opt/nath_standalone_flask_template_docs /var/backup \
-    && chown -R web:web /var/log/nath_standalone_flask_template /opt/nath_standalone_flask_template_docs /var/backup \
-    && chmod 775 /var/log/nath_standalone_flask_template /var/backup \
-    && touch /var/log/nath_standalone_flask_template/nath_standalone_flask_template.log \
-    && chown web:web /var/log/nath_standalone_flask_template/nath_standalone_flask_template.log \
-    && chmod 664 /var/log/nath_standalone_flask_template/nath_standalone_flask_template.log
+RUN mkdir -p /var/log/budget_manager /opt/budget_manager_docs /var/backup \
+    && chown -R web:web /var/log/budget_manager /opt/budget_manager_docs /var/backup \
+    && chmod 775 /var/log/budget_manager /var/backup \
+    && touch /var/log/budget_manager/budget_manager.log \
+    && chown web:web /var/log/budget_manager/budget_manager.log \
+    && chmod 664 /var/log/budget_manager/budget_manager.log
 
 # Set working directory
-WORKDIR /opt/nath_standalone_flask_template
+WORKDIR /opt/budget_manager
 
 # Copy application code
-COPY --chown=web:web . /opt/nath_standalone_flask_template/
+COPY --chown=web:web . /opt/budget_manager/
 
 # Create and activate virtual environment
-RUN python -m venv /opt/env3/nath_standalone_flask_template \
-    && chown -R web:web /opt/env3/nath_standalone_flask_template
+RUN python -m venv /opt/env3/budget_manager \
+    && chown -R web:web /opt/env3/budget_manager
 
 # Install Python dependencies
-RUN /opt/env3/nath_standalone_flask_template/bin/pip install --upgrade pip setuptools \
-    && /opt/env3/nath_standalone_flask_template/bin/pip install -r deploy/requirements.txt \
-    && /opt/env3/nath_standalone_flask_template/bin/pip install -e .
+RUN /opt/env3/budget_manager/bin/pip install --upgrade pip setuptools \
+    && /opt/env3/budget_manager/bin/pip install -r deploy/requirements.txt \
+    && /opt/env3/budget_manager/bin/pip install -e .
 
 # Expose port
-EXPOSE 8080
+EXPOSE 8081
 
 # Set up entrypoint
 COPY deploy/docker-entrypoint.sh /docker-entrypoint.sh

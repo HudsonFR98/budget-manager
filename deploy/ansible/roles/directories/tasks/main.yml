@@ -9,15 +9,15 @@
     group: nath
     mode: '0755'
   with_items:
-    - /var/log/nath_standalone_flask_template
-    - /opt/nath_standalone_flask_template_data
+    - /var/log/budget_manager
+    - /opt/budget_manager_data
     - /var/log/nginx
     - /etc/letsencrypt
     - /var/www/html
     - /var/backup
 - name: Set log directory permissions for Docker container
   file:
-    path: /var/log/nath_standalone_flask_template
+    path: /var/log/budget_manager
     state: directory
     owner: "1000"  # UID of web user in container
     group: "1000"  # GID of web user in container
@@ -26,7 +26,7 @@
 
 - name: Create log file with correct permissions
   file:
-    path: /var/log/nath_standalone_flask_template/nath_standalone_flask_template.log
+    path: /var/log/budget_manager/budget_manager.log
     state: touch
     owner: "1000"
     group: "1000"
@@ -34,7 +34,7 @@
 
 - name: Set data directory permissions for Docker container
   file:
-    path: /opt/nath_standalone_flask_template_data
+    path: /opt/budget_manager_data
     state: directory
     owner: "1000"  # UID of web user in container
     group: "1000"  # GID of web user in container

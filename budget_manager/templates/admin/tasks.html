@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Async Tasks') }} - {{ _('Admin') }}{% endblock %}
+
+{% block content %}
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="h3 mb-4">{{ _('Async Tasks Management') }}</h1>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                {{ _('Total Executions') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ total_executions }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                {{ _('Successful') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ success_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-check fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                {{ _('Failed') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ failed_count }}</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-times fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                {{ _('Success Rate') }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ success_rate }}%</div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-percent fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Scheduled Tasks -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ _('Active Scheduled Tasks') }}</h6>
+                </div>
+                <div class="card-body">
+                    {% if active_tasks %}
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Task Name') }}</th>
+                                    <th>{{ _('Description') }}</th>
+                                    <th>{{ _('Schedule') }}</th>
+                                    <th>{{ _('Status') }}</th>
+                                    <th>{{ _('Last Run') }}</th>
+                                    <th>{{ _('Next Run') }}</th>
+                                    <th>{{ _('Actions') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for task in active_tasks %}
+                                <tr>
+                                    <td>{{ task.task_name }}</td>
+                                    <td>{{ task.description or '-' }}</td>
+                                    <td><code>{{ task.cron_expression }}</code></td>
+                                    <td>
+                                        <span class="badge badge-success">{{ _('Active') }}</span>
+                                    </td>
+                                    <td>
+                                        {% if task.last_run %}
+                                        {{ task.last_run.strftime('%Y-%m-%d %H:%M') }}
+                                        {% else %}
+                                        {{ _('Never') }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if task.next_run %}
+                                        {{ task.next_run.strftime('%Y-%m-%d %H:%M') }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-info task-status-btn"
+                                                data-task="{{ task.task_name }}">
+                                                {{ _('Status') }}
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">{{ _('No active scheduled tasks found.') }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Task Executions -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">{{ _('Task Execution History') }} <span
+                            id="resultCount" class="text-muted small"></span></h6>
+                    <div>
+                        <select id="statusFilter" class="form-control form-control-sm d-inline-block"
+                            style="width: auto;">
+                            <option value="">{{ _('All Status') }}</option>
+                            <option value="completed">{{ _('Completed') }}</option>
+                            <option value="failed">{{ _('Failed') }}</option>
+                            <option value="running">{{ _('Running') }}</option>
+                            <option value="pending">{{ _('Pending') }}</option>
+                        </select>
+                        <select id="taskFilter" class="form-control form-control-sm d-inline-block ms-2"
+                            style="width: auto;">
+                            <option value="">{{ _('All Tasks') }}</option>
+                            {% for task in active_tasks %}
+                            <option value="{{ task.task_name }}">{{ task.task_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <button id="refreshBtn" class="btn btn-sm btn-outline-primary ms-2">
+                            <i class="fas fa-sync-alt" id="refreshIcon"></i> {{ _('Refresh') }}
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0" id="executionsTable">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('Task Name') }}</th>
+                                    <th>{{ _('Status') }}</th>
+                                    <th>{{ _('Started') }}</th>
+                                    <th>{{ _('Completed') }}</th>
+                                    <th>{{ _('Duration') }}</th>
+                                    <th>{{ _('Result/Error') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="6" class="text-center">Loading...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Status Modal -->
+<div class="modal fade" id="taskStatusModal" tabindex="-1" aria-labelledby="taskStatusModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="taskStatusModalLabel">{{ _('Task Status') }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="taskStatusContent">
+                    {{ _('Loading...') }}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ _('Close') }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Task status button click handler
+        document.querySelectorAll('.task-status-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var taskName = this.getAttribute('data-task');
+                var modal = document.getElementById('taskStatusModal');
+                var content = document.getElementById('taskStatusContent');
+
+                content.innerHTML = '{{ _("Loading...") }}';
+                var bootstrapModal = new bootstrap.Modal(modal);
+                bootstrapModal.show();
+
+                fetch('/admin/api/task/' + taskName + '/status')
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(function (data) {
+                        var html = '<div class="row">';
+                        html += '<div class="col-12"><strong>Task:</strong> ' + data.task_name + '</div>';
+                        html += '<div class="col-12"><strong>Job Active:</strong> ' + (data.job_active ? 'Yes' : 'No') + '</div>';
+
+                        if (data.next_run) {
+                            // Format the datetime to match the table display (same as backend)
+                            var nextRunDate = new Date(data.next_run);
+                            var formattedDate = nextRunDate.getFullYear() + '-' +
+                                String(nextRunDate.getMonth() + 1).padStart(2, '0') + '-' +
+                                String(nextRunDate.getDate()).padStart(2, '0') + ' ' +
+                                String(nextRunDate.getHours()).padStart(2, '0') + ':' +
+                                String(nextRunDate.getMinutes()).padStart(2, '0');
+                            html += '<div class="col-12"><strong>Next Run:</strong> ' + formattedDate + '</div>';
+                        }
+
+                        if (data.scheduled_task) {
+                            html += '<div class="col-12"><strong>Schedule:</strong> <code>' + data.scheduled_task.cron_expression + '</code></div>';
+                            if (data.scheduled_task.last_run) {
+                                // Format the datetime to match the table display (same as backend)
+                                var lastRunDate = new Date(data.scheduled_task.last_run);
+                                var formattedLastRun = lastRunDate.getFullYear() + '-' +
+                                    String(lastRunDate.getMonth() + 1).padStart(2, '0') + '-' +
+                                    String(lastRunDate.getDate()).padStart(2, '0') + ' ' +
+                                    String(lastRunDate.getHours()).padStart(2, '0') + ':' +
+                                    String(lastRunDate.getMinutes()).padStart(2, '0');
+                                html += '<div class="col-12"><strong>Last Run:</strong> ' + formattedLastRun + '</div>';
+                            }
+                        }
+
+                        html += '</div>';
+                        content.innerHTML = html;
+                    })
+                    .catch(function (error) {
+                        content.innerHTML = '<div class="alert alert-danger">{{ _("Failed to load task status") }}</div>';
+                    });
+            });
+        });
+
+        // Filter functionality
+        document.getElementById('statusFilter').addEventListener('change', loadFilteredExecutions);
+        document.getElementById('taskFilter').addEventListener('change', loadFilteredExecutions);
+        document.getElementById('refreshBtn').addEventListener('click', loadFilteredExecutions);
+
+        // Load initial data
+        loadFilteredExecutions();
+
+        function loadFilteredExecutions() {
+            var statusFilter = document.getElementById('statusFilter').value;
+            var taskFilter = document.getElementById('taskFilter').value;
+            var refreshBtn = document.getElementById('refreshBtn');
+            var refreshIcon = document.getElementById('refreshIcon');
+
+            // Disable refresh button and show spinning icon
+            refreshBtn.disabled = true;
+            refreshIcon.className = 'fas fa-spinner fa-spin';
+
+            // Build query parameters
+            var params = new URLSearchParams();
+            if (statusFilter) {
+                params.append('status', statusFilter);
+            }
+            if (taskFilter) {
+                params.append('task_name', taskFilter);
+            }
+            params.append('limit', '100');
+
+            // Show loading state
+            var tbody = document.querySelector('#executionsTable tbody');
+            tbody.innerHTML = '<tr><td colspan="6" class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
+
+            // Fetch filtered data from server
+            fetch('/admin/api/executions?' + params.toString())
+                .then(function (response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function (data) {
+                    updateExecutionsTable(data.executions);
+                    // Update result count
+                    var resultCount = document.getElementById('resultCount');
+                    if (data.executions) {
+                        resultCount.textContent = '(' + data.executions.length + ' results)';
+                    } else {
+                        resultCount.textContent = '';
+                    }
+                })
+                .catch(function (error) {
+                    console.error('Error loading filtered executions:', error);
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center text-danger"><i class="fas fa-exclamation-triangle"></i> Error loading data</td></tr>';
+                })
+                .finally(function () {
+                    // Re-enable refresh button and restore icon
+                    refreshBtn.disabled = false;
+                    refreshIcon.className = 'fas fa-sync-alt';
+                });
+        }
+
+        function updateExecutionsTable(executions) {
+            var tbody = document.querySelector('#executionsTable tbody');
+            tbody.innerHTML = '';
+
+            if (executions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No executions found</td></tr>';
+                return;
+            }
+
+            executions.forEach(function (execution) {
+                var row = document.createElement('tr');
+
+                // Task name
+                var taskNameCell = document.createElement('td');
+                taskNameCell.textContent = execution.task_name;
+                row.appendChild(taskNameCell);
+
+                // Status
+                var statusCell = document.createElement('td');
+                var badge = document.createElement('span');
+                badge.className = 'badge';
+
+                if (execution.status === 'completed') {
+                    badge.className += ' bg-success';
+                    badge.textContent = '{{ _("Success") }}';
+                } else if (execution.status === 'failed') {
+                    badge.className += ' bg-danger';
+                    badge.textContent = '{{ _("Failed") }}';
+                } else if (execution.status === 'running') {
+                    badge.className += ' bg-warning text-dark';
+                    badge.textContent = '{{ _("Running") }}';
+                } else {
+                    badge.className += ' bg-secondary';
+                    badge.textContent = execution.status;
+                }
+
+                statusCell.appendChild(badge);
+                row.appendChild(statusCell);
+
+                // Started at
+                var startedCell = document.createElement('td');
+                if (execution.started_at) {
+                    var startedDate = new Date(execution.started_at);
+                    startedCell.textContent = startedDate.getFullYear() + '-' +
+                        String(startedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(startedDate.getDate()).padStart(2, '0') + ' ' +
+                        String(startedDate.getHours()).padStart(2, '0') + ':' +
+                        String(startedDate.getMinutes()).padStart(2, '0') + ':' +
+                        String(startedDate.getSeconds()).padStart(2, '0');
+                } else {
+                    startedCell.textContent = '-';
+                }
+                row.appendChild(startedCell);
+
+                // Completed at
+                var completedCell = document.createElement('td');
+                if (execution.completed_at) {
+                    var completedDate = new Date(execution.completed_at);
+                    completedCell.textContent = completedDate.getFullYear() + '-' +
+                        String(completedDate.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(completedDate.getDate()).padStart(2, '0') + ' ' +
+                        String(completedDate.getHours()).padStart(2, '0') + ':' +
+                        String(completedDate.getMinutes()).padStart(2, '0') + ':' +
+                        String(completedDate.getSeconds()).padStart(2, '0');
+                } else {
+                    completedCell.textContent = '-';
+                }
+                row.appendChild(completedCell);
+
+                // Duration
+                var durationCell = document.createElement('td');
+                if (execution.execution_time) {
+                    durationCell.textContent = execution.execution_time + 's';
+                } else {
+                    durationCell.textContent = '-';
+                }
+                row.appendChild(durationCell);
+
+                // Result/Error
+                var resultCell = document.createElement('td');
+                if (execution.status === 'failed' && execution.error_message) {
+                    var errorText = document.createElement('small');
+                    errorText.className = 'text-danger';
+                    errorText.textContent = execution.error_message.length > 100 ?
+                        execution.error_message.substring(0, 100) + '...' :
+                        execution.error_message;
+                    resultCell.appendChild(errorText);
+                } else if (execution.status === 'completed' && execution.result) {
+                    var resultText = document.createElement('small');
+                    resultText.className = 'text-success';
+                    resultText.textContent = execution.result.length > 100 ?
+                        execution.result.substring(0, 100) + '...' :
+                        execution.result;
+                    resultCell.appendChild(resultText);
+                } else {
+                    resultCell.textContent = '-';
+                }
+                row.appendChild(resultCell);
+
+                tbody.appendChild(row);
+            });
+        }
+    });
+</script>
+{% endblock %}

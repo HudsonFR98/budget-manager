@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>Évolution des dépenses</b></h4>
+<br>
+<img src="data:image/png;base64,{{ chart }}" alt="Stacked Areas Chart">
+
+<br>
+<h5>Ajout légende:</h5><br>
+<p>Total entrées d'argent: barre verte</p>
+<p>Évolution de la solde totale: barre violette</p>
+
+{% endblock %}

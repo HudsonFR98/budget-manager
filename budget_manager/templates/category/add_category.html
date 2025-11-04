@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h4>Ajouter une catégorie</h4>
+<br>
+<form method="POST" action="/category/add">
+  <div class="form-group">
+    <label for="name">Nom</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="CAF, Alimentation, Banque, Voyages..."
+      required>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="type-select">Type</label>
+    <select class="form-control" id="type-select" name="type">
+      <option value="0">Revenus</option>
+      <option value="1">Dépenses fixes</option>
+      <option value="2">Dépenses variables</option>
+    </select>
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="budget-percent">Budget alloué pour ce mois<br><span style="color: gray">(en % de vos
+        gains)</span></label>
+    <br>
+    <input type="range" step="0.001" class="form-control-range" id="budget-percent" name="budget" min="0" max="100"
+      value="0" required>
+    <span id="budget-percent-value">0</span>%
+    <br>
+    <label for="budget-percent"><span style="color: gray">(ou en €)</span></label>
+    <input type="text" class="form-control" id="budget-euros" name="budget-euros" value="" placeholder="€">
+  </div>
+  <br>
+  <div class="form-group" style="width: 100px">
+    <label for="name">Couleur</label>
+    <input type="color" class="form-control" id="color" name="color" required>
+  </div>
+  <br>
+  <div class="form-group" style="width: 100px">
+    <label for="name">Icone</label>
+    <input style="font-size: 20px" type="text" class="form-control" id="icon" name="icon" placeholder="(emoji)">
+  </div>
+  <br>
+  <button type="submit" class="btn btn-primary">Créer</button>
+</form>
+
+<script>
+  // Get the range input element
+  var rangePercentInput = document.getElementById('budget-percent');
+  var rangeEurosInput = document.getElementById('budget-euros');
+
+  // Get the span element to display the value
+  var rangePercentValue = document.getElementById('budget-percent-value');
+
+  // Get the numeric variable from the server via Jinja
+  var numericVariable = {{ total_earnings }};
+
+  // Update the span element with the initial value
+  rangePercentValue.innerHTML = rangePercentInput.value;
+
+  // Calculate the corresponding value in euros and update the numeric input
+  rangePercentInput.addEventListener('input', function () {
+    rangePercentValue.innerHTML = this.value;
+    var eurosValue = (this.value / 100) * numericVariable;
+    rangeEurosInput.value = eurosValue.toFixed(2);
+  });
+
+  // Update the range input with the corresponding percentage when the numeric input changes
+  rangeEurosInput.addEventListener('input', function () {
+    var percentValue = (this.value / numericVariable) * 100;
+    rangePercentInput.value = percentValue.toFixed(4);
+    rangePercentValue.innerHTML = percentValue.toFixed(2);
+  });
+</script>
+
+{% endblock %}

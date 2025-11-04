@@ -4,61 +4,61 @@ version: '3.8'
 services:
   app:
     build: .
-    container_name: nsft_app_dev
+    container_name: budman_app_dev
     ports:
-      - "8080:8080"
+      - "8081:8081"
     environment:
-      - NATH_STANDALONE_FLASK_TEMPLATE_CONTEXT=dev
-      - DB_IP=nsft_db_dev
+      - BUDGET_MANAGER_CONTEXT=dev
+      - DB_IP=budman_db_dev
     depends_on:
       db:
         condition: service_healthy
       redis:
         condition: service_healthy
     volumes:
-      - ./:/opt/nath_standalone_flask_template:cached
-      - app_logs:/var/log/nath_standalone_flask_template
+      - ./:/opt/budget_manager:cached
+      - app_logs:/var/log/budget_manager
       - backup_data:/var/backup
     restart: always
     networks:
-      - nsft_network_dev
+      - budman_network_dev
 
   db:
     image: postgres:15
-    container_name: nsft_db_dev
+    container_name: budman_db_dev
     environment:
       - POSTGRES_USER=web
-      - POSTGRES_PASSWORD=nsft2025_x
+      - POSTGRES_PASSWORD=budman2025_x
       - POSTGRES_DB=postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./nath_standalone_flask_template/tests/reset.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - ./budget_manager/tests/reset.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - ./deploy/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
     ports:
-      - "5431:5433"
+      - "5434:5432"
     restart: always
     command: postgres -c 'max_connections=100'
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U web -d nsft"]
+      test: [ "CMD-SHELL", "pg_isready -U web -d budman" ]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
-      - nsft_network_dev
+      - budman_network_dev
 
   redis:
     image: redis:7-alpine
-    container_name: nsft_redis_dev
+    container_name: budman_redis_dev
     ports:
-      - "6380:6379"
+      - "6381:6379"
     restart: always
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 5s
       timeout: 5s
       retries: 5
     networks:
-      - nsft_network_dev
+      - budman_network_dev
 
 volumes:
   postgres_data:
@@ -75,5 +75,5 @@ volumes:
       o: bind
       device: ./backups
 networks:
-  nsft_network_dev:
+  budman_network_dev:
     driver: bridge

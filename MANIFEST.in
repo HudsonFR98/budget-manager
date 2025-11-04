@@ -1,11 +1,11 @@
-recursive-include nath_standalone_flask_template/static *
-recursive-include nath_standalone_flask_template/bin *
-recursive-include nath_standalone_flask_template/templates *
-recursive-include nath_standalone_flask_template/i18n *
+recursive-include budget_manager/static *
+recursive-include budget_manager/bin *
+recursive-include budget_manager/templates *
+recursive-include budget_manager/i18n *
 recursive-include migrations *.py
 recursive-include deploy *
 recursive-include docs *
 recursive-include alembic *
 include *.py *.ini
 global-exclude *.pyc *.php
-recursive-exclude nath_standalone_flask_template/tests *
+recursive-exclude budget_manager/tests *

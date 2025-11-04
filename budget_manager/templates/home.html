@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>État des finances - <b>{{ current_date }}</b></h4>
+<br>
+<div class="row">
+    <div class="col">
+        <table class="table table-striped table-hover table-green table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">REVENUS</th>
+                    <th scope="col">Total du mois</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in earnings %}
+                {% set conso = e.consumed_budget %}
+                <tr>
+                    <td>{{ e.name }}</td>
+                    <td>{% if e.month_total_amount > 0 %}<span style="color: forestgreen;font-weight: bold">+{{
+                            e.month_total_amount }} €</span>{% else %}<span style="color: red;font-weight: bold">{{
+                            e.month_total_amount }} €</span>{% endif %}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ total_earnings }} €</b></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-striped table-hover table-red table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">DÉPENSES FIXES</th>
+                    <th scope="col">Total du mois</th>
+                    <th scope="col">Conso budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for f in fixed_expenses %}
+                {% set conso = f.consumed_budget %}
+                <tr>
+                    <td>{{ f.name }}</td>
+                    <td>{% if f.month_total_amount > 0 %}<span style="color: forestgreen;font-weight: bold">+{{
+                            f.month_total_amount }} €</span>{% else %}<span style="color: red;font-weight: bold">{{
+                            f.month_total_amount }} €</span>{% endif %}</td>
+                    <td>
+                        {% if conso %}
+                        <div class="progress" style="height: 20px;">
+                            {% if conso >= 99 %}
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% else %}
+                            {% if conso >= 75 %}
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% else %}
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ total_fixed_expenses }} €</b></td>
+                    <td>
+                        {% if total_conso_fixed_expenses > 99 %}⚠️{% endif %}
+                        <b style="color: white">{{ total_conso_fixed_expenses }} %</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-hover table-red table-bordered">
+            <tbody>
+                <tr>
+                    <td><b style="color: white">Reste pour dépense variable</b></td>
+                    <td>
+                        {% if (total_earnings + total_fixed_expenses) < 20 %}⚠️{% endif %} <b style="color: white">{{
+                            total_earnings + total_fixed_expenses }} €</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table table-striped table-hover table-orange table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">DÉPENSES VARIABLES</th>
+                    <th scope="col">Total du mois</th>
+                    <th scope="col">Conso budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in variable_expenses %}
+                {% set conso = v.consumed_budget %}
+                <tr>
+                    <td>{{ v.name }}</td>
+                    <td>{% if v.month_total_amount > 0 %}<span style="color: forestgreen;font-weight: bold">+{{
+                            v.month_total_amount }} €</span>{% else %}<span style="color: red;font-weight: bold">{{
+                            v.month_total_amount }} €</span>{% endif %}</td>
+                    <td>
+                        {% if conso %}
+                        <div class="progress" style="height: 20px;">
+                            {% if conso >= 99 %}
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% else %}
+                            {% if conso >= 75 %}
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% else %}
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ conso }}%;"
+                                aria-valuenow="{{ conso }}" aria-valuemin="0" aria-valuemax="100">{{ conso }}%</div>
+                            {% endif %}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ total_variable_expenses }} €</b></td>
+                    {% set conso = total_conso_variable_expenses %}
+                    <td>
+                        {% if total_conso_variable_expenses > 99 %}⚠️{% endif %}
+                        <b style="color: white">{{ total_conso_variable_expenses }} %</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped table-hover table-orange table-bordered">
+            <tbody>
+                <tr>
+                    <td><b style="color: white">Reste pour épargner</b></td>
+                    <td>
+                        {% if ((total_earnings + total_fixed_expenses) + total_variable_expenses) < 20 %}⚠️{% endif %}
+                            <b style="color: white">{{ (total_earnings + total_fixed_expenses) + total_variable_expenses
+                            }} €</b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

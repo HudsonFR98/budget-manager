@@ -1,6 +1,6 @@
 # Ansible Deployment Structure
 
-This directory contains the modularized Ansible deployment configuration for the nath_standalone_flask_template application.
+This directory contains the modularized Ansible deployment configuration for the budget_manager application.
 
 ## Structure
 
