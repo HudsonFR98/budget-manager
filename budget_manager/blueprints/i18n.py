@@ -8,7 +8,7 @@ i18n = Blueprint('i18n', __name__)
 def set_language(language):
     """Set the language for the current session"""
     session['language'] = language
-    return redirect(request.referrer or url_for('dashboard.home'))
+    return redirect(request.referrer or url_for('home.dashboard'))
 
 
 @i18n.route('/language')

@@ -17,7 +17,7 @@ def login():
     """Handle user login"""
     # Redirect if user is already logged in
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard.home'))
+        return redirect(url_for('home.dashboard'))
 
     if request.method == 'POST':
         try:
@@ -25,7 +25,7 @@ def login():
             if user and user.is_active():
                 login_user(user, remember=True)
                 log.debug(f"User logged in successfully: {user.ide}")
-                response = make_response(redirect(url_for("dashboard.home")))
+                response = make_response(redirect(url_for("home.dashboard")))
                 response.set_cookie('nath_signature', value='signed !!')
                 return response
             else:
