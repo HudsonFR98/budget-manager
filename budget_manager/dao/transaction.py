@@ -1,4 +1,5 @@
 from datetime import datetime, date
+from calendar import monthrange
 from sqlalchemy import extract
 from sqlalchemy import or_, and_
 from budget_manager.models import *
@@ -92,11 +93,15 @@ def get_all_transactions() -> List[Transaction]:
 
 def past_sold(month, year):
     """
-    sold at that month (everthing before and this month included)
+    sold at that month (everything before and this month included)
     """
+    # Get the last day of the month (handles leap years and months with different lengths)
+    last_day = monthrange(year, month)[1]
+    end_date = date(year, month, last_day)
+    
     total_amount = 0
     transactions = Transaction.query.filter(
-        Transaction.date <= date(year, month, 27),
+        Transaction.date <= end_date,
         (Transaction.paypal == False) | (Transaction.paypal == None)
     ).order_by(Transaction.id.desc())
     for t in transactions:
