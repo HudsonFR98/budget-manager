@@ -22,7 +22,7 @@ When you make changes to your models (add/modify/remove tables, columns, etc.), 
 
 3. Generate a new migration script:
    ```bash
-   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev alembic revision --autogenerate -m "Description of your changes"
+   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev /opt/env3/budget_manager/bin/alembic revision --autogenerate -m "Description of your changes"
    ```
 
    This command will:
@@ -48,7 +48,7 @@ Migrations are automatically applied when the application container starts, than
 
 3. Apply all pending migrations:
    ```bash
-   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev alembic upgrade head
+   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev /opt/env3/budget_manager/bin/alembic upgrade head
    ```
 
 ## Initial Database Setup
@@ -84,7 +84,7 @@ If you encounter issues with migrations:
    ```bash
    docker exec -it budman_app_dev bash
    cd /opt/budget-manager
-   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev alembic upgrade head --verbose
+   BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev /opt/env3/budget_manager/bin/alembic upgrade head --verbose
    ```
 
 ## Best Practices

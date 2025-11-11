@@ -30,6 +30,16 @@
         <input type="text" class="form-control" id="note" name="note" value="{{ transac.note }}" required>
     </div>
     <br>
+    <div class="form-group">
+        <label for="saving-select">Épargne</label>
+        <select class="form-control" id="saving-select" name="saving" required>
+            {% for s in savings %}
+            <option {% if (transac.saving_id and transac.saving_id==s.id) or (not transac.saving_id and loop.first)
+                %}selected{% endif %} value="{{ s.id }}">{{ s.icon if s.icon else '' }} {{ s.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
     <button type="submit" class="btn btn-primary">Mettre à jour</button>
 </form>
 

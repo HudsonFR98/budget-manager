@@ -29,6 +29,16 @@
         <input type="text" class="form-control" id="note" name="note" required>
     </div>
     <br>
+    <div class="form-group">
+        <label for="saving-select">Épargne</label>
+        <select class="form-control" id="saving-select" name="saving" required>
+            {% for s in savings %}
+            <option {% if loop.first %}selected{% endif %} value="{{ s.id }}">{{ s.icon if s.icon else '' }} {{ s.name
+                }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <br>
     <button type="submit" class="btn btn-primary">Créer</button>
 </form>
 

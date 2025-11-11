@@ -560,3 +560,32 @@ footer p {
 .navbar-nav .btn {
     margin: 0;
 }
+
+/* Savings card styles */
+.saving-card {
+    transition: box-shadow 0.2s ease;
+    border: 1px solid var(--card-border);
+}
+
+.saving-card:hover {
+    box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.saving-card .card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.saving-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.saving-card .btn-group {
+    flex-shrink: 0;
+}
+
+.saving-card .text-success {
+    font-weight: 700;
+    font-size: 1.5rem;
+}

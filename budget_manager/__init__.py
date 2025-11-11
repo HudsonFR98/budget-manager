@@ -20,6 +20,7 @@ from .blueprints.category import category
 from .blueprints.transaction import transaction
 from .blueprints.paypal import paypal
 from .blueprints.elytras import elytras
+from .blueprints.saving import saving
 from .blueprints.home import home
 # from .blueprints.rest import rest
 
@@ -229,6 +230,7 @@ def create_app():
     app.register_blueprint(transaction, url_prefix='/transaction/')
     app.register_blueprint(paypal, url_prefix='/paypal/')
     app.register_blueprint(elytras, url_prefix='/elytras/')
+    app.register_blueprint(saving, url_prefix='/saving/')
     app.register_blueprint(home, url_prefix='/home/')
     # Register coverage blueprint only in test context
     if config.CONTEXT in ['test', 'dev']:

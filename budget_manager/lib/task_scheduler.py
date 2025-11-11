@@ -362,3 +362,17 @@ def database_backup():
     except Exception as e:
         log.error(f"Database backup failed: {e}")
         raise
+
+
+# Adjust savings amounts task
+@scheduled_task('0 5 * * *', 'Adjust savings amounts to match total balance every day at 5:00 AM')
+def adjust_savings_amounts():
+    """Adjust savings amounts to match total balance"""
+    try:
+        # Import here to avoid circular imports
+        from budget_manager.blueprints.saving import adjust_savings_amounts as adjust_function
+        result = adjust_function()
+        return result
+    except Exception as e:
+        log.error(f"Adjust savings amounts failed: {e}")
+        raise

@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4>{{ _('Savings') }}</h4>
+        <p class="text-muted mb-0">{{ _('Total') }}: <span
+                class="badge {% if total_amount > 0 %}bg-success{% else %}bg-secondary{% endif %} fs-6">{{ total_amount
+                }} €</span></p>
+    </div>
+    <div>
+        <a href="{{ url_for('saving.add') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i>&nbsp;{{ _('Add Saving') }}
+        </a>
+        <button type="button" class="btn btn-secondary ms-2" id="adjust-amounts-btn">
+            <i class="fa-solid fa-balance-scale"></i>&nbsp;{{ _('Adjust Amounts') }}
+        </button>
+    </div>
+</div>
+
+{% if savings_with_percent %}
+<div class="row">
+    <div class="col-md-7">
+        <div class="row g-4">
+            {% for item in savings_with_percent %}
+            {% set saving = item.saving %}
+            {% set percent = item.percent %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card saving-card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0">
+                                {% if saving.icon %}<span style="font-size: 1.2em">{{ saving.icon }}</span> {% endif
+                                %}{{ saving.name }}
+                            </h5>
+                            <div class="btn-group" role="group">
+                                <a href="{{ url_for('saving.edit', id=saving.id) }}"
+                                    class="btn btn-sm btn-outline-primary" title="{{ _('Edit') }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-saving"
+                                    data-id="{{ saving.id }}" title="{{ _('Delete') }}">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <h3 class="text-success mb-0">{{ saving.amount }} €</h3>
+                            <small class="text-muted">{{ percent|round(2) }}%</small>
+                            {% if saving.goal %}
+                            {% set saving_amount_float = saving.amount|float %}
+                            {% set saving_goal_float = saving.goal|float %}
+                            {% set goal_progress = ((saving_amount_float / saving_goal_float) * 100) if
+                            saving_goal_float > 0 else 0 %}
+                            {% set goal_progress = [goal_progress, 100]|min %}
+                            <div class="mt-2">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <small class="text-muted">{{ _('Goal') }}: {{ saving.goal }} €</small>
+                                    <small class="text-muted">{{ goal_progress|round(1) }}%</small>
+                                </div>
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar {% if goal_progress >= 100 %}bg-success{% else %}bg-info{% endif %}"
+                                        role="progressbar" style="width: {{ goal_progress }}%"
+                                        aria-valuenow="{{ goal_progress }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if saving.note %}
+                        <p class="card-text text-muted small mb-0">
+                            <i class="fa-solid fa-note-sticky"></i> {{ saving.note }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="col-md-5">
+        <br>
+        <div id="donut"></div>
+    </div>
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="fa-solid fa-info-circle"></i> {{ _('No savings found. Add your first saving!') }}
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var deleteButtons = document.querySelectorAll('.delete-saving');
+        deleteButtons.forEach(btn => {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-id');
+                if (confirm('{{ _("Are you sure you want to delete this saving?") }}')) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '{{ url_for("saving.delete") }}', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                window.location.reload();
+                            } else {
+                                alert('{{ _("Error deleting saving") }}');
+                            }
+                        }
+                    };
+                    xhr.send(JSON.stringify({ "id": id }));
+                }
+            });
+        });
+
+        // Adjust amounts button
+        var adjustBtn = document.getElementById('adjust-amounts-btn');
+        if (adjustBtn) {
+            adjustBtn.addEventListener('click', function () {
+                if (confirm('{{ _("This will adjust all saving amounts to match the current balance. Continue?") }}')) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '{{ url_for("saving.adjust") }}', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                alert(response.message);
+                                window.location.reload();
+                            } else {
+                                alert('{{ _("Error adjusting amounts") }}');
+                            }
+                        }
+                    };
+                    xhr.send();
+                }
+            });
+        }
+    });
+</script>
+{% endblock %}
+
+{% block js %}
+{% if savings_with_percent %}
+<script>
+    (function () {
+        if (!window.d3) return;
+        var width = 400;
+        var height = 400;
+        var radius = Math.min(width, height) / 2;
+
+        var data = {{ chart_data| safe
+    }};
+
+    function drawDonut() {
+        var styles = getComputedStyle(document.body);
+        var bodyColor = styles.getPropertyValue('--bs-body-color').trim() || '#212529';
+
+        var colorScale = d3.scaleOrdinal()
+            .domain(data.map(function (d) { return d.name; }))
+            .range(data.map(function (d) { return d.color; }));
+
+        var arc = d3.arc().innerRadius(radius * 0.5).outerRadius(radius * 0.8);
+        var pie = d3.pie().value(function (d) { return d.value; });
+
+        var root = d3.select("#donut");
+        root.selectAll('*').remove();
+
+        var svg = root.append("svg").attr("viewBox", "0 0 " + width + " " + height)
+            .append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+        var g = svg.selectAll("arc").data(pie(data)).enter().append("g");
+
+        g.append("path").attr("d", arc).style("fill", function (d) { return colorScale(d.data.name); });
+
+        g.append("text")
+            .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+            .style("text-anchor", "middle")
+            .attr("dy", "0.35em")
+            .attr("font-size", "30px")
+            .attr("fill", bodyColor)
+            .text(function (d) { return d.data.label; });
+
+        var totalAmount = {{ total_amount }};
+    var titleText = "Total: " + totalAmount.toFixed(2) + " €";
+    var title = svg.append("foreignObject")
+        .attr("x", -radius * 0.41)
+        .attr("y", -radius * 0.19)
+        .attr("width", radius * 1.6)
+        .attr("height", radius * 0.2)
+        .attr("style", "width: 40%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
+        .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(titleText);
+
+    var mainTitleText = "Répartition de l'épargne";
+    var maintitle = svg.append("foreignObject")
+        .attr("x", -radius * 0.8)
+        .attr("y", -radius * 1)
+        .attr("width", radius * 1.6)
+        .attr("height", radius * 0.2)
+        .attr("style", "width: 80%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
+        .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(mainTitleText);
+        }
+
+    drawDonut();
+
+    var observer = new MutationObserver(function (mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+            if (mutations[i].attributeName === 'data-bs-theme') { drawDonut(); }
+        }
+    });
+    observer.observe(document.documentElement, { attributes: true });
+    }) ();
+</script>
+{% endif %}
+{% endblock %}

@@ -19,13 +19,16 @@ class Transaction(Base):
     amount = Column(Numeric(precision=8, scale=2), nullable=False)
     category_id = Column(Integer, ForeignKey('category.id'), nullable=False)
     category = relationship('Category', backref='transactions')
+    saving_id = Column(Integer, ForeignKey('saving.id'), nullable=True)
+    saving = relationship('Saving', backref='transactions')
     paypal = Column(Boolean, default=False)
 
-    def __init__(self, date=None, note=None, amount=None, category_id=None, paypal=False):
+    def __init__(self, date=None, note=None, amount=None, category_id=None, saving_id=None, paypal=False):
         self.date = date or date.today()
         self.note = note
         self.amount = amount
         self.category_id = category_id
+        self.saving_id = saving_id
         self.paypal = paypal
 
     @property
