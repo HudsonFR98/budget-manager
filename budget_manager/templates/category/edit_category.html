@@ -54,32 +54,70 @@
 </form>
 
 <script>
-  // Get the range input element
-  var rangePercentInput = document.getElementById('budget-percent');
-  var rangeEurosInput = document.getElementById('budget-euros');
+  (function() {
+    // Get the range input element
+    var rangePercentInput = document.getElementById('budget-percent');
+    var rangeEurosInput = document.getElementById('budget-euros');
 
-  // Get the span element to display the value
-  var rangePercentValue = document.getElementById('budget-percent-value');
+    // Get the span element to display the value
+    var rangePercentValue = document.getElementById('budget-percent-value');
 
-  // Get the numeric variable from the server via Jinja
-  var numericVariable = {{ total_earnings }};
+    // Get the numeric variable from the server via Jinja
+    var numericVariable = {{ total_earnings }};
+    
+    // Ensure numericVariable is valid
+    if (!numericVariable || numericVariable <= 0) {
+      numericVariable = 1; // Prevent division by zero
+    }
 
-  // Update the span element with the initial value
-  rangePercentValue.innerHTML = rangePercentInput.value;
+    // Initialize euros input on page load based on slider value
+    function initializeEuros() {
+      var percentValue = parseFloat(rangePercentInput.value) || 0;
+      var eurosValue = (percentValue / 100) * numericVariable;
+      rangeEurosInput.value = eurosValue.toFixed(2);
+    }
+    
+    // Initialize on page load
+    initializeEuros();
 
-  // Calculate the corresponding value in euros and update the numeric input
-  rangePercentInput.addEventListener('input', function () {
-    rangePercentValue.innerHTML = this.value;
-    var eurosValue = (this.value / 100) * numericVariable;
-    rangeEurosInput.value = eurosValue.toFixed(2);
-  });
+    // Update the span element with the initial value
+    rangePercentValue.innerHTML = parseFloat(rangePercentInput.value).toFixed(2);
 
-  // Update the range input with the corresponding percentage when the numeric input changes
-  rangeEurosInput.addEventListener('input', function () {
-    var percentValue = (this.value / numericVariable) * 100;
-    rangePercentInput.value = percentValue.toFixed(4);
-    rangePercentValue.innerHTML = percentValue.toFixed(2);
-  });
+    // Calculate the corresponding value in euros and update the numeric input
+    rangePercentInput.addEventListener('input', function () {
+      var percentValue = parseFloat(this.value) || 0;
+      
+      // Constrain to valid range
+      if (percentValue < 0) percentValue = 0;
+      if (percentValue > 100) percentValue = 100;
+      
+      rangePercentValue.innerHTML = percentValue.toFixed(2);
+      var eurosValue = (percentValue / 100) * numericVariable;
+      rangeEurosInput.value = eurosValue.toFixed(2);
+    });
+
+    // Update the range input with the corresponding percentage when the numeric input changes
+    rangeEurosInput.addEventListener('input', function () {
+      var eurosValue = parseFloat(this.value) || 0;
+      
+      // If input is empty or invalid, set to 0
+      if (isNaN(eurosValue) || !isFinite(eurosValue)) {
+        eurosValue = 0;
+        this.value = '0.00';
+      }
+      
+      // Calculate percentage
+      var percentValue = (eurosValue / numericVariable) * 100;
+      
+      // Constrain to valid range
+      if (percentValue < 0) percentValue = 0;
+      if (percentValue > 100) percentValue = 100;
+      
+      // Update slider and display
+      rangePercentInput.value = percentValue.toFixed(4);
+      rangePercentValue.innerHTML = percentValue.toFixed(2);
+    });
+  })();
 </script>
 
 {% endblock %}
