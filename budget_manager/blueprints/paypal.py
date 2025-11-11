@@ -24,7 +24,7 @@ def summary(year):
     #we display transaction from 1 month max
     transactions = Transaction.query.filter(
         Transaction.date >= start_date.date(),
-        Transaction.date < end_date.date(),
+        Transaction.date <= end_date.date(),
         Transaction.paypal == True
     ).order_by(Transaction.id.desc()).all()
     
