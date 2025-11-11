@@ -1,5 +1,6 @@
 import json
-from datetime import datetime
+import logging
+from datetime import datetime, date
 
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_required
@@ -7,6 +8,7 @@ from budget_manager.models import *
 from budget_manager.lib.database import DBSession
 
 category = Blueprint("category", __name__)
+log = logging.getLogger(__name__)
 
 @category.route('/', methods=['GET', 'POST'])
 @login_required
@@ -64,14 +66,13 @@ def add():
         DBSession.commit()
         try:
             if float(request.form['budget']) > 0 and type != 0:
-                bud = Budget()
-                bud.date = datetime.now().strftime('%Y-%m-%d')
-                bud.amount = float(request.form['budget']) / 100
+                bud = Budget(date_val=date.today(), amount=float(request.form['budget']) / 100)
                 DBSession.add(bud)
                 DBSession.commit()
                 cat_bud = category_budget.insert().values(category_id=cat.id, budget_id=bud.id)
                 DBSession.execute(cat_bud)
-        except:
+        except Exception as e:
+            log.error(f"Error adding budget: {e}")
             pass
         DBSession.commit()
         return redirect(url_for('category.summary'))
@@ -91,13 +92,12 @@ def edit(id):
         try:
             if float(request.form['budget']) > 0:
                 if not bud:
-                    bud = Budget()
-                    bud.date = datetime.now().strftime('%Y-%m-%d')
-                    bud.amount = float(request.form['budget']) / 100
+                    bud = Budget(date_val=date.today(), amount=float(request.form['budget']) / 100)
                     DBSession.add(bud)
                     DBSession.commit()
-                    cat_bud = category_budget.insert().values(category_id=id, budget_id=bud.id)
+                    cat_bud = category_budget.insert().values(category_id=int(id), budget_id=bud.id)
                     DBSession.execute(cat_bud)
+                    DBSession.commit()
                 else:
                     bud.amount = float(request.form['budget']) / 100
             else:
@@ -106,7 +106,8 @@ def edit(id):
                 else:
                     DBSession.delete(bud)
                     DBSession.commit()
-        except:
+        except Exception as e:
+            log.error(f"Error updating budget: {e}")
             pass
         cat.name = request.form['name']
         cat.type = request.form['type']

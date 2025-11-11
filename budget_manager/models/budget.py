@@ -16,8 +16,8 @@ class Budget(Base):
     date = Column(Date, default=date.today, nullable=False)
     amount = Column(Numeric(precision=12, scale=6), nullable=False)  # a float between 0 and 1 (-> percentage)
 
-    def __init__(self, date=None, amount=None):
-        self.date = date or date.today()
+    def __init__(self, date_val=None, amount=None):
+        self.date = date_val if date_val is not None else date.today()
         self.amount = amount
 
     @property
