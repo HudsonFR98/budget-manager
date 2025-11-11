@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-15 19:33+0200\n"
+"POT-Creation-Date: 2025-11-11 20:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,61 +34,62 @@ msgid "Statistics"
 msgstr ""
 
 #: budget_manager/templates/base.html:52
-msgid "Elytras"
+#: budget_manager/templates/saving/saving.html:6
+msgid "Savings"
 msgstr ""
 
 #: budget_manager/templates/base.html:55
+msgid "Elytras"
+msgstr ""
+
+#: budget_manager/templates/base.html:58
 msgid "PayPal"
 msgstr ""
 
-#: budget_manager/templates/base.html:62
+#: budget_manager/templates/base.html:65
 msgid "Administration"
 msgstr ""
 
-#: budget_manager/templates/base.html:65
+#: budget_manager/templates/base.html:68
 msgid "Users"
 msgstr ""
 
 #: budget_manager/templates/admin/tasks.html:3
-#: budget_manager/templates/base.html:66
+#: budget_manager/templates/base.html:69
 msgid "Async Tasks"
 msgstr ""
 
-#: budget_manager/templates/base.html:67
+#: budget_manager/templates/base.html:70
 msgid "Logs"
 msgstr ""
 
-#: budget_manager/templates/base.html:79
+#: budget_manager/templates/base.html:82
 msgid "Tests"
 msgstr ""
 
-#: budget_manager/templates/base.html:82
+#: budget_manager/templates/base.html:85
 msgid "Coverage"
 msgstr ""
 
-#: budget_manager/templates/base.html:83
+#: budget_manager/templates/base.html:86
 msgid "Test Output"
 msgstr ""
 
-#: budget_manager/templates/base.html:106
+#: budget_manager/templates/base.html:109
 msgid "Help"
 msgstr ""
 
-#: budget_manager/templates/base.html:108
+#: budget_manager/templates/base.html:111
 msgid "Toggle theme"
 msgstr ""
 
-#: budget_manager/templates/base.html:114
+#: budget_manager/templates/base.html:117
 msgid "Language"
 msgstr ""
 
-#: budget_manager/templates/base.html:127
+#: budget_manager/templates/base.html:130
 #: budget_manager/templates/login.html:14
 msgid "Login"
-msgstr ""
-
-#: budget_manager/templates/base.html:130
-msgid "Register"
 msgstr ""
 
 #: budget_manager/templates/base.html:213
@@ -317,6 +318,7 @@ msgid "Inactive"
 msgstr ""
 
 #: budget_manager/templates/admin/users.html:69
+#: budget_manager/templates/saving/saving.html:38
 msgid "Edit"
 msgstr ""
 
@@ -335,6 +337,8 @@ msgstr ""
 
 #: budget_manager/templates/admin/users.html:137
 #: budget_manager/templates/admin/users.html:189
+#: budget_manager/templates/saving/add_saving.html:45
+#: budget_manager/templates/saving/edit_saving.html:45
 msgid "Cancel"
 msgstr ""
 
@@ -420,6 +424,8 @@ msgid ""
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:123
+#: budget_manager/templates/saving/add_saving.html:25
+#: budget_manager/templates/saving/edit_saving.html:25
 msgid "Note"
 msgstr ""
 
@@ -505,5 +511,96 @@ msgstr ""
 
 #: budget_manager/templates/doc/index.html:171
 msgid "CI/CD pipeline integration"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:5
+#: budget_manager/templates/saving/saving.html:13
+msgid "Add Saving"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:9
+#: budget_manager/templates/saving/edit_saving.html:9
+msgid "Name"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:14
+#: budget_manager/templates/saving/edit_saving.html:14
+msgid "Amount"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:25
+#: budget_manager/templates/saving/add_saving.html:35
+#: budget_manager/templates/saving/add_saving.html:40
+#: budget_manager/templates/saving/edit_saving.html:25
+#: budget_manager/templates/saving/edit_saving.html:35
+#: budget_manager/templates/saving/edit_saving.html:40
+msgid "optional"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:30
+#: budget_manager/templates/saving/edit_saving.html:30
+msgid "Color"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:35
+#: budget_manager/templates/saving/edit_saving.html:35
+msgid "Icon"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:40
+#: budget_manager/templates/saving/edit_saving.html:40
+#: budget_manager/templates/saving/saving.html:58
+msgid "Goal"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:41
+#: budget_manager/templates/saving/edit_saving.html:41
+msgid "Target amount"
+msgstr ""
+
+#: budget_manager/templates/saving/add_saving.html:44
+msgid "Create"
+msgstr ""
+
+#: budget_manager/templates/saving/edit_saving.html:5
+msgid "Edit Saving"
+msgstr ""
+
+#: budget_manager/templates/saving/edit_saving.html:44
+msgid "Update"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:7
+msgid "Total"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:16
+msgid "Adjust Amounts"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:42
+msgid "Delete"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:88
+msgid "No savings found. Add your first saving!"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:98
+msgid "Are you sure you want to delete this saving?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:107
+msgid "Error deleting saving"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:120
+msgid ""
+"This will adjust all saving amounts to match the current balance. "
+"Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:131
+msgid "Error adjusting amounts"
 msgstr ""
 
