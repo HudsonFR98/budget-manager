@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required
 from budget_manager.models import *
 from budget_manager.lib.database import DBSession
+from budget_manager.lib.telegram import send_telegram_message
 
 saving = Blueprint("saving", __name__)
 log = logging.getLogger(__name__)
@@ -50,11 +51,18 @@ def summary():
             "color": s.color if s.color else SAVINGS_COLORS[idx % len(SAVINGS_COLORS)]
         })
     
+    # Calculate current month's "Reste pour épargner" for display
+    from datetime import datetime
+    current_month = datetime.now().month
+    current_year = datetime.now().year
+    reste_pour_epargner = calculate_reste_pour_epargner(current_month, current_year)
+    
     ctx = {
         'savings_with_percent': savings_with_percent,
         'total_amount': total_amount,
         'total_balance': total_balance,
-        'chart_data': json.dumps(chart_data)
+        'chart_data': json.dumps(chart_data),
+        'reste_pour_epargner': reste_pour_epargner
     }
     return render_template('saving/saving.html', **ctx)
 
@@ -223,6 +231,26 @@ def delete():
         return jsonify({'message': 'Saving deleted!'})
     return jsonify({'error': 'Saving not found'}), 404
 
+@saving.route('/distribute-monthly', methods=['POST'])
+@login_required
+def distribute_monthly():
+    """Manually trigger monthly savings distribution"""
+    try:
+        # When manually triggered, use current month (not previous month)
+        from datetime import datetime
+        now = datetime.now()
+        result = distribute_monthly_savings(month=now.month, year=now.year)
+        return jsonify({
+            'message': result,
+            'status': 'success'
+        })
+    except Exception as e:
+        log.error(f"Manual monthly distribution failed: {e}")
+        return jsonify({
+            'message': f'Error distributing monthly savings: {str(e)}',
+            'status': 'error'
+        }), 500
+
 @saving.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
@@ -288,4 +316,212 @@ def edit(id):
         'current_percent': current_percent
     }
     return render_template('saving/edit_saving.html', **ctx)
+
+def calculate_reste_pour_epargner(month=None, year=None):
+    """Calculate 'Reste pour épargner' (remaining for saving) for a given month
+    
+    Args:
+        month: Month number (1-12). If None, uses current month.
+        year: Year. If None, uses current year.
+    
+    Returns:
+        float: The remaining amount for saving after all expenses
+    """
+    from datetime import datetime
+    from sqlalchemy import extract
+    
+    if month is None:
+        month = datetime.now().month
+    if year is None:
+        year = datetime.now().year
+    
+    # Calculate total earnings for the month
+    total_earnings = 0
+    earning_categories = Category.query.filter(Category.type == 0).all()
+    for category in earning_categories:
+        # Get transactions for this category in the specified month
+        transactions = Transaction.query.filter(
+            Transaction.category_id == category.id,
+            extract('month', Transaction.date) == month,
+            extract('year', Transaction.date) == year
+        ).all()
+        for t in transactions:
+            total_earnings += float(t.amount)
+    
+    # Calculate total fixed expenses for the month
+    total_fixed_expenses = 0
+    fixed_categories = Category.query.filter(Category.type == 1).all()
+    for category in fixed_categories:
+        transactions = Transaction.query.filter(
+            Transaction.category_id == category.id,
+            extract('month', Transaction.date) == month,
+            extract('year', Transaction.date) == year
+        ).all()
+        for t in transactions:
+            total_fixed_expenses += float(t.amount)
+    
+    # Calculate total variable expenses for the month
+    total_variable_expenses = 0
+    variable_categories = Category.query.filter(Category.type == 2).all()
+    for category in variable_categories:
+        transactions = Transaction.query.filter(
+            Transaction.category_id == category.id,
+            extract('month', Transaction.date) == month,
+            extract('year', Transaction.date) == year
+        ).all()
+        for t in transactions:
+            total_variable_expenses += float(t.amount)
+    
+    # "Reste pour épargner" = total_earnings + total_fixed_expenses + total_variable_expenses
+    # (expenses are negative, so this gives: earnings - |expenses|)
+    reste_pour_epargner = total_earnings + total_fixed_expenses + total_variable_expenses
+    
+    return reste_pour_epargner
+
+def distribute_monthly_savings(month=None, year=None):
+    """Distribute 'Reste pour épargner' among all savings at end of month
+    
+    This function:
+    1. Calculates 'Reste pour épargner' for the specified month
+    2. Removes that amount from 'Reste' saving
+    3. Distributes it proportionally among all savings (including Reste)
+    
+    Args:
+        month: Month number (1-12). If None, uses previous month.
+        year: Year. If None, uses current year (or previous year if month is previous).
+    
+    Returns:
+        str: Result message
+    """
+    from datetime import datetime
+    from calendar import monthrange
+    
+    # If month/year not provided, use previous month
+    now = datetime.now()
+    if month is None:
+        if now.month == 1:
+            month = 12
+            year = now.year - 1
+        else:
+            month = now.month - 1
+            year = now.year
+    elif year is None:
+        year = now.year
+    
+    # Calculate "Reste pour épargner" for the month
+    reste_pour_epargner = calculate_reste_pour_epargner(month, year)
+    
+    if reste_pour_epargner <= 0:
+        return f'No remaining amount to distribute for {month}/{year}. Reste pour épargner: {reste_pour_epargner:.2f}€'
+    
+    # Find "Reste" saving
+    reste_saving = Saving.query.filter(Saving.name == "Reste").first()
+    if not reste_saving:
+        return f'No "Reste" saving found. Cannot distribute monthly savings.'
+    
+    # Get current amount in Reste saving
+    reste_amount = float(reste_saving.amount)
+    
+    # We need to take the "Reste pour épargner" amount FROM Reste saving
+    # But only if Reste has at least that amount
+    if reste_amount < reste_pour_epargner:
+        # Not enough in Reste, use what's available (but warn the user)
+        amount_to_distribute = reste_amount
+        reste_saving.amount = 0
+        log.warning(f'Reste saving ({reste_amount:.2f}€) has less than calculated "Reste pour épargner" ({reste_pour_epargner:.2f}€). Distributing available amount.')
+    else:
+        # Take exactly the "Reste pour épargner" amount from Reste
+        amount_to_distribute = reste_pour_epargner
+        reste_saving.amount = reste_amount - reste_pour_epargner
+    
+    # Commit the Reste saving update first
+    DBSession.commit()
+    
+    # Get all savings (including Reste) for proportional distribution
+    all_savings = Saving.query.all()
+    
+    if not all_savings:
+        return 'No savings found. Cannot distribute monthly savings.'
+    
+    # Calculate total of all savings amounts (AFTER subtracting from Reste) for proportional calculation
+    # This is the base for calculating percentages
+    total_savings_amount = sum([float(s.amount) for s in all_savings])
+    
+    if total_savings_amount > 0:
+        # Distribute proportionally based on current savings amounts
+        # First pass: distribute proportionally, capping at goals
+        excess_amount = 0
+        for saving in all_savings:
+            saving_amount = float(saving.amount)
+            # Calculate percentage of total savings amount
+            percent = (saving_amount / total_savings_amount * 100) if total_savings_amount > 0 else 0
+            # Add proportional amount
+            proportional_amount = (percent / 100) * amount_to_distribute
+            new_amount = float(saving.amount) + proportional_amount
+            
+            if saving.goal:
+                if new_amount > float(saving.goal):
+                    # Saving reached goal, track excess
+                    excess_amount += (new_amount - float(saving.goal))
+                    saving.amount = saving.goal
+                else:
+                    saving.amount = new_amount
+            else:
+                saving.amount = new_amount
+        
+        # Second pass: redistribute excess to savings that haven't reached their goals
+        if excess_amount > 0.01:
+            still_eligible = [s for s in all_savings if not s.goal or float(s.amount) < float(s.goal)]
+            if still_eligible:
+                total_still_eligible = sum([float(s.amount) for s in still_eligible])
+                if total_still_eligible > 0:
+                    for saving in still_eligible:
+                        saving_amount = float(saving.amount)
+                        proportion = saving_amount / total_still_eligible
+                        additional = proportion * excess_amount
+                        new_amount = float(saving.amount) + additional
+                        if saving.goal:
+                            saving.amount = min(new_amount, float(saving.goal))
+                        else:
+                            saving.amount = new_amount
+                else:
+                    # All at 0, distribute equally
+                    equal_excess = excess_amount / len(still_eligible)
+                    for saving in still_eligible:
+                        new_amount = float(saving.amount) + equal_excess
+                        if saving.goal:
+                            saving.amount = min(new_amount, float(saving.goal))
+                        else:
+                            saving.amount = new_amount
+    else:
+        # If balance is 0 or negative, distribute equally
+        equal_amount = amount_to_distribute / len(all_savings)
+        for saving in all_savings:
+            new_amount = float(saving.amount) + equal_amount
+            if saving.goal:
+                saving.amount = min(new_amount, float(saving.goal))
+            else:
+                saving.amount = new_amount
+    
+    DBSession.commit()
+    
+    # Send Telegram notification
+    try:
+        # Get final amounts for each saving to show in notification
+        final_savings = Saving.query.all()
+        savings_summary = []
+        for saving in final_savings:
+            savings_summary.append(f"  • {saving.name}: {float(saving.amount):.2f}€")
+        
+        message = f"💰 *[BUDGET MANAGER] Monthly Savings Distribution*\n\n"
+        message += f"📅 Month: {month}/{year}\n"
+        message += f"💵 Amount distributed: {amount_to_distribute:.2f}€\n"
+        message += f"📤 From: Reste pour épargner\n\n"
+        message += f"📊 *Final Savings Amounts:*\n"
+        message += "\n".join(savings_summary)
+        send_telegram_message(message)
+    except Exception as e:
+        log.error(f"Failed to send Telegram notification for monthly distribution: {e}")
+    
+    return f'Distributed {amount_to_distribute:.2f}€ from "Reste pour épargner" ({month}/{year}) among all savings successfully!'
 

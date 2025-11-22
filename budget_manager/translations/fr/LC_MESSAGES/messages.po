@@ -7,34 +7,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-11 20:37+0100\n"
+"POT-Creation-Date: 2025-11-22 22:29+0100\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.17.0\n"
+"Generated-By: Babel 2.8.0\n"
 
 #: budget_manager/templates/base.html:19 budget_manager/templates/base.html:26
 msgid "Budget Manager"
 msgstr "Gestion de mon budget"
 
 #: budget_manager/templates/base.html:43
-
 msgid "Transactions"
-msgstr "Actions"
+msgstr "Transactions"
 
 #: budget_manager/templates/base.html:46
 msgid "Categories"
 msgstr "Catégories"
 
 #: budget_manager/templates/base.html:49
-
 msgid "Statistics"
-msgstr "Statut"
+msgstr "Statistiques"
 
 #: budget_manager/templates/base.html:52
 #: budget_manager/templates/saving/saving.html:6
@@ -63,9 +61,8 @@ msgid "Async Tasks"
 msgstr "Tâches Asynchrones"
 
 #: budget_manager/templates/base.html:70
-
 msgid "Logs"
-msgstr "Connexion"
+msgstr "Journaux d'Application"
 
 #: budget_manager/templates/base.html:82
 msgid "Tests"
@@ -322,7 +319,7 @@ msgid "Inactive"
 msgstr "Inactif"
 
 #: budget_manager/templates/admin/users.html:69
-#: budget_manager/templates/saving/saving.html:38
+#: budget_manager/templates/saving/saving.html:41
 msgid "Edit"
 msgstr "Modifier"
 
@@ -421,7 +418,6 @@ msgid "Welcome to the Budget Manager Documentation"
 msgstr "Bienvenue dans la documentation de Budget Manager"
 
 #: budget_manager/templates/doc/index.html:119
-
 msgid ""
 "This documentation provides information about the Budget Manager "
 "application, its\n"
@@ -437,7 +433,6 @@ msgid "Note"
 msgstr "Remarque"
 
 #: budget_manager/templates/doc/index.html:124
-
 msgid ""
 "This documentation is customizable and can be edited to include specific "
 "information\n"
@@ -451,7 +446,6 @@ msgid "User Management"
 msgstr "Gestion des utilibudmaneurs"
 
 #: budget_manager/templates/doc/index.html:132
-
 msgid ""
 "The application includes a comprehensive user management system with "
 "role-based\n"
@@ -535,7 +529,6 @@ msgstr "Ajouter une épargne"
 
 #: budget_manager/templates/saving/add_saving.html:9
 #: budget_manager/templates/saving/edit_saving.html:9
-
 msgid "Name"
 msgstr "Nom d'utilisateur"
 
@@ -555,7 +548,6 @@ msgstr "optionnel"
 
 #: budget_manager/templates/saving/add_saving.html:30
 #: budget_manager/templates/saving/edit_saving.html:30
-
 msgid "Color"
 msgstr "Fermer"
 
@@ -566,7 +558,7 @@ msgstr "Icône"
 
 #: budget_manager/templates/saving/add_saving.html:40
 #: budget_manager/templates/saving/edit_saving.html:40
-#: budget_manager/templates/saving/saving.html:58
+#: budget_manager/templates/saving/saving.html:61
 msgid "Goal"
 msgstr "Objectif"
 
@@ -576,17 +568,14 @@ msgid "Target amount"
 msgstr "Montant cible"
 
 #: budget_manager/templates/saving/add_saving.html:44
-
 msgid "Create"
 msgstr "Créer l'épargne"
 
 #: budget_manager/templates/saving/edit_saving.html:5
-
 msgid "Edit Saving"
 msgstr "Modifier l'épargne"
 
 #: budget_manager/templates/saving/edit_saving.html:44
-
 msgid "Update"
 msgstr "Mettre à jour l'épargne"
 
@@ -598,33 +587,55 @@ msgstr "Total"
 msgid "Adjust Amounts"
 msgstr "Ajuster les montants"
 
-#: budget_manager/templates/saving/saving.html:42
+#: budget_manager/templates/saving/saving.html:19
+msgid "Distribute Monthly"
+msgstr ""
 
+#: budget_manager/templates/saving/saving.html:45
 msgid "Delete"
 msgstr "Déploiement"
 
-#: budget_manager/templates/saving/saving.html:88
+#: budget_manager/templates/saving/saving.html:91
 msgid "No savings found. Add your first saving!"
 msgstr "Aucune épargne trouvée. Ajoutez votre première épargne !"
 
-#: budget_manager/templates/saving/saving.html:98
-
+#: budget_manager/templates/saving/saving.html:101
 msgid "Are you sure you want to delete this saving?"
 msgstr "Êtes-vous sûr de vouloir désactiver cet épargne ?"
 
-#: budget_manager/templates/saving/saving.html:107
+#: budget_manager/templates/saving/saving.html:110
 msgid "Error deleting saving"
 msgstr "Erreur lors de la suppression de l'épargne"
 
-#: budget_manager/templates/saving/saving.html:120
+#: budget_manager/templates/saving/saving.html:123
 msgid ""
 "This will adjust all saving amounts to match the current balance. "
 "Continue?"
-msgstr "Cela ajustera tous les montants d'épargne pour correspondre au solde actuel. Continuer ?"
+msgstr ""
+"Cela ajustera tous les montants d'épargne pour correspondre au solde "
+"actuel. Continuer ?"
 
-#: budget_manager/templates/saving/saving.html:131
+#: budget_manager/templates/saving/saving.html:134
 msgid "Error adjusting amounts"
 msgstr "Erreur lors de l'ajustement des montants"
+
+#: budget_manager/templates/saving/saving.html:149
+msgid "This will distribute the remaining monthly savings (Reste pour épargner: "
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:149
+msgid "from Reste saving among all savings. Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:151
+msgid ""
+"This will distribute the remaining monthly savings from Reste saving "
+"among all savings. Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:165
+msgid "Error distributing monthly savings"
+msgstr ""
 
 #~ msgid "Example"
 #~ msgstr "Exemple"

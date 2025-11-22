@@ -376,3 +376,29 @@ def adjust_savings_amounts():
     except Exception as e:
         log.error(f"Adjust savings amounts failed: {e}")
         raise
+
+
+# Distribute monthly savings task (runs on 2nd of each month at 00:01 AM to process previous month)
+@scheduled_task('1 0 2 * *', 'Distribute remaining monthly savings at beginning of month (processes previous month)')
+def distribute_monthly_savings():
+    """Distribute 'Reste pour épargner' among all savings at end of month (runs on 2nd to process previous month)"""
+    try:
+        # Import here to avoid circular imports
+        from budget_manager.blueprints.saving import distribute_monthly_savings as distribute_function
+        from datetime import datetime
+        
+        # Explicitly calculate previous month to ensure we process the correct month
+        now = datetime.now()
+        if now.month == 1:
+            prev_month = 12
+            prev_year = now.year - 1
+        else:
+            prev_month = now.month - 1
+            prev_year = now.year
+        
+        # Call with explicit previous month/year to avoid any timing issues
+        result = distribute_function(month=prev_month, year=prev_year)
+        return result
+    except Exception as e:
+        log.error(f"Distribute monthly savings failed: {e}")
+        raise
