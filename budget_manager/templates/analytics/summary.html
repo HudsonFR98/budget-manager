@@ -1,13 +1,251 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h4>Évolution des dépenses</b></h4>
-<br>
-<img src="data:image/png;base64,{{ chart }}" alt="Stacked Areas Chart">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4>{{ _('Analytics dashboard') }}</h4>
+        <p class="text-muted mb-0">{{ _('Deep dive into savings and spending trends') }}</p>
+    </div>
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-auto">
+            <label for="months-input" class="form-label mb-0">{{ _('Window (months)') }}</label>
+            <input type="number" min="1" max="24" id="months-input" name="months" class="form-control form-control-sm"
+                value="{{ months_window }}">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary btn-sm">{{ _('Apply') }}</button>
+        </div>
+    </form>
+</div>
 
-<br>
-<h5>Ajout légende:</h5><br>
-<p>Total entrées d'argent: barre verte</p>
-<p>Évolution de la solde totale: barre violette</p>
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-muted mb-0">{{ _('Total balance change') }}</h6>
+                    <span class="badge bg-light text-dark">{{ balance_metrics.label }}</span>
+                </div>
+                <h3 class="mb-1">{{ balance_metrics.current }} €</h3>
+                <small class="text-muted">{{ _('Reference') }}: {{ balance_metrics.reference }} €</small>
+                <div class="mt-3">
+                    {% if balance_metrics.change_pct >= 0 %}
+                    <span class="text-success"><i class="fa-solid fa-arrow-up"></i> {{ balance_metrics.change_pct }}
+                        %</span>
+                    {% else %}
+                    <span class="text-danger"><i class="fa-solid fa-arrow-down"></i> {{ balance_metrics.change_pct }}
+                        %</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="text-muted mb-0">{{ _('Income over period') }}</h6>
+                    <span class="badge bg-light text-dark">{{ income_metrics.label }}</span>
+                </div>
+                <h3 class="mb-1">{{ income_metrics.current }} €</h3>
+                <small class="text-muted">{{ _('Reference') }}: {{ income_metrics.reference }} €</small>
+                <div class="mt-3">
+                    {% if income_metrics.change_pct >= 0 %}
+                    <span class="text-success"><i class="fa-solid fa-arrow-up"></i> {{ income_metrics.change_pct }}
+                        %</span>
+                    {% else %}
+                    <span class="text-danger"><i class="fa-solid fa-arrow-down"></i> {{ income_metrics.change_pct }}
+                        %</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h5 class="mb-0">{{ _('Savings insights') }}</h5>
+                <small class="text-muted">{{ _('Average leftover last') }} {{ months_window }} {{ _('months') }}: {{
+                    avg_leftover }} €</small>
+            </div>
+        </div>
+        {% if savings_insights %}
+        <div class="row g-3">
+            {% for saving in savings_insights %}
+            <div class="col-lg-6">
+                <div class="border rounded p-3 h-100">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <h6 class="mb-0">
+                                {% if saving.icon %}<span style="font-size: 1.2em">{{ saving.icon }}</span>{% endif %}
+                                {{ saving.name }}
+                            </h6>
+                            <small class="text-muted">{{ _('Ratio') }}: {{ saving.ratio|round(2) }}</small>
+                        </div>
+                        <span class="badge" style="background-color: {{ saving.color }}20; color: {{ saving.color }}">
+                            {{ saving.current_amount }} €
+                        </span>
+                    </div>
+                    <div class="sparkline" data-sparkline='{{ saving.evolution|tojson }}'></div>
+                    <div class="mt-3">
+                        {% if saving.goal %}
+                        <p class="mb-1">{{ _('Goal') }}: <strong>{{ saving.goal }} €</strong></p>
+                        {% endif %}
+                        <p class="mb-1">{{ _('Estimated monthly allocation') }}: <strong>{{ saving.monthly_expected }}
+                                €</strong></p>
+                        {% if saving.estimated_goal_date %}
+                        <p class="text-success mb-0">
+                            <i class="fa-solid fa-flag-checkered"></i>
+                            {{ _('Goal ETA') }}: {{ saving.estimated_goal_date }}
+                            {% if saving.months_to_goal %} ({{ saving.months_to_goal }} {{ _('months') }}){% endif %}
+                        </p>
+                        {% elif saving.goal %}
+                        <p class="text-muted mb-0">
+                            <i class="fa-solid fa-circle-info"></i>
+                            {{ _('Unable to estimate goal date (ratio or leftover too low).') }}
+                        </p>
+                        {% else %}
+                        <p class="text-muted mb-0">
+                            <i class="fa-solid fa-circle-info"></i>
+                            {{ _('No goal set') }}
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-muted mb-0">{{ _('No savings data yet.') }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="mb-3">{{ _('Top growing categories') }}</h5>
+                {% if category_stats.top_growing %}
+                <ul class="list-group list-group-flush">
+                    {% for item in category_stats.top_growing %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <div>
+                            <strong>
+                                {% if item.category.icon %}<span style="font-size: 1.1em">{{ item.category.icon
+                                    }}</span> {% endif %}
+                                {{ item.category.name }}
+                            </strong>
+                            <div class="text-muted small">{{ _('Avg spending') }}: {{ item.avg_spending }} €</div>
+                        </div>
+                        <span class="text-danger">
+                            <i class="fa-solid fa-arrow-up"></i> {{ item.growth_pct }} %
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted mb-0">{{ _('Not enough data') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="mb-3">{{ _('Top falling categories') }}</h5>
+                {% if category_stats.top_falling %}
+                <ul class="list-group list-group-flush">
+                    {% for item in category_stats.top_falling %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <div>
+                            <strong>
+                                {% if item.category.icon %}<span style="font-size: 1.1em">{{ item.category.icon
+                                    }}</span> {% endif %}
+                                {{ item.category.name }}
+                            </strong>
+                            <div class="text-muted small">{{ _('Avg spending') }}: {{ item.avg_spending }} €</div>
+                        </div>
+                        <span class="text-success">
+                            <i class="fa-solid fa-arrow-down"></i> {{ item.growth_pct }} %
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-muted mb-0">{{ _('Not enough data') }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="mb-3">{{ _('Historical spending overview') }}</h5>
+        <img src="data:image/png;base64,{{ chart }}" alt="Stacked Areas Chart" class="img-fluid rounded">
+        <div class="mt-2 text-muted small">
+            <p class="mb-0">{{ _('Legend: green = income, purple = total balance trend') }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (!window.d3) {
+            return;
+        }
+        var sparklineElements = document.querySelectorAll('.sparkline');
+        sparklineElements.forEach(function (element) {
+            var data = JSON.parse(element.dataset.sparkline || '[]');
+            if (!data.length) {
+                element.innerHTML = '<span class="text-muted small">{{ _("No data for last months") }}</span>';
+                return;
+            }
+            var width = element.clientWidth || 220;
+            var height = 80;
+            var svg = d3.select(element).append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            var x = d3.scaleLinear()
+                .domain([0, data.length - 1])
+                .range([0, width]);
+            var extent = d3.extent(data, function (d) { return d.value; });
+            if (extent[0] === extent[1]) {
+                extent[1] = extent[0] + 1;
+            }
+            var y = d3.scaleLinear()
+                .domain(extent)
+                .range([height - 10, 10]);
+            var area = d3.area()
+                .x(function (d, i) { return x(i); })
+                .y0(height - 10)
+                .y1(function (d) { return y(d.value); })
+                .curve(d3.curveMonotoneX);
+            var line = d3.line()
+                .x(function (d, i) { return x(i); })
+                .y(function (d) { return y(d.value); })
+                .curve(d3.curveMonotoneX);
+
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'var(--bs-primary)')
+                .attr('opacity', 0.15)
+                .attr('d', area);
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', 'var(--bs-primary)')
+                .attr('stroke-width', 2)
+                .attr('d', line);
+        });
+    });
+</script>
 {% endblock %}

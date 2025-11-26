@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required
 from sqlalchemy import extract
 from budget_manager.models import *
+from budget_manager.blueprints.saving import calculate_leftover_for_savings
 
 home = Blueprint("home", __name__)
 
@@ -25,13 +26,23 @@ def month_sold():
 def dashboard():
     """Main dashboard with financial overview"""
     now = datetime.now()
-    total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type==0).all()])
+    total_earnings = sum([
+        category.month_total_amount
+        for category in Category.query.filter(Category.type == 0).all()
+    ])
     total_budget_fixed_expenses = sum([category.get_month_budget.amount for category in Category.query.filter(Category.type == 1).all() if category.get_month_budget is not None])
     total_fixed_expenses_with_budget = sum([category.month_total_amount for category in Category.query.filter(Category.type == 1).all() if category.get_month_budget is not None])
     total_fixed_expenses = sum([category.month_total_amount for category in Category.query.filter(Category.type == 1).all()])
     total_budget_variable_expenses = sum([category.get_month_budget.amount for category in Category.query.filter(Category.type == 2).all() if category.get_month_budget is not None])
     total_variable_expenses_with_budget = sum([category.month_total_amount for category in Category.query.filter(Category.type == 2).all() if category.get_month_budget is not None])
     total_variable_expenses = sum([category.month_total_amount for category in Category.query.filter(Category.type == 2).all()])
+    # Remaining amount for variable expenses (avoid Decimal/float mixing)
+    remaining_for_variable_expenses = float(total_earnings) + float(total_fixed_expenses)
+    leftover_for_savings = calculate_leftover_for_savings(now.month, now.year)
+    # Safely compute consumption percentages using floats to avoid Decimal/float issues
+    fixed_denominator = float(total_budget_fixed_expenses) * float(total_earnings) if total_budget_fixed_expenses and total_earnings else 0
+    variable_denominator = float(total_budget_variable_expenses) * float(total_earnings) if total_budget_variable_expenses and total_earnings else 0
+
     ctx = {
         "month_sold": month_sold(),
         "current_date": now.strftime("%B %Y"),
@@ -39,10 +50,12 @@ def dashboard():
         "total_earnings": total_earnings,
         "fixed_expenses": Category.query.filter(Category.type==1).all(),
         "total_fixed_expenses": total_fixed_expenses,
-        "total_conso_fixed_expenses": round(-((total_fixed_expenses_with_budget / (total_budget_fixed_expenses*total_earnings)) * 100), 1) if total_fixed_expenses_with_budget else 0,
+        "total_conso_fixed_expenses": round(-((float(total_fixed_expenses_with_budget) / fixed_denominator) * 100), 1) if total_fixed_expenses_with_budget and fixed_denominator else 0,
         "variable_expenses": Category.query.filter(Category.type==2).all(),
         "total_variable_expenses": total_variable_expenses,
-        "total_conso_variable_expenses": round(-((total_variable_expenses_with_budget / (total_budget_variable_expenses*total_earnings)) * 100), 1) if total_variable_expenses_with_budget else 0,
+        "total_conso_variable_expenses": round(-((float(total_variable_expenses_with_budget) / variable_denominator) * 100), 1) if total_variable_expenses_with_budget and variable_denominator else 0,
+        "remaining_for_variable_expenses": remaining_for_variable_expenses,
+        "leftover_for_savings": leftover_for_savings,
     }
     return render_template('home.html', **ctx)
 

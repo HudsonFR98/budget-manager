@@ -55,7 +55,7 @@ def delete():
 @login_required
 def add():
     """Add a new category"""
-    total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type==0).all()])
+    total_earnings = Transaction.get_budget_eligible_earnings()
     if request.method == 'POST':
         name = request.form['name'] # or request.get_json().get('name') if xhr json
         type = int(request.form['type'])
@@ -85,7 +85,7 @@ def add():
 @login_required
 def edit(id):
     """Edit an existing category"""
-    total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type==0).all()])
+    total_earnings = Transaction.get_budget_eligible_earnings()
     cat = Category.query.get(id)
     bud = cat.get_month_budget
     if request.method == 'POST':

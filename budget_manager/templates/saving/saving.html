@@ -8,22 +8,25 @@
                 class="badge {% if total_amount > 0 %}bg-success{% else %}bg-secondary{% endif %} fs-6">{{ total_amount
                 }} €</span></p>
     </div>
-    <div>
-        <a href="{{ url_for('saving.add') }}" class="btn btn-primary">
-            <i class="fa-solid fa-plus"></i>&nbsp;{{ _('Add Saving') }}
-        </a>
-        <button type="button" class="btn btn-secondary ms-2" id="adjust-amounts-btn">
-            <i class="fa-solid fa-balance-scale"></i>&nbsp;{{ _('Adjust Amounts') }}
-        </button>
-        <button type="button" class="btn btn-info ms-2" id="distribute-monthly-btn">
-            <i class="fa-solid fa-calendar-check"></i>&nbsp;{{ _('Distribute Monthly') }}
-        </button>
-    </div>
 </div>
 
 {% if savings_with_percent %}
 <div class="row">
     <div class="col-md-7">
+        <div class="mb-3">
+            <a href="{{ url_for('saving.add') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i>&nbsp;{{ _('Add Saving') }}
+            </a>
+            <button type="button" class="btn btn-secondary ms-2" id="adjust-amounts-btn">
+                <i class="fa-solid fa-balance-scale"></i>&nbsp;{{ _('Adjust Amounts') }}
+            </button>
+            <button type="button" class="btn btn-info ms-2" id="distribute-monthly-btn">
+                <i class="fa-solid fa-calendar-check"></i>&nbsp;{{ _('Distribute Monthly') }}
+            </button>
+            <button type="button" class="btn btn-outline-info ms-2" id="snapshot-btn">
+                <i class="fa-solid fa-camera"></i>&nbsp;{{ _('Snapshot') }}
+            </button>
+        </div>
         <div class="row g-4">
             {% for item in savings_with_percent %}
             {% set saving = item.saving %}
@@ -49,7 +52,12 @@
                         </div>
                         <div class="mb-2">
                             <h3 class="text-success mb-0">{{ saving.amount }} €</h3>
-                            <small class="text-muted">{{ percent|round(2) }}%</small>
+                            <small class="text-muted">
+                                {{ percent|round(2) }}%
+                                {% if saving.ratio is not none %}
+                                &nbsp;·&nbsp;{{ _('Ratio') }}: {{ saving.ratio|float|round(2) }}
+                                {% endif %}
+                            </small>
                             {% if saving.goal %}
                             {% set saving_amount_float = saving.amount|float %}
                             {% set saving_goal_float = saving.goal|float %}
@@ -83,6 +91,16 @@
     </div>
     <div class="col-md-5">
         <br>
+        <div class="d-flex justify-content-center">
+            <div class="btn-group mb-2" role="group" aria-label="Chart mode">
+                <button type="button" id="btn-chart-amounts" class="btn btn-sm btn-outline-primary active">
+                    {{ _('Amounts') }}
+                </button>
+                <button type="button" id="btn-chart-ratios" class="btn btn-sm btn-outline-secondary">
+                    {{ _('Ratios') }}
+                </button>
+            </div>
+        </div>
         <div id="donut"></div>
     </div>
 </div>
@@ -116,60 +134,84 @@
             });
         });
 
-               // Adjust amounts button
-               var adjustBtn = document.getElementById('adjust-amounts-btn');
-               if (adjustBtn) {
-                   adjustBtn.addEventListener('click', function () {
-                       if (confirm('{{ _("This will adjust all saving amounts to match the current balance. Continue?") }}')) {
-                           var xhr = new XMLHttpRequest();
-                           xhr.open('POST', '{{ url_for("saving.adjust") }}', true);
-                           xhr.setRequestHeader('Content-Type', 'application/json');
-                           xhr.onreadystatechange = function () {
-                               if (xhr.readyState === XMLHttpRequest.DONE) {
-                                   if (xhr.status === 200) {
-                                       var response = JSON.parse(xhr.responseText);
-                                       alert(response.message);
-                                       window.location.reload();
-                                   } else {
-                                       alert('{{ _("Error adjusting amounts") }}');
-                                   }
-                               }
-                           };
-                           xhr.send();
-                       }
-                   });
+        // Adjust amounts button
+        var adjustBtn = document.getElementById('adjust-amounts-btn');
+        if (adjustBtn) {
+            adjustBtn.addEventListener('click', function () {
+                if (confirm('{{ _("This will adjust all saving amounts to match the current balance. Continue?") }}')) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '{{ url_for("saving.adjust") }}', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                var response = JSON.parse(xhr.responseText);
+                                alert(response.message);
+                                window.location.reload();
+                            } else {
+                                alert('{{ _("Error adjusting amounts") }}');
+                            }
+                        }
+                    };
+                    xhr.send();
+                }
+            });
+        }
+
+        // Distribute monthly button
+        var distributeBtn = document.getElementById('distribute-monthly-btn');
+        if (distributeBtn) {
+            distributeBtn.addEventListener('click', function () {
+                {% if leftover_for_savings %}
+                var resteAmount = {{ leftover_for_savings }};
+            var message = '{{ _("This will distribute the remaining monthly savings (Leftover: ") }}' + resteAmount.toFixed(2) + ' €) {{ _("from Reste saving among all savings. Continue?") }}';
+            {% else %}
+            var message = '{{ _("This will distribute the remaining monthly savings from Reste saving among all savings. Continue?") }}';
+            {% endif %}
+            if (confirm(message)) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ url_for("saving.distribute_monthly") }}', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            alert(response.message);
+                            window.location.reload();
+                        } else {
+                            var response = JSON.parse(xhr.responseText);
+                            alert(response.message || '{{ _("Error distributing monthly savings") }}');
+                        }
+                    }
+                };
+                xhr.send();
+            }
+        });
                }
 
-               // Distribute monthly button
-               var distributeBtn = document.getElementById('distribute-monthly-btn');
-               if (distributeBtn) {
-                   distributeBtn.addEventListener('click', function () {
-                       {% if reste_pour_epargner %}
-                       var resteAmount = {{ reste_pour_epargner }};
-                       var message = '{{ _("This will distribute the remaining monthly savings (Reste pour épargner: ") }}' + resteAmount.toFixed(2) + ' €) {{ _("from Reste saving among all savings. Continue?") }}';
-                       {% else %}
-                       var message = '{{ _("This will distribute the remaining monthly savings from Reste saving among all savings. Continue?") }}';
-                       {% endif %}
-                       if (confirm(message)) {
-                           var xhr = new XMLHttpRequest();
-                           xhr.open('POST', '{{ url_for("saving.distribute_monthly") }}', true);
-                           xhr.setRequestHeader('Content-Type', 'application/json');
-                           xhr.onreadystatechange = function () {
-                               if (xhr.readyState === XMLHttpRequest.DONE) {
-                                   if (xhr.status === 200) {
-                                       var response = JSON.parse(xhr.responseText);
-                                       alert(response.message);
-                                       window.location.reload();
-                                   } else {
-                                       var response = JSON.parse(xhr.responseText);
-                                       alert(response.message || '{{ _("Error distributing monthly savings") }}');
-                                   }
-                               }
-                           };
-                           xhr.send();
-                       }
-                   });
-               }
+    // Snapshot button
+    var snapshotBtn = document.getElementById('snapshot-btn');
+    if (snapshotBtn) {
+        snapshotBtn.addEventListener('click', function () {
+            if (confirm('{{ _("Capture a snapshot of current savings state?") }}')) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ url_for("saving.snapshot") }}', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var response = JSON.parse(xhr.responseText);
+                            alert(response.message);
+                        } else {
+                            var response = JSON.parse(xhr.responseText);
+                            alert(response.message || '{{ _("Error capturing snapshot") }}');
+                        }
+                    }
+                };
+                xhr.send();
+            }
+        });
+    }
     });
 </script>
 {% endblock %}
@@ -186,6 +228,8 @@
         var data = {{ chart_data| safe
     }};
 
+    var currentMode = 'amounts'; // 'amounts' or 'ratios'
+
     function drawDonut() {
         var styles = getComputedStyle(document.body);
         var bodyColor = styles.getPropertyValue('--bs-body-color').trim() || '#212529';
@@ -195,48 +239,106 @@
             .range(data.map(function (d) { return d.color; }));
 
         var arc = d3.arc().innerRadius(radius * 0.5).outerRadius(radius * 0.8);
-        var pie = d3.pie().value(function (d) { return d.value; });
+        var pie;
+        var titleText;
 
-        var root = d3.select("#donut");
-        root.selectAll('*').remove();
+        if (currentMode === 'ratios') {
+            var totalRatio = data.reduce(function (sum, d) { return sum + (d.ratio || 0); }, 0);
 
-        var svg = root.append("svg").attr("viewBox", "0 0 " + width + " " + height)
-            .append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+            var root = d3.select("#donut");
+            root.selectAll('*').remove();
 
-        var g = svg.selectAll("arc").data(pie(data)).enter().append("g");
+            if (totalRatio <= 0) {
+                // Show message when no ratios are defined
+                root.append('p')
+                    .attr('class', 'text-muted')
+                    .text("{{ _('No ratios defined yet.') }}");
+                return;
+            }
 
-        g.append("path").attr("d", arc).style("fill", function (d) { return colorScale(d.data.name); });
+            pie = d3.pie().value(function (d) { return d.ratio || 0; });
+            titleText = "Ratios (sum = " + totalRatio.toFixed(2) + ")";
+        } else {
+            pie = d3.pie().value(function (d) { return d.value; });
+            var totalAmount = {{ total_amount }};
+        titleText = "Total: " + totalAmount.toFixed(2) + " €";
+    }
 
-        g.append("text")
-            .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
-            .style("text-anchor", "middle")
-            .attr("dy", "0.35em")
-            .attr("font-size", "30px")
-            .attr("fill", bodyColor)
-            .text(function (d) { return d.data.label; });
+    var root = d3.select("#donut");
+    root.selectAll('*').remove();
 
-        var totalAmount = {{ total_amount }};
-    var titleText = "Total: " + totalAmount.toFixed(2) + " €";
-    var title = svg.append("foreignObject")
-        .attr("x", -radius * 0.41)
-        .attr("y", -radius * 0.19)
-        .attr("width", radius * 1.6)
-        .attr("height", radius * 0.2)
-        .attr("style", "width: 40%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
-        .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(titleText);
+    var svg = root.append("svg").attr("viewBox", "0 0 " + width + " " + height)
+        .append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    var mainTitleText = "Répartition de l'épargne";
-    var maintitle = svg.append("foreignObject")
+    var g = svg.selectAll("arc").data(pie(data)).enter().append("g");
+
+    g.append("path").attr("d", arc).style("fill", function (d) { return colorScale(d.data.name); });
+
+    g.append("text")
+        .attr("transform", function (d) { return "translate(" + arc.centroid(d) + ")"; })
+        .style("text-anchor", "middle")
+        .attr("dy", "0.35em")
+        .attr("font-size", "30px")
+        .attr("fill", bodyColor)
+        .text(function (d) { return d.data.label; });
+
+    svg.append("foreignObject")
         .attr("x", -radius * 0.8)
         .attr("y", -radius * 1)
         .attr("width", radius * 1.6)
-        .attr("height", radius * 0.2)
-        .attr("style", "width: 80%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
-        .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(mainTitleText);
+        .attr("height", radius * 0.3)
+        .attr("style", "width: 80%;height:30%;text-align:center;font-size:13px;color:" + bodyColor)
+        .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(titleText);
+
+    if (currentMode === 'amounts') {
+        var mainTitleText = "Répartition de l'épargne";
+        svg.append("foreignObject")
+            .attr("x", -radius * 0.8)
+            .attr("y", -radius * 0.3)
+            .attr("width", radius * 1.6)
+            .attr("height", radius * 0.2)
+            .attr("style", "width: 80%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
+            .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "16px").text(mainTitleText);
+    } else {
+        var ratiosTitle = "Répartition des ratios";
+        svg.append("foreignObject")
+            .attr("x", -radius * 0.8)
+            .attr("y", -radius * 0.3)
+            .attr("width", radius * 1.6)
+            .attr("height", radius * 0.2)
+            .attr("style", "width: 80%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
+            .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "16px").text(ratiosTitle);
+    }
         }
 
+    // Initial draw
     drawDonut();
 
+    // Toggle buttons
+    var btnAmounts = document.getElementById('btn-chart-amounts');
+    var btnRatios = document.getElementById('btn-chart-ratios');
+
+    if (btnAmounts && btnRatios) {
+        btnAmounts.addEventListener('click', function () {
+            currentMode = 'amounts';
+            btnAmounts.classList.add('btn-outline-primary', 'active');
+            btnAmounts.classList.remove('btn-outline-secondary');
+            btnRatios.classList.add('btn-outline-secondary');
+            btnRatios.classList.remove('btn-outline-primary', 'active');
+            drawDonut();
+        });
+
+        btnRatios.addEventListener('click', function () {
+            currentMode = 'ratios';
+            btnRatios.classList.add('btn-outline-primary', 'active');
+            btnRatios.classList.remove('btn-outline-secondary');
+            btnAmounts.classList.add('btn-outline-secondary');
+            btnAmounts.classList.remove('btn-outline-primary', 'active');
+            drawDonut();
+        });
+    }
+
+    // Redraw on theme change
     var observer = new MutationObserver(function (mutations) {
         for (var i = 0; i < mutations.length; i++) {
             if (mutations[i].attributeName === 'data-bs-theme') { drawDonut(); }

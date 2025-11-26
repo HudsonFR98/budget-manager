@@ -1,7 +1,8 @@
 import logging
 import uuid
 import requests
-from datetime import datetime
+from datetime import datetime, date
+from calendar import monthrange
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
@@ -401,4 +402,29 @@ def distribute_monthly_savings():
         return result
     except Exception as e:
         log.error(f"Distribute monthly savings failed: {e}")
+        raise
+
+
+# Record saving history snapshots shortly after monthly distribution
+@scheduled_task('5 0 2 * *', 'Record savings history snapshot after monthly distribution')
+def record_saving_history_snapshot():
+    """Persist previous month-end saving amounts after distribution completes."""
+    try:
+        from budget_manager.blueprints.saving import snapshot_savings_state
+
+        now = datetime.now()
+        if now.month == 1:
+            snapshot_year = now.year - 1
+            snapshot_month = 12
+        else:
+            snapshot_year = now.year
+            snapshot_month = now.month - 1
+
+        snapshot_day = monthrange(snapshot_year, snapshot_month)[1]
+        snapshot_date = date(snapshot_year, snapshot_month, snapshot_day)
+
+        created = snapshot_savings_state(snapshot_date)
+        return f"Recorded {created} saving history snapshots for {snapshot_date}"
+    except Exception as e:
+        log.error(f"Saving history snapshot task failed: {e}")
         raise

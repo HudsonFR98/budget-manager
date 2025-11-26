@@ -98,13 +98,19 @@ class Category(Base):
     @property
     def consumed_budget(self):
         """Get percentage of consumed allocated budget"""
-        earnings_total = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
-        month_total = self.month_total_amount
+        earnings_total = Transaction.get_budget_eligible_earnings()
+        try:
+            month_total = float(self.month_total_amount)
+        except (TypeError, ValueError):
+            month_total = 0.0
         month_budget = self.get_month_budget
         if self.get_month_budget is not None:
             try:
-                return round(-((month_total / (month_budget.amount * earnings_total)) * 100), 1)
-            except:
+                denominator = float(month_budget.amount) * float(earnings_total)
+                if denominator == 0:
+                    return 0
+                return round(-((month_total / denominator) * 100), 1)
+            except Exception:
                 return 0
         else:
             return 0
@@ -112,9 +118,11 @@ class Category(Base):
     @property
     def get_month_budget_in_euro(self):
         """Get budget calculated knowing allocated budget and total earning"""
-        earnings_total = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+        earnings_total = Transaction.get_budget_eligible_earnings()
         month_budget = self.get_month_budget if self.get_month_budget is not None else 0
-        return round(month_budget.amount * earnings_total, 1)
+        if not month_budget:
+            return 0
+        return round(float(month_budget.amount) * float(earnings_total), 1)
 
     @property
     def is_deletable(self):

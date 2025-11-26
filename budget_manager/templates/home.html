@@ -47,7 +47,7 @@
                             f.month_total_amount }} €</span>{% else %}<span style="color: red;font-weight: bold">{{
                             f.month_total_amount }} €</span>{% endif %}</td>
                     <td>
-                        {% if conso %}
+                        {% if conso is not none %}
                         <div class="progress" style="height: 20px;">
                             {% if conso >= 99 %}
                             <div class="progress-bar bg-danger" role="progressbar" style="width: {{ conso }}%;"
@@ -81,8 +81,8 @@
                 <tr>
                     <td><b style="color: white">Reste pour dépense variable</b></td>
                     <td>
-                        {% if (total_earnings + total_fixed_expenses) < 20 %}⚠️{% endif %} <b style="color: white">{{
-                            total_earnings + total_fixed_expenses }} €</b>
+                        {% if remaining_for_variable_expenses < 20 %}⚠️{% endif %} <b style="color: white">{{
+                            remaining_for_variable_expenses }} €</b>
                     </td>
                 </tr>
             </tbody>
@@ -106,7 +106,7 @@
                             v.month_total_amount }} €</span>{% else %}<span style="color: red;font-weight: bold">{{
                             v.month_total_amount }} €</span>{% endif %}</td>
                     <td>
-                        {% if conso %}
+                        {% if conso is not none %}
                         <div class="progress" style="height: 20px;">
                             {% if conso >= 99 %}
                             <div class="progress-bar bg-danger" role="progressbar" style="width: {{ conso }}%;"
@@ -141,9 +141,9 @@
                 <tr>
                     <td><b style="color: white">Reste pour épargner</b></td>
                     <td>
-                        {% if ((total_earnings + total_fixed_expenses) + total_variable_expenses) < 20 %}⚠️{% endif %}
-                            <b style="color: white">{{ (total_earnings + total_fixed_expenses) + total_variable_expenses
-                            }} €</b>
+                        {% if leftover_for_savings < 20 %}⚠️{% endif %} <b style="color: white">{{ leftover_for_savings
+                            }}
+                            €</b>
                     </td>
                 </tr>
             </tbody>

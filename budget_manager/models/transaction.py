@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, date
-from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, Date, extract, or_
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
 
@@ -48,6 +48,27 @@ class Transaction(Base):
 
     def __repr__(self):
         return f'<Transaction {self.id}: {self.amount} on {self.date}>'
+
+    @staticmethod
+    def get_budget_eligible_earnings(month=None, year=None):
+        """Return earnings total used for budgeting (excludes non-Reste savings)."""
+        if month is None or year is None:
+            today = datetime.today()
+            if month is None:
+                month = today.month
+            if year is None:
+                year = today.year
+
+        query = Transaction.query.filter(
+            Transaction.category.has(type=0),
+            extract('month', Transaction.date) == month,
+            extract('year', Transaction.date) == year,
+            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+        )
+        total = 0
+        for transaction in query:
+            total += float(transaction.amount)
+        return total
 
 
 # Add query property to model

@@ -18,7 +18,7 @@ def sold():
 
 def reajust_fixed_budgets(old_total_earnings):
     """Readjust fixed budgets when earnings change"""
-    new_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+    new_total_earnings = Transaction.get_budget_eligible_earnings()
     fixed_categories = Category.query.filter(Category.type == 1).all()
     fixed_budgets = []
     for cat in fixed_categories:
@@ -35,13 +35,13 @@ def reajust_fixed_budgets(old_total_earnings):
         else:
             year = current_year - 1
             month = 12
-        old_total_earnings = sum([category.given_month_total_amount(month, year) for category in Category.query.filter(Category.type == 0).all()])
+        old_total_earnings = Transaction.get_budget_eligible_earnings(month=month, year=year)
     try:
         diff = new_total_earnings / old_total_earnings
     except:
         diff = 1 #no change
     for bud in fixed_budgets:
-        bud.amount = bud.amount / diff
+        bud.amount = float(bud.amount) / diff
     DBSession.commit()
 
 @transaction.route('/', methods=['GET', 'POST'])
@@ -68,7 +68,7 @@ def delete():
     """Delete a transaction"""
     data = request.get_json()
     id = data.get('id')
-    old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+    old_total_earnings = Transaction.get_budget_eligible_earnings()
     transac = Transaction.query.get(id)
     if not transac:
         return jsonify({'error': 'Transaction not found'}), 404
@@ -114,7 +114,7 @@ def add():
     """Add a new transaction"""
     now = datetime.now().strftime('%Y-%m-%d')
     if request.method == 'POST':
-        old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+        old_total_earnings = Transaction.get_budget_eligible_earnings()
         note = request.form['note']
         category_id = request.form['category']
         date = request.form['date']
@@ -194,7 +194,7 @@ def edit(id):
         return redirect(url_for('transaction.summary'))
     
     if request.method == 'POST':
-        old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+        old_total_earnings = Transaction.get_budget_eligible_earnings()
         old_amount = float(transac.amount)
         old_category_type = transac.category.type
         old_saving_id = transac.saving_id

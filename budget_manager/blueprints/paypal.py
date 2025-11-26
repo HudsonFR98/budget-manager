@@ -38,7 +38,7 @@ def delete():
     """Delete a PayPal transaction"""
     data = request.get_json()
     id = data.get('id')
-    old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+    old_total_earnings = Transaction.get_budget_eligible_earnings()
     transac = Transaction.query.get(id)
     type = transac.category.type
     DBSession.delete(transac)
@@ -56,27 +56,45 @@ def add():
     """Add a new PayPal transaction"""
     now = datetime.now().strftime('%Y-%m-%d')
     if request.method == 'POST':
-        old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+        old_total_earnings = Transaction.get_budget_eligible_earnings()
         note = request.form['note']
         category_id = request.form['category']
         date = request.form['date']
-        amount = request.form['amount']
+        amount = float(request.form['amount'])
+
+        # Validate amount based on category type (same rules as bank transactions)
+        category = Category.query.get(category_id)
+        if category.type == 0:  # Earnings - must be positive
+            if amount < 0:
+                flash('Les revenus (catégorie type 0) doivent être positifs.', 'error')
+                return render_template('paypal/add_transaction.html', now=now, categories=Category.query.order_by(Category.name).all())
+        else:  # Spending (type 1 or 2) - must be negative
+            if amount > 0:
+                flash('Les dépenses (catégories type 1 et 2) doivent être négatives.', 'error')
+                return render_template('paypal/add_transaction.html', now=now, categories=Category.query.order_by(Category.name).all())
+
         transac = Transaction(note=note, category_id=category_id, date=date, amount=amount, paypal=True)
         DBSession.add(transac)
         DBSession.commit()
         # if earning has changed
         if transac.category.type == 0:
-            #we re-adjust all fixed bugdets
+            # we re-adjust all fixed bugdets
             reajust_fixed_budgets(old_total_earnings)
 
         if transac.amount < 0:
             # we add the + version of transac to simulate we have already received this money on bank account
             cat_ventes = Category.query.filter(Category.name == "Ventes Elytras").one()
-            reverse_transac = Transaction(note="ventes", category_id=cat_ventes.id, date=date, amount=abs(float(amount)), paypal=True)
+            reverse_transac = Transaction(
+                note="ventes",
+                category_id=cat_ventes.id,
+                date=date,
+                amount=abs(amount),
+                paypal=True,
+            )
             DBSession.add(reverse_transac)
             DBSession.commit()
             if reverse_transac.category.type == 0:
-                #we re-adjust all fixed bugdets
+                # we re-adjust all fixed bugdets
                 reajust_fixed_budgets(old_total_earnings)
 
         return redirect(url_for('paypal.summary'))
@@ -88,13 +106,36 @@ def edit(id):
     """Edit an existing PayPal transaction"""
     ctx = {}
     if request.method == 'POST':
-        old_total_earnings = sum([category.month_total_amount for category in Category.query.filter(Category.type == 0).all()])
+        old_total_earnings = Transaction.get_budget_eligible_earnings()
         transac = Transaction.query.get(id)
-        transac.note = request.form['note']
-        transac.category_id = request.form['category']
-        transac.date = request.form['date']
-        transac.amount = request.form['amount']
+
+        note = request.form['note']
+        category_id = request.form['category']
+        date = request.form['date']
+        new_amount = float(request.form['amount'])
+
+        # Validate amount based on category type (same rules as bank transactions)
+        category = Category.query.get(category_id)
+        if category.type == 0:  # Earnings - must be positive
+            if new_amount < 0:
+                flash('Les revenus doivent être positifs.', 'error')
+                ctx.update({"transac": transac})
+                ctx.update({"categories": Category.query.order_by(Category.name).all()})
+                return render_template('paypal/edit_transaction.html', **ctx)
+        else:  # Spending (type 1 or 2) - must be negative
+            if new_amount > 0:
+                flash('Les dépenses doivent être négatives.', 'error')
+                ctx.update({"transac": transac})
+                ctx.update({"categories": Category.query.order_by(Category.name).all()})
+                return render_template('paypal/edit_transaction.html', **ctx)
+
+        # Apply changes
+        transac.note = note
+        transac.category_id = category_id
+        transac.date = date
+        transac.amount = new_amount
         DBSession.commit()
+
         # if earning has changed
         if transac.category.type == 0:
             # we re-adjust all fixed bugdets

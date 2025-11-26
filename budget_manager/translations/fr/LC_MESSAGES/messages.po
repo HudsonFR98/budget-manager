@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-22 22:29+0100\n"
+"POT-Creation-Date: 2025-11-26 16:03+0100\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -35,7 +35,6 @@ msgid "Statistics"
 msgstr "Statistiques"
 
 #: budget_manager/templates/base.html:52
-#: budget_manager/templates/saving/saving.html:6
 msgid "Savings"
 msgstr "Épargnes"
 
@@ -319,7 +318,6 @@ msgid "Inactive"
 msgstr "Inactif"
 
 #: budget_manager/templates/admin/users.html:69
-#: budget_manager/templates/saving/saving.html:41
 msgid "Edit"
 msgstr "Modifier"
 
@@ -338,8 +336,8 @@ msgstr "Maintenez Ctrl/Cmd pour sélectionner plusieurs rôles"
 
 #: budget_manager/templates/admin/users.html:137
 #: budget_manager/templates/admin/users.html:189
-#: budget_manager/templates/saving/add_saving.html:45
-#: budget_manager/templates/saving/edit_saving.html:45
+#: budget_manager/templates/saving/add_saving.html:53
+#: budget_manager/templates/saving/edit_saving.html:53
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -379,6 +377,108 @@ msgstr "Êtes-vous sûr de vouloir activer cet utilisateur ?"
 #: budget_manager/templates/admin/users.html:270
 msgid "Failed to update user status"
 msgstr "Échec de la mise à jour du statut utilisateur"
+
+#: budget_manager/templates/analytics/summary.html:6
+msgid "Analytics dashboard"
+msgstr "Tableau de bord analytique"
+
+#: budget_manager/templates/analytics/summary.html:7
+msgid "Deep dive into savings and spending trends"
+msgstr "Analyse approfondie des tendances d'épargne et de dépenses"
+
+#: budget_manager/templates/analytics/summary.html:11
+msgid "Window (months)"
+msgstr "Période (mois)"
+
+#: budget_manager/templates/analytics/summary.html:16
+msgid "Apply"
+msgstr "Appliquer"
+
+#: budget_manager/templates/analytics/summary.html:26
+msgid "Total balance change"
+msgstr "Variation du solde total"
+
+#: budget_manager/templates/analytics/summary.html:30
+#: budget_manager/templates/analytics/summary.html:51
+msgid "Reference"
+msgstr "Référence"
+
+#: budget_manager/templates/analytics/summary.html:47
+msgid "Income over period"
+msgstr "Revenus sur la période"
+
+#: budget_manager/templates/analytics/summary.html:70
+msgid "Savings insights"
+msgstr "Aperçu des épargnes"
+
+#: budget_manager/templates/analytics/summary.html:71
+msgid "Average leftover last"
+msgstr "Reste pour épargne moyen sur les"
+
+#: budget_manager/templates/analytics/summary.html:71
+#: budget_manager/templates/analytics/summary.html:103
+msgid "months"
+msgstr "mois"
+
+#: budget_manager/templates/analytics/summary.html:86
+msgid "Ratio"
+msgstr "Ratio"
+
+#: budget_manager/templates/analytics/summary.html:95
+#: budget_manager/templates/saving/add_saving.html:40
+#: budget_manager/templates/saving/edit_saving.html:40
+msgid "Goal"
+msgstr "Objectif"
+
+#: budget_manager/templates/analytics/summary.html:97
+msgid "Estimated monthly allocation"
+msgstr "Allocation mensuelle estimée"
+
+#: budget_manager/templates/analytics/summary.html:102
+msgid "Goal ETA"
+msgstr "Date estimée d'objectif"
+
+#: budget_manager/templates/analytics/summary.html:108
+msgid "Unable to estimate goal date (ratio or leftover too low)."
+msgstr "Impossible d'estimer la date d'objectif (ratio ou reste pour épargne trop faible)."
+
+#: budget_manager/templates/analytics/summary.html:113
+msgid "No goal set"
+msgstr "Aucun objectif défini"
+
+#: budget_manager/templates/analytics/summary.html:122
+msgid "No savings data yet."
+msgstr "Aucune donnée d'épargne pour le moment."
+
+#: budget_manager/templates/analytics/summary.html:131
+msgid "Top growing categories"
+msgstr "Catégories en plus forte hausse"
+
+#: budget_manager/templates/analytics/summary.html:142
+#: budget_manager/templates/analytics/summary.html:170
+msgid "Avg spending"
+msgstr "Dépense moyenne"
+
+#: budget_manager/templates/analytics/summary.html:151
+#: budget_manager/templates/analytics/summary.html:179
+msgid "Not enough data"
+msgstr "Données insuffisantes"
+
+#: budget_manager/templates/analytics/summary.html:159
+msgid "Top falling categories"
+msgstr "Catégories en plus forte baisse"
+
+#: budget_manager/templates/analytics/summary.html:188
+msgid "Historical spending overview"
+msgstr "Vue d'ensemble historique des dépenses"
+
+#: budget_manager/templates/analytics/summary.html:191
+msgid "Legend: green = income, purple = total balance trend"
+msgstr "Légende : vert = revenus, violet = tendance du solde total"
+
+#: budget_manager/templates/analytics/summary.html:208
+msgid "No data for last months"
+msgstr "Aucune donnée pour les derniers mois"
 
 #: budget_manager/templates/dashboard/home.html:5
 msgid "Welcome to the Dashboard"
@@ -523,7 +623,6 @@ msgid "CI/CD pipeline integration"
 msgstr "Intégration de la chaîne CI/CD"
 
 #: budget_manager/templates/saving/add_saving.html:5
-#: budget_manager/templates/saving/saving.html:13
 msgid "Add Saving"
 msgstr "Ajouter une épargne"
 
@@ -556,18 +655,31 @@ msgstr "Fermer"
 msgid "Icon"
 msgstr "Icône"
 
-#: budget_manager/templates/saving/add_saving.html:40
-#: budget_manager/templates/saving/edit_saving.html:40
-#: budget_manager/templates/saving/saving.html:61
-msgid "Goal"
-msgstr "Objectif"
-
 #: budget_manager/templates/saving/add_saving.html:41
 #: budget_manager/templates/saving/edit_saving.html:41
 msgid "Target amount"
 msgstr "Montant cible"
 
-#: budget_manager/templates/saving/add_saving.html:44
+#: budget_manager/templates/saving/add_saving.html:45
+#: budget_manager/templates/saving/edit_saving.html:45
+msgid "Ratio for leftover distribution"
+msgstr "Ratio de répartition du reste pour épargne"
+
+#: budget_manager/templates/saving/add_saving.html:46
+#: budget_manager/templates/saving/edit_saving.html:46
+msgid "0 to 1"
+msgstr "0 à 1"
+
+#: budget_manager/templates/saving/add_saving.html:48
+#: budget_manager/templates/saving/edit_saving.html:48
+msgid ""
+"Ratio defines how much of the leftover is allocated to this saving. Sum "
+"of all ratios is kept at 1."
+msgstr ""
+"Le ratio définit la part du reste pour épargne allouée à cette épargne. La somme de "
+"tous les ratios est maintenue à 1."
+
+#: budget_manager/templates/saving/add_saving.html:52
 msgid "Create"
 msgstr "Créer l'épargne"
 
@@ -575,67 +687,9 @@ msgstr "Créer l'épargne"
 msgid "Edit Saving"
 msgstr "Modifier l'épargne"
 
-#: budget_manager/templates/saving/edit_saving.html:44
+#: budget_manager/templates/saving/edit_saving.html:52
 msgid "Update"
 msgstr "Mettre à jour l'épargne"
-
-#: budget_manager/templates/saving/saving.html:7
-msgid "Total"
-msgstr "Total"
-
-#: budget_manager/templates/saving/saving.html:16
-msgid "Adjust Amounts"
-msgstr "Ajuster les montants"
-
-#: budget_manager/templates/saving/saving.html:19
-msgid "Distribute Monthly"
-msgstr ""
-
-#: budget_manager/templates/saving/saving.html:45
-msgid "Delete"
-msgstr "Déploiement"
-
-#: budget_manager/templates/saving/saving.html:91
-msgid "No savings found. Add your first saving!"
-msgstr "Aucune épargne trouvée. Ajoutez votre première épargne !"
-
-#: budget_manager/templates/saving/saving.html:101
-msgid "Are you sure you want to delete this saving?"
-msgstr "Êtes-vous sûr de vouloir désactiver cet épargne ?"
-
-#: budget_manager/templates/saving/saving.html:110
-msgid "Error deleting saving"
-msgstr "Erreur lors de la suppression de l'épargne"
-
-#: budget_manager/templates/saving/saving.html:123
-msgid ""
-"This will adjust all saving amounts to match the current balance. "
-"Continue?"
-msgstr ""
-"Cela ajustera tous les montants d'épargne pour correspondre au solde "
-"actuel. Continuer ?"
-
-#: budget_manager/templates/saving/saving.html:134
-msgid "Error adjusting amounts"
-msgstr "Erreur lors de l'ajustement des montants"
-
-#: budget_manager/templates/saving/saving.html:149
-msgid "This will distribute the remaining monthly savings (Reste pour épargner: "
-msgstr ""
-
-#: budget_manager/templates/saving/saving.html:149
-msgid "from Reste saving among all savings. Continue?"
-msgstr ""
-
-#: budget_manager/templates/saving/saving.html:151
-msgid ""
-"This will distribute the remaining monthly savings from Reste saving "
-"among all savings. Continue?"
-msgstr ""
-
-#: budget_manager/templates/saving/saving.html:165
-msgid "Error distributing monthly savings"
-msgstr ""
 
 #~ msgid "Example"
 #~ msgstr "Exemple"
@@ -681,4 +735,53 @@ msgstr ""
 
 #~ msgid "Register"
 #~ msgstr "Résultat/Erreur"
+
+#~ msgid "Total"
+#~ msgstr "Total"
+
+#~ msgid "Adjust Amounts"
+#~ msgstr "Ajuster les montants"
+
+#~ msgid "Distribute Monthly"
+#~ msgstr "Distribuer mensuellement"
+
+#~ msgid "Delete"
+#~ msgstr "Déploiement"
+
+#~ msgid "No savings found. Add your first saving!"
+#~ msgstr "Aucune épargne trouvée. Ajoutez votre première épargne !"
+
+#~ msgid "Are you sure you want to delete this saving?"
+#~ msgstr "Êtes-vous sûr de vouloir désactiver cet épargne ?"
+
+#~ msgid "Error deleting saving"
+#~ msgstr "Erreur lors de la suppression de l'épargne"
+
+#~ msgid ""
+#~ "This will adjust all saving amounts "
+#~ "to match the current balance. Continue?"
+#~ msgstr ""
+#~ "Cela ajustera tous les montants "
+#~ "d'épargne pour correspondre au solde "
+#~ "actuel. Continuer ?"
+
+#~ msgid "Error adjusting amounts"
+#~ msgstr "Erreur lors de l'ajustement des montants"
+
+#~ msgid ""
+#~ "This will distribute the remaining "
+#~ "monthly savings (Reste pour épargner: "
+#~ msgstr ""
+
+#~ msgid "from Reste saving among all savings. Continue?"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "This will distribute the remaining "
+#~ "monthly savings from Reste saving among"
+#~ " all savings. Continue?"
+#~ msgstr ""
+
+#~ msgid "Error distributing monthly savings"
+#~ msgstr ""
 

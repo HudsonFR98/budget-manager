@@ -12,8 +12,13 @@ import budget_manager.dao as dao
 
 class StackedSpendingChart():
 
-    def __init__(self):
-        
+    def __init__(self, months=12):
+        try:
+            months_count = int(months)
+        except (TypeError, ValueError):
+            months_count = 12
+        self.months = max(1, min(24, months_count))
+
         # Get width and height parameters from the request
         self.width = int(request.args.get('width', 1700))
         self.height = int(request.args.get('height', 800))
@@ -23,9 +28,9 @@ class StackedSpendingChart():
         self.y_label = 'Mois/Année'
         self.x_label = 'Montant en €'
 
-        # Generate x-axis labels for the last 12 months
+        # Generate x-axis labels for the requested number of months
         today = datetime.now()
-        self.last_12_months = [today - timedelta(days=30*i) for i in range(11, -1, -1)]
+        self.month_dates = [today - timedelta(days=30 * i) for i in range(self.months - 1, -1, -1)]
         self.categories = dao.get_spending_categories()
 
         # Use category colors
@@ -42,14 +47,14 @@ class StackedSpendingChart():
 
     def generate(self):
 
-        x_labels = [date.strftime("%m/%y") for date in self.last_12_months]
+        x_labels = [date.strftime("%m/%y") for date in self.month_dates]
 
         # Generate spendings data
         x = np.arange(len(x_labels))
         spending_data = []
         for category in self.categories:
             y = []
-            for date in self.last_12_months:
+            for date in self.month_dates:
                 amount = abs(float(category.given_month_total_amount(month=date.month, year=date.year)))
                 y.append(amount)
             spending_data.append(y)
@@ -67,7 +72,7 @@ class StackedSpendingChart():
 
         # Generate income data
         income_data = []
-        for date in self.last_12_months:
+        for date in self.month_dates:
             transactions = dao.get_month_transac(month=date.month, year=date.year, paypal=True)
             y = dao.turnover(transactions)
             income_data.append(y)
@@ -78,7 +83,7 @@ class StackedSpendingChart():
 
         # Generate amount (solde) data
         sold_data = []
-        for date in self.last_12_months:
+        for date in self.month_dates:
             y = dao.past_sold(month=date.month, year=date.year)
             sold_data.append(y)
         line2, = ax.plot(x, sold_data, color='#FF00AE', linestyle='-', label='Line Data', linewidth=1.7)

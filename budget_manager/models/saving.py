@@ -1,5 +1,7 @@
 import logging
-from sqlalchemy import Column, Integer, String, Numeric
+from datetime import date
+from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from budget_manager.lib.database import Base, DBSession
 
 log = logging.getLogger(__name__)
@@ -16,6 +18,7 @@ class Saving(Base):
     icon = Column(String(30), nullable=True)  # a html class or emoji
     color = Column(String(30), nullable=True)  # hexadecimal
     goal = Column(Numeric(precision=8, scale=2), nullable=True)  # goal amount for this saving
+    ratio = Column(Numeric(precision=8, scale=2), nullable=True)
 
     def __init__(self, name=None, note=None, amount=None, icon=None, color=None, goal=None):
         self.name = name
@@ -31,4 +34,27 @@ class Saving(Base):
 
 # Add query property to model
 Saving.query = DBSession.query_property()
+
+
+class SavingHistory(Base):
+    """Historical snapshot of savings amounts"""
+    __tablename__ = 'saving_history'
+
+    id = Column(Integer, primary_key=True)
+    saving_id = Column(Integer, ForeignKey('saving.id'), nullable=False, index=True)
+    date = Column(Date, default=date.today, nullable=False, index=True)
+    amount = Column(Numeric(precision=8, scale=2), nullable=False)
+
+    saving = relationship('Saving', backref='history_entries')
+
+    def __init__(self, saving_id=None, date_snapshot=None, amount=None):
+        self.saving_id = saving_id
+        self.date = date_snapshot or date.today()
+        self.amount = amount
+
+    def __repr__(self):
+        return f'<SavingHistory saving={self.saving_id} date={self.date} amount={self.amount}>'
+
+
+SavingHistory.query = DBSession.query_property()
 

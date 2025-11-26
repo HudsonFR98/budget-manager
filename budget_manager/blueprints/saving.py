@@ -1,5 +1,6 @@
 import json
 import logging
+from datetime import date
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_required
 from budget_manager.models import *
@@ -24,6 +25,87 @@ def sold():
         total_amount += t.amount
     return total_amount
 
+
+def snapshot_savings_state(snapshot_date=None):
+    """Persist current savings amounts for historical analysis."""
+    if snapshot_date is None:
+        snapshot_date = date.today()
+
+    existing_ids = {
+        entry.saving_id
+        for entry in SavingHistory.query.filter(SavingHistory.date == snapshot_date).all()
+    }
+
+    new_entries = []
+    for saving in Saving.query.all():
+        if saving.id in existing_ids:
+            continue
+        new_entries.append(
+            SavingHistory(
+                saving_id=saving.id,
+                date_snapshot=snapshot_date,
+                amount=saving.amount
+            )
+        )
+
+    if new_entries:
+        DBSession.add_all(new_entries)
+        DBSession.commit()
+    return len(new_entries)
+
+
+def _normalize_saving_ratios(updated_saving, new_ratio: float):
+    """Normalize all savings' ratios so that the sum is 1.
+
+    Rules:
+    - new_ratio is the ratio for updated_saving, must be between 0 and 1.
+    - Sum of all ratios after normalization is 1 (or 0 if there is only one saving and its ratio is 0).
+    - Other savings keep their relative proportions, scaled so their sum is (1 - new_ratio).
+    """
+    # Clamp new_ratio into [0, 1]
+    if new_ratio < 0:
+        new_ratio = 0.0
+    if new_ratio > 1:
+        new_ratio = 1.0
+
+    # Assign new ratio to the updated saving
+    updated_saving.ratio = new_ratio
+
+    all_savings = Saving.query.order_by(Saving.id).all()
+    others = [s for s in all_savings if s.id != updated_saving.id]
+
+    # If there are no other savings, single saving gets full ratio 1 or 0 as requested
+    if not others:
+        # If user set something < 1, normalize to 1 to respect "sum of all ratios must be 1"
+        updated_saving.ratio = 1.0 if new_ratio > 0 else 0.0
+        DBSession.commit()
+        return
+
+    target_others_sum = max(0.0, 1.0 - float(updated_saving.ratio or 0.0))
+
+    # Compute current total of others' ratios
+    old_others_sum = sum(float(s.ratio or 0.0) for s in others)
+
+    if target_others_sum == 0:
+        # Updated saving takes everything, others go to 0
+        for s in others:
+            s.ratio = 0.0
+        DBSession.commit()
+        return
+
+    if old_others_sum > 0:
+        # Scale existing ratios to fill target_others_sum, preserving proportions
+        for s in others:
+            old = float(s.ratio or 0.0)
+            s.ratio = (old / old_others_sum) * target_others_sum
+    else:
+        # All others had ratio 0 or None, distribute equally
+        per = target_others_sum / len(others)
+        for s in others:
+            s.ratio = per
+
+    DBSession.commit()
+
 @saving.route('/', methods=['GET', 'POST'])
 @login_required
 def summary():
@@ -38,6 +120,7 @@ def summary():
     for idx, s in enumerate(savings):
         saving_amount = float(s.amount)
         percent = (saving_amount / total_balance * 100) if total_balance > 0 else 0
+        saving_ratio = float(s.ratio) if getattr(s, "ratio", None) is not None else 0.0
         
         savings_with_percent.append({
             'saving': s,
@@ -48,6 +131,7 @@ def summary():
             "name": s.name,
             "label": s.icon if s.icon else "💰",
             "value": saving_amount,
+            "ratio": saving_ratio,
             "color": s.color if s.color else SAVINGS_COLORS[idx % len(SAVINGS_COLORS)]
         })
     
@@ -55,14 +139,14 @@ def summary():
     from datetime import datetime
     current_month = datetime.now().month
     current_year = datetime.now().year
-    reste_pour_epargner = calculate_reste_pour_epargner(current_month, current_year)
+    leftover_for_savings = calculate_leftover_for_savings(current_month, current_year)
     
     ctx = {
         'savings_with_percent': savings_with_percent,
         'total_amount': total_amount,
         'total_balance': total_balance,
         'chart_data': json.dumps(chart_data),
-        'reste_pour_epargner': reste_pour_epargner
+        'leftover_for_savings': leftover_for_savings
     }
     return render_template('saving/saving.html', **ctx)
 
@@ -251,6 +335,25 @@ def distribute_monthly():
             'status': 'error'
         }), 500
 
+
+@saving.route('/snapshot', methods=['POST'])
+@login_required
+def snapshot():
+    """Manually capture a snapshot of current savings."""
+    try:
+        created = snapshot_savings_state()
+        msg = f'Snapshot stored ({created} entries created).' if created else 'Snapshot already up to date for today.'
+        return jsonify({
+            'message': msg,
+            'status': 'success'
+        })
+    except Exception as e:
+        log.error(f"Manual snapshot failed: {e}")
+        return jsonify({
+            'message': f'Error capturing snapshot: {str(e)}',
+            'status': 'error'
+        }), 500
+
 @saving.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
@@ -264,11 +367,33 @@ def add():
         icon = request.form.get('icon', '') or None
         color = request.form.get('color', '') or None
         goal = request.form.get('goal', '') or None
+        raw_ratio = (request.form.get('ratio') or '').strip()
+
         if goal:
             goal = float(goal)
-        saving_item = Saving(name=name, note=note, amount=amount, icon=icon, color=color, goal=goal)
+
+        # Parse ratio; default to 0 if empty
+        ratio = 0.0
+        if raw_ratio:
+            try:
+                ratio = float(raw_ratio)
+            except ValueError:
+                flash('Invalid ratio value. Please enter a number between 0 and 1.', 'error')
+                ctx = {'total_balance': total_balance}
+                return render_template('saving/add_saving.html', **ctx)
+
+        if ratio < 0 or ratio > 1:
+            flash('Ratio must be between 0 and 1.', 'error')
+            ctx = {'total_balance': total_balance}
+            return render_template('saving/add_saving.html', **ctx)
+
+        saving_item = Saving(name=name, note=note, amount=amount, icon=icon, color=color, goal=goal, ratio=ratio)
         DBSession.add(saving_item)
         DBSession.commit()
+
+        # Normalize ratios so that their sum is 1, based on this new saving's ratio
+        _normalize_saving_ratios(saving_item, ratio)
+
         flash('Saving added successfully!', 'success')
         return redirect(url_for('saving.summary'))
     ctx = {
@@ -294,14 +419,48 @@ def edit(id):
         saving_item.icon = request.form.get('icon', '') or None
         saving_item.color = request.form.get('color', '') or None
         goal = request.form.get('goal', '') or None
+        raw_ratio = (request.form.get('ratio') or '').strip()
+
         if goal:
             saving_item.goal = float(goal)
         else:
             saving_item.goal = None
+
+        # Parse ratio; default to current or 0 if empty
+        if raw_ratio:
+            try:
+                new_ratio = float(raw_ratio)
+            except ValueError:
+                flash('Invalid ratio value. Please enter a number between 0 and 1.', 'error')
+                ctx = {
+                    'saving': saving_item,
+                    'total_balance': total_balance,
+                    'current_percent': (float(saving_item.amount) / total_balance * 100) if total_balance > 0 else 0
+                }
+                return render_template('saving/edit_saving.html', **ctx)
+
+            if new_ratio < 0 or new_ratio > 1:
+                flash('Ratio must be between 0 and 1.', 'error')
+                ctx = {
+                    'saving': saving_item,
+                    'total_balance': total_balance,
+                    'current_percent': (float(saving_item.amount) / total_balance * 100) if total_balance > 0 else 0
+                }
+                return render_template('saving/edit_saving.html', **ctx)
+
+            saving_item.ratio = new_ratio
+        else:
+            # If left empty, treat as 0 (this saving opts out of leftover distribution)
+            saving_item.ratio = 0.0
+
         # Ensure amount doesn't exceed goal if goal is set
         if saving_item.goal and float(saving_item.amount) > float(saving_item.goal):
             saving_item.amount = saving_item.goal
         DBSession.commit()
+
+        # Normalize ratios after updating this saving
+        _normalize_saving_ratios(saving_item, float(saving_item.ratio or 0.0))
+
         flash('Saving updated successfully!', 'success')
         return redirect(url_for('saving.summary'))
     
@@ -317,8 +476,8 @@ def edit(id):
     }
     return render_template('saving/edit_saving.html', **ctx)
 
-def calculate_reste_pour_epargner(month=None, year=None):
-    """Calculate 'Reste pour épargner' (remaining for saving) for a given month
+def calculate_leftover_for_savings(month=None, year=None):
+    """Calculate leftover amount for savings for a given month
     
     Args:
         month: Month number (1-12). If None, uses current month.
@@ -346,6 +505,9 @@ def calculate_reste_pour_epargner(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
+            # Only count transactions registered against "Reste" (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+                continue
             total_earnings += float(t.amount)
     
     # Calculate total fixed expenses for the month
@@ -358,6 +520,9 @@ def calculate_reste_pour_epargner(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
+            # Only count transactions registered against "Reste" (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+                continue
             total_fixed_expenses += float(t.amount)
     
     # Calculate total variable expenses for the month
@@ -370,16 +535,19 @@ def calculate_reste_pour_epargner(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
+            # Only count transactions registered against "Reste" (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+                continue
             total_variable_expenses += float(t.amount)
     
-    # "Reste pour épargner" = total_earnings + total_fixed_expenses + total_variable_expenses
+    # Leftover for savings = total_earnings + total_fixed_expenses + total_variable_expenses
     # (expenses are negative, so this gives: earnings - |expenses|)
-    reste_pour_epargner = total_earnings + total_fixed_expenses + total_variable_expenses
+    leftover_for_savings = total_earnings + total_fixed_expenses + total_variable_expenses
     
-    return reste_pour_epargner
+    return leftover_for_savings
 
 def distribute_monthly_savings(month=None, year=None):
-    """Distribute 'Reste pour épargner' among all savings at end of month
+    """Distribute leftover savings among all savings at end of month
     
     This function:
     1. Calculates 'Reste pour épargner' for the specified month
@@ -408,11 +576,11 @@ def distribute_monthly_savings(month=None, year=None):
     elif year is None:
         year = now.year
     
-    # Calculate "Reste pour épargner" for the month
-    reste_pour_epargner = calculate_reste_pour_epargner(month, year)
+    # Calculate leftover for savings for the month
+    leftover_for_savings = calculate_leftover_for_savings(month, year)
     
-    if reste_pour_epargner <= 0:
-        return f'No remaining amount to distribute for {month}/{year}. Reste pour épargner: {reste_pour_epargner:.2f}€'
+    if leftover_for_savings <= 0:
+        return f'No remaining amount to distribute for {month}/{year}. Leftover for savings: {leftover_for_savings:.2f}€'
     
     # Find "Reste" saving
     reste_saving = Saving.query.filter(Saving.name == "Reste").first()
@@ -422,17 +590,17 @@ def distribute_monthly_savings(month=None, year=None):
     # Get current amount in Reste saving
     reste_amount = float(reste_saving.amount)
     
-    # We need to take the "Reste pour épargner" amount FROM Reste saving
+    # We need to take the leftover amount FROM Reste saving
     # But only if Reste has at least that amount
-    if reste_amount < reste_pour_epargner:
+    if reste_amount < leftover_for_savings:
         # Not enough in Reste, use what's available (but warn the user)
         amount_to_distribute = reste_amount
         reste_saving.amount = 0
-        log.warning(f'Reste saving ({reste_amount:.2f}€) has less than calculated "Reste pour épargner" ({reste_pour_epargner:.2f}€). Distributing available amount.')
+        log.warning(f'Reste saving ({reste_amount:.2f}€) has less than calculated leftover ({leftover_for_savings:.2f}€). Distributing available amount.')
     else:
-        # Take exactly the "Reste pour épargner" amount from Reste
-        amount_to_distribute = reste_pour_epargner
-        reste_saving.amount = reste_amount - reste_pour_epargner
+        # Take exactly the leftover amount from Reste
+        amount_to_distribute = leftover_for_savings
+        reste_saving.amount = reste_amount - leftover_for_savings
     
     # Commit the Reste saving update first
     DBSession.commit()
@@ -442,66 +610,97 @@ def distribute_monthly_savings(month=None, year=None):
     
     if not all_savings:
         return 'No savings found. Cannot distribute monthly savings.'
-    
-    # Calculate total of all savings amounts (AFTER subtracting from Reste) for proportional calculation
-    # This is the base for calculating percentages
-    total_savings_amount = sum([float(s.amount) for s in all_savings])
-    
-    if total_savings_amount > 0:
-        # Distribute proportionally based on current savings amounts
-        # First pass: distribute proportionally, capping at goals
-        excess_amount = 0
-        for saving in all_savings:
-            saving_amount = float(saving.amount)
-            # Calculate percentage of total savings amount
-            percent = (saving_amount / total_savings_amount * 100) if total_savings_amount > 0 else 0
-            # Add proportional amount
-            proportional_amount = (percent / 100) * amount_to_distribute
-            new_amount = float(saving.amount) + proportional_amount
-            
+
+    # Prefer ratios for distribution; fall back to amount-based if no ratios set
+    ratio_savings = [s for s in all_savings if s.ratio is not None and float(s.ratio) > 0]
+    total_ratio = sum(float(s.ratio) for s in ratio_savings)
+
+    if total_ratio > 0 and ratio_savings:
+        # Ratio-based distribution
+        excess_amount = 0.0
+
+        # First pass: distribute by ratio, respecting goals
+        for saving in ratio_savings:
+            share = amount_to_distribute * (float(saving.ratio) / total_ratio)
+            new_amount = float(saving.amount) + share
+
             if saving.goal:
                 if new_amount > float(saving.goal):
-                    # Saving reached goal, track excess
                     excess_amount += (new_amount - float(saving.goal))
                     saving.amount = saving.goal
                 else:
                     saving.amount = new_amount
             else:
                 saving.amount = new_amount
-        
-        # Second pass: redistribute excess to savings that haven't reached their goals
+
+        # Second pass: redistribute any excess among savings still below goal, using their ratios
         if excess_amount > 0.01:
-            still_eligible = [s for s in all_savings if not s.goal or float(s.amount) < float(s.goal)]
-            if still_eligible:
-                total_still_eligible = sum([float(s.amount) for s in still_eligible])
-                if total_still_eligible > 0:
-                    for saving in still_eligible:
-                        saving_amount = float(saving.amount)
-                        proportion = saving_amount / total_still_eligible
-                        additional = proportion * excess_amount
-                        new_amount = float(saving.amount) + additional
-                        if saving.goal:
-                            saving.amount = min(new_amount, float(saving.goal))
-                        else:
-                            saving.amount = new_amount
-                else:
-                    # All at 0, distribute equally
-                    equal_excess = excess_amount / len(still_eligible)
-                    for saving in still_eligible:
-                        new_amount = float(saving.amount) + equal_excess
-                        if saving.goal:
-                            saving.amount = min(new_amount, float(saving.goal))
-                        else:
-                            saving.amount = new_amount
+            still_eligible = [
+                s for s in ratio_savings
+                if not s.goal or float(s.amount) < float(s.goal)
+            ]
+            total_ratio_eligible = sum(float(s.ratio) for s in still_eligible)
+
+            if still_eligible and total_ratio_eligible > 0:
+                for saving in still_eligible:
+                    extra_share = excess_amount * (float(saving.ratio) / total_ratio_eligible)
+                    new_amount = float(saving.amount) + extra_share
+                    if saving.goal:
+                        saving.amount = min(new_amount, float(saving.goal))
+                    else:
+                        saving.amount = new_amount
     else:
-        # If balance is 0 or negative, distribute equally
-        equal_amount = amount_to_distribute / len(all_savings)
-        for saving in all_savings:
-            new_amount = float(saving.amount) + equal_amount
-            if saving.goal:
-                saving.amount = min(new_amount, float(saving.goal))
-            else:
-                saving.amount = new_amount
+        # Legacy behavior: distribute based on current savings amounts
+        total_savings_amount = sum([float(s.amount) for s in all_savings])
+
+        if total_savings_amount > 0:
+            excess_amount = 0
+            for saving in all_savings:
+                saving_amount = float(saving.amount)
+                percent = (saving_amount / total_savings_amount * 100) if total_savings_amount > 0 else 0
+                proportional_amount = (percent / 100) * amount_to_distribute
+                new_amount = float(saving.amount) + proportional_amount
+
+                if saving.goal:
+                    if new_amount > float(saving.goal):
+                        excess_amount += (new_amount - float(saving.goal))
+                        saving.amount = saving.goal
+                    else:
+                        saving.amount = new_amount
+                else:
+                    saving.amount = new_amount
+
+            if excess_amount > 0.01:
+                still_eligible = [s for s in all_savings if not s.goal or float(s.amount) < float(s.goal)]
+                if still_eligible:
+                    total_still_eligible = sum([float(s.amount) for s in still_eligible])
+                    if total_still_eligible > 0:
+                        for saving in still_eligible:
+                            saving_amount = float(saving.amount)
+                            proportion = saving_amount / total_still_eligible
+                            additional = proportion * excess_amount
+                            new_amount = float(saving.amount) + additional
+                            if saving.goal:
+                                saving.amount = min(new_amount, float(saving.goal))
+                            else:
+                                saving.amount = new_amount
+                    else:
+                        equal_excess = excess_amount / len(still_eligible)
+                        for saving in still_eligible:
+                            new_amount = float(saving.amount) + equal_excess
+                            if saving.goal:
+                                saving.amount = min(new_amount, float(saving.goal))
+                            else:
+                                saving.amount = new_amount
+        else:
+            # If balance is 0 or negative, distribute equally
+            equal_amount = amount_to_distribute / len(all_savings)
+            for saving in all_savings:
+                new_amount = float(saving.amount) + equal_amount
+                if saving.goal:
+                    saving.amount = min(new_amount, float(saving.goal))
+                else:
+                    saving.amount = new_amount
     
     DBSession.commit()
     
