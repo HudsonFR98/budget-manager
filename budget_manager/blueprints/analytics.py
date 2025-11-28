@@ -2,10 +2,12 @@ import json
 import math
 from datetime import datetime, date, timedelta
 from calendar import monthrange
+from collections import defaultdict
+from statistics import median
 
 from flask import Blueprint, render_template, request, jsonify
 from flask_login import login_required
-from sqlalchemy import extract, func, case
+from sqlalchemy import extract, func, case, or_
 from budget_manager.blueprints.saving import calculate_leftover_for_savings, sold, snapshot_savings_state
 import budget_manager.dao as dao
 import budget_manager.process as process
@@ -213,19 +215,30 @@ def _compute_income_metrics(months: int) -> dict:
     }
 
 
-def _category_spending_totals(start_date: date, end_date: date) -> dict[int, float]:
-    spending_expr = func.sum(
-        case(
-            (Transaction.amount < 0, -Transaction.amount),
-            else_=0
-        )
-    )
-    rows = DBSession.query(Transaction.category_id, spending_expr).join(Category).filter(
+def _category_spending_data(start_date: date, end_date: date) -> dict[int, dict]:
+    rows = DBSession.query(
+        Transaction.category_id,
+        Transaction.amount
+    ).join(Category).filter(
         Transaction.date >= start_date,
         Transaction.date <= end_date,
-        Category.type.in_([1, 2])
-    ).group_by(Transaction.category_id).all()
-    return {cat_id: float(total or 0.0) for cat_id, total in rows}
+        Category.type.in_([1, 2]),
+        or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+    ).all()
+
+    data = defaultdict(lambda: {"amounts": [], "total": 0.0})
+    for category_id, amount in rows:
+        value = float(abs(amount or 0))
+        entry = data[category_id]
+        entry["amounts"].append(value)
+        entry["total"] += value
+    return data
+
+
+def _median_value(values: list[float]) -> float:
+    if not values:
+        return 0.0
+    return round(median(values), 2)
 
 
 def _build_category_stats(months: int) -> dict:
@@ -235,27 +248,28 @@ def _build_category_stats(months: int) -> dict:
     previous_end = current_start - timedelta(days=1)
     previous_start = _shift_month(_month_start(previous_end), -(months - 1))
 
-    current_totals = _category_spending_totals(current_start, current_end)
-    previous_totals = _category_spending_totals(previous_start, previous_end)
+    current_data = _category_spending_data(current_start, current_end)
+    previous_data = _category_spending_data(previous_start, previous_end)
 
     categories = Category.query.filter(Category.type.in_([1, 2])).all()
     stats = []
     for category in categories:
-        current_total = current_totals.get(category.id, 0.0)
-        previous_total = previous_totals.get(category.id, 0.0)
-        avg_current = current_total / months
-        avg_previous = previous_total / months
-        growth_pct = _compute_pct_change(avg_current, avg_previous)
+        current_entry = current_data.get(category.id, {"amounts": [], "total": 0.0})
+        previous_entry = previous_data.get(category.id, {"amounts": [], "total": 0.0})
+
+        current_total = current_entry["total"]
+        previous_total = previous_entry["total"]
+        growth_pct = _compute_pct_change(current_total, previous_total)
         stats.append({
             "category": category,
-            "avg_spending": round(avg_current, 2),
+            "median_spending": _median_value(current_entry["amounts"]),
             "growth_pct": growth_pct
         })
 
     top_growing = sorted(stats, key=lambda s: s['growth_pct'], reverse=True)[:5]
     top_growing = sorted(stats, key=lambda s: s['growth_pct'], reverse=True)[:5]
 
-    falling_candidates = [s for s in stats if s['avg_spending'] > 0]
+    falling_candidates = [s for s in stats if s['median_spending'] > 0]
     top_falling = sorted(falling_candidates, key=lambda s: s['growth_pct'])[:5]
 
     return {

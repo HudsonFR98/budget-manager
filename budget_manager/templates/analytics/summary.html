@@ -139,7 +139,7 @@
                                     }}</span> {% endif %}
                                 {{ item.category.name }}
                             </strong>
-                            <div class="text-muted small">{{ _('Avg spending') }}: {{ item.avg_spending }} €</div>
+                            <div class="text-muted small">{{ _('Median spending') }}: {{ item.median_spending }} €</div>
                         </div>
                         <span class="text-danger">
                             <i class="fa-solid fa-arrow-up"></i> {{ item.growth_pct }} %
@@ -167,7 +167,7 @@
                                     }}</span> {% endif %}
                                 {{ item.category.name }}
                             </strong>
-                            <div class="text-muted small">{{ _('Avg spending') }}: {{ item.avg_spending }} €</div>
+                            <div class="text-muted small">{{ _('Median spending') }}: {{ item.median_spending }} €</div>
                         </div>
                         <span class="text-success">
                             <i class="fa-solid fa-arrow-down"></i> {{ item.growth_pct }} %

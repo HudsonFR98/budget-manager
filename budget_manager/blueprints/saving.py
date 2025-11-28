@@ -54,55 +54,86 @@ def snapshot_savings_state(snapshot_date=None):
     return len(new_entries)
 
 
+def _sum_positive_ratios(savings):
+    return sum(max(float(s.ratio or 0.0), 0.0) for s in savings)
+
+
+def _redistribute_proportionally(savings, target_sum: float):
+    """Scale given savings so that their ratios sum to target_sum, preserving proportions."""
+    savings = [s for s in savings if s is not None]
+    if not savings:
+        return
+
+    if target_sum <= 0:
+        for s in savings:
+            s.ratio = 0.0
+        return
+
+    current_sum = _sum_positive_ratios(savings)
+    if current_sum <= 0:
+        per = target_sum / len(savings)
+        for s in savings:
+            s.ratio = per
+        return
+
+    scale = target_sum / current_sum
+    for s in savings:
+        s.ratio = max(0.0, min(1.0, float(s.ratio or 0.0) * scale))
+
+
 def _normalize_saving_ratios(updated_saving, new_ratio: float):
-    """Normalize all savings' ratios so that the sum is 1.
-
-    Rules:
-    - new_ratio is the ratio for updated_saving, must be between 0 and 1.
-    - Sum of all ratios after normalization is 1 (or 0 if there is only one saving and its ratio is 0).
-    - Other savings keep their relative proportions, scaled so their sum is (1 - new_ratio).
-    """
-    # Clamp new_ratio into [0, 1]
-    if new_ratio < 0:
-        new_ratio = 0.0
-    if new_ratio > 1:
-        new_ratio = 1.0
-
-    # Assign new ratio to the updated saving
+    """Normalize ratios so their sum stays at 1 following Reste-first adjustments."""
+    new_ratio = max(0.0, min(1.0, new_ratio))
     updated_saving.ratio = new_ratio
 
     all_savings = Saving.query.order_by(Saving.id).all()
-    others = [s for s in all_savings if s.id != updated_saving.id]
+    if not all_savings:
+        DBSession.commit()
+        return
 
-    # If there are no other savings, single saving gets full ratio 1 or 0 as requested
-    if not others:
-        # If user set something < 1, normalize to 1 to respect "sum of all ratios must be 1"
+    if len(all_savings) == 1:
         updated_saving.ratio = 1.0 if new_ratio > 0 else 0.0
         DBSession.commit()
         return
 
-    target_others_sum = max(0.0, 1.0 - float(updated_saving.ratio or 0.0))
+    reste_saving = next((s for s in all_savings if s.name == "Reste"), None)
 
-    # Compute current total of others' ratios
-    old_others_sum = sum(float(s.ratio or 0.0) for s in others)
-
-    if target_others_sum == 0:
-        # Updated saving takes everything, others go to 0
-        for s in others:
-            s.ratio = 0.0
+    # If "Reste" is missing, fall back to proportional scaling for others.
+    if not reste_saving:
+        others = [s for s in all_savings if s.id != updated_saving.id]
+        _redistribute_proportionally(others, max(0.0, 1.0 - new_ratio))
         DBSession.commit()
         return
 
-    if old_others_sum > 0:
-        # Scale existing ratios to fill target_others_sum, preserving proportions
-        for s in others:
-            old = float(s.ratio or 0.0)
-            s.ratio = (old / old_others_sum) * target_others_sum
-    else:
-        # All others had ratio 0 or None, distribute equally
-        per = target_others_sum / len(others)
-        for s in others:
-            s.ratio = per
+    if updated_saving.id == reste_saving.id:
+        # Editing "Reste": redistribute all other ratios proportionally.
+        others = [s for s in all_savings if s.id != reste_saving.id]
+        _redistribute_proportionally(others, max(0.0, 1.0 - float(reste_saving.ratio or 0.0)))
+        DBSession.commit()
+        return
+
+    rest_target = max(0.0, 1.0 - new_ratio)
+    rest_savings = [s for s in all_savings if s.id != updated_saving.id]
+    rest_current_sum = _sum_positive_ratios(rest_savings)
+
+    reste_current = max(float(reste_saving.ratio or 0.0), 0.0)
+    delta = rest_target - rest_current_sum
+    max_reste_allowed = rest_target
+    new_reste_ratio = reste_current + delta
+    new_reste_ratio = min(max(new_reste_ratio, 0.0), max_reste_allowed)
+    reste_saving.ratio = new_reste_ratio
+
+    remaining_target = max(0.0, rest_target - new_reste_ratio)
+    other_savings = [s for s in rest_savings if s.id != reste_saving.id]
+    _redistribute_proportionally(other_savings, remaining_target)
+
+    total_sum = _sum_positive_ratios(all_savings)
+    diff = 1.0 - total_sum
+    if abs(diff) > 1e-6:
+        adjust_target = reste_saving if reste_saving.id != updated_saving.id else (other_savings[0] if other_savings else updated_saving)
+        if adjust_target:
+            adjusted = max(float(adjust_target.ratio or 0.0) + diff, 0.0)
+            adjust_target.ratio = min(1.0, adjusted)
 
     DBSession.commit()
 

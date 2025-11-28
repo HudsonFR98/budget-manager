@@ -456,8 +456,8 @@ msgstr "Catégories en plus forte hausse"
 
 #: budget_manager/templates/analytics/summary.html:142
 #: budget_manager/templates/analytics/summary.html:170
-msgid "Avg spending"
-msgstr "Dépense moyenne"
+msgid "Median spending"
+msgstr "Dépense médiane"
 
 #: budget_manager/templates/analytics/summary.html:151
 #: budget_manager/templates/analytics/summary.html:179
