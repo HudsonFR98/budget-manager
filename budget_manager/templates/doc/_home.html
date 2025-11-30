@@ -1,0 +1,85 @@
+<h2><i class="fas fa-chart-pie"></i> {{ _('Home dashboard') }}</h2>
+<p class="lead">
+    {{ _('The home dashboard gives a compact monthly overview of your financial health: incomes, fixed expenses, variable expenses and what is left for savings.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Period and scope') }}</h3>
+<p>
+    {{ _('All amounts shown on the home page are computed for the current calendar month and for all transactions recorded in that period.') }}
+    {{ _('The date of each transaction is taken into account, so back‑dating or correcting a transaction immediately updates the dashboard.') }}
+</p>
+
+<h3 class="mt-4">{{ _('INCOMES block') }}</h3>
+<ul>
+    <li>
+        <strong>{{ _('Per‑category income') }}</strong> –
+        {{ _('each row in the INCOME table corresponds to a category of type 0 (INCOMES).') }}
+        {{ _('The “Monthly total” column sums all transactions of that category for the current month.') }}
+    </li>
+    <li>
+        <strong>{{ _('Total incomes') }}</strong> –
+        {{ _('the bottom TOTAL row aggregates all income categories and is the reference used by other calculations (budgets, remaining amounts, analytics).') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('FIXED EXPENSES block') }}</h3>
+<p>
+    {{ _('Fixed expenses are recurring, predictable costs such as rent, insurance or subscriptions. They correspond to categories of type 1.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Monthly total per category') }}</strong> –
+        {{ _('each row shows the sum of all transactions for that fixed‑expense category in the current month. Negative amounts (expenses) are displayed in red for quick scanning.') }}
+    </li>
+    <li>
+        <strong>{{ _('Budget usage progress bar') }}</strong> –
+        {{ _('for categories that have a monthly budget configured, a colored progress bar shows how much of the planned budget has already been consumed.') }}
+        {{ _('The color adapts to the usage level: green for comfortable usage, orange when the consumption is high, and red when almost or fully consumed.') }}
+    </li>
+    <li>
+        <strong>{{ _('Fixed expenses TOTAL') }}</strong> –
+        {{ _('the TOTAL row aggregates the monthly totals of all fixed‑expense categories and displays the overall budget usage percentage across these categories.') }}
+        {{ _('A warning icon appears when the global percentage exceeds a critical threshold (for example 99%).') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Remaining for variable expenses') }}</h3>
+<p>
+    {{ _('Below the fixed‑expenses table, a dedicated line “Remaining for variable expenses” shows how much money is still available for day‑to‑day, non‑recurring spending after all fixed charges are taken into account.') }}
+    {{ _('This amount is computed from your incomes and fixed expenses and acts as a real‑time envelope for VARIABLE EXPENSES. A warning icon highlights when the remaining amount drops below a small threshold (for example 20 €).') }}
+</p>
+
+<h3 class="mt-4">{{ _('VARIABLE EXPENSES block') }}</h3>
+<p>
+    {{ _('Variable expenses correspond to categories of type 2 and represent flexible spending such as food, shopping or leisure.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Monthly total per category') }}</strong> –
+        {{ _('each row shows the monthly total of transactions for the corresponding variable‑expense category, with the same color conventions as for fixed expenses.') }}
+    </li>
+    <li>
+        <strong>{{ _('Budget usage') }}</strong> –
+        {{ _('when a budget is configured on a variable category, the progress bar indicates how fast this budget is being used during the month.') }}
+        {{ _('The global TOTAL row aggregates these usages into a single percentage for all variable expenses combined.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Remaining for savings') }}</h3>
+<p>
+    {{ _('At the bottom of the VARIABLE EXPENSES column, the “Remaining for savings” line answers a key question: how much of this month’s income is still available once both fixed and variable expenses are included?') }}
+    {{ _('This amount is closely tied to the Savings module: it is the basis for “leftover for savings” computations and for monthly distributions between individual savings accounts.') }}
+    {{ _('A low remaining amount is highlighted with a warning icon so you can quickly detect months where expenses are about to overrun your capacity to save.') }}
+</p>
+
+<h3 class="mt-4">{{ _('From dashboard to categories and budgets') }}</h3>
+<p>
+    {{ _('The dashboard itself is read‑only, but every figure is derived from your categories and budgets:') }}
+</p>
+<ul>
+    <li>{{ _('INCOMES, FIXED EXPENSES and VARIABLE EXPENSES come from categories of type 0, 1 and 2 respectively.') }}</li>
+    <li>{{ _('Budget usage percentages are driven by the monthly budgets configured on those categories.') }}</li>
+    <li>{{ _('To change limits or rebalance your plan, use the Categories section; the home dashboard will refresh automatically based on your new configuration.') }}</li>
+</ul>
+
+

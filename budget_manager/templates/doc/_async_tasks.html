@@ -1,0 +1,50 @@
+<h2><i class="fas fa-tasks"></i> {{ _('Async tasks') }}</h2>
+<p class="lead">
+    {{ _('Async tasks allow the application to run background jobs on a schedule (for example at night or at the end of the month) without blocking the web interface.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Async Tasks Management page') }}</h3>
+<p>
+    {{ _('The administration section provides a dedicated page where you can monitor scheduled tasks and their executions.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Summary cards') }}</strong> –
+        {{ _('at the top of the page, four cards show the total number of task executions, how many succeeded, how many failed and the global success rate.') }}
+    </li>
+    <li>
+        <strong>{{ _('Active scheduled tasks') }}</strong> –
+        {{ _('a table lists all tasks that are currently configured as active by the scheduler, with their name, description, cron expression, last run time and next planned execution.') }}
+    </li>
+    <li>
+        <strong>{{ _('Task status details') }}</strong> –
+        {{ _('clicking the “Status” button for a task opens a modal dialog that queries an API endpoint and displays up‑to‑date information about whether the job is active and when it will run next.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Execution history and filters') }}</h3>
+<p>
+    {{ _('The second part of the page focuses on individual executions of tasks, making it easy to audit what ran, when and with which result.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Filtering by status and task') }}</strong> –
+        {{ _('you can filter the history by task name (for example to focus on a specific maintenance job) and by execution status (completed, failed, running or pending).') }}
+    </li>
+    <li>
+        <strong>{{ _('Live reload') }}</strong> –
+        {{ _('the “Refresh” button reloads the data from the backend API and updates the table as well as the result count indicator above it.') }}
+    </li>
+    <li>
+        <strong>{{ _('Execution details') }}</strong> –
+        {{ _('for each execution the table shows the status with a colored badge, the start and completion timestamps, the duration and either the result message or a short version of the error message in case of failure.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('How async tasks relate to budgeting features') }}</h3>
+<p>
+    {{ _('Several features of the application are good candidates to be executed asynchronously: regular saving snapshots, monthly distribution of leftover savings, or periodic maintenance to keep data consistent.') }}
+    {{ _('The async task infrastructure records all these executions, making it possible to troubleshoot issues and verify that automation is running as expected without manually inspecting logs on the server.') }}
+</p>
+
+

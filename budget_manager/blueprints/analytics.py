@@ -30,8 +30,9 @@ def summary():
 
     _ensure_today_saving_snapshots()
 
-    avg_leftover = _average_leftover_amount(months=months_window)
-    savings_insights = _build_savings_insights(avg_leftover=avg_leftover, months=months_window)
+    leftover_stats = _leftover_stats(months_window)
+    median_leftover = leftover_stats["median"]
+    savings_insights = _build_savings_insights(months=months_window, leftover_median=median_leftover)
     balance_metrics = _compute_balance_metrics(months_window)
     income_metrics = _compute_income_metrics(months_window)
     category_stats = _build_category_stats(months_window)
@@ -39,7 +40,7 @@ def summary():
     ctx = {
         'chart': plot,
         'months_window': months_window,
-        'avg_leftover': avg_leftover,
+        'median_leftover': median_leftover,
         'savings_insights': savings_insights,
         'savings_insights_json': json.dumps(savings_insights),
         'balance_metrics': balance_metrics,
@@ -81,16 +82,27 @@ def _ensure_today_saving_snapshots():
     snapshot_savings_state(date.today())
 
 
-def _average_leftover_amount(months: int = 6) -> float:
-    total = 0.0
-    count = 0
+def _monthly_leftover_values(months: int) -> list[float]:
     reference = datetime.now()
+    values = []
     for offset in range(months):
         target = _shift_month(reference, -offset)
         leftover = calculate_leftover_for_savings(month=target.month, year=target.year)
-        total += leftover
-        count += 1
-    return round(total / count, 2) if count else 0.0
+        values.append(float(leftover))
+    return values
+
+
+def _leftover_stats(months: int = 6) -> dict:
+    values = _monthly_leftover_values(months)
+    if not values:
+        return {"average": 0.0, "median": 0.0, "values": []}
+    avg = round(sum(values) / len(values), 2)
+    med = round(median(values), 2)
+    return {
+        "average": avg,
+        "median": med,
+        "values": values
+    }
 
 
 def _build_saving_evolution_series(saving: Saving, months: int = 12) -> list[dict]:
@@ -122,29 +134,29 @@ def _build_saving_evolution_series(saving: Saving, months: int = 12) -> list[dic
     return series
 
 
-def _estimate_goal_date(saving: Saving, avg_leftover: float):
+def _estimate_goal_date(saving: Saving, expected_monthly: float):
     if not saving.goal:
-        return None, None, 0.0
+        return None, None
+    if expected_monthly <= 0:
+        return None, None
     current_amount = float(saving.amount)
     goal_amount = float(saving.goal)
     if current_amount >= goal_amount:
-        return None, 0, 0.0
-    ratio = float(saving.ratio or 0.0)
-    expected_monthly = avg_leftover * ratio
-    if expected_monthly <= 0:
-        return None, None, expected_monthly
+        return None, 0
     remaining = goal_amount - current_amount
     months_needed = math.ceil(remaining / expected_monthly)
     estimated_date = _shift_month(date.today(), months_needed)
-    return estimated_date, months_needed, expected_monthly
+    return estimated_date, months_needed
 
 
-def _build_savings_insights(avg_leftover: float, months: int = 12) -> list[dict]:
+def _build_savings_insights(months: int = 12, leftover_median: float = 0.0) -> list[dict]:
     savings = Saving.query.order_by(Saving.id).all()
     insights = []
     for saving in savings:
         evolution = _build_saving_evolution_series(saving, months=months)
-        estimated_date, months_needed, expected_monthly = _estimate_goal_date(saving, avg_leftover)
+        ratio = float(saving.ratio or 0.0)
+        expected_monthly = round(max(leftover_median, 0.0) * ratio, 2)
+        estimated_date, months_needed = _estimate_goal_date(saving, expected_monthly)
         insights.append({
             "id": saving.id,
             "name": saving.name,
@@ -155,7 +167,7 @@ def _build_savings_insights(avg_leftover: float, months: int = 12) -> list[dict]
             "ratio": float(saving.ratio or 0.0),
             "estimated_goal_date": estimated_date.strftime("%Y-%m") if estimated_date else None,
             "months_to_goal": months_needed,
-            "monthly_expected": round(expected_monthly, 2),
+            "monthly_expected": expected_monthly,
             "evolution": evolution
         })
     return insights
@@ -260,17 +272,37 @@ def _build_category_stats(months: int) -> dict:
         current_total = current_entry["total"]
         previous_total = previous_entry["total"]
         growth_pct = _compute_pct_change(current_total, previous_total)
+        median_spending = _median_value(current_entry["amounts"])
+        impact_score = round(growth_pct * median_spending, 2)
         stats.append({
             "category": category,
-            "median_spending": _median_value(current_entry["amounts"]),
-            "growth_pct": growth_pct
+            "median_spending": median_spending,
+            "growth_pct": growth_pct,
+            "impact_score": impact_score
         })
 
-    top_growing = sorted(stats, key=lambda s: s['growth_pct'], reverse=True)[:5]
-    top_growing = sorted(stats, key=lambda s: s['growth_pct'], reverse=True)[:5]
+    growing_candidates = [
+        s for s in stats
+        if s['growth_pct'] > 0 and s['median_spending'] > 0
+    ]
+    if not growing_candidates:
+        growing_candidates = stats
+    top_growing = sorted(
+        growing_candidates,
+        key=lambda s: (s['impact_score'], s['growth_pct'], s['median_spending']),
+        reverse=True
+    )[:5]
 
-    falling_candidates = [s for s in stats if s['median_spending'] > 0]
-    top_falling = sorted(falling_candidates, key=lambda s: s['growth_pct'])[:5]
+    falling_candidates = [
+        s for s in stats
+        if s['growth_pct'] < 0 and s['median_spending'] > 0
+    ]
+    if not falling_candidates:
+        falling_candidates = stats
+    top_falling = sorted(
+        falling_candidates,
+        key=lambda s: (s['impact_score'], s['growth_pct'])
+    )[:5]
 
     return {
         "top_growing": top_growing,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-26 16:03+0100\n"
+"POT-Creation-Date: 2025-11-30 19:41+0100\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -23,18 +23,26 @@ msgid "Budget Manager"
 msgstr ""
 
 #: budget_manager/templates/base.html:43
+#: budget_manager/templates/doc/_transactions.html:1
+#: budget_manager/templates/doc/index.html:103
 msgid "Transactions"
 msgstr ""
 
 #: budget_manager/templates/base.html:46
+#: budget_manager/templates/doc/_categories.html:1
+#: budget_manager/templates/doc/index.html:109
 msgid "Categories"
 msgstr ""
 
 #: budget_manager/templates/base.html:49
+#: budget_manager/templates/doc/index.html:115
 msgid "Statistics"
 msgstr ""
 
 #: budget_manager/templates/base.html:52
+#: budget_manager/templates/doc/_savings.html:1
+#: budget_manager/templates/doc/index.html:112
+#: budget_manager/templates/saving/saving.html:6
 msgid "Savings"
 msgstr ""
 
@@ -98,6 +106,47 @@ msgstr ""
 
 #: budget_manager/templates/base.html:216
 msgid "Switch to dark mode"
+msgstr ""
+
+#: budget_manager/templates/home.html:4
+msgid "Financial status"
+msgstr ""
+
+#: budget_manager/templates/home.html:11
+msgid "INCOME"
+msgstr ""
+
+#: budget_manager/templates/home.html:12 budget_manager/templates/home.html:37
+#: budget_manager/templates/home.html:96
+msgid "Monthly total"
+msgstr ""
+
+#: budget_manager/templates/home.html:26 budget_manager/templates/home.html:70
+#: budget_manager/templates/home.html:129
+msgid "TOTAL"
+msgstr ""
+
+#: budget_manager/templates/home.html:36
+msgid "FIXED EXPENSES"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:62
+#: budget_manager/templates/home.html:38 budget_manager/templates/home.html:97
+msgid "Budget usage"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:46
+#: budget_manager/templates/home.html:82
+msgid "Remaining for variable expenses"
+msgstr ""
+
+#: budget_manager/templates/home.html:95
+msgid "VARIABLE EXPENSES"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:68
+#: budget_manager/templates/home.html:142
+msgid "Remaining for savings"
 msgstr ""
 
 #: budget_manager/templates/login.html:9
@@ -318,6 +367,8 @@ msgid "Inactive"
 msgstr ""
 
 #: budget_manager/templates/admin/users.html:69
+#: budget_manager/templates/category/category.html:12
+#: budget_manager/templates/saving/saving.html:44
 msgid "Edit"
 msgstr ""
 
@@ -412,7 +463,7 @@ msgid "Savings insights"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:71
-msgid "Average leftover last"
+msgid "Median leftover last"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:71
@@ -421,12 +472,15 @@ msgid "months"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:86
+#: budget_manager/templates/saving/saving.html:58
 msgid "Ratio"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:95
+#: budget_manager/templates/doc/_savings.html:39
 #: budget_manager/templates/saving/add_saving.html:40
 #: budget_manager/templates/saving/edit_saving.html:40
+#: budget_manager/templates/saving/saving.html:69
 msgid "Goal"
 msgstr ""
 
@@ -456,7 +510,7 @@ msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:142
 #: budget_manager/templates/analytics/summary.html:170
-msgid "Avg spending"
+msgid "Median spending"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:151
@@ -480,8 +534,1344 @@ msgstr ""
 msgid "No data for last months"
 msgstr ""
 
+#: budget_manager/templates/category/category.html:4
+msgid "Transaction categories"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:8
+msgid "Add"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:13
+#: budget_manager/templates/doc/_categories.html:58
+#: budget_manager/templates/saving/add_saving.html:9
+#: budget_manager/templates/saving/edit_saving.html:9
+msgid "Name"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:14
+#: budget_manager/templates/doc/_categories.html:35
+#: budget_manager/templates/saving/add_saving.html:30
+#: budget_manager/templates/saving/edit_saving.html:30
+msgid "Color"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:15
+#: budget_manager/templates/doc/_categories.html:62
+msgid "Type"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:16
+#: budget_manager/templates/doc/_categories.html:43
+msgid "Calculated budget"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:17
+#: budget_manager/templates/saving/saving.html:48
+msgid "Delete"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:138
+msgid "At least"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:138
+msgid "of your income remains for savings or other expenses (🔒)"
+msgstr ""
+
+#: budget_manager/templates/category/category.html:148
+msgid "Category budgets for this month"
+msgstr ""
+
 #: budget_manager/templates/dashboard/home.html:5
 msgid "Welcome to the Dashboard"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:1
+#: budget_manager/templates/doc/index.html:118
+msgid "Async tasks"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:3
+msgid ""
+"Async tasks allow the application to run background jobs on a schedule "
+"(for example at night or at the end of the month) without blocking the "
+"web interface."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:6
+msgid "Async Tasks Management page"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:8
+msgid ""
+"The administration section provides a dedicated page where you can "
+"monitor scheduled tasks and their executions."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:12
+msgid "Summary cards"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:13
+msgid ""
+"at the top of the page, four cards show the total number of task "
+"executions, how many succeeded, how many failed and the global success "
+"rate."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:16
+msgid "Active scheduled tasks"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:17
+msgid ""
+"a table lists all tasks that are currently configured as active by the "
+"scheduler, with their name, description, cron expression, last run time "
+"and next planned execution."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:20
+msgid "Task status details"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:21
+msgid ""
+"clicking the “Status” button for a task opens a modal dialog that queries"
+" an API endpoint and displays up‑to‑date information about whether the "
+"job is active and when it will run next."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:25
+msgid "Execution history and filters"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:27
+msgid ""
+"The second part of the page focuses on individual executions of tasks, "
+"making it easy to audit what ran, when and with which result."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:31
+msgid "Filtering by status and task"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:32
+msgid ""
+"you can filter the history by task name (for example to focus on a "
+"specific maintenance job) and by execution status (completed, failed, "
+"running or pending)."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:35
+msgid "Live reload"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:36
+msgid ""
+"the “Refresh” button reloads the data from the backend API and updates "
+"the table as well as the result count indicator above it."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:39
+msgid "Execution details"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:40
+msgid ""
+"for each execution the table shows the status with a colored badge, the "
+"start and completion timestamps, the duration and either the result "
+"message or a short version of the error message in case of failure."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:44
+msgid "How async tasks relate to budgeting features"
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:46
+msgid ""
+"Several features of the application are good candidates to be executed "
+"asynchronously: regular saving snapshots, monthly distribution of "
+"leftover savings, or periodic maintenance to keep data consistent."
+msgstr ""
+
+#: budget_manager/templates/doc/_async_tasks.html:47
+msgid ""
+"The async task infrastructure records all these executions, making it "
+"possible to troubleshoot issues and verify that automation is running as "
+"expected without manually inspecting logs on the server."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:3
+msgid ""
+"Categories are the backbone of the application: they define how each "
+"transaction is classified and how budgets and statistics are computed."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:6
+msgid "Category types"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:8
+msgid ""
+"Every category belongs to exactly one of the following types, which "
+"directly drive the behavior of dashboards and analytics:"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:12
+msgid "INCOMES (type 0)"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:13
+msgid ""
+"sources of money such as salaries, refunds or bonuses. Transactions in "
+"these categories are expected to have positive amounts and feed the "
+"income section of the home dashboard."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:16
+msgid "FIXED EXPENSES (type 1)"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:17
+msgid ""
+"recurring, predictable charges like rent, utilities or subscriptions. "
+"They are used in the FIXED EXPENSES block and participate in the "
+"“Remaining for variable expenses” calculation."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:20
+msgid "VARIABLE EXPENSES (type 2)"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:21
+msgid ""
+"flexible spending such as groceries, hobbies or transport. They appear in"
+" the VARIABLE EXPENSES block and in analytics for growing/falling "
+"categories."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:25
+msgid "Category list"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:27
+msgid ""
+"The Category management page lists all categories with their main "
+"properties and quick actions:"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:31
+msgid "Name and icon"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:32
+msgid ""
+"the human‑readable name of the category and an optional emoji/icon, also "
+"displayed in transaction tables and analytics."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:36
+msgid ""
+"used for visualizations such as donut charts; each category can have its "
+"own color tag."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:39
+msgid "Type badge"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:40
+msgid ""
+"a colored badge indicating whether the category is an income, fixed "
+"expense or variable expense."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:44
+msgid ""
+"if a monthly budget is configured, this column shows the amount in euros "
+"for the current month, derived from your total earnings."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:47
+msgid "Delete protection"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:48
+msgid ""
+"some categories are not deletable (for example when they are structurally"
+" required or already used extensively). Non‑deletable categories show a "
+"“forbidden” icon instead of a trash icon."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:52
+msgid "Adding a category"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:54
+msgid ""
+"When you create a new category you define both its visual identity and "
+"its financial role."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:59
+msgid ""
+"short label that will be reused in all screens (home, transactions, "
+"analytics, savings)."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:63
+msgid ""
+"choose INCOMES, FIXED EXPENSES or VARIABLE EXPENSES depending on the "
+"behavior you expect on dashboards and budgets."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:66
+msgid "Color and icon"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:67
+msgid ""
+"optional fields to make the category immediately recognizable in tables "
+"and charts."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:70
+msgid "Budget (for expenses)"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:71
+msgid ""
+"for FIXED or VARIABLE EXPENSES you can optionally set a monthly budget as"
+" a percentage of your total earnings."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:72
+msgid ""
+"Internally the application stores this percentage and multiplies it by "
+"the current eligible income to obtain a euro amount every month."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:76
+msgid ""
+"Once saved, the category becomes available in the transaction forms and "
+"will be taken into account in all subsequent calculations."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:79
+msgid "Editing a category"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:81
+msgid ""
+"Editing allows you to rename categories, change their color or icon, "
+"adjust their type and fine‑tune their budget."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:85
+msgid "Updating the budget"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:86
+msgid ""
+"you can increase or decrease the percentage to adapt to new income "
+"levels. Setting the budget to zero (or leaving it empty) removes the "
+"associated monthly budget for that category."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:89
+msgid "Changing type carefully"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:90
+msgid ""
+"switching a category from income to expense (or the opposite) changes how"
+" its transactions are interpreted in all dashboards, so it should only be"
+" done when you fully understand the impact."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:94
+msgid "Deleting a category"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:96
+msgid ""
+"A category can be deleted only when the application considers it safe to "
+"do so (for example if it is not used by critical internal logic)."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:97
+msgid ""
+"When deletion is allowed, clicking the red trash icon removes the "
+"category and its associated budget configuration; existing transactions "
+"should be cleaned up or reassigned beforehand to keep your data "
+"meaningful."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:100
+msgid "Categories in dashboards and analytics"
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:102
+msgid ""
+"The Home dashboard groups amounts by category type to build the INCOME, "
+"FIXED EXPENSES and VARIABLE EXPENSES tables."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:103
+msgid ""
+"Budget usage progress bars for fixed and variable expenses depend on the "
+"monthly budgets defined on categories."
+msgstr ""
+
+#: budget_manager/templates/doc/_categories.html:104
+msgid ""
+"Analytics use categories to detect top growing and top falling spending "
+"areas over configurable time windows."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:1
+#: budget_manager/templates/doc/index.html:106
+msgid "Home dashboard"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:3
+msgid ""
+"The home dashboard gives a compact monthly overview of your financial "
+"health: incomes, fixed expenses, variable expenses and what is left for "
+"savings."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:6
+msgid "Period and scope"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:8
+msgid ""
+"All amounts shown on the home page are computed for the current calendar "
+"month and for all transactions recorded in that period."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:9
+msgid ""
+"The date of each transaction is taken into account, so back‑dating or "
+"correcting a transaction immediately updates the dashboard."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:12
+msgid "INCOMES block"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:15
+msgid "Per‑category income"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:16
+msgid ""
+"each row in the INCOME table corresponds to a category of type 0 "
+"(INCOMES)."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:17
+msgid ""
+"The “Monthly total” column sums all transactions of that category for the"
+" current month."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:20
+msgid "Total incomes"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:21
+msgid ""
+"the bottom TOTAL row aggregates all income categories and is the "
+"reference used by other calculations (budgets, remaining amounts, "
+"analytics)."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:25
+msgid "FIXED EXPENSES block"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:27
+msgid ""
+"Fixed expenses are recurring, predictable costs such as rent, insurance "
+"or subscriptions. They correspond to categories of type 1."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:31
+#: budget_manager/templates/doc/_home.html:58
+msgid "Monthly total per category"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:32
+msgid ""
+"each row shows the sum of all transactions for that fixed‑expense "
+"category in the current month. Negative amounts (expenses) are displayed "
+"in red for quick scanning."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:35
+msgid "Budget usage progress bar"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:36
+msgid ""
+"for categories that have a monthly budget configured, a colored progress "
+"bar shows how much of the planned budget has already been consumed."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:37
+msgid ""
+"The color adapts to the usage level: green for comfortable usage, orange "
+"when the consumption is high, and red when almost or fully consumed."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:40
+msgid "Fixed expenses TOTAL"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:41
+msgid ""
+"the TOTAL row aggregates the monthly totals of all fixed‑expense "
+"categories and displays the overall budget usage percentage across these "
+"categories."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:42
+msgid ""
+"A warning icon appears when the global percentage exceeds a critical "
+"threshold (for example 99%)."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:48
+msgid ""
+"Below the fixed‑expenses table, a dedicated line “Remaining for variable "
+"expenses” shows how much money is still available for day‑to‑day, "
+"non‑recurring spending after all fixed charges are taken into account."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:49
+msgid ""
+"This amount is computed from your incomes and fixed expenses and acts as "
+"a real‑time envelope for VARIABLE EXPENSES. A warning icon highlights "
+"when the remaining amount drops below a small threshold (for example 20 "
+"€)."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:52
+msgid "VARIABLE EXPENSES block"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:54
+msgid ""
+"Variable expenses correspond to categories of type 2 and represent "
+"flexible spending such as food, shopping or leisure."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:59
+msgid ""
+"each row shows the monthly total of transactions for the corresponding "
+"variable‑expense category, with the same color conventions as for fixed "
+"expenses."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:63
+msgid ""
+"when a budget is configured on a variable category, the progress bar "
+"indicates how fast this budget is being used during the month."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:64
+msgid ""
+"The global TOTAL row aggregates these usages into a single percentage for"
+" all variable expenses combined."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:70
+msgid ""
+"At the bottom of the VARIABLE EXPENSES column, the “Remaining for "
+"savings” line answers a key question: how much of this month’s income is "
+"still available once both fixed and variable expenses are included?"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:71
+msgid ""
+"This amount is closely tied to the Savings module: it is the basis for "
+"“leftover for savings” computations and for monthly distributions between"
+" individual savings accounts."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:72
+msgid ""
+"A low remaining amount is highlighted with a warning icon so you can "
+"quickly detect months where expenses are about to overrun your capacity "
+"to save."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:75
+msgid "From dashboard to categories and budgets"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:77
+msgid ""
+"The dashboard itself is read‑only, but every figure is derived from your "
+"categories and budgets:"
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:80
+msgid ""
+"INCOMES, FIXED EXPENSES and VARIABLE EXPENSES come from categories of "
+"type 0, 1 and 2 respectively."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:81
+msgid ""
+"Budget usage percentages are driven by the monthly budgets configured on "
+"those categories."
+msgstr ""
+
+#: budget_manager/templates/doc/_home.html:82
+msgid ""
+"To change limits or rebalance your plan, use the Categories section; the "
+"home dashboard will refresh automatically based on your new "
+"configuration."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:3
+msgid ""
+"The Savings module helps you organize your savings into named envelopes, "
+"define goals and ratios, and keep them synchronized with your real "
+"account balance."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:6
+msgid "Savings overview"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:8
+msgid ""
+"The main Savings page displays all savings as cards, along with the total"
+" saved amount and a donut chart summarizing the distribution."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:12
+msgid "Saving cards"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:13
+msgid ""
+"each card shows the saving name and icon, its current amount, the "
+"percentage of the global balance it represents, and optionally its ratio "
+"and goal progress."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:16
+msgid "Goal progress bars"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:17
+msgid ""
+"when a goal is defined, a horizontal bar shows how close the current "
+"amount is to the target, with a percentage label."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:20
+msgid "Actions on a saving"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:21
+msgid ""
+"you can edit a saving to change its configuration or delete it entirely. "
+"Deletion is protected by a confirmation dialog and will remove the saving"
+" but not its historical snapshots."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:25
+msgid "Adding and editing a saving"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:27
+msgid "The saving forms share the same structure when adding or editing:"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:31
+msgid "Name, note, color and icon"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:32
+msgid ""
+"define the identity of the saving (what it is for) and make it easy to "
+"recognize in charts and cards."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:35
+#: budget_manager/templates/doc/_transactions.html:48
+#: budget_manager/templates/saving/add_saving.html:14
+#: budget_manager/templates/saving/edit_saving.html:14
+msgid "Amount"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:36
+msgid ""
+"the current amount can be expressed either as a percentage of the global "
+"balance (slider) or directly in euros; both inputs stay synchronized and "
+"a hidden field stores the canonical value."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:40
+msgid ""
+"an optional target amount. The application ensures that the saved amount "
+"never exceeds the goal and uses it to compute progress indicators and "
+"estimated completion dates in analytics."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:43
+#: budget_manager/templates/saving/add_saving.html:45
+#: budget_manager/templates/saving/edit_saving.html:45
+msgid "Ratio for leftover distribution"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:44
+msgid ""
+"a number between 0 and 1 that expresses how much of the monthly “leftover"
+" for savings” should go to this saving relative to others."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:45
+msgid ""
+"Ratios are automatically normalized across all savings so that their sum "
+"remains equal to 1, with special handling for the “Reste” saving, which "
+"acts as a buffer."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:49
+msgid ""
+"When you change the ratio of a saving, the system recalculates the other "
+"ratios to respect the global 1.0 sum while preserving proportions as much"
+" as possible."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:52
+msgid "Monthly distribution of savings"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:54
+msgid ""
+"Monthly distribution is designed to transform the theoretical “remaining "
+"for savings” of a month into concrete allocations on individual savings."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:58
+msgid "Leftover for savings"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:59
+msgid ""
+"a dedicated function computes, for any month and year, how much income "
+"remains once fixed and variable expenses linked to the “Reste” saving (or"
+" no saving) are taken into account."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:62
+msgid "Source of distribution"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:63
+msgid ""
+"the distribution process takes the leftover amount from the “Reste” "
+"saving, ensuring that this buffer decreases by exactly what is being "
+"distributed (or by the available amount if it is smaller)."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:66
+msgid "Distribution logic"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:67
+msgid ""
+"if ratios are defined, the leftover is split proportionally according to "
+"these ratios. If not, the system falls back to a distribution based on "
+"current saving amounts or, when necessary, an equal distribution."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:68
+msgid ""
+"Goals are always respected: no saving will be pushed above its goal; any "
+"extra is re-distributed to remaining eligible savings."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:71
+msgid "Manual trigger"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:72
+msgid ""
+"the “Distribute Monthly” button on the Savings page calls this logic for "
+"the current (or previous) month, updates all savings and informs you "
+"about the amount that has been distributed."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:76
+msgid "Adjusting savings to the real balance"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:78
+msgid ""
+"Over time, minor differences can appear between the sum of all savings "
+"and the actual account balance computed from transactions."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:79
+msgid ""
+"The “Adjust Amounts” feature recalculates savings so that their total "
+"exactly matches the real balance."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:83
+msgid "Primary adjustment"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:84
+msgid ""
+"the first pass tries to absorb the difference inside the “Reste” saving "
+"when it exists, since it is the natural buffer for discrepancies."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:87
+msgid "Handling negative amounts"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:88
+msgid ""
+"if some savings become negative after an adjustment, they are reset to "
+"zero and the deficit is redistributed proportionally across positive "
+"savings, never exceeding goals."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:91
+msgid "Final consistency check"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:92
+msgid ""
+"after redistribution, the system performs a final pass to ensure that no "
+"saving exceeds its goal and that the total of all savings is as close as "
+"possible to the real balance."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:96
+msgid "Snapshots and history"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:98
+msgid ""
+"The application can take snapshots of all savings at a given date, "
+"storing historical amounts for later analysis."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:102
+msgid "Automatic snapshots"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:103
+msgid ""
+"analytics make sure that a snapshot exists for the current day before "
+"computing long‑term charts, so you always have a coherent time series."
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:106
+msgid "Manual snapshots"
+msgstr ""
+
+#: budget_manager/templates/doc/_savings.html:107
+msgid ""
+"the “Snapshot” button on the Savings page forces the creation of a "
+"snapshot for today if it does not already exist, and confirms how many "
+"entries were created."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:1
+msgid "Statistics and analytics"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:3
+msgid ""
+"The Analytics dashboard aggregates several views to help you understand "
+"how your balance, incomes, expenses and savings evolve over time."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:6
+msgid "Time window configuration"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:8
+msgid ""
+"At the top of the Analytics page you can choose a number of months to "
+"analyze. This window drives all subsequent statistics: balances, incomes,"
+" leftovers and category trends are computed for the same period."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:9
+msgid ""
+"The application validates this window (for example between 1 and 24 "
+"months) to avoid excessively heavy queries."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:12
+msgid "Balance evolution metrics"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:15
+msgid "Current balance"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:16
+msgid ""
+"the first card shows the current global balance, computed from all "
+"non‑excluded transactions."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:19
+msgid "Reference balance"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:20
+msgid ""
+"a reference value is computed at the end of a past period (for example "
+"the balance N months ago); this allows direct comparison with the "
+"present."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:23
+msgid "Percentage change"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:24
+msgid ""
+"the card displays the relative change between the current balance and the"
+" reference, with an up or down arrow depending on the direction of the "
+"evolution."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:28
+msgid "Income over the period"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:30
+msgid ""
+"The second card focuses purely on incomes for the selected window, "
+"independently from expenses."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:34
+msgid "Current income"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:35
+msgid ""
+"sum of all positive transactions in income categories across the current "
+"analysis window."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:38
+msgid "Reference income"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:39
+msgid ""
+"sum of incomes in an equivalent previous period, so that you can compare,"
+" for example, the last 6 months of income with the 6 months before that."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:42
+msgid "Income change"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:43
+msgid ""
+"percentage comparison between current and previous income, with visual "
+"cues to highlight increases or decreases."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:47
+msgid "Leftover and savings insights"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:49
+msgid ""
+"The analytics module also computes, for each past month, how much money "
+"was left for saving after expenses and leverages this information to "
+"build savings insights."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:53
+msgid "Monthly leftover values"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:54
+msgid ""
+"for each of the analyzed months, the system calculates a “leftover for "
+"savings” value by combining incomes, fixed expenses and variable expenses"
+" linked to the general buffer saving."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:57
+msgid "Average and median leftover"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:58
+msgid ""
+"these statistics summarize how much you typically manage to save each "
+"month, smoothing out exceptional peaks or dips."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:61
+msgid "Savings insights per envelope"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:62
+msgid ""
+"for every saving, the dashboard shows its current amount, goal, ratio, an"
+" evolution sparkline and an estimate of how much it can receive each "
+"month based on the median leftover and its ratio."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:65
+msgid "Estimated time to goal"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:66
+msgid ""
+"when a goal and a positive expected monthly allocation are available, the"
+" system estimates in how many months the goal could be reached and "
+"displays an approximate target date."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:70
+msgid "Category spending trends"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:72
+msgid ""
+"To identify which parts of your budget are drifting, analytics compares "
+"spending in expense categories between the current window and an "
+"equivalent past window."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:76
+msgid "Per‑category totals and medians"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:77
+msgid ""
+"for each FIXED or VARIABLE EXPENSES category, the system gathers all "
+"monthly transaction amounts and computes both totals and a median typical"
+" spending value."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:80
+msgid "Growth rate"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:81
+msgid ""
+"the percentage change in total spending for each category between the two"
+" periods is calculated to show where costs are accelerating or "
+"decreasing."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:84
+msgid "Impact score"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:85
+msgid ""
+"by combining growth and median spending, analytics derives an impact "
+"score used to order categories by importance of their change."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:88
+msgid "Top growing and top falling categories"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:89
+msgid ""
+"two lists present categories where spending is increasing the most and "
+"decreasing the most, helping you quickly spot budget leaks or successful "
+"optimizations."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:93
+msgid "Historical spending overview chart"
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:95
+msgid ""
+"At the bottom of the analytics page, a historical stacked chart "
+"summarizes spending and income trends over time."
+msgstr ""
+
+#: budget_manager/templates/doc/_statistics.html:96
+msgid ""
+"The chart uses color coding (for example green for income and another "
+"color for overall balance) so that you can visually follow how your "
+"situation evolves month after month."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:3
+msgid ""
+"The Transactions module is the central place where you record every "
+"income and expense of the month."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:6
+msgid "Transactions dashboard"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:8
+msgid ""
+"Open the transactions page to see a table of the most recent operations "
+"(by default the last month)."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:12
+msgid "Balance (Solde)"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:13
+msgid ""
+"the colored badge at the top shows the global balance of all transactions"
+" managed in this module; green for a positive balance, red for a negative"
+" one."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:16
+msgid "Transactions table"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:17
+msgid ""
+"each row represents one transaction with its date, category, amount, "
+"optional note and quick actions to edit or delete it."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:20
+msgid "Edit icon"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:21
+msgid ""
+"click the blue pencil icon to open the edit form for the selected "
+"transaction."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:24
+msgid "Delete icon"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:25
+msgid ""
+"click the red trash icon to remove a transaction; the application will "
+"automatically revert its impact on savings and budgets before deleting "
+"it."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:29
+msgid "Adding a transaction"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:31
+msgid ""
+"Use the “Add” button on the Transactions page to create a new operation. "
+"The form is intentionally simple but strongly validated to keep your data"
+" consistent."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:35
+msgid "Category"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:36
+msgid ""
+"choose one of the configured categories. The category type determines "
+"whether the transaction is treated as an income, a fixed expense or a "
+"variable expense:"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:38
+msgid "Type 0 → INCOMES (earnings)"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:39
+msgid "Type 1 → FIXED EXPENSES (rent, subscriptions, etc.)"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:40
+msgid "Type 2 → VARIABLE EXPENSES (food, leisure, etc.)"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:44
+msgid "Date"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:45
+msgid ""
+"the effective date of the transaction. It is used everywhere: in the "
+"monthly dashboard, in category statistics and in savings analytics."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:49
+msgid ""
+"the signed amount of the transaction. A positive value represents an "
+"income, a negative value represents an expense."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:50
+msgid "The application enforces this rule:"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:52
+msgid ""
+"for income categories (type 0) the amount MUST be positive; otherwise the"
+" form is rejected with an explicit error message."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:53
+msgid ""
+"for expense categories (types 1 and 2) the amount MUST be negative; "
+"positive values are rejected to avoid mixing signs."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:57
+#: budget_manager/templates/doc/index.html:138
+#: budget_manager/templates/saving/add_saving.html:25
+#: budget_manager/templates/saving/edit_saving.html:25
+msgid "Note"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:58
+msgid ""
+"a short free text description (for example “Salary April” or “Groceries –"
+" supermarket”). This text appears in the transaction table and helps when"
+" you review your history."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:61
+msgid "Saving"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:62
+msgid ""
+"optional link to a saving account. This controls how the transaction will"
+" affect your savings:"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:65
+msgid ""
+"for an INCOME: if a saving is selected, the amount is added to that "
+"saving (capped at its goal if one is defined); otherwise the amount is "
+"added to the special “Reste” saving or to the first saving if “Reste” "
+"does not exist."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:68
+msgid ""
+"for an EXPENSE: if a saving is selected, the absolute value of the amount"
+" is removed from that saving, never letting it go below zero."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:74
+msgid ""
+"When the transaction is saved, the system also recalculates fixed-budget "
+"allocations whenever an income changes, so your FIXED EXPENSES budgets "
+"always stay consistent with your real earnings."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:77
+msgid "Editing a transaction"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:79
+msgid ""
+"Editing a transaction is safe: the application first reverts the old "
+"impact, then applies the new one."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:83
+msgid "Reverting the old impact"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:84
+msgid ""
+"if the original transaction was an income, the amount is removed from the"
+" saving (or “Reste”) where it was previously stored; if it was an "
+"expense, the corresponding amount is added back to the affected saving so"
+" that your totals return to the pre‑edit state."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:87
+msgid "Applying the new values"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:88
+msgid ""
+"the updated category, date, amount and saving are written, the same "
+"validations as for creation are applied, and the savings are updated "
+"according to the new configuration."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:91
+msgid "Budget readjustment"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:92
+msgid ""
+"if the edited transaction is an income, fixed budgets are recalculated so"
+" that their percentage still reflects the current level of earnings."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:96
+msgid "Deleting a transaction"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:98
+msgid ""
+"Deleting a transaction is more than just removing a row from the table: "
+"the system keeps your savings and budgets coherent by undoing the "
+"financial effect of the deleted operation."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:102
+msgid "Savings rollback"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:103
+msgid ""
+"if the transaction was linked to a saving, its amount is removed from or "
+"added back to that saving accordingly (for incomes the saved money is "
+"removed, for expenses the spent money is returned)."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:106
+msgid "Earnings‑dependent budgets"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:107
+msgid ""
+"when a deleted transaction is an income, fixed budgets that depend on "
+"total earnings are recomputed to keep the global percentages aligned."
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:110
+msgid "Deletion via the table"
+msgstr ""
+
+#: budget_manager/templates/doc/_transactions.html:111
+msgid ""
+"click the red trash icon in the Transactions table. The page "
+"automatically reloads once the deletion and all related recalculations "
+"are complete."
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:80
@@ -493,139 +1883,119 @@ msgid "Overview"
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:91
-msgid ""
-"User\n"
-"                                Management"
+#: budget_manager/templates/doc/index.html:146
+msgid "User Management"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:95
-#: budget_manager/templates/doc/index.html:143
+#: budget_manager/templates/doc/index.html:94
+#: budget_manager/templates/doc/index.html:158
 msgid "Database"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:98
-#: budget_manager/templates/doc/index.html:154
+#: budget_manager/templates/doc/index.html:97
+#: budget_manager/templates/doc/index.html:169
 msgid "Configuration"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:102
-#: budget_manager/templates/doc/index.html:166
+#: budget_manager/templates/doc/index.html:100
+#: budget_manager/templates/doc/index.html:181
 msgid "Deployment"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:117
+#: budget_manager/templates/doc/index.html:132
 msgid "Welcome to the Budget Manager Documentation"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:119
+#: budget_manager/templates/doc/index.html:134
 msgid ""
 "This documentation provides information about the Budget Manager "
 "application, its\n"
 "                        features, and how to use it."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:123
-#: budget_manager/templates/saving/add_saving.html:25
-#: budget_manager/templates/saving/edit_saving.html:25
-msgid "Note"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:124
+#: budget_manager/templates/doc/index.html:139
 msgid ""
 "This documentation is customizable and can be edited to include specific "
 "information\n"
 "                            about your implementation."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:131
-msgid "User Management"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:132
+#: budget_manager/templates/doc/index.html:147
 msgid ""
 "The application includes a comprehensive user management system with "
 "role-based\n"
 "                        permissions:"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:135
+#: budget_manager/templates/doc/index.html:150
 msgid "User authentication and authorization"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:136
+#: budget_manager/templates/doc/index.html:151
 msgid "Role-based access control"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:137
+#: budget_manager/templates/doc/index.html:152
 msgid "Permission management"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:144
+#: budget_manager/templates/doc/index.html:159
 msgid ""
 "The application uses PostgreSQL as its database with Alembic for "
 "migrations:"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:146
+#: budget_manager/templates/doc/index.html:161
 msgid "Automatic database migrations"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:147
+#: budget_manager/templates/doc/index.html:162
 msgid "SQLAlchemy ORM for database access"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:148
+#: budget_manager/templates/doc/index.html:163
 msgid "Efficient data management"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:155
+#: budget_manager/templates/doc/index.html:170
 msgid "The application supports multiple environments:"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:157
+#: budget_manager/templates/doc/index.html:172
 msgid "Development"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:158
+#: budget_manager/templates/doc/index.html:173
 msgid "Testing"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:159
+#: budget_manager/templates/doc/index.html:174
 msgid "Demo"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:160
+#: budget_manager/templates/doc/index.html:175
 msgid "Production"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:167
+#: budget_manager/templates/doc/index.html:182
 msgid "The application can be deployed using Docker:"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:169
+#: budget_manager/templates/doc/index.html:184
 msgid "Docker Compose for local development"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:170
+#: budget_manager/templates/doc/index.html:185
 msgid "Ansible for production deployment"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:171
+#: budget_manager/templates/doc/index.html:186
 msgid "CI/CD pipeline integration"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:5
+#: budget_manager/templates/saving/saving.html:18
 msgid "Add Saving"
-msgstr ""
-
-#: budget_manager/templates/saving/add_saving.html:9
-#: budget_manager/templates/saving/edit_saving.html:9
-msgid "Name"
-msgstr ""
-
-#: budget_manager/templates/saving/add_saving.html:14
-#: budget_manager/templates/saving/edit_saving.html:14
-msgid "Amount"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:25
@@ -637,11 +2007,6 @@ msgstr ""
 msgid "optional"
 msgstr ""
 
-#: budget_manager/templates/saving/add_saving.html:30
-#: budget_manager/templates/saving/edit_saving.html:30
-msgid "Color"
-msgstr ""
-
 #: budget_manager/templates/saving/add_saving.html:35
 #: budget_manager/templates/saving/edit_saving.html:35
 msgid "Icon"
@@ -650,11 +2015,6 @@ msgstr ""
 #: budget_manager/templates/saving/add_saving.html:41
 #: budget_manager/templates/saving/edit_saving.html:41
 msgid "Target amount"
-msgstr ""
-
-#: budget_manager/templates/saving/add_saving.html:45
-#: budget_manager/templates/saving/edit_saving.html:45
-msgid "Ratio for leftover distribution"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:46
@@ -679,6 +2039,82 @@ msgstr ""
 
 #: budget_manager/templates/saving/edit_saving.html:52
 msgid "Update"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:7
+msgid "Total"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:21
+msgid "Adjust Amounts"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:24
+msgid "Distribute Monthly"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:27
+msgid "Snapshot"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:97
+msgid "Amounts"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:100
+msgid "Ratios"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:109
+msgid "No savings found. Add your first saving!"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:119
+msgid "Are you sure you want to delete this saving?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:128
+msgid "Error deleting saving"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:141
+msgid ""
+"This will adjust all saving amounts to match the current balance. "
+"Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:152
+msgid "Error adjusting amounts"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:167
+msgid "This will distribute the remaining monthly savings (Leftover: "
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:167
+msgid "from Reste saving among all savings. Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:169
+msgid ""
+"This will distribute the remaining monthly savings from Reste saving "
+"among all savings. Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:183
+msgid "Error distributing monthly savings"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:196
+msgid "Capture a snapshot of current savings state?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:207
+msgid "Error capturing snapshot"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:255
+msgid "No ratios defined yet."
 msgstr ""
 
 #~ msgid "Budget Manager"
@@ -785,5 +2221,22 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "Error distributing monthly savings"
+#~ msgstr ""
+
+#~ msgid "Average leftover last"
+#~ msgstr ""
+
+#~ msgid "Avg spending"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "User\n"
+#~ "                                Management"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "At least {percent}% of your income "
+#~ "remains for savings or other expenses"
+#~ " (🔒)"
 #~ msgstr ""
 

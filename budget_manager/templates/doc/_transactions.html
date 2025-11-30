@@ -1,0 +1,115 @@
+<h2><i class="fas fa-receipt"></i> {{ _('Transactions') }}</h2>
+<p class="lead">
+    {{ _('The Transactions module is the central place where you record every income and expense of the month.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Transactions dashboard') }}</h3>
+<p>
+    {{ _('Open the transactions page to see a table of the most recent operations (by default the last month).') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Balance (Solde)') }}</strong> –
+        {{ _('the colored badge at the top shows the global balance of all transactions managed in this module; green for a positive balance, red for a negative one.') }}
+    </li>
+    <li>
+        <strong>{{ _('Transactions table') }}</strong> –
+        {{ _('each row represents one transaction with its date, category, amount, optional note and quick actions to edit or delete it.') }}
+    </li>
+    <li>
+        <strong>{{ _('Edit icon') }}</strong> –
+        {{ _('click the blue pencil icon to open the edit form for the selected transaction.') }}
+    </li>
+    <li>
+        <strong>{{ _('Delete icon') }}</strong> –
+        {{ _('click the red trash icon to remove a transaction; the application will automatically revert its impact on savings and budgets before deleting it.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Adding a transaction') }}</h3>
+<p>
+    {{ _('Use the “Add” button on the Transactions page to create a new operation. The form is intentionally simple but strongly validated to keep your data consistent.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Category') }}</strong> –
+        {{ _('choose one of the configured categories. The category type determines whether the transaction is treated as an income, a fixed expense or a variable expense:') }}
+        <ul>
+            <li>{{ _('Type 0 → INCOMES (earnings)') }}</li>
+            <li>{{ _('Type 1 → FIXED EXPENSES (rent, subscriptions, etc.)') }}</li>
+            <li>{{ _('Type 2 → VARIABLE EXPENSES (food, leisure, etc.)') }}</li>
+        </ul>
+    </li>
+    <li>
+        <strong>{{ _('Date') }}</strong> –
+        {{ _('the effective date of the transaction. It is used everywhere: in the monthly dashboard, in category statistics and in savings analytics.') }}
+    </li>
+    <li>
+        <strong>{{ _('Amount') }}</strong> –
+        {{ _('the signed amount of the transaction. A positive value represents an income, a negative value represents an expense.') }}
+        {{ _('The application enforces this rule:') }}
+        <ul>
+            <li>{{ _('for income categories (type 0) the amount MUST be positive; otherwise the form is rejected with an explicit error message.') }}</li>
+            <li>{{ _('for expense categories (types 1 and 2) the amount MUST be negative; positive values are rejected to avoid mixing signs.') }}</li>
+        </ul>
+    </li>
+    <li>
+        <strong>{{ _('Note') }}</strong> –
+        {{ _('a short free text description (for example “Salary April” or “Groceries – supermarket”). This text appears in the transaction table and helps when you review your history.') }}
+    </li>
+    <li>
+        <strong>{{ _('Saving') }}</strong> –
+        {{ _('optional link to a saving account. This controls how the transaction will affect your savings:') }}
+        <ul>
+            <li>
+                {{ _('for an INCOME: if a saving is selected, the amount is added to that saving (capped at its goal if one is defined); otherwise the amount is added to the special “Reste” saving or to the first saving if “Reste” does not exist.') }}
+            </li>
+            <li>
+                {{ _('for an EXPENSE: if a saving is selected, the absolute value of the amount is removed from that saving, never letting it go below zero.') }}
+            </li>
+        </ul>
+    </li>
+</ul>
+<p>
+    {{ _('When the transaction is saved, the system also recalculates fixed-budget allocations whenever an income changes, so your FIXED EXPENSES budgets always stay consistent with your real earnings.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Editing a transaction') }}</h3>
+<p>
+    {{ _('Editing a transaction is safe: the application first reverts the old impact, then applies the new one.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Reverting the old impact') }}</strong> –
+        {{ _('if the original transaction was an income, the amount is removed from the saving (or “Reste”) where it was previously stored; if it was an expense, the corresponding amount is added back to the affected saving so that your totals return to the pre‑edit state.') }}
+    </li>
+    <li>
+        <strong>{{ _('Applying the new values') }}</strong> –
+        {{ _('the updated category, date, amount and saving are written, the same validations as for creation are applied, and the savings are updated according to the new configuration.') }}
+    </li>
+    <li>
+        <strong>{{ _('Budget readjustment') }}</strong> –
+        {{ _('if the edited transaction is an income, fixed budgets are recalculated so that their percentage still reflects the current level of earnings.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Deleting a transaction') }}</h3>
+<p>
+    {{ _('Deleting a transaction is more than just removing a row from the table: the system keeps your savings and budgets coherent by undoing the financial effect of the deleted operation.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Savings rollback') }}</strong> –
+        {{ _('if the transaction was linked to a saving, its amount is removed from or added back to that saving accordingly (for incomes the saved money is removed, for expenses the spent money is returned).') }}
+    </li>
+    <li>
+        <strong>{{ _('Earnings‑dependent budgets') }}</strong> –
+        {{ _('when a deleted transaction is an income, fixed budgets that depend on total earnings are recomputed to keep the global percentages aligned.') }}
+    </li>
+    <li>
+        <strong>{{ _('Deletion via the table') }}</strong> –
+        {{ _('click the red trash icon in the Transactions table. The page automatically reloads once the deletion and all related recalculations are complete.') }}
+    </li>
+</ul>
+
+

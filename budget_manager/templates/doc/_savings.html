@@ -1,0 +1,111 @@
+<h2><i class="fas fa-piggy-bank"></i> {{ _('Savings') }}</h2>
+<p class="lead">
+    {{ _('The Savings module helps you organize your savings into named envelopes, define goals and ratios, and keep them synchronized with your real account balance.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Savings overview') }}</h3>
+<p>
+    {{ _('The main Savings page displays all savings as cards, along with the total saved amount and a donut chart summarizing the distribution.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Saving cards') }}</strong> –
+        {{ _('each card shows the saving name and icon, its current amount, the percentage of the global balance it represents, and optionally its ratio and goal progress.') }}
+    </li>
+    <li>
+        <strong>{{ _('Goal progress bars') }}</strong> –
+        {{ _('when a goal is defined, a horizontal bar shows how close the current amount is to the target, with a percentage label.') }}
+    </li>
+    <li>
+        <strong>{{ _('Actions on a saving') }}</strong> –
+        {{ _('you can edit a saving to change its configuration or delete it entirely. Deletion is protected by a confirmation dialog and will remove the saving but not its historical snapshots.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Adding and editing a saving') }}</h3>
+<p>
+    {{ _('The saving forms share the same structure when adding or editing:') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Name, note, color and icon') }}</strong> –
+        {{ _('define the identity of the saving (what it is for) and make it easy to recognize in charts and cards.') }}
+    </li>
+    <li>
+        <strong>{{ _('Amount') }}</strong> –
+        {{ _('the current amount can be expressed either as a percentage of the global balance (slider) or directly in euros; both inputs stay synchronized and a hidden field stores the canonical value.') }}
+    </li>
+    <li>
+        <strong>{{ _('Goal') }}</strong> –
+        {{ _('an optional target amount. The application ensures that the saved amount never exceeds the goal and uses it to compute progress indicators and estimated completion dates in analytics.') }}
+    </li>
+    <li>
+        <strong>{{ _('Ratio for leftover distribution') }}</strong> –
+        {{ _('a number between 0 and 1 that expresses how much of the monthly “leftover for savings” should go to this saving relative to others.') }}
+        {{ _('Ratios are automatically normalized across all savings so that their sum remains equal to 1, with special handling for the “Reste” saving, which acts as a buffer.') }}
+    </li>
+</ul>
+<p>
+    {{ _('When you change the ratio of a saving, the system recalculates the other ratios to respect the global 1.0 sum while preserving proportions as much as possible.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Monthly distribution of savings') }}</h3>
+<p>
+    {{ _('Monthly distribution is designed to transform the theoretical “remaining for savings” of a month into concrete allocations on individual savings.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Leftover for savings') }}</strong> –
+        {{ _('a dedicated function computes, for any month and year, how much income remains once fixed and variable expenses linked to the “Reste” saving (or no saving) are taken into account.') }}
+    </li>
+    <li>
+        <strong>{{ _('Source of distribution') }}</strong> –
+        {{ _('the distribution process takes the leftover amount from the “Reste” saving, ensuring that this buffer decreases by exactly what is being distributed (or by the available amount if it is smaller).') }}
+    </li>
+    <li>
+        <strong>{{ _('Distribution logic') }}</strong> –
+        {{ _('if ratios are defined, the leftover is split proportionally according to these ratios. If not, the system falls back to a distribution based on current saving amounts or, when necessary, an equal distribution.') }}
+        {{ _('Goals are always respected: no saving will be pushed above its goal; any extra is re-distributed to remaining eligible savings.') }}
+    </li>
+    <li>
+        <strong>{{ _('Manual trigger') }}</strong> –
+        {{ _('the “Distribute Monthly” button on the Savings page calls this logic for the current (or previous) month, updates all savings and informs you about the amount that has been distributed.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Adjusting savings to the real balance') }}</h3>
+<p>
+    {{ _('Over time, minor differences can appear between the sum of all savings and the actual account balance computed from transactions.') }}
+    {{ _('The “Adjust Amounts” feature recalculates savings so that their total exactly matches the real balance.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Primary adjustment') }}</strong> –
+        {{ _('the first pass tries to absorb the difference inside the “Reste” saving when it exists, since it is the natural buffer for discrepancies.') }}
+    </li>
+    <li>
+        <strong>{{ _('Handling negative amounts') }}</strong> –
+        {{ _('if some savings become negative after an adjustment, they are reset to zero and the deficit is redistributed proportionally across positive savings, never exceeding goals.') }}
+    </li>
+    <li>
+        <strong>{{ _('Final consistency check') }}</strong> –
+        {{ _('after redistribution, the system performs a final pass to ensure that no saving exceeds its goal and that the total of all savings is as close as possible to the real balance.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Snapshots and history') }}</h3>
+<p>
+    {{ _('The application can take snapshots of all savings at a given date, storing historical amounts for later analysis.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Automatic snapshots') }}</strong> –
+        {{ _('analytics make sure that a snapshot exists for the current day before computing long‑term charts, so you always have a coherent time series.') }}
+    </li>
+    <li>
+        <strong>{{ _('Manual snapshots') }}</strong> –
+        {{ _('the “Snapshot” button on the Savings page forces the creation of a snapshot for today if it does not already exist, and confirms how many entries were created.') }}
+    </li>
+</ul>
+
+

@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h4>État des finances - <b>{{ current_date }}</b></h4>
+<h4>{{ _('Financial status') }} - <b>{{ current_date }}</b></h4>
 <br>
 <div class="row">
     <div class="col">
         <table class="table table-striped table-hover table-green table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">REVENUS</th>
-                    <th scope="col">Total du mois</th>
+                    <th scope="col">{{ _('INCOME') }}</th>
+                    <th scope="col">{{ _('Monthly total') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,7 +23,7 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ _('TOTAL') }}</b></td>
                     <td><b style="color: white">{{ total_earnings }} €</b></td>
                 </tr>
             </tbody>
@@ -33,9 +33,9 @@
         <table class="table table-striped table-hover table-red table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">DÉPENSES FIXES</th>
-                    <th scope="col">Total du mois</th>
-                    <th scope="col">Conso budget</th>
+                    <th scope="col">{{ _('FIXED EXPENSES') }}</th>
+                    <th scope="col">{{ _('Monthly total') }}</th>
+                    <th scope="col">{{ _('Budget usage') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,7 +67,7 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ _('TOTAL') }}</b></td>
                     <td><b style="color: white">{{ total_fixed_expenses }} €</b></td>
                     <td>
                         {% if total_conso_fixed_expenses > 99 %}⚠️{% endif %}
@@ -79,7 +79,7 @@
         <table class="table table-striped table-hover table-red table-bordered">
             <tbody>
                 <tr>
-                    <td><b style="color: white">Reste pour dépense variable</b></td>
+                    <td><b style="color: white">{{ _('Remaining for variable expenses') }}</b></td>
                     <td>
                         {% if remaining_for_variable_expenses < 20 %}⚠️{% endif %} <b style="color: white">{{
                             remaining_for_variable_expenses }} €</b>
@@ -92,9 +92,9 @@
         <table class="table table-striped table-hover table-orange table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">DÉPENSES VARIABLES</th>
-                    <th scope="col">Total du mois</th>
-                    <th scope="col">Conso budget</th>
+                    <th scope="col">{{ _('VARIABLE EXPENSES') }}</th>
+                    <th scope="col">{{ _('Monthly total') }}</th>
+                    <th scope="col">{{ _('Budget usage') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -126,7 +126,7 @@
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td><b style="color: white">TOTAL</b></td>
+                    <td><b style="color: white">{{ _('TOTAL') }}</b></td>
                     <td><b style="color: white">{{ total_variable_expenses }} €</b></td>
                     {% set conso = total_conso_variable_expenses %}
                     <td>
@@ -139,7 +139,7 @@
         <table class="table table-striped table-hover table-orange table-bordered">
             <tbody>
                 <tr>
-                    <td><b style="color: white">Reste pour épargner</b></td>
+                    <td><b style="color: white">{{ _('Remaining for savings') }}</b></td>
                     <td>
                         {% if leftover_for_savings < 20 %}⚠️{% endif %} <b style="color: white">{{ leftover_for_savings
                             }}

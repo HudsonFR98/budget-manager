@@ -1,0 +1,107 @@
+<h2><i class="fas fa-tags"></i> {{ _('Categories') }}</h2>
+<p class="lead">
+    {{ _('Categories are the backbone of the application: they define how each transaction is classified and how budgets and statistics are computed.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Category types') }}</h3>
+<p>
+    {{ _('Every category belongs to exactly one of the following types, which directly drive the behavior of dashboards and analytics:') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('INCOMES (type 0)') }}</strong> –
+        {{ _('sources of money such as salaries, refunds or bonuses. Transactions in these categories are expected to have positive amounts and feed the income section of the home dashboard.') }}
+    </li>
+    <li>
+        <strong>{{ _('FIXED EXPENSES (type 1)') }}</strong> –
+        {{ _('recurring, predictable charges like rent, utilities or subscriptions. They are used in the FIXED EXPENSES block and participate in the “Remaining for variable expenses” calculation.') }}
+    </li>
+    <li>
+        <strong>{{ _('VARIABLE EXPENSES (type 2)') }}</strong> –
+        {{ _('flexible spending such as groceries, hobbies or transport. They appear in the VARIABLE EXPENSES block and in analytics for growing/falling categories.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Category list') }}</h3>
+<p>
+    {{ _('The Category management page lists all categories with their main properties and quick actions:') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Name and icon') }}</strong> –
+        {{ _('the human‑readable name of the category and an optional emoji/icon, also displayed in transaction tables and analytics.') }}
+    </li>
+    <li>
+        <strong>{{ _('Color') }}</strong> –
+        {{ _('used for visualizations such as donut charts; each category can have its own color tag.') }}
+    </li>
+    <li>
+        <strong>{{ _('Type badge') }}</strong> –
+        {{ _('a colored badge indicating whether the category is an income, fixed expense or variable expense.') }}
+    </li>
+    <li>
+        <strong>{{ _('Calculated budget') }}</strong> –
+        {{ _('if a monthly budget is configured, this column shows the amount in euros for the current month, derived from your total earnings.') }}
+    </li>
+    <li>
+        <strong>{{ _('Delete protection') }}</strong> –
+        {{ _('some categories are not deletable (for example when they are structurally required or already used extensively). Non‑deletable categories show a “forbidden” icon instead of a trash icon.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Adding a category') }}</h3>
+<p>
+    {{ _('When you create a new category you define both its visual identity and its financial role.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Name') }}</strong> –
+        {{ _('short label that will be reused in all screens (home, transactions, analytics, savings).') }}
+    </li>
+    <li>
+        <strong>{{ _('Type') }}</strong> –
+        {{ _('choose INCOMES, FIXED EXPENSES or VARIABLE EXPENSES depending on the behavior you expect on dashboards and budgets.') }}
+    </li>
+    <li>
+        <strong>{{ _('Color and icon') }}</strong> –
+        {{ _('optional fields to make the category immediately recognizable in tables and charts.') }}
+    </li>
+    <li>
+        <strong>{{ _('Budget (for expenses)') }}</strong> –
+        {{ _('for FIXED or VARIABLE EXPENSES you can optionally set a monthly budget as a percentage of your total earnings.') }}
+        {{ _('Internally the application stores this percentage and multiplies it by the current eligible income to obtain a euro amount every month.') }}
+    </li>
+</ul>
+<p>
+    {{ _('Once saved, the category becomes available in the transaction forms and will be taken into account in all subsequent calculations.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Editing a category') }}</h3>
+<p>
+    {{ _('Editing allows you to rename categories, change their color or icon, adjust their type and fine‑tune their budget.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Updating the budget') }}</strong> –
+        {{ _('you can increase or decrease the percentage to adapt to new income levels. Setting the budget to zero (or leaving it empty) removes the associated monthly budget for that category.') }}
+    </li>
+    <li>
+        <strong>{{ _('Changing type carefully') }}</strong> –
+        {{ _('switching a category from income to expense (or the opposite) changes how its transactions are interpreted in all dashboards, so it should only be done when you fully understand the impact.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Deleting a category') }}</h3>
+<p>
+    {{ _('A category can be deleted only when the application considers it safe to do so (for example if it is not used by critical internal logic).') }}
+    {{ _('When deletion is allowed, clicking the red trash icon removes the category and its associated budget configuration; existing transactions should be cleaned up or reassigned beforehand to keep your data meaningful.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Categories in dashboards and analytics') }}</h3>
+<ul>
+    <li>{{ _('The Home dashboard groups amounts by category type to build the INCOME, FIXED EXPENSES and VARIABLE EXPENSES tables.') }}</li>
+    <li>{{ _('Budget usage progress bars for fixed and variable expenses depend on the monthly budgets defined on categories.') }}</li>
+    <li>{{ _('Analytics use categories to detect top growing and top falling spending areas over configurable time windows.') }}</li>
+</ul>
+
+

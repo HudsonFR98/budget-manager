@@ -1,0 +1,99 @@
+<h2><i class="fas fa-chart-line"></i> {{ _('Statistics and analytics') }}</h2>
+<p class="lead">
+    {{ _('The Analytics dashboard aggregates several views to help you understand how your balance, incomes, expenses and savings evolve over time.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Time window configuration') }}</h3>
+<p>
+    {{ _('At the top of the Analytics page you can choose a number of months to analyze. This window drives all subsequent statistics: balances, incomes, leftovers and category trends are computed for the same period.') }}
+    {{ _('The application validates this window (for example between 1 and 24 months) to avoid excessively heavy queries.') }}
+</p>
+
+<h3 class="mt-4">{{ _('Balance evolution metrics') }}</h3>
+<ul>
+    <li>
+        <strong>{{ _('Current balance') }}</strong> –
+        {{ _('the first card shows the current global balance, computed from all non‑excluded transactions.') }}
+    </li>
+    <li>
+        <strong>{{ _('Reference balance') }}</strong> –
+        {{ _('a reference value is computed at the end of a past period (for example the balance N months ago); this allows direct comparison with the present.') }}
+    </li>
+    <li>
+        <strong>{{ _('Percentage change') }}</strong> –
+        {{ _('the card displays the relative change between the current balance and the reference, with an up or down arrow depending on the direction of the evolution.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Income over the period') }}</h3>
+<p>
+    {{ _('The second card focuses purely on incomes for the selected window, independently from expenses.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Current income') }}</strong> –
+        {{ _('sum of all positive transactions in income categories across the current analysis window.') }}
+    </li>
+    <li>
+        <strong>{{ _('Reference income') }}</strong> –
+        {{ _('sum of incomes in an equivalent previous period, so that you can compare, for example, the last 6 months of income with the 6 months before that.') }}
+    </li>
+    <li>
+        <strong>{{ _('Income change') }}</strong> –
+        {{ _('percentage comparison between current and previous income, with visual cues to highlight increases or decreases.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Leftover and savings insights') }}</h3>
+<p>
+    {{ _('The analytics module also computes, for each past month, how much money was left for saving after expenses and leverages this information to build savings insights.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Monthly leftover values') }}</strong> –
+        {{ _('for each of the analyzed months, the system calculates a “leftover for savings” value by combining incomes, fixed expenses and variable expenses linked to the general buffer saving.') }}
+    </li>
+    <li>
+        <strong>{{ _('Average and median leftover') }}</strong> –
+        {{ _('these statistics summarize how much you typically manage to save each month, smoothing out exceptional peaks or dips.') }}
+    </li>
+    <li>
+        <strong>{{ _('Savings insights per envelope') }}</strong> –
+        {{ _('for every saving, the dashboard shows its current amount, goal, ratio, an evolution sparkline and an estimate of how much it can receive each month based on the median leftover and its ratio.') }}
+    </li>
+    <li>
+        <strong>{{ _('Estimated time to goal') }}</strong> –
+        {{ _('when a goal and a positive expected monthly allocation are available, the system estimates in how many months the goal could be reached and displays an approximate target date.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Category spending trends') }}</h3>
+<p>
+    {{ _('To identify which parts of your budget are drifting, analytics compares spending in expense categories between the current window and an equivalent past window.') }}
+</p>
+<ul>
+    <li>
+        <strong>{{ _('Per‑category totals and medians') }}</strong> –
+        {{ _('for each FIXED or VARIABLE EXPENSES category, the system gathers all monthly transaction amounts and computes both totals and a median typical spending value.') }}
+    </li>
+    <li>
+        <strong>{{ _('Growth rate') }}</strong> –
+        {{ _('the percentage change in total spending for each category between the two periods is calculated to show where costs are accelerating or decreasing.') }}
+    </li>
+    <li>
+        <strong>{{ _('Impact score') }}</strong> –
+        {{ _('by combining growth and median spending, analytics derives an impact score used to order categories by importance of their change.') }}
+    </li>
+    <li>
+        <strong>{{ _('Top growing and top falling categories') }}</strong> –
+        {{ _('two lists present categories where spending is increasing the most and decreasing the most, helping you quickly spot budget leaks or successful optimizations.') }}
+    </li>
+</ul>
+
+<h3 class="mt-4">{{ _('Historical spending overview chart') }}</h3>
+<p>
+    {{ _('At the bottom of the analytics page, a historical stacked chart summarizes spending and income trends over time.') }}
+    {{ _('The chart uses color coding (for example green for income and another color for overall balance) so that you can visually follow how your situation evolves month after month.') }}
+</p>
+
+

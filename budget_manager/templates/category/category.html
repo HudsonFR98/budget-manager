@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h4>Catégories de transaction</h4>
+<h4>{{ _('Transaction categories') }}</h4>
 <div class="row">
     <div class="col-md-7">
-        <a href="{{ url_for('category.add') }}" class="btn btn-primary"><i
-                class="fa-solid fa-plus"></i>&nbsp;Ajouter</a>
+        <a href="{{ url_for('category.add') }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i>&nbsp;{{
+            _('Add') }}</a>
         <table class="table table-striped table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Modifier</th>
-                    <th scope="col">Nom</th>
-                    <th scope="col">Couleur</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Budget calculé</th>
-                    <th scope="col">Supprimer</th>
+                    <th scope="col">{{ _('Edit') }}</th>
+                    <th scope="col">{{ _('Name') }}</th>
+                    <th scope="col">{{ _('Color') }}</th>
+                    <th scope="col">{{ _('Type') }}</th>
+                    <th scope="col">{{ _('Calculated budget') }}</th>
+                    <th scope="col">{{ _('Delete') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -102,7 +102,8 @@
             var height = 400;
             var radius = Math.min(width, height) / 2;
 
-            var data = {{ data| safe }};
+            var data = {{ data| safe
+        }};
 
     function drawDonut() {
         var styles = getComputedStyle(document.body);
@@ -134,7 +135,8 @@
             .text(function (d) { return d.data.label; });
 
         var num = {{ budget_total }};
-    var titleText = "Il restera au minimum " + (parseFloat((1 - num) * 100).toFixed(2)) + " % de vos gains pour épargne ou autres dépenses (🔒)";
+    var titleTemplate = "{{ _('At least') }} {percent}% {{ _('of your income remains for savings or other expenses (🔒)') }}";
+    var titleText = titleTemplate.replace('{percent}', parseFloat((1 - num) * 100).toFixed(2));
     var title = svg.append("foreignObject")
         .attr("x", -radius * 0.41)
         .attr("y", -radius * 0.19)
@@ -143,7 +145,7 @@
         .attr("style", "width: 40%;height:20%;text-align:center;font-size:13px;color:" + bodyColor)
         .append("xhtml:p").attr("text-anchor", "middle").attr("font-size", "20px").text(titleText);
 
-    var mainTitleText = "Budget des différentes catégories pour ce mois";
+    var mainTitleText = "{{ _('Category budgets for this month') }}";
     var maintitle = svg.append("foreignObject")
         .attr("x", -radius * 0.8)
         .attr("y", -radius * 1)
