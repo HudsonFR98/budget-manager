@@ -6,13 +6,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required
 from budget_manager.models import *
 from budget_manager.lib.database import DBSession
-from budget_manager.blueprints.analytics import (
-    _category_spending_data,
-    _median_value,
-    _last_complete_month_start,
-    _last_complete_month_end,
-    _shift_month,
-)
+from budget_manager.blueprints.analytics import _category_median_monthly_spending
 
 category = Blueprint("category", __name__)
 log = logging.getLogger(__name__)
@@ -43,14 +37,7 @@ def summary():
         "color": "#65cd64"
     })
     median_window = 6
-    last_month_start = _last_complete_month_start()
-    period_start = _shift_month(last_month_start, -(median_window - 1))
-    period_end = _last_complete_month_end()
-    spending_data = _category_spending_data(period_start, period_end)
-    category_medians = {
-        cat_id: _median_value(entry["amounts"])
-        for cat_id, entry in spending_data.items()
-    }
+    category_medians = _category_median_monthly_spending(median_window, categories)
     ctx = {
         'categories': categories,
         'data': json.dumps(data),

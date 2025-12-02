@@ -257,6 +257,28 @@ def _category_spending_data(start_date: date, end_date: date) -> dict[int, dict]
     return data
 
 
+def _category_monthly_totals(months: int, categories: list[Category]) -> dict[int, list[float]]:
+    """Aggregate monthly totals per category across a window of complete months."""
+    totals = {cat.id: [] for cat in categories}
+    if months <= 0 or not categories:
+        return totals
+    month_cursor = _shift_month(_last_complete_month_start(), -(months - 1))
+    for _ in range(months):
+        month_end = _month_end(month_cursor)
+        month_data = _category_spending_data(month_cursor, month_end)
+        for cat in categories:
+            total = month_data.get(cat.id, {"total": 0.0})["total"]
+            totals[cat.id].append(total)
+        month_cursor = _shift_month(month_cursor, 1)
+    return totals
+
+
+def _category_median_monthly_spending(months: int, categories: list[Category]) -> dict[int, float]:
+    """Return the median of monthly totals for each category."""
+    monthly_totals = _category_monthly_totals(months, categories)
+    return {cat_id: _median_value(values) for cat_id, values in monthly_totals.items()}
+
+
 def _median_value(values: list[float]) -> float:
     if not values:
         return 0.0
@@ -274,6 +296,7 @@ def _build_category_stats(months: int) -> dict:
     previous_data = _category_spending_data(previous_start, previous_end)
 
     categories = Category.query.filter(Category.type.in_([1, 2])).all()
+    category_medians = _category_median_monthly_spending(months, categories)
     stats = []
     for category in categories:
         current_entry = current_data.get(category.id, {"amounts": [], "total": 0.0})
@@ -282,7 +305,7 @@ def _build_category_stats(months: int) -> dict:
         current_total = current_entry["total"]
         previous_total = previous_entry["total"]
         growth_pct = _compute_pct_change(current_total, previous_total)
-        median_spending = _median_value(current_entry["amounts"])
+        median_spending = category_medians.get(category.id, 0.0)
         impact_score = round(growth_pct * median_spending, 2)
         stats.append({
             "category": category,

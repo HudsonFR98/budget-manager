@@ -52,15 +52,13 @@
                         &mdash;
                         {% endif %}
                     </td>
-                    <td>
-                        <a>
+                    <td><a>
                             {% if c.is_deletable %}
                             <span style="color: red"><i class="fa-solid fa-trash-can"></i></span>
                             {% else %}
                             <span style="color: grey"><i class="fa-solid fa-ban"></i></span>
                             {% endif %}
-                        </a>
-                    </td>
+                        </a></td>
                 </tr>
                 {% endfor %}
             </tbody>
