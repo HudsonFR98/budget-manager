@@ -37,8 +37,8 @@ def dashboard():
     total_variable_expenses_with_budget = sum([category.month_total_amount for category in Category.query.filter(Category.type == 2).all() if category.get_month_budget is not None])
     total_variable_expenses = sum([category.month_total_amount for category in Category.query.filter(Category.type == 2).all()])
     # Remaining amount for variable expenses (avoid Decimal/float mixing)
-    remaining_for_variable_expenses = float(total_earnings) + float(total_fixed_expenses)
-    leftover_for_savings = calculate_leftover_for_savings(now.month, now.year)
+    remaining_for_variable_expenses = round(float(total_earnings) + float(total_fixed_expenses), 2)
+    leftover_for_savings = round(calculate_leftover_for_savings(now.month, now.year), 2)
     # Safely compute consumption percentages using floats to avoid Decimal/float issues
     fixed_denominator = float(total_budget_fixed_expenses) * float(total_earnings) if total_budget_fixed_expenses and total_earnings else 0
     variable_denominator = float(total_budget_variable_expenses) * float(total_earnings) if total_budget_variable_expenses and total_earnings else 0

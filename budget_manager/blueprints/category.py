@@ -6,6 +6,13 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required
 from budget_manager.models import *
 from budget_manager.lib.database import DBSession
+from budget_manager.blueprints.analytics import (
+    _category_spending_data,
+    _median_value,
+    _last_complete_month_start,
+    _last_complete_month_end,
+    _shift_month,
+)
 
 category = Blueprint("category", __name__)
 log = logging.getLogger(__name__)
@@ -35,9 +42,22 @@ def summary():
         "value": 1-float(budget_total),
         "color": "#65cd64"
     })
-    ctx = {'categories': categories,
-           'data': json.dumps(data),
-           'budget_total': round(float(budget_total), 2)}
+    median_window = 6
+    last_month_start = _last_complete_month_start()
+    period_start = _shift_month(last_month_start, -(median_window - 1))
+    period_end = _last_complete_month_end()
+    spending_data = _category_spending_data(period_start, period_end)
+    category_medians = {
+        cat_id: _median_value(entry["amounts"])
+        for cat_id, entry in spending_data.items()
+    }
+    ctx = {
+        'categories': categories,
+        'data': json.dumps(data),
+        'budget_total': round(float(budget_total), 2),
+        'category_medians': category_medians,
+        'median_window': median_window,
+    }
     return render_template('category/category.html', **ctx)
 
 @category.route('/delete', methods=['GET', 'POST'])

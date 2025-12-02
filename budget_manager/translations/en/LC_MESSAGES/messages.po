@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-30 19:41+0100\n"
+"POT-Creation-Date: 2025-12-02 07:26+0100\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -468,6 +468,7 @@ msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:71
 #: budget_manager/templates/analytics/summary.html:103
+#: budget_manager/templates/category/category.html:18
 msgid "months"
 msgstr ""
 
@@ -510,6 +511,7 @@ msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:142
 #: budget_manager/templates/analytics/summary.html:170
+#: budget_manager/templates/category/category.html:18
 msgid "Median spending"
 msgstr ""
 
@@ -566,20 +568,20 @@ msgstr ""
 msgid "Calculated budget"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:17
+#: budget_manager/templates/category/category.html:20
 #: budget_manager/templates/saving/saving.html:48
 msgid "Delete"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:138
+#: budget_manager/templates/category/category.html:151
 msgid "At least"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:138
+#: budget_manager/templates/category/category.html:151
 msgid "of your income remains for savings or other expenses (🔒)"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:148
+#: budget_manager/templates/category/category.html:161
 msgid "Category budgets for this month"
 msgstr ""
 

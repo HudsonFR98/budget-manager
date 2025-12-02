@@ -14,6 +14,9 @@
                     <th scope="col">{{ _('Color') }}</th>
                     <th scope="col">{{ _('Type') }}</th>
                     <th scope="col">{{ _('Calculated budget') }}</th>
+                    <th scope="col">
+                        {{ _('Median spending') }} ({{ median_window }} {{ _('months') }})
+                    </th>
                     <th scope="col">{{ _('Delete') }}</th>
                 </tr>
             </thead>
@@ -41,13 +44,23 @@
                         {{ c.get_month_budget_in_euro }} €
                         {% endif %}
                     </td>
-                    <td><a>
+                    {% set median_value = category_medians.get(c.id, 0.0) %}
+                    <td>
+                        {% if c.type in [1, 2] %}
+                        {{ median_value|round(2) }} €
+                        {% else %}
+                        &mdash;
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a>
                             {% if c.is_deletable %}
                             <span style="color: red"><i class="fa-solid fa-trash-can"></i></span>
                             {% else %}
                             <span style="color: grey"><i class="fa-solid fa-ban"></i></span>
                             {% endif %}
-                        </a></td>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>

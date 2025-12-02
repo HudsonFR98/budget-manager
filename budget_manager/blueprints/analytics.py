@@ -77,16 +77,24 @@ def _month_sequence(months: int) -> list[date]:
     return sequence
 
 
+def _last_complete_month_start() -> date:
+    return _shift_month(_month_start(date.today()), -1)
+
+
+def _last_complete_month_end() -> date:
+    return _month_end(_last_complete_month_start())
+
+
 def _ensure_today_saving_snapshots():
     """Capture today's snapshot for each saving if not already stored."""
     snapshot_savings_state(date.today())
 
 
 def _monthly_leftover_values(months: int) -> list[float]:
-    reference = datetime.now()
     values = []
+    last_complete = _last_complete_month_start()
     for offset in range(months):
-        target = _shift_month(reference, -offset)
+        target = _shift_month(last_complete, -offset)
         leftover = calculate_leftover_for_savings(month=target.month, year=target.year)
         values.append(float(leftover))
     return values
@@ -145,7 +153,8 @@ def _estimate_goal_date(saving: Saving, expected_monthly: float):
         return None, 0
     remaining = goal_amount - current_amount
     months_needed = math.ceil(remaining / expected_monthly)
-    estimated_date = _shift_month(date.today(), months_needed)
+    base_date = _last_complete_month_end()
+    estimated_date = _shift_month(base_date, months_needed)
     return estimated_date, months_needed
 
 
@@ -188,8 +197,9 @@ def _compute_pct_change(current: float, reference: float) -> float:
 
 
 def _compute_balance_metrics(months: int) -> dict:
-    current_balance = float(sold())
-    past_cutoff = _month_end(_shift_month(date.today(), -months))
+    current_cutoff = _last_complete_month_end()
+    current_balance = _sum_transactions_until(current_cutoff)
+    past_cutoff = _month_end(_shift_month(current_cutoff, -months))
     past_balance = _sum_transactions_until(past_cutoff)
     change_pct = _compute_pct_change(current_balance, past_balance)
     return {
@@ -210,9 +220,9 @@ def _sum_income_between(start_date: date, end_date: date) -> float:
 
 
 def _compute_income_metrics(months: int) -> dict:
-    today = date.today()
-    current_period_start = _shift_month(_month_start(today), -(months - 1))
-    current_period_end = today
+    last_month_start = _last_complete_month_start()
+    current_period_start = _shift_month(last_month_start, -(months - 1))
+    current_period_end = _last_complete_month_end()
     previous_period_end = current_period_start - timedelta(days=1)
     previous_period_start = _shift_month(_month_start(previous_period_end), -(months - 1))
 
@@ -254,9 +264,9 @@ def _median_value(values: list[float]) -> float:
 
 
 def _build_category_stats(months: int) -> dict:
-    today = date.today()
-    current_start = _shift_month(_month_start(today), -(months - 1))
-    current_end = today
+    last_month_start = _last_complete_month_start()
+    current_start = _shift_month(last_month_start, -(months - 1))
+    current_end = _last_complete_month_end()
     previous_end = current_start - timedelta(days=1)
     previous_start = _shift_month(_month_start(previous_end), -(months - 1))
 

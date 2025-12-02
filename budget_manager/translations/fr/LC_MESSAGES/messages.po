@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-30 19:41+0100\n"
+"POT-Creation-Date: 2025-12-02 07:26+0100\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -468,6 +468,7 @@ msgstr "Reste médian sur les"
 
 #: budget_manager/templates/analytics/summary.html:71
 #: budget_manager/templates/analytics/summary.html:103
+#: budget_manager/templates/category/category.html:18
 msgid "months"
 msgstr "mois"
 
@@ -512,6 +513,7 @@ msgstr "Catégories en plus forte hausse"
 
 #: budget_manager/templates/analytics/summary.html:142
 #: budget_manager/templates/analytics/summary.html:170
+#: budget_manager/templates/category/category.html:18
 msgid "Median spending"
 msgstr "Dépense médiane"
 
@@ -568,20 +570,20 @@ msgstr "Type"
 msgid "Calculated budget"
 msgstr "Budget calculé"
 
-#: budget_manager/templates/category/category.html:17
+#: budget_manager/templates/category/category.html:20
 #: budget_manager/templates/saving/saving.html:48
 msgid "Delete"
 msgstr "Supprimer"
 
-#: budget_manager/templates/category/category.html:138
+#: budget_manager/templates/category/category.html:151
 msgid "At least"
 msgstr "Au moins"
 
-#: budget_manager/templates/category/category.html:138
+#: budget_manager/templates/category/category.html:151
 msgid "of your income remains for savings or other expenses (🔒)"
-msgstr "de vos revenus restent disponibles pour l'épargne ou d'autres dépenses (🔒)"
+msgstr "de vos revenus restent disponibles pour l épargne (🔒)"
 
-#: budget_manager/templates/category/category.html:148
+#: budget_manager/templates/category/category.html:161
 msgid "Category budgets for this month"
 msgstr "Budgets par catégorie pour ce mois"
 
@@ -1926,8 +1928,8 @@ msgid ""
 "The Transactions module is the central place where you record every "
 "income and expense of the month."
 msgstr ""
-"Le module Transactions est l'endroit central où vous enregistrez tous les "
-"revenus et toutes les dépenses du mois."
+"Le module Transactions est l'endroit central où vous enregistrez tous les"
+" revenus et toutes les dépenses du mois."
 
 #: budget_manager/templates/doc/_transactions.html:6
 msgid "Transactions dashboard"
@@ -1951,9 +1953,9 @@ msgid ""
 " managed in this module; green for a positive balance, red for a negative"
 " one."
 msgstr ""
-"le badge coloré en haut affiche le solde global de toutes les transactions "
-"gérées dans ce module ; vert pour un solde positif, rouge pour un solde "
-"négatif."
+"le badge coloré en haut affiche le solde global de toutes les "
+"transactions gérées dans ce module ; vert pour un solde positif, rouge "
+"pour un solde négatif."
 
 #: budget_manager/templates/doc/_transactions.html:16
 msgid "Transactions table"
@@ -2004,9 +2006,9 @@ msgid ""
 "The form is intentionally simple but strongly validated to keep your data"
 " consistent."
 msgstr ""
-"Utilisez le bouton « Ajouter » sur la page des transactions pour créer une "
-"nouvelle opération. Le formulaire est volontairement simple mais fortement "
-"validé afin de garder vos données cohérentes."
+"Utilisez le bouton « Ajouter » sur la page des transactions pour créer "
+"une nouvelle opération. Le formulaire est volontairement simple mais "
+"fortement validé afin de garder vos données cohérentes."
 
 #: budget_manager/templates/doc/_transactions.html:35
 msgid "Category"
@@ -2018,9 +2020,9 @@ msgid ""
 "whether the transaction is treated as an income, a fixed expense or a "
 "variable expense:"
 msgstr ""
-"choisissez l'une des catégories configurées. Le type de catégorie détermine "
-"si la transaction est traitée comme un revenu, une dépense fixe ou une "
-"dépense variable :"
+"choisissez l'une des catégories configurées. Le type de catégorie "
+"détermine si la transaction est traitée comme un revenu, une dépense fixe"
+" ou une dépense variable :"
 
 #: budget_manager/templates/doc/_transactions.html:38
 msgid "Type 0 → INCOMES (earnings)"
@@ -2074,8 +2076,8 @@ msgid ""
 "positive values are rejected to avoid mixing signs."
 msgstr ""
 "pour les catégories de dépenses (types 1 et 2), le montant DOIT être "
-"négatif ; les valeurs positives sont refusées pour éviter de mélanger les "
-"signes."
+"négatif ; les valeurs positives sont refusées pour éviter de mélanger les"
+" signes."
 
 #: budget_manager/templates/doc/_transactions.html:57
 #: budget_manager/templates/doc/index.html:138
@@ -2090,8 +2092,8 @@ msgid ""
 " supermarket”). This text appears in the transaction table and helps when"
 " you review your history."
 msgstr ""
-"courte description en texte libre (par exemple « Salaire avril » ou "
-"« Courses – supermarché »). Ce texte apparaît dans le tableau des "
+"courte description en texte libre (par exemple « Salaire avril » ou « "
+"Courses – supermarché »). Ce texte apparaît dans le tableau des "
 "transactions et vous aide lors de la relecture de votre historique."
 
 #: budget_manager/templates/doc/_transactions.html:61
@@ -2113,10 +2115,10 @@ msgid ""
 "added to the special “Reste” saving or to the first saving if “Reste” "
 "does not exist."
 msgstr ""
-"pour un REVENU : si une épargne est sélectionnée, le montant est ajouté à "
-"cette épargne (plafonné à son objectif si un objectif est défini) ; sinon "
-"le montant est ajouté à l'épargne spéciale « Reste » ou à la première "
-"épargne si « Reste » n'existe pas."
+"pour un REVENU : si une épargne est sélectionnée, le montant est ajouté à"
+" cette épargne (plafonné à son objectif si un objectif est défini) ; "
+"sinon le montant est ajouté à l'épargne spéciale « Reste » ou à la "
+"première épargne si « Reste » n'existe pas."
 
 #: budget_manager/templates/doc/_transactions.html:68
 msgid ""
@@ -2134,8 +2136,8 @@ msgid ""
 "always stay consistent with your real earnings."
 msgstr ""
 "Lors de l'enregistrement de la transaction, le système recalcule "
-"également les allocations de budget fixe chaque fois qu'un revenu change, "
-"de sorte que vos budgets de DÉPENSES FIXES restent cohérents avec vos "
+"également les allocations de budget fixe chaque fois qu'un revenu change,"
+" de sorte que vos budgets de DÉPENSES FIXES restent cohérents avec vos "
 "revenus réels."
 
 #: budget_manager/templates/doc/_transactions.html:77
@@ -2177,9 +2179,9 @@ msgid ""
 "validations as for creation are applied, and the savings are updated "
 "according to the new configuration."
 msgstr ""
-"la catégorie, la date, le montant et l'épargne mis à jour sont enregistrés ; "
-"les mêmes validations qu'à la création sont appliquées et les épargnes sont "
-"mises à jour en fonction de la nouvelle configuration."
+"la catégorie, la date, le montant et l'épargne mis à jour sont "
+"enregistrés ; les mêmes validations qu'à la création sont appliquées et "
+"les épargnes sont mises à jour en fonction de la nouvelle configuration."
 
 #: budget_manager/templates/doc/_transactions.html:91
 msgid "Budget readjustment"
@@ -2190,9 +2192,9 @@ msgid ""
 "if the edited transaction is an income, fixed budgets are recalculated so"
 " that their percentage still reflects the current level of earnings."
 msgstr ""
-"si la transaction modifiée est un revenu, les budgets fixes sont recalculés "
-"de façon à ce que leur pourcentage reflète toujours le niveau actuel de "
-"revenus."
+"si la transaction modifiée est un revenu, les budgets fixes sont "
+"recalculés de façon à ce que leur pourcentage reflète toujours le niveau "
+"actuel de revenus."
 
 #: budget_manager/templates/doc/_transactions.html:96
 msgid "Deleting a transaction"
@@ -2204,8 +2206,8 @@ msgid ""
 "the system keeps your savings and budgets coherent by undoing the "
 "financial effect of the deleted operation."
 msgstr ""
-"Supprimer une transaction ne revient pas simplement à retirer une ligne du "
-"tableau : le système préserve la cohérence de vos épargnes et de vos "
+"Supprimer une transaction ne revient pas simplement à retirer une ligne "
+"du tableau : le système préserve la cohérence de vos épargnes et de vos "
 "budgets en annulant l'effet financier de l'opération supprimée."
 
 #: budget_manager/templates/doc/_transactions.html:102
@@ -2279,7 +2281,7 @@ msgstr "Déploiement"
 
 #: budget_manager/templates/doc/index.html:132
 msgid "Welcome to the Budget Manager Documentation"
-msgstr "Bienvenue dans la documentation de Budget Manager"
+msgstr "Bienvenue dans la documentation de Gestion de mon budget"
 
 #: budget_manager/templates/doc/index.html:134
 msgid ""
@@ -2287,8 +2289,8 @@ msgid ""
 "application, its\n"
 "                        features, and how to use it."
 msgstr ""
-"Cette documentation fournit des informations sur l'application Fair3r "
-"Custom Overlay, ses fonctionnalités et son utilisateur."
+"Cette documentation fournit des informations sur l'application Gestion de"
+" mon budget, ses fonctionnalités et son utilisateur."
 
 #: budget_manager/templates/doc/index.html:139
 msgid ""
@@ -2614,6 +2616,6 @@ msgstr "Aucun ratio défini pour le moment."
 #~ " (🔒)"
 #~ msgstr ""
 #~ "Au moins {percent}% de vos revenus "
-#~ "restent disponibles pour l'épargne ou "
-#~ "d'autres dépenses (🔒)"
+#~ "restent disponibles pour l épargne ou "
+#~ "(🔒)"
 

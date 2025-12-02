@@ -18,7 +18,7 @@ class StackedSpendingChart():
         except (TypeError, ValueError):
             months_count = 12
         self.months = max(1, min(24, months_count))
-
+        
         # Get width and height parameters from the request
         self.width = int(request.args.get('width', 1700))
         self.height = int(request.args.get('height', 800))
