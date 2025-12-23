@@ -127,7 +127,8 @@ def _build_saving_evolution_series(saving: Saving, months: int = 12) -> list[dic
         SavingHistory.date < start_date
     ).order_by(SavingHistory.date.desc()).first()
 
-    last_amount = float(baseline_entry.amount) if baseline_entry else float(saving.amount)
+    # If we have history before the window, use its last known amount; otherwise start from zero
+    last_amount = float(baseline_entry.amount) if baseline_entry else 0.0
     idx = 0
     series = []
     for dt in sequence:
@@ -139,6 +140,7 @@ def _build_saving_evolution_series(saving: Saving, months: int = 12) -> list[dic
             "label": dt.strftime("%b %Y"),
             "value": round(last_amount, 2)
         })
+    #raise Exception(f"series: {series}")
     return series
 
 

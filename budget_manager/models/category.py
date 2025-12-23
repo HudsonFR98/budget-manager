@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, Table, ForeignKey, extract
+from sqlalchemy import Column, Integer, String, Table, ForeignKey, extract, or_
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
 # Import Transaction here to avoid circular imports
@@ -63,7 +63,8 @@ class Category(Base):
         transactions = Transaction.query.filter(
             extract('month', Transaction.date) == current_month,
             extract('year', Transaction.date) == current_year,
-            Transaction.category == self
+            Transaction.category == self,
+            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
         ).all()
         for t in transactions:
             total_amount += t.amount
@@ -75,7 +76,8 @@ class Category(Base):
         transactions = Transaction.query.filter(
             extract('month', Transaction.date) == month,
             extract('year', Transaction.date) == year,
-            Transaction.category == self
+            Transaction.category == self,
+            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
         ).all()
         for t in transactions:
             total_amount += t.amount

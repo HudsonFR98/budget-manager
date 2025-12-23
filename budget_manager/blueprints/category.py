@@ -40,7 +40,7 @@ def summary():
     category_medians = _category_median_monthly_spending(median_window, categories)
     ctx = {
         'categories': categories,
-        'data': json.dumps(data),
+           'data': json.dumps(data),
         'budget_total': round(float(budget_total), 2),
         'category_medians': category_medians,
         'median_window': median_window,
