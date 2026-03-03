@@ -54,6 +54,15 @@ def snapshot_savings_state(snapshot_date=None):
     return len(new_entries)
 
 
+def _get_previous_month_year(base_date=None):
+    from datetime import datetime
+
+    now = base_date or datetime.now()
+    if now.month == 1:
+        return 12, now.year - 1
+    return now.month - 1, now.year
+
+
 def _sum_positive_ratios(savings):
     return sum(max(float(s.ratio or 0.0), 0.0) for s in savings)
 
@@ -166,11 +175,9 @@ def summary():
             "color": s.color if s.color else SAVINGS_COLORS[idx % len(SAVINGS_COLORS)]
         })
     
-    # Calculate current month's "Reste pour épargner" for display
-    from datetime import datetime
-    current_month = datetime.now().month
-    current_year = datetime.now().year
-    leftover_for_savings = calculate_leftover_for_savings(current_month, current_year)
+    # Calculate previous month's "Reste pour épargner" for display
+    prev_month, prev_year = _get_previous_month_year()
+    leftover_for_savings = calculate_leftover_for_savings(prev_month, prev_year)
     
     ctx = {
         'savings_with_percent': savings_with_percent,
@@ -351,10 +358,8 @@ def delete():
 def distribute_monthly():
     """Manually trigger monthly savings distribution"""
     try:
-        # When manually triggered, use current month (not previous month)
-        from datetime import datetime
-        now = datetime.now()
-        result = distribute_monthly_savings(month=now.month, year=now.year)
+        prev_month, prev_year = _get_previous_month_year()
+        result = distribute_monthly_savings(month=prev_month, year=prev_year)
         return jsonify({
             'message': result,
             'status': 'success'
