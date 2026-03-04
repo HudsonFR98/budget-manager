@@ -6,8 +6,8 @@
   remote_user: root
   become: yes
   vars:
-    action: "{{ action | default('deploy') }}"
-    context: "{{ context | default('demo') }}"
+    deploy_action: "{{ deploy_action }}"
+    context: "{{ context }}"
     docker_image: "{{ docker_image }}"
     app_name: "budman"  # Short name for budget_manager
     container_name: "{{ app_name }}_app_{{ context }}"
