@@ -155,6 +155,7 @@ class Config(object):
     # Database (same building blocks in all contexts; DB host differs via DB_IP)
     DB_URI = build_db_uri()
     SQLALCHEMY_DATABASE_URI = DB_URI
+    APP_NAME = "Budget Manager"
 
     # (Legacy) Email settings kept for backward compatibility, no longer used for errors
     ERROR_EMAIL_FROM = ''
