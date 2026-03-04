@@ -33,7 +33,7 @@ class TestDatabaseBackup:
         
         expected = {
             'host': 'localhost',
-            'port': '5434',
+            'port': '5434', 
             'user': 'user',
             'password': 'pass',
             'database': 'database'

@@ -8,6 +8,7 @@
       - ca-certificates
       - curl
       - gnupg-agent
+      - openssl
       - software-properties-common
     state: present
     update_cache: yes
@@ -25,7 +26,7 @@
 
 - name: Add Docker repository
   apt_repository:
-    repo: deb [arch=amd64] https://download.docker.com/linux/debian bullseye stable
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian bookworm stable
     state: present
 
 - name: Install Docker

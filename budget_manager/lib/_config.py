@@ -99,6 +99,31 @@ def setup_logging():
 # Set up logging when module is imported
 setup_logging()
 
+def require_env(name: str) -> str:
+    """
+    Return required env var value
+    Raises a clear error if missing/empty.
+    """
+    value = os.environ.get(name)
+    if value is None or str(value).strip() == "":
+        raise RuntimeError(f"La variable d'environnement {name} n'est pas renseignée")
+    return value
+
+
+def build_db_uri() -> str:
+    """
+    Build SQLAlchemy DB URI from environment variables
+    Required:
+      - DB_IP
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - BUDMAN_DB_NAME
+    """
+    host = require_env("DB_IP")
+    user = require_env("POSTGRES_USER")
+    password = require_env("POSTGRES_PASSWORD")
+    db_name = require_env("BUDMAN_DB_NAME")
+    return f"postgresql://{user}:{password}@{host}/{db_name}"
 
 class Config(object):
     """
@@ -114,12 +139,14 @@ class Config(object):
     EMAIL_DEV = 'natha.debanne@gmail.com'
     SETTINGS = None
     STATIC_URI = '/static'
-    SECRET_KEY = 'fr2445zzjknc5eeee85s6w###hjciksd'
-    APP_NAME = 'Budget Manager'
+    SECRET_KEY = require_env("SECRET_KEY")
 
     # Telegram notification settings
-    TELEGRAM_BOT_TOKEN = "7237344537:AAF2dpUWEChJZz9q2X36smwX-5-7xsk51gw"
-    TELEGRAM_CHAT_ID = "6440591299"
+    TELEGRAM_BOT_TOKEN = require_env("TELEGRAM_BOT_TOKEN")
+    TELEGRAM_CHAT_ID = require_env("TELEGRAM_CHAT_ID")
+    # Database (same building blocks in all contexts; DB host differs via DB_IP)
+    DB_URI = build_db_uri()
+    SQLALCHEMY_DATABASE_URI = DB_URI
 
     # (Legacy) Email settings kept for backward compatibility, no longer used for errors
     ERROR_EMAIL_FROM = ''
@@ -143,18 +170,10 @@ class Config(object):
         'fr': 'Français'
     }
 
-    # docs paths
-    DOC_DIR = '/opt/budget_manager_docs'
-
-    # Base URL for task execution (used by test_simple_route task)
-    BASE_URL = 'http://localhost:8080'
-
 
 class ProdConfig(Config):
 
     CONTEXT = 'prod'
-    DB_URI = "postgresql://web:budman2025_x@budman_db_prod/budman"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:budman2025_x@budman_db_prod/budman"
     LOG_LEVEL = logging.ERROR
     
     # Session settings for production (HTTP environment)
@@ -169,8 +188,6 @@ class DevConfig(Config):
     DEBUG = True
     TESTING = False
     LOG_LEVEL = logging.DEBUG
-    DB_URI = "postgresql://web:budman2025_x@budman_db_dev/budman"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:budman2025_x@budman_db_dev/budman"
     PRESERVE_CONTEXT_ON_EXCEPTION = False  # Helps with better error reporting
     
     # Enable Flask's debug toolbar
@@ -185,8 +202,6 @@ class DevConfig(Config):
 class DemoConfig(Config):
 
     CONTEXT = 'demo'
-    DB_URI = "postgresql://web:budman2025_x@budman_db_demo/budman"
-    SQLALCHEMY_DATABASE_URI = "postgresql://web:budman2025_x@budman_db_demo/budman"
     LOG_LEVEL = logging.ERROR
     
     # Session settings for demo (HTTP environment)
@@ -200,8 +215,6 @@ class TestConfig(Config):
     CONTEXT = 'test'
     TESTING = True
     LOG_LEVEL = logging.ERROR
-    DB_URI = "postgresql://web:budman2025_x@budman_db_test/budman"
-    SQLALCHEMY_DATABASE_URI = DB_URI
     SERVER_NAME = 'localhost'
     
     # Session settings for test (HTTP environment)
@@ -210,14 +223,9 @@ class TestConfig(Config):
     SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
 
 
-if 'BUDGET_MANAGER_CONTEXT' not in os.environ:
-    raise Exception("La variable d'environnement BUDGET_MANAGER_CONTEXT n'est pas renseignée")
 
-# Updated validation: only dev environment requires DB_IP (external database)
-# test, demo, and prod environments use local Docker container databases
-if os.environ['BUDGET_MANAGER_CONTEXT'] == 'dev' and 'DB_IP' not in os.environ:
-    raise Exception("La variable d'environnement DB_IP n'est pas renseignée pour l'environnement de développement")
-
+require_env("BUDGET_MANAGER_CONTEXT")
+require_env("DB_IP")
 
 _envs = dict(
     test=TestConfig,
