@@ -146,11 +146,11 @@ class Config(object):
     TELEGRAM_CHAT_ID = require_env("TELEGRAM_CHAT_ID")
 
     # Initial admin bootstrap user (used only if no users exist yet)
-    ADMIN_USER_USERNAME = os.getenv("ADMIN_USER_USERNAME", "admin")
-    ADMIN_USER_PASSWORD = os.getenv("ADMIN_USER_PASSWORD", "admin")
-    ADMIN_USER_FIRST_NAME = os.getenv("ADMIN_USER_FIRST_NAME", "Admin")
-    ADMIN_USER_LAST_NAME = os.getenv("ADMIN_USER_LAST_NAME", "User")
-    ADMIN_USER_EMAIL = os.getenv("ADMIN_USER_EMAIL", "admin@example.com")
+    ADMIN_USER_USERNAME = require_env("ADMIN_USER_USERNAME")
+    ADMIN_USER_PASSWORD = require_env("ADMIN_USER_PASSWORD")
+    ADMIN_USER_FIRST_NAME = require_env("ADMIN_USER_FIRST_NAME")
+    ADMIN_USER_LAST_NAME = require_env("ADMIN_USER_LAST_NAME")
+    ADMIN_USER_EMAIL = require_env("ADMIN_USER_EMAIL")
 
     # Database (same building blocks in all contexts; DB host differs via DB_IP)
     DB_URI = build_db_uri()
