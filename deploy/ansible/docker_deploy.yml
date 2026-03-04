@@ -3,7 +3,7 @@
 
 - name: Deploy budget_manager using Docker
   hosts: "{{ target_host }}"
-  remote_user: nath
+  remote_user: root
   become: yes
   vars:
     action: "{{ action | default('deploy') }}"
