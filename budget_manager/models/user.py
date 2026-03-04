@@ -190,35 +190,53 @@ class User(Base, UserMixin):
 
     @classmethod
     def create_admin_if_not_exists(cls):
-        """Create an admin user if no users exist"""
-        if cls.query.count() == 0:
-            admin_data = cls._get_initial_admin_data()
+        """Ensure admin user exists and matches configured values."""
+        admin_data = cls._get_initial_admin_data()
 
-            # Create admin role if it doesn't exist
-            admin_role = Role.query.filter_by(name='admin').first()
-            if not admin_role:
-                admin_role = Role(
-                    name='admin',
-                    description='Administrator with all permissions',
-                    permissions=['admin', 'read', 'write', 'delete']
-                )
-                DBSession.add(admin_role)
-            
-            # Create admin user
+        # Create admin role if it doesn't exist
+        admin_role = Role.query.filter_by(name='admin').first()
+        if not admin_role:
+            admin_role = Role(
+                name='admin',
+                description='Administrator with all permissions',
+                permissions=['admin', 'read', 'write', 'delete']
+            )
+            DBSession.add(admin_role)
+
+        # Technical admin account is expected to be user id 1
+        admin_user = cls.query.get(1)
+        
+        if not admin_user:
             admin_user = cls(
                 ide=admin_data['username'],
                 pwd=admin_data['password'],  # Will be hashed by the validator
                 first_name=admin_data['first_name'],
                 last_name=admin_data['last_name'],
                 email=admin_data['email'],
-                active=True
+                active=True,
+                has_left=False
             )
             admin_user.add_role(admin_role)
             DBSession.add(admin_user)
             DBSession.commit()
             log.info("Created admin user with username '%s'", admin_data['username'])
             return admin_user
-        return None
+        else:
+            # Update existing admin user from config
+            admin_user.ide = admin_data['username']
+            admin_user.first_name = admin_data['first_name']
+            admin_user.last_name = admin_data['last_name']
+            admin_user.email = admin_data['email']
+            admin_user.active = True
+            admin_user.has_left = False
+            if admin_role not in admin_user.roles:
+                admin_user.add_role(admin_role)
+            admin_user.pwd = admin_data['password']  # Will be hashed by the validator
+
+            DBSession.commit()
+            log.info("Updated admin user '%s' from configuration", admin_data['username'])
+
+        return admin_user
 
 # Add query property to models
 User.query = DBSession.query_property()
