@@ -175,11 +175,11 @@ class User(Base, UserMixin):
     @classmethod
     def _get_initial_admin_data(cls) -> dict:
         """Load initial admin values from application config with safe defaults."""
-        username = (getattr(config, 'ADMIN_USER_USERNAME', 'admin') or 'admin').strip()
-        password = getattr(config, 'ADMIN_USER_PASSWORD', 'admin') or 'admin'
-        first_name = (getattr(config, 'ADMIN_USER_FIRST_NAME', 'Admin') or 'Admin').strip()
-        last_name = (getattr(config, 'ADMIN_USER_LAST_NAME', 'User') or 'User').strip()
-        email = (getattr(config, 'ADMIN_USER_EMAIL', 'admin@example.com') or 'admin@example.com').strip()
+        username = config.ADMIN_USER_USERNAME
+        password = config.ADMIN_USER_PASSWORD
+        first_name = config.ADMIN_USER_FIRST_NAME
+        last_name = config.ADMIN_USER_LAST_NAME
+        email = config.ADMIN_USER_EMAIL
         return {
             'username': username,
             'password': password,
