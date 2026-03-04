@@ -144,6 +144,14 @@ class Config(object):
     # Telegram notification settings
     TELEGRAM_BOT_TOKEN = require_env("TELEGRAM_BOT_TOKEN")
     TELEGRAM_CHAT_ID = require_env("TELEGRAM_CHAT_ID")
+
+    # Initial admin bootstrap user (used only if no users exist yet)
+    ADMIN_USER_USERNAME = os.getenv("ADMIN_USER_USERNAME", "admin")
+    ADMIN_USER_PASSWORD = os.getenv("ADMIN_USER_PASSWORD", "admin")
+    ADMIN_USER_FIRST_NAME = os.getenv("ADMIN_USER_FIRST_NAME", "Admin")
+    ADMIN_USER_LAST_NAME = os.getenv("ADMIN_USER_LAST_NAME", "User")
+    ADMIN_USER_EMAIL = os.getenv("ADMIN_USER_EMAIL", "admin@example.com")
+
     # Database (same building blocks in all contexts; DB host differs via DB_IP)
     DB_URI = build_db_uri()
     SQLALCHEMY_DATABASE_URI = DB_URI
