@@ -72,6 +72,7 @@ build_docker:
 deploy_prod:
   stage: prod
   <<: *deploy_via_ansible
+  # admin_user variables do have default values in case they are not set (except for the password)
   variables:
     SSH_HOST: budman.nath-server.home
     BUILD_DATE: $CI_PIPELINE_CREATED_AT
