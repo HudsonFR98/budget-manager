@@ -20,13 +20,14 @@ class Saving(Base):
     goal = Column(Numeric(precision=8, scale=2), nullable=True)  # goal amount for this saving
     ratio = Column(Numeric(precision=8, scale=2), nullable=True)
 
-    def __init__(self, name=None, note=None, amount=None, icon=None, color=None, goal=None):
+    def __init__(self, name=None, note=None, amount=None, icon=None, color=None, goal=None, ratio=None):
         self.name = name
         self.note = note
         self.amount = amount
         self.icon = icon
         self.color = color
         self.goal = goal
+        self.ratio = ratio
 
     def __repr__(self):
         return f'<Saving {self.id}: {self.name} - {self.amount}>'
