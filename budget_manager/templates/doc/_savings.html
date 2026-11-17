@@ -18,7 +18,7 @@
     </li>
     <li>
         <strong>{{ _('Actions on a saving') }}</strong> –
-        {{ _('you can edit a saving to change its configuration or delete it entirely. Deletion is protected by a confirmation dialog and will remove the saving but not its historical snapshots.') }}
+        {{ _('you can edit a saving to change its configuration or delete it entirely. Deletion is protected by a confirmation dialog and will remove the saving but not its historical snapshots. The Base saving is created with the database and cannot be deleted or renamed.') }}
     </li>
 </ul>
 
@@ -42,7 +42,7 @@
     <li>
         <strong>{{ _('Ratio for leftover distribution') }}</strong> –
         {{ _('a number between 0 and 1 that expresses how much of the monthly “leftover for savings” should go to this saving relative to others.') }}
-        {{ _('Ratios are automatically normalized across all savings so that their sum remains equal to 1, with special handling for the “Reste” saving, which acts as a buffer.') }}
+        {{ _('Ratios are automatically normalized across all savings so that their sum remains equal to 1, with special handling for the “Base” saving, which acts as a buffer.') }}
     </li>
 </ul>
 <p>
@@ -56,11 +56,11 @@
 <ul>
     <li>
         <strong>{{ _('Leftover for savings') }}</strong> –
-        {{ _('a dedicated function computes, for any month and year, how much income remains once fixed and variable expenses linked to the “Reste” saving (or no saving) are taken into account.') }}
+        {{ _('a dedicated function computes, for any month and year, how much income remains once fixed and variable expenses linked to the “Base” saving (or no saving) are taken into account.') }}
     </li>
     <li>
         <strong>{{ _('Source of distribution') }}</strong> –
-        {{ _('the distribution process takes the leftover amount from the “Reste” saving, ensuring that this buffer decreases by exactly what is being distributed (or by the available amount if it is smaller).') }}
+        {{ _('the distribution process takes the leftover amount from the “Base” saving, ensuring that this buffer decreases by exactly what is being distributed (or by the available amount if it is smaller).') }}
     </li>
     <li>
         <strong>{{ _('Distribution logic') }}</strong> –
@@ -81,7 +81,7 @@
 <ul>
     <li>
         <strong>{{ _('Primary adjustment') }}</strong> –
-        {{ _('the first pass tries to absorb the difference inside the “Reste” saving when it exists, since it is the natural buffer for discrepancies.') }}
+        {{ _('the first pass tries to absorb the difference inside the “Base” saving when it exists, since it is the natural buffer for discrepancies.') }}
     </li>
     <li>
         <strong>{{ _('Handling negative amounts') }}</strong> –

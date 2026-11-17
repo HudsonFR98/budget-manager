@@ -4,7 +4,10 @@ from sqlalchemy import extract
 from sqlalchemy import or_, and_
 from budget_manager.models import *
 from budget_manager.lib.database import DBSession
-from typing import List
+from typing import List, Optional
+
+DEMO_SALARY_NOTE = "Salaire"
+DEMO_SALARY_CATEGORY = "Salaire"
 
 TRIM_MONTHS = {1: [1,2,3], 2: [4,5,6], 3:[7,8,9], 4:[10,11,12]}
 
@@ -34,6 +37,35 @@ def get_year_transac(year, cat_names, paypal=False) -> List[Transaction]:
         q = q.filter((Transaction.paypal == False) | (Transaction.paypal == None))
 
     return q.all()
+
+def has_salary_transaction(year: int, month: int) -> bool:
+    """True when the demo salary row for this month already exists."""
+    return (
+        Transaction.query.join(Transaction.category)
+        .filter(
+            extract("year", Transaction.date) == year,
+            extract("month", Transaction.date) == month,
+            Transaction.note == DEMO_SALARY_NOTE,
+            Category.name == DEMO_SALARY_CATEGORY,
+        )
+        .first()
+        is not None
+    )
+
+
+def latest_salary_transaction_date() -> Optional[date]:
+    """Most recent demo salary transaction date, if any."""
+    row = (
+        Transaction.query.join(Transaction.category)
+        .filter(
+            Transaction.note == DEMO_SALARY_NOTE,
+            Category.name == DEMO_SALARY_CATEGORY,
+        )
+        .order_by(Transaction.date.desc())
+        .first()
+    )
+    return row.date if row else None
+
 
 def get_month_transac(month, year, cat_names=None, paypal=False) -> List[Transaction]:
     """ extract all transactions from specific month, year and categories """

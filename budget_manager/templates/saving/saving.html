@@ -14,16 +14,20 @@
 <div class="row">
     <div class="col-md-7">
         <div class="mb-3">
-            <a href="{{ url_for('saving.add') }}" class="btn btn-primary">
+            <a href="{{ url_for('saving.add') }}" class="btn btn-primary mutate-control{% if not can_edit_data %} disabled{% endif %}"
+                {% if not can_edit_data %}aria-disabled="true" tabindex="-1"{% endif %}>
                 <i class="fa-solid fa-plus"></i>&nbsp;{{ _('Add Saving') }}
             </a>
-            <button type="button" class="btn btn-secondary ms-2" id="adjust-amounts-btn">
+            <button type="button" class="btn btn-secondary ms-2 mutate-control" id="adjust-amounts-btn"
+                {% if not can_edit_data %}disabled{% endif %}>
                 <i class="fa-solid fa-balance-scale"></i>&nbsp;{{ _('Adjust Amounts') }}
             </button>
-            <button type="button" class="btn btn-info ms-2" id="distribute-monthly-btn">
+            <button type="button" class="btn btn-info ms-2 mutate-control" id="distribute-monthly-btn"
+                {% if not can_edit_data %}disabled{% endif %}>
                 <i class="fa-solid fa-calendar-check"></i>&nbsp;{{ _('Distribute Monthly') }}
             </button>
-            <button type="button" class="btn btn-outline-info ms-2" id="snapshot-btn">
+            <button type="button" class="btn btn-outline-info ms-2 mutate-control" id="snapshot-btn"
+                {% if not can_edit_data %}disabled{% endif %}>
                 <i class="fa-solid fa-camera"></i>&nbsp;{{ _('Snapshot') }}
             </button>
         </div>
@@ -41,13 +45,18 @@
                             </h5>
                             <div class="btn-group" role="group">
                                 <a href="{{ url_for('saving.edit', id=saving.id) }}"
-                                    class="btn btn-sm btn-outline-primary" title="{{ _('Edit') }}">
+                                    class="btn btn-sm btn-outline-primary mutate-control{% if not can_edit_data %} disabled{% endif %}"
+                                    title="{{ _('Edit') }}"
+                                    {% if not can_edit_data %}aria-disabled="true" tabindex="-1"{% endif %}>
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <button type="button" class="btn btn-sm btn-outline-danger delete-saving"
-                                    data-id="{{ saving.id }}" title="{{ _('Delete') }}">
+                                {% if saving.name != 'Base' %}
+                                <button type="button" class="btn btn-sm btn-outline-danger delete-saving mutate-control"
+                                    data-id="{{ saving.id }}" title="{{ _('Delete') }}"
+                                    {% if not can_edit_data %}disabled{% endif %}>
                                     <i class="fa-solid fa-trash-can"></i>
                                 </button>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="mb-2">
@@ -112,6 +121,9 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        if (document.body.classList.contains('reviewer-readonly')) {
+            return;
+        }
         var deleteButtons = document.querySelectorAll('.delete-saving');
         deleteButtons.forEach(btn => {
             btn.addEventListener('click', function () {
@@ -164,9 +176,9 @@
             distributeBtn.addEventListener('click', function () {
                 {% if leftover_for_savings %}
                 var resteAmount = {{ leftover_for_savings }};
-            var message = '{{ _("This will distribute the remaining monthly savings (Leftover: ") }}' + resteAmount.toFixed(2) + ' €) {{ _("from Reste saving among all savings. Continue?") }}';
+            var message = '{{ _("This will distribute the remaining monthly savings (Leftover: ") }}' + resteAmount.toFixed(2) + ' €) {{ _("from Base saving among all savings. Continue?") }}';
             {% else %}
-            var message = '{{ _("This will distribute the remaining monthly savings from Reste saving among all savings. Continue?") }}';
+            var message = '{{ _("This will distribute the remaining monthly savings from Base saving among all savings. Continue?") }}';
             {% endif %}
             if (confirm(message)) {
                 var xhr = new XMLHttpRequest();

@@ -12,7 +12,6 @@
     - /var/log/budget_manager
     - /var/backups/budget_manager
     - /opt/budget_manager_data
-    - /opt/budget_manager_data/ssl
     - /opt/budget_manager_data/postgresql/15/main
     - /var/log/nginx
     - /etc/letsencrypt

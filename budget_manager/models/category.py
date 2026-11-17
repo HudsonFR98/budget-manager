@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
 # Import Transaction here to avoid circular imports
 from .transaction import Transaction
+from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import Base, DBSession
 
 log = logging.getLogger(__name__)
@@ -64,7 +65,7 @@ class Category(Base):
             extract('month', Transaction.date) == current_month,
             extract('year', Transaction.date) == current_year,
             Transaction.category == self,
-            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+            or_(Transaction.saving_id == None, Transaction.saving.has(name=SYSTEM_SAVING_NAME))
         ).all()
         for t in transactions:
             total_amount += t.amount
@@ -77,7 +78,7 @@ class Category(Base):
             extract('month', Transaction.date) == month,
             extract('year', Transaction.date) == year,
             Transaction.category == self,
-            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+            or_(Transaction.saving_id == None, Transaction.saving.has(name=SYSTEM_SAVING_NAME))
         ).all()
         for t in transactions:
             total_amount += t.amount

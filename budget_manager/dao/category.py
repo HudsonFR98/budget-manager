@@ -5,6 +5,11 @@ from budget_manager.models import *
 from budget_manager.lib.database import DBSession
 from typing import List
 
+def get_category_by_name(name: str) -> Category | None:
+    """Return a category by exact name, or None."""
+    return Category.query.filter(Category.name == name).first()
+
+
 def get_spending_categories() -> List[Category]:
     """ get all categories of spending/expenses type """
 

@@ -59,6 +59,12 @@ run_as_web "cd /opt/budget_manager && \
     /opt/env3/budget_manager/bin/pip install -r deploy/requirements.txt && \
     /opt/env3/budget_manager/bin/alembic upgrade head"
 
+if [ "$BUDGET_MANAGER_CONTEXT" = "validation" ]; then
+    echo "Loading validation demo dataset..."
+    PGPASSWORD="${DB_PASSWORD}" psql -h "${DB_HOST}" -U "${DB_USER}" -d "${DB_NAME}" \
+        -v ON_ERROR_STOP=1 \
+        -f /opt/budget_manager/budget_manager/bin/full_demo.sql
+fi
 
 # Determine which server to use based on context
 if [ "$BUDGET_MANAGER_CONTEXT" = "dev" ]; then
@@ -67,6 +73,6 @@ if [ "$BUDGET_MANAGER_CONTEXT" = "dev" ]; then
     exec /opt/env3/budget_manager/bin/python budget_manager_app.py
 else
     echo "Starting Gunicorn production server..."
-    # Use Gunicorn for production/demo/test modes
+    # Use Gunicorn for integration, validation, and production
     exec /opt/env3/budget_manager/bin/gunicorn --bind 0.0.0.0:8080 --log-level=debug --capture-output --enable-stdio-inheritance budget_manager_app:app
 fi

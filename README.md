@@ -4,9 +4,81 @@ BUDGET_MANAGER
 
 # Technical documentation for the Budget Manager Application
 
-The application's CI/CD pipeline is organized through GitLab CI/CD, with distinct stages for different environments. Here's a step-by-step breakdown of how it works:
+## Installation (recommended): Docker Compose on one host
 
-## Development Setup
+The **supported way to run this app in production** is **Docker Compose on your own machine or VM**. You do not need Ansible, Terraform, or Proxmox for that. The repo ships the same stack the app expects: **app + PostgreSQL + Redis**, configured through **`.env`** and the root **`docker-compose.yml`**.
+
+**Development** uses context `dev` (Flask debug server, source bind-mounted for hot reload). **Production** uses context `prod` (Gunicorn, stricter logging). You switch modes in **`.env` only**—the same `docker-compose.yml` interpolates names from `BUDGET_MANAGER_CONTEXT`.
+
+### How Compose uses the context from `.env`
+
+Docker Compose reads **`.env`** for variable substitution. With `BUDGET_MANAGER_CONTEXT=dev` as default
+
+To switch `dev` ↔ `prod`, change the context in `.env`
+
+### 1. Configure secrets and bootstrap users
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env` with real values (no defaults in code—empty or missing required keys fail at startup):
+
+- **Context**: `BUDGET_MANAGER_CONTEXT` — `dev`, `prod`, or `validation`
+- **Postgres**: `POSTGRES_*`, `BUDMAN_DB_NAME`
+- **App**: `SECRET_KEY`, `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` (placeholders are fine if you do not use Telegram alerts)
+- **Admin** (always created on first start): `ADMIN_USER_*`
+- **Reviewer** (optional): set `REVIEWER_USER_USERNAME` and `REVIEWER_USER_PASSWORD` together, or omit both—no reviewer user is created. Reviewer can open every page but cannot add, edit, or delete data (Statistics **Apply** is allowed). Useful for demonstration.
+
+### 2. Production-like mode
+
+Set in **`.env`**:
+
+```bash
+BUDGET_MANAGER_CONTEXT=prod
+```
+
+Optional but recommended for a real deployment (edit **`docker-compose.yml`**):
+
+`deploy/docker-entrypoint.sh` still runs **Alembic migrations** and starts **Gunicorn** when context is not `dev`.
+
+Then start the stack :
+
+```bash
+docker compose up -d --build
+```
+
+Open **http://localhost:8081**. Log in with the admin user from `.env`.
+
+Use **`validation`** instead of **`prod`** if you want pre-production behaviour (e.g. validation guest reviewer in Admin → Users). Validation deploys load the demo dataset from `budget_manager/bin/full_demo.sql` after Alembic, then the `fill_validation_demo_transactions` scheduled task inserts randomized transactions for later months. For day-to-day coding, switch back to **`dev`**.
+
+### 3. Updates
+
+```bash
+git pull
+docker compose up -d --build
+```
+
+Postgres data lives in the `postgres_data` volume unless you run `docker compose down -v`.
+
+---
+
+## Optional: GitLab CI, Proxmox, Terraform, Ansible
+
+This repository also includes an **automation stack for Nath’s homelab-style pipeline**: build image in GitLab, allocate a VM IP in Pi-hole, **Terraform** on **Proxmox**, deploy with **Ansible** (`deploy/ansible_deploy.py`), run tests on integration, then validation / manual prod. That path is **optional**; it mirrors what runs in `.gitlab-ci.yml` but is not required to install or operate the app.
+
+| Piece | Role |
+|--------|------|
+| [docs/infra_automation/](docs/infra_automation/) | Architecture, Pi-hole, Terraform, GitLab jobs |
+| `deploy/terraform/<env>` | Proxmox VM per environment |
+| `deploy/ansible/docker_deploy.yml` | Docker stack + nginx on a remote VM |
+| `.gitlab-ci.yml` | `integration` / `validation` / `prod` stages |
+
+Use **Compose + `.env`** for your installation; use **infra docs + CI** only if you want disposable VMs and automated deploys.
+
+---
+
+## Development setup
 
 ### Prerequisites
 - Docker and Docker Compose installed
@@ -39,7 +111,8 @@ The script automatically handles all name variations:
    ```bash
    ./setup_dev.sh
    ```
-3. Start by building the development environment:
+3. Create your `.env` file from `.env.example` (see [Installation](#installation-recommended-docker-compose-on-one-host) for production)
+4. Start by building the development environment:
    ```bash
    docker compose up --build
    ```
@@ -47,21 +120,26 @@ The script automatically handles all name variations:
    ```bash
       docker compose up
    ```
-4. Access the application at http://localhost:8081
+5. Access the application at http://localhost:8081
 
 
 ### Development Environment Details
-- **Database**: PostgreSQL 15 on port 5434 (container: `budman_db_dev`)
-- **Application**: Flask app on port 8081 (container: `budman_app_dev`)
-- **Redis**: Redis on port 6381 (container: `budman_redis_dev`)
+
+With `BUDGET_MANAGER_CONTEXT=dev` in `.env` (default in `.env.example`):
+
+- **Database**: PostgreSQL 15 on host port 5434 (container `budman_db_dev`)
+- **Application**: host port 8081, container port 8080 (`budman_app_dev`)
+- **Redis**: host port 6381 (container `budman_redis_dev`)
 - **Network**: `budman_network_dev`
+
+Use **`docker compose exec app …`** (service name) or the container names above on the host.
 - **Logs**: Stored in `./logs/` directory
 - **User**: Container runs as UID 1000 for proper file permissions
 
 
 **Environment variables**:
-   - Set in docker-compose.yml for local development
-   - Can be overridden with a .env file
+   - Copy `.env.example` to `.env` for local development (docker-compose loads it)
+   - No in-code defaults: missing variables fail at startup
 
 **Compatibility Notes**:
    - The docker-compose.yml file uses version 3.8 for compatibility with Docker Compose 2.35.1 and Docker 28.1.1
@@ -70,11 +148,6 @@ The script automatically handles all name variations:
    - Both containers have healthchecks configured to ensure proper initialization
    - Volume configurations have been simplified for better compatibility
    - The Ansible deployment scripts install the full set of Docker packages needed for Docker 28.1.1
-
-**Run test in development**
-   ```
-   docker exec -it budman_app_dev bash -c "BUDGET_MANAGER_CONTEXT=dev DB_IP=budman_db_dev /opt/env3/budget_manager/bin/python budget_manager/tests/run_tests.py"
-   ```
 
 ### Resetting Development Database or Changing Database Password
 If you need to reset all development data (for example, after changing the database password or to start with a clean database):
@@ -110,9 +183,9 @@ If you need to restore your development database from a backup file in the `back
    docker compose rm -f db
    ```
 
-3. **Remove the database volume to ensure a clean restore:**
+3. **Remove the database volume to ensure a clean restore** (or `docker compose down -v`; volume name is `budman-<context>_postgres_data`):
    ```bash
-   docker volume rm budget-manager_postgres_data
+   docker compose down -v
    ```
 
 4. **Start the database container fresh:**
@@ -127,12 +200,12 @@ If you need to restore your development database from a backup file in the `back
 
 6. **Restore from your chosen backup file. For example, to restore from the most recent backup:**
    ```bash
-   docker exec -i budman_db_dev psql -U web -d budman < backups/budman_backup_YYYYMMDD_HHMMSS.sql
+   docker compose exec -T db psql -U web -d budman < backups/budman_backup_YYYYMMDD_HHMMSS.sql
    ```
 
    Or if you want to restore to the `postgres` database (which is the default):
    ```bash
-   docker exec -i budman_db_dev psql -U web -d postgres < backups/budman_backup_YYYYMMDD_HHMMSS.sql
+   docker compose exec -T db psql -U web -d postgres < backups/budman_backup_YYYYMMDD_HHMMSS.sql
    ```
 
 7. **Start your application container:**
@@ -143,215 +216,172 @@ If you need to restore your development database from a backup file in the `back
 
 ## Testing
 
-The application uses a consolidated testing approach with organized, easily editable test data.
+Pytest lives in `budget_manager/tests/`. The suite talks to Postgres, so a full run needs a database (local Compose with `BUDGET_MANAGER_CONTEXT=dev`, or the integration VM).
 
-Test data is organized in the `budget_manager/tests/fixtures/` directory
+Dependencies (including pytest) are installed in the app image venv (`/opt/env3/budget_manager`). If `PATH` does not start with that venv’s `bin/`, `python` is `/usr/local/bin/python` and pytest is missing. Compose sets `PATH` for the `app` service; the Dockerfile sets it in the image. Recreate the app container after changing compose: `docker compose up -d app`.
 
-### Test Runner
+### Dev Compose (recommended)
 
-The consolidated test runner (`run_tests.py`) handles:
-- Permission issues by using temporary directories
-- Environment variable setup
-- Coverage reporting
-- Cleanup after execution
+From the host, with the stack up and `.env` loaded by Compose:
 
-## 1. GitLab CI/CD Pipeline Structure
+```bash
+# No database (NO_DB in test_context.py); uses .env context and DB_IP=db in the container
+docker compose exec app python -m pytest budget_manager/tests/test_context.py -q
 
-The pipeline is defined in `.gitlab-ci.yml` and consists of six stages:
+# Full suite (same entry point as CI integration)
+docker compose exec app python budget_manager/tests/run_tests.py
+```
 
-1. **Install**: Sets up the test environment
-2. **Test**: Runs tests and code quality checks
-3. **Build**: Creates a distributable package
-4. **Docker**: Builds and pushes Docker images
-5. **Demo**: Deploys to the demo/staging environment (manual trigger)
-6. **Prod**: Deploys to the production environment (manual trigger)
+Inside an interactive shell (`docker compose exec app bash`), use `python`, not bare `python3` from before the image was rebuilt:
 
-## 2. Environment Configuration
+```bash
+python -m pytest budget_manager/tests/test_context.py -q
+python budget_manager/tests/run_tests.py
+```
 
-The application uses environment variables to determine which configuration to use:
+Or call the venv explicitly (works on any image revision):
 
-- `BUDGET_MANAGER_CONTEXT`: Specifies the environment (dev, test, demo, prod)
-- `DB_IP`: Required for dev and test environments to specify the database IP
+```bash
+/opt/env3/budget_manager/bin/python budget_manager/tests/run_tests.py
+```
 
-These configurations are defined in `budget_manager/lib/_config.py` with specific classes for each environment:
+### Host (no Docker)
 
-### DEV Environment
-- **Purpose**: Local development
-- **Configuration**: `DevConfig` class
-- **Database**: Uses a local database specified by `DB_IP` environment variable (defaults to `budman_db_dev`)
-- **Run Command**: `docker compose up --build`
-- **Deployment**: Docker containers with volume mounts for development
+Install deps into a local venv from `deploy/requirements.txt`, export the same variables as `.env` (see `.env.example`), set `DB_IP=127.0.0.1` and port `5434` if Postgres is published from Compose, then run pytest or `run_tests.py`.
 
-### PROD Environment
-- **Purpose**: Production deployment
-- **Configuration**: `ProdConfig` class
-- **Database**: Uses a prod database (`budman`) on the `budman_db_prod` container
-- **Deployment**:
-  - Triggered manually in GitLab CI
-  - Uses Ansible to deploy Docker containers to `nath-server.local` server
-  - Accessible at `http://nath-server.local`
-  - Uses Docker for process management
+### Infra helpers
 
-## 3. Deployment Process
+Pi-hole, IP pool, and Terraform plan guard tests are stdlib only (host Python, not the app container):
 
-The deployment process is handled by several scripts:
+```bash
+cd deploy && python3 -m unittest discover -s infra/tests -t .
+```
 
-1. **GitLab CI** triggers the deployment through the `.gitlab-ci.yml` file
-2. **Ansible** (`deploy/ansible/*.yml`) is used to:
-   - Install Docker on the target server
-   - Pull the Docker image from the GitLab Container Registry
-   - Run the Docker container with appropriate environment variables and volume mounts
+On a deployed integration VM, CI runs the app suite with `deploy/ansible/run_tests.yml` (`docker exec` + venv `python` + `run_tests.py`).
 
-3. **Docker** containers handle:
-   - Application execution
-   - Database migrations
-   - Nginx configuration
-   - Process management
+## GitLab CI/CD
 
-## 4. Environment-Specific Configurations
+`.gitlab-ci.yml` stages, in order: `docker`, `integration`, `validation`, `prod`.
 
-Each environment has specific configurations for:
+1. **docker** — build and push the app image (`build_docker`) on every branch and merge request.
+2. **integration** — allocate a Pi-hole IP, create the VM with Terraform, deploy with Ansible, run pytest in the container, then destroy the VM. `INTEGRATION_KEEP_VM=true` makes that destroy manual.
+3. **validation** — same VM flow after integration tests pass. No automated tests. `destroy_validation_vm` is manual.
+4. **prod** — `master` only. VM setup runs on the chain; `update_prod` and `destroy_prod_vm` are manual.
 
-- **Docker**: Different environment variables and volume mounts
-- **Database Connections**: Different database URIs in the config classes
-- **Installation Process**: Different installation methods based on environment
+`dev` stays on local Docker Compose and is not a CI environment.
 
-## 5. Update Process
+A branch that already has an open merge request runs the merge-request pipeline only.
 
-Updates to existing installations are handled by:
-- The Ansible playbooks with conditional logic based on action type
-- Dedicated GitLab CI jobs (`update_demo` and `update_prod`)
-- Preserves existing database containers and data during updates
+## Environments
 
-This comprehensive CI/CD setup ensures that code is properly tested before being deployed to staging and production environments, with appropriate controls and environment-specific configurations at each stage.
+`BUDGET_MANAGER_CONTEXT` selects the class in `budget_manager/lib/_config.py`. Names live in `budget_manager/lib/const.py`.
 
+| Context | Role |
+|---|---|
+| `dev` | Local Compose. `DevConfig`. |
+| `integration` | Disposable CI VM `budman.integration.nath-server.home`. `IntegrationConfig` (`TESTING = True`). |
+| `validation` | Pre-production VM `budman.validation.nath-server.home`. `ValidationConfig`. |
+| `prod` | `budman.nath-server.home`. `ProdConfig`. HTTP on port 80 on the VM. |
 
-## Nginx Setup (Test, Demo and Production)
+Deployed hosts are created by Terraform (`deploy/terraform/<env>`) and registered in Pi-hole before Ansible runs. See `docs/infra_automation/`.
 
-The test, demo, and production environments now use a modern Nginx reverse proxy:
+`DB_IP` is required in every context: the database container name on a VM, or the Compose service host in dev.
 
-### Architecture
-- **Nginx Container**: Handles HTTP traffic on port 80 (e.g., `budman_nginx_test`)
-- **Application Container**: Runs Gunicorn on internal port 8080 (not exposed externally) (e.g., `budman_app_test`)
-- **Database Container**: PostgreSQL 15 on internal port 5433 (e.g., `budman_db_test`)
-- **Redis Container**: Redis cache on internal port 6379 (e.g., `budman_redis_test`)
-- **Network**: Isolated Docker network per environment (e.g., `budman_network_test`)
+## Deployment
 
-### Features
-- **Modern Security Headers**: X-Frame-Options, X-Content-Type-Options, X-XSS-Protection
-- **Static File Serving**: Flask application serves static files (CSS, JS, images)
-- **Health Checks**: Built-in health check endpoints
-- **Clean Proxy Configuration**: Proper forwarding of headers and protocols
+GitLab calls `python3 deploy/ansible_deploy.py`.
 
-### Access URLs
-- **Production**: http://nath-server.local
+- `--action deploy` or `update` runs `deploy/ansible/docker_deploy.yml` (Docker, directories, registry CA, files, containers, HTTP check).
+- `--action test` runs `deploy/ansible/run_tests.yml` inside `budman_app_<env>`.
+- `--env` is `integration`, `validation`, or `prod`.
+- Ansible connects as `Nath` (cloud-init user on the template VM).
 
-### Configuration Files
-- **Test**: `deploy/nginx_test.conf`
-- **Demo**: `deploy/nginx_demo.conf`
-- **Production**: `deploy/nginx_prod.conf`
+An update keeps the Postgres volume. A fresh `deploy` recreates containers.
 
-### Session Security
-Test, demo, and production environments use standard HTTP session cookies:
-- `SESSION_COOKIE_SECURE = False` (HTTP compatible)
-- `SESSION_COOKIE_HTTPONLY = True` (No JavaScript access)
-- `SESSION_COOKIE_SAMESITE = 'Lax'` (CSRF protection)
+CI variables are listed at the top of `.gitlab-ci.yml`. Shared Proxmox/Pi-hole variables and all `INTEGRATION_*` / `VALIDATION_*` must not be protected (pipelines run on feature branches). Only `PROD_*` should be protected. Use GitLab environment scope where documented.
 
-**Note**: HTTPS and SSL certificates can be added later by re-enabling the certbot steps in the Ansible deployment and updating the Nginx configurations.
+## Nginx
+
+Each environment has its own VM and nginx config:
+
+- Integration: `deploy/nginx_integration.conf` (port 80), `budman_app_integration`
+- Validation: `deploy/nginx_validation.conf` (port 80), `budman_app_validation`
+- Production: `deploy/nginx_prod.conf` (port 80), `budman_app_prod`
+
+Compose publishes port 80 on every environment. All contexts use HTTP session cookies (`SESSION_COOKIE_SECURE = False`).
 
 ## Internationalization (i18n) Support
 
-The application now supports internationalization with English and French translations. Users can switch between languages using the language selector in the navigation bar.
+The application uses Flask-Babel. English and French are supported; users switch language from the navigation bar. Catalog files live under `budget_manager/translations/` (`babel.cfg` at the repo root).
 
-### Translation Management
+### Mark strings for translation
 
-The application uses Flask-Babel for internationalization. Translation files are located in `budget_manager/translations/`.
+In Python:
 
-#### Adding New Translations
+```python
+from flask_babel import gettext as _
 
-When you add new translatable strings to the application:
+message = _('Your translatable string')
+```
 
-1. **Mark strings for translation** in your Python code:
-   ```python
-   from flask_babel import gettext as _
-   
-   message = _('Your translatable string')
-   ```
+In Jinja2 templates:
 
-2. **Mark strings for translation** in your Jinja2 templates:
-   ```html
-   <h1>{{ _('Welcome to the Dashboard') }}</h1>
-   ```
+```html
+<h1>{{ _('Welcome to the Dashboard') }}</h1>
+```
 
-3. **Extract translatable strings**:
-   ```bash
-   python manage_translations.py extract
-   ```
+### Translation workflow (Docker dev)
 
-4. **Update existing translation files**:
-   ```bash
-   python manage_translations.py update
-   ```
+Local dev runs in Compose (`docker compose exec app`). Use the **app** service; the project is bind-mounted at `/opt/budget_manager`, so `.po` / `.mo` edits on the host match the container.
 
-5. **Edit the translation files**:
-   - English: `budget_manager/translations/en/LC_MESSAGES/messages.po`
-   - French: `budget_manager/translations/fr/LC_MESSAGES/messages.po`
+Add a **shell function** once per terminal (a plain variable does not work: zsh treats `$APP_PY extract` as one command name):
 
-6. **Compile the translations**:
-   ```bash
-   python manage_translations.py compile
-   ```
+```bash
+app_py() {
+  docker compose exec app \
+    python \
+    /opt/budget_manager/manage_translations.py "$@"
+}
+```
 
-#### Adding a New Language
+Typical cycle after adding `{{ _('...') }}` strings:
 
-To add support for a new language (e.g., Spanish):
+```bash
+app_py extract    # refresh messages.pot
+app_py update     # merge into en/fr .po files
+# edit budget_manager/translations/*/LC_MESSAGES/messages.po on the host
+app_py compile    # build .mo files; refresh http://localhost:8081
+```
 
-1. **Initialize the new language**:
-   ```bash
-   python manage_translations.py init es
-   ```
+One-shot: `app_py all`
 
-2. **Add the language to the configuration** in `budget_manager/lib/_config.py`:
-   ```python
-   LANGUAGES = {
-       'en': 'English',
-       'fr': 'Français',
-       'es': 'Español'
-   }
-   ```
+Without a function, run the full command each time:
 
-3. **Add the language to the navbar** in `budget_manager/templates/base.html`:
-   ```html
-   <a class="dropdown-item" href="{{ url_for('i18n.set_language', language='es') }}">Español</a>
-   ```
+```bash
+docker compose exec app python /opt/budget_manager/manage_translations.py extract
+```
 
-4. **Translate the strings** in `budget_manager/translations/es/LC_MESSAGES/messages.po`
+Commands: `extract`, `update`, `compile`, `init <lang>`, `all`.
 
-5. **Compile the translations**:
-   ```bash
-   python manage_translations.py compile
-   ```
+### Host-only (optional)
 
-#### Translation Management Script
+If you prefer not to use Docker for Babel:
 
-The `manage_translations.py` script provides convenient commands for translation management:
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install Babel
+python manage_translations.py all
+```
 
-- `python manage_translations.py extract` - Extract translatable strings
-- `python manage_translations.py update` - Update existing translation files
-- `python manage_translations.py compile` - Compile all translation files
-- `python manage_translations.py init <lang>` - Initialize new language
-- `python manage_translations.py all` - Run extract, update, and compile
+### Add a new language (e.g. Spanish)
 
-#### Translation Workflow
+1. `app_py init es` (or host `python manage_translations.py init es`)
+2. Add `'es': 'Español'` to `LANGUAGES` in `budget_manager/lib/_config.py`
+3. Add a navbar link in `budget_manager/templates/base.html`
+4. Translate `budget_manager/translations/es/LC_MESSAGES/messages.po`
+5. `app_py compile`
 
-1. **Development**: Add translatable strings using `_()` function
-2. **Extraction**: Run `python manage_translations.py extract` to create/update `messages.pot`
-3. **Update**: Run `python manage_translations.py update` to update existing `.po` files
-4. **Translation**: Edit the `.po` files with translations
-5. **Compilation**: Run `python manage_translations.py compile` to create `.mo` files
-6. **Testing**: Test the translations in the application
+### Current languages
 
-### Current Supported Languages
-
-- **English (en)**: Default language
-- **French (fr)**: Full translation available
+- **English (en)** — default
+- **French (fr)** — full catalog

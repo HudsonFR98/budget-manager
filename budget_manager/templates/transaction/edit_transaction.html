@@ -41,7 +41,7 @@
         </select>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+    <button type="submit" class="btn btn-primary mutate-control" {% if not can_edit_data %}disabled{% endif %}>Mettre à jour</button>
 </form>
 
 {% endblock %}

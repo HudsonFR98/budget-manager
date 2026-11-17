@@ -62,7 +62,7 @@
         {{ _('optional link to a saving account. This controls how the transaction will affect your savings:') }}
         <ul>
             <li>
-                {{ _('for an INCOME: if a saving is selected, the amount is added to that saving (capped at its goal if one is defined); otherwise the amount is added to the special “Reste” saving or to the first saving if “Reste” does not exist.') }}
+                {{ _('for an INCOME: if a saving is selected, the amount is added to that saving (capped at its goal if one is defined); otherwise the amount is added to the special “Base” saving.') }}
             </li>
             <li>
                 {{ _('for an EXPENSE: if a saving is selected, the absolute value of the amount is removed from that saving, never letting it go below zero.') }}
@@ -81,7 +81,7 @@
 <ul>
     <li>
         <strong>{{ _('Reverting the old impact') }}</strong> –
-        {{ _('if the original transaction was an income, the amount is removed from the saving (or “Reste”) where it was previously stored; if it was an expense, the corresponding amount is added back to the affected saving so that your totals return to the pre‑edit state.') }}
+        {{ _('if the original transaction was an income, the amount is removed from the saving (or “Base”) where it was previously stored; if it was an expense, the corresponding amount is added back to the affected saving so that your totals return to the pre‑edit state.') }}
     </li>
     <li>
         <strong>{{ _('Applying the new values') }}</strong> –

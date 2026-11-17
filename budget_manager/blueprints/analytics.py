@@ -6,12 +6,13 @@ from collections import defaultdict
 from statistics import median
 
 from flask import Blueprint, render_template, request, jsonify
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy import extract, func, case, or_
 from budget_manager.blueprints.saving import calculate_leftover_for_savings, sold, snapshot_savings_state
 import budget_manager.dao as dao
 import budget_manager.process as process
 from budget_manager.models import *
+from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import DBSession
 
 analytics = Blueprint("analytics", __name__)
@@ -87,6 +88,8 @@ def _last_complete_month_end() -> date:
 
 def _ensure_today_saving_snapshots():
     """Capture today's snapshot for each saving if not already stored."""
+    if current_user.is_authenticated and not current_user.can_edit_data():
+        return
     snapshot_savings_state(date.today())
 
 
@@ -247,7 +250,7 @@ def _category_spending_data(start_date: date, end_date: date) -> dict[int, dict]
         Transaction.date >= start_date,
         Transaction.date <= end_date,
         Category.type.in_([1, 2]),
-        or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+        or_(Transaction.saving_id == None, Transaction.saving.has(name=SYSTEM_SAVING_NAME))
     ).all()
 
     data = defaultdict(lambda: {"amounts": [], "total": 0.0})
