@@ -1,10 +1,9 @@
 import logging
 
 from functools import wraps
-from flask import g
+from flask import abort, g, request
 from flask_login import login_required as flask_login_required, current_user
 
-from budget_manager import dao
 from budget_manager.lib.database import DBSession
 
 log = logging.getLogger(__name__)
@@ -16,11 +15,19 @@ login_required = flask_login_required
 
 def before_request():
     """ launched before each request """
+    from budget_manager.lib.validation_guest import ValidationGuestReviewer
+
+    ValidationGuestReviewer.maybe_auto_login()
 
     g.user = current_user
     if current_user.is_authenticated:
-        #log.debug(f"User authenticated: {current_user.ide}")
         current_user.reload_permissions()
+        if (
+            request.blueprint != 'auth'
+            and request.method in ('POST', 'PUT', 'PATCH', 'DELETE')
+            and not current_user.can_edit_data()
+        ):
+            abort(403)
 
 
 def after_request():
@@ -29,16 +36,24 @@ def after_request():
     DBSession.remove()
 
 
-def admin_required(f):
-    """Decorator to require admin permissions"""
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if not current_user.is_authenticated:
-            return login_required(f)(*args, **kwargs)
-        
-        if not current_user.has_permission('admin'):
-            from flask import abort
-            abort(403)
-        
-        return f(*args, **kwargs)
-    return decorated_function
+def require_user(predicate):
+    """Require a logged-in user who satisfies predicate(user)."""
+
+    def decorator(view):
+        @wraps(view)
+        def decorated_function(*args, **kwargs):
+            if not current_user.is_authenticated:
+                return login_required(view)(*args, **kwargs)
+            if not predicate(current_user):
+                abort(403)
+            return view(*args, **kwargs)
+
+        return decorated_function
+
+    return decorator
+
+
+admin_required = require_user(lambda user: user.has_permission("admin"))
+staff_required = require_user(lambda user: user.has_role("admin", "reviewer"))
+admin_role_required = require_user(lambda user: user.has_role("admin"))
+write_required = require_user(lambda user: user.can_edit_data())

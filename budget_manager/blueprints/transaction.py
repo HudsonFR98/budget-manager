@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request,
 from flask_login import login_required
 from sqlalchemy import extract
 from budget_manager.models import *
+from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import DBSession
 
 transaction = Blueprint("transaction", __name__)
@@ -79,17 +80,17 @@ def delete():
     
     # Revert transaction's effect on savings before deleting
     if transac_type == 0:
-        # Was earning: revert addition to Reste or selected saving
+        # Was earning: revert addition to Base or selected saving
         if transac_saving_id:
             # Revert from selected saving
             saving = Saving.query.get(transac_saving_id)
             if saving:
                 saving.amount = max(0, float(saving.amount) - transac_amount)
         else:
-            # Revert from "Reste" saving
-            reste_saving = Saving.query.filter(Saving.name == "Reste").first()
-            if reste_saving:
-                reste_saving.amount = max(0, float(reste_saving.amount) - transac_amount)
+            # Revert from Base saving
+            base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
+            if base_saving:
+                base_saving.amount = max(0, float(base_saving.amount) - transac_amount)
     else:
         # Was spending: revert subtraction (add back the absolute value)
         if transac_saving_id:
@@ -141,7 +142,7 @@ def add():
         # Handle savings based on transaction type
         category = Category.query.get(category_id)
         if category.type == 0:
-            # Earning: Add amount to "Reste" saving (or selected saving if provided)
+            # Earning: Add amount to Base saving (or selected saving if provided)
             if saving_id:
                 # Add to selected saving
                 saving = Saving.query.get(saving_id)
@@ -153,15 +154,14 @@ def add():
                     else:
                         saving.amount = new_amount
             else:
-                # Add to "Reste" saving by default
-                reste_saving = Saving.query.filter(Saving.name == "Reste").first()
-                if reste_saving:
-                    reste_saving.amount = float(reste_saving.amount) + amount
+                # Add to Base saving by default
+                base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
+                if base_saving:
+                    base_saving.amount = float(base_saving.amount) + amount
                 else:
-                    # No "Reste" saving found, create it or add to first saving
+                    # No Base saving found, add to first saving
                     all_savings = Saving.query.all()
                     if all_savings:
-                        # Add to first saving if no Reste exists
                         all_savings[0].amount = float(all_savings[0].amount) + amount
         else:
             # Spending: Subtract amount from selected saving
@@ -230,17 +230,17 @@ def edit(id):
         
         # Revert old transaction's effect on savings
         if old_category_type == 0:
-            # Was earning: revert addition to Reste or selected saving
+            # Was earning: revert addition to Base or selected saving
             if old_saving_id:
                 # Revert from selected saving
                 saving = Saving.query.get(old_saving_id)
                 if saving:
                     saving.amount = max(0, float(saving.amount) - old_amount)
             else:
-                # Revert from "Reste" saving
-                reste_saving = Saving.query.filter(Saving.name == "Reste").first()
-                if reste_saving:
-                    reste_saving.amount = max(0, float(reste_saving.amount) - old_amount)
+                # Revert from Base saving
+                base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
+                if base_saving:
+                    base_saving.amount = max(0, float(base_saving.amount) - old_amount)
         else:
             # Was spending: revert subtraction (add back the absolute value)
             if old_saving_id:
@@ -260,7 +260,7 @@ def edit(id):
         # Apply new transaction's effect on savings
         category = Category.query.get(category_id)
         if category.type == 0:
-            # Earning: Add amount to "Reste" saving (or selected saving if provided)
+            # Earning: Add amount to Base saving (or selected saving if provided)
             if new_saving_id:
                 # Add to selected saving
                 saving = Saving.query.get(new_saving_id)
@@ -272,12 +272,12 @@ def edit(id):
                     else:
                         saving.amount = new_amount_value
             else:
-                # Add to "Reste" saving by default
-                reste_saving = Saving.query.filter(Saving.name == "Reste").first()
-                if reste_saving:
-                    reste_saving.amount = float(reste_saving.amount) + new_amount
+                # Add to Base saving by default
+                base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
+                if base_saving:
+                    base_saving.amount = float(base_saving.amount) + new_amount
                 else:
-                    # No "Reste" saving found, add to first saving
+                    # No Base saving found, add to first saving
                     all_savings = Saving.query.all()
                     if all_savings:
                         all_savings[0].amount = float(all_savings[0].amount) + new_amount

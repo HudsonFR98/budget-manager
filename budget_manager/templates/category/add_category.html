@@ -42,7 +42,7 @@
     <input style="font-size: 20px" type="text" class="form-control" id="icon" name="icon" placeholder="(emoji)">
   </div>
   <br>
-  <button type="submit" class="btn btn-primary">Créer</button>
+  <button type="submit" class="btn btn-primary mutate-control" {% if not can_edit_data %}disabled{% endif %}>Créer</button>
 </form>
 
 <script>

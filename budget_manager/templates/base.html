@@ -19,13 +19,19 @@
   <title>{% block title %}{{ _('Budget Manager') }}{% endblock %}</title>
 </head>
 
-<body>
+<body{% if current_user.is_authenticated and not can_edit_data %} class="reviewer-readonly"{% endif %}>
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="{{ url_for('home.dashboard') }}">
         <i class="fa-solid fa-coins"></i>&nbsp;&nbsp;&nbsp; {{ _('Budget Manager') }}
         {% if CONTEXT == 'dev' %}
         &nbsp; <span class="badge bg-warning">dev</span>
+        {% elif CONTEXT == 'validation' %}
+        &nbsp; <span class="badge bg-primary">validation</span>
+        <span class="version">&nbsp;{{ VERSION }}</span>
+        {% elif CONTEXT == 'integration' %}
+        &nbsp; <span class="badge bg-info">integration</span>
+        <span class="version">&nbsp;{{ VERSION }}</span>
         {% else %}
         <span class="version">&nbsp;{{ VERSION }}</span>
         {% endif %}
@@ -58,7 +64,7 @@
             <a class="nav-link" href="{{ url_for('paypal.summary') }}">{{ _('PayPal') }}</a>
           </li>
           <!-- Admin Navigation -->
-          {% if current_user.has_permission('admin') %}
+          {% if current_user.has_role('admin', 'reviewer') %}
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button" data-bs-toggle="dropdown"
               aria-expanded="false">
@@ -66,15 +72,19 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="adminDropdown">
               <a class="dropdown-item" href="{{ url_for('admin.users') }}">{{ _('Users') }}</a>
+              <a class="dropdown-item" href="{{ url_for('admin.roles') }}">{{ _('Roles') }}</a>
+              <a class="dropdown-item" href="{{ url_for('admin.permissions') }}">{{ _('Permissions') }}</a>
               <a class="dropdown-item" href="{{ url_for('admin.tasks') }}">{{ _('Async Tasks') }}</a>
-              <a class="dropdown-item" href="{{ url_for('admin.logs') }}">{{ _('Logs') }}</a>
+              <a class="dropdown-item{% if not current_user.has_role('admin') %} disabled{% endif %}"
+                href="{{ url_for('admin.logs') if current_user.has_role('admin') else '#' }}"
+                {% if not current_user.has_role('admin') %}tabindex="-1" aria-disabled="true"{% endif %}>{{ _('Logs') }}</a>
             </div>
           </li>
           {% endif %}
         </ul>
 
         <!-- Test Navigation -->
-        {% if CONTEXT == 'test' %}
+        {% if CONTEXT == 'integration' %}
         <ul class="navbar-nav me-auto">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="testDropdown" role="button" data-bs-toggle="dropdown"

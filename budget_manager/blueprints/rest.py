@@ -1,21 +1,23 @@
-""" webservices """
+"""Token-authenticated HTTP API."""
 
-import logging
-import json
-import string
+from flask import Blueprint, g, jsonify, request
 
-from flask import request, Blueprint, abort, jsonify
-from budget_manager import dao
-
+from budget_manager.lib.api_auth import ApiTokenAuthenticator
 
 rest = Blueprint('rest', __name__)
-log = logging.getLogger(__name__)
 
 
-# @rest.route('/test', methods=["GET"])
-# def get_test():
-#     """ Exemple """
+@rest.before_request
+def authenticate_api_token():
+    return ApiTokenAuthenticator().require(request)
 
-#     gene_id = request.values.get('gene_id')
-#     gene = dao.get_gene(gene_id)
-#     return jsonify(gene.to_json())
+
+@rest.route('/test', methods=['GET'])
+def get_test():
+    """Simple authenticated probe: who the token belongs to."""
+    user = g.api_user
+    return jsonify({
+        'ok': True,
+        'user': user.ide,
+        'user_id': user.id,
+    })

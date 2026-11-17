@@ -4,20 +4,28 @@ import tempfile
 
 from logging.config import dictConfig
 
+from .const import (
+    CONTEXT_DEV,
+    CONTEXT_ENV_VAR,
+    CONTEXT_INTEGRATION,
+    CONTEXT_PROD,
+    CONTEXT_VALIDATION,
+)
+
 """
 Configuration module for budget_manager application.
 
 Deployment Architecture:
 - DEV: Uses external database specified by DB_IP environment variable
-- TEST/DEMO/PROD: Use Docker containers with local PostgreSQL databases
-  - Database container name: 'budman_db_{context}' (e.g., 'budman_db_test', 'budman_db_demo', 'budman_db_prod')
+- INTEGRATION/VALIDATION/PROD: Use Docker containers with local PostgreSQL databases
+  - Database container name: 'budman_db_{context}' (e.g., 'budman_db_integration', 'budman_db_validation', 'budman_db_prod')
   - Database name: 'budman'
-  - All environments accessible on port 8081
+  - Container listens on port 8080; local Compose publishes it on host port 8081
   - Deploy vs Update operations supported (data preservation during updates)
 
 Environment Variables:
-- BUDGET_MANAGER_CONTEXT: Required for all environments (dev, test, demo, prod)
-- DB_IP: Required only for dev environment (external database host)
+- BUDGET_MANAGER_CONTEXT: Required for all environments (dev, integration, validation, prod)
+- DB_IP: Required for every environment (container name on deployed hosts, host address in dev)
 
 Session Security:
 - All environments currently configured for HTTP (SESSION_COOKIE_SECURE = False)
@@ -110,6 +118,19 @@ def require_env(name: str) -> str:
     return value
 
 
+def optional_env(name: str) -> str | None:
+    """Return env var value, or None if unset or blank."""
+    value = os.environ.get(name)
+    if value is None or str(value).strip() == "":
+        return None
+    return value
+
+
+def reviewer_bootstrap_configured() -> bool:
+    """True when REVIEWER_USER_USERNAME and REVIEWER_USER_PASSWORD are both set."""
+    return bool(optional_env("REVIEWER_USER_USERNAME") and optional_env("REVIEWER_USER_PASSWORD"))
+
+
 def build_db_uri() -> str:
     """
     Build SQLAlchemy DB URI from environment variables
@@ -125,13 +146,14 @@ def build_db_uri() -> str:
     db_name = require_env("BUDMAN_DB_NAME")
     return f"postgresql://{user}:{password}@{host}/{db_name}"
 
+
 class Config(object):
     """
     Base configuration class.
     
     Session configurations are overridden by environment-specific classes:
     - DEV: Relaxed settings for debugging (HTTP, JavaScript access)
-    - TEST/DEMO/PROD: Standard security settings (HTTP, no JavaScript access)
+    - INTEGRATION/VALIDATION/PROD: Standard security settings (HTTP, no JavaScript access)
     - All environments currently configured for HTTP compatibility
     - When HTTPS is enabled, update SESSION_COOKIE_SECURE to True
     """
@@ -152,10 +174,18 @@ class Config(object):
     ADMIN_USER_LAST_NAME = require_env("ADMIN_USER_LAST_NAME")
     ADMIN_USER_EMAIL = require_env("ADMIN_USER_EMAIL")
 
+    REVIEWER_USER_USERNAME = optional_env("REVIEWER_USER_USERNAME")
+    REVIEWER_USER_PASSWORD = optional_env("REVIEWER_USER_PASSWORD")
+    REVIEWER_USER_FIRST_NAME = optional_env("REVIEWER_USER_FIRST_NAME")
+    REVIEWER_USER_LAST_NAME = optional_env("REVIEWER_USER_LAST_NAME")
+    REVIEWER_USER_EMAIL = optional_env("REVIEWER_USER_EMAIL")
+
     # Database (same building blocks in all contexts; DB host differs via DB_IP)
     DB_URI = build_db_uri()
     SQLALCHEMY_DATABASE_URI = DB_URI
     APP_NAME = "Budget Manager"
+
+
 
     # (Legacy) Email settings kept for backward compatibility, no longer used for errors
     ERROR_EMAIL_FROM = ''
@@ -178,6 +208,12 @@ class Config(object):
         'en': 'English',
         'fr': 'Français'
     }
+
+    # docs paths
+    DOC_DIR = '/opt/budget_manager_docs'
+
+    # Base URL for task execution (used by test_simple_route task)
+    BASE_URL = 'http://localhost:8080'
 
 
 class ProdConfig(Config):
@@ -208,38 +244,38 @@ class DevConfig(Config):
     SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-class DemoConfig(Config):
+class ValidationConfig(Config):
 
-    CONTEXT = 'demo'
+    CONTEXT = 'validation'
     LOG_LEVEL = logging.ERROR
-    
-    # Session settings for demo (HTTP environment)
+
+    # Session settings for validation (HTTP environment)
     SESSION_COOKIE_SECURE = False  # Disabled for HTTP
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-class TestConfig(Config):
+class IntegrationConfig(Config):
 
-    CONTEXT = 'test'
+    CONTEXT = 'integration'
     TESTING = True
     LOG_LEVEL = logging.ERROR
     SERVER_NAME = 'localhost'
-    
-    # Session settings for test (HTTP environment)
+
+    # Session settings for integration (HTTP environment)
     SESSION_COOKIE_SECURE = False  # Disabled for HTTP
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'  # Changed from 'Strict' to 'Lax' for better compatibility
+    SESSION_COOKIE_SAMESITE = 'Lax'
 
 
-
-require_env("BUDGET_MANAGER_CONTEXT")
+require_env(CONTEXT_ENV_VAR)
 require_env("DB_IP")
 
-_envs = dict(
-    test=TestConfig,
-    dev=DevConfig,
-    demo=DemoConfig,
-    prod=ProdConfig
-)
-config = _envs[os.environ['BUDGET_MANAGER_CONTEXT']]
+
+_envs = {
+    CONTEXT_INTEGRATION: IntegrationConfig,
+    CONTEXT_DEV: DevConfig,
+    CONTEXT_VALIDATION: ValidationConfig,
+    CONTEXT_PROD: ProdConfig,
+}
+config = _envs[os.environ[CONTEXT_ENV_VAR]]

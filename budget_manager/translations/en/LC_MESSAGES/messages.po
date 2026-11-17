@@ -7,104 +7,332 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-02 07:26+0100\n"
+"POT-Creation-Date: 2026-11-17 10:47+0000\n"
 "PO-Revision-Date: 2025-07-07 15:40+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
 "Language-Team: en <LL@li.org>\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.8.0\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: budget_manager/blueprints/admin.py:54
+msgid "Error loading tasks data. Please check database connection."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:230
+msgid "Error loading logs"
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:255
+msgid "Error loading users data. Please check database connection."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:270
+msgid "This setting only applies in the validation context."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:275
+msgid "Validation reviewer guest login enabled."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:277
+msgid "Validation reviewer guest login disabled."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:298
+msgid "Username and password are required."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:303
+#: budget_manager/blueprints/admin.py:371
+msgid "Username already exists."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:328
+msgid "User created successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:333
+msgid "Error creating user. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:354
+msgid "User ID is required."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:360 budget_manager/dao/user.py:33
+#: budget_manager/dao/user.py:50
+msgid "User not found."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:365
+msgid "Username is required."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:394
+msgid "User updated successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:399
+msgid "Error updating user. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:534
+msgid "Error loading roles data. Please check database connection."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:548
+msgid "Role created successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:554
+msgid "Error creating role. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:570
+msgid "Role updated successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:573
+#: budget_manager/blueprints/admin.py:592
+msgid "Role ID is required."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:578
+msgid "Error updating role. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:589
+msgid "Role deleted successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:597
+msgid "Error deleting role. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:634
+msgid "Error loading permissions data. Please check database connection."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:647
+msgid "Permission created successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:653
+msgid "Error creating permission. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:667
+msgid "Permission updated successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:670
+#: budget_manager/blueprints/admin.py:689
+msgid "Permission ID is required."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:675
+msgid "Error updating permission. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:686
+msgid "Permission deleted successfully."
+msgstr ""
+
+#: budget_manager/blueprints/admin.py:694
+msgid "Error deleting permission. Please try again."
+msgstr ""
+
+#: budget_manager/blueprints/auth.py:35
+msgid "User account is inactive"
+msgstr ""
+
+#: budget_manager/blueprints/auth.py:41
+msgid "Invalid username or password"
+msgstr ""
+
+#: budget_manager/blueprints/auth.py:56
+msgid "Reviewer account is not available."
+msgstr ""
+
+#: budget_manager/blueprints/auth.py:70
+msgid "Please sign in again"
+msgstr ""
+
+#: budget_manager/blueprints/saving.py:354
+msgid "The Base saving cannot be deleted."
+msgstr ""
+
+#: budget_manager/dao/permission.py:28
+msgid ""
+"Permission name must start with a letter and contain only lowercase "
+"letters, digits, or underscores."
+msgstr ""
+
+#: budget_manager/dao/permission.py:32
+msgid "A permission with this name already exists."
+msgstr ""
+
+#: budget_manager/dao/permission.py:46 budget_manager/dao/permission.py:55
+msgid "Permission not found."
+msgstr ""
+
+#: budget_manager/dao/permission.py:57
+msgid "System permissions cannot be deleted."
+msgstr ""
+
+#: budget_manager/dao/permission.py:59
+msgid "This permission is still assigned to one or more roles."
+msgstr ""
+
+#: budget_manager/dao/role.py:32
+msgid "One of the selected permissions does not exist."
+msgstr ""
+
+#: budget_manager/dao/role.py:46 budget_manager/dao/role.py:75
+#: budget_manager/dao/role.py:95
+msgid "Role not found."
+msgstr ""
+
+#: budget_manager/dao/role.py:55 budget_manager/dao/role.py:78
+msgid "Role name is required."
+msgstr ""
+
+#: budget_manager/dao/role.py:57 budget_manager/dao/role.py:83
+msgid "A role with this name already exists."
+msgstr ""
+
+#: budget_manager/dao/role.py:80
+msgid "The admin role cannot be renamed."
+msgstr ""
+
+#: budget_manager/dao/role.py:97
+msgid "The admin role cannot be deleted."
+msgstr ""
+
+#: budget_manager/dao/role.py:99
+msgid "This role is still assigned to one or more users."
+msgstr ""
+
+#: budget_manager/dao/user.py:52
+msgid "This user has no API token."
+msgstr ""
+
+#: budget_manager/lib/api_auth.py:30
+msgid "Invalid or missing API token"
+msgstr ""
 
 #: budget_manager/templates/base.html:19 budget_manager/templates/base.html:26
+#: budget_manager/templates/dashboard/home.html:7
 msgid "Budget Manager"
 msgstr ""
 
-#: budget_manager/templates/base.html:43
+#: budget_manager/templates/base.html:49
 #: budget_manager/templates/doc/_transactions.html:1
-#: budget_manager/templates/doc/index.html:103
+#: budget_manager/templates/doc/index.html:106
 msgid "Transactions"
 msgstr ""
 
-#: budget_manager/templates/base.html:46
+#: budget_manager/templates/base.html:52
 #: budget_manager/templates/doc/_categories.html:1
-#: budget_manager/templates/doc/index.html:109
+#: budget_manager/templates/doc/index.html:112
 msgid "Categories"
 msgstr ""
 
-#: budget_manager/templates/base.html:49
-#: budget_manager/templates/doc/index.html:115
+#: budget_manager/templates/base.html:55
+#: budget_manager/templates/doc/index.html:118
 msgid "Statistics"
 msgstr ""
 
-#: budget_manager/templates/base.html:52
+#: budget_manager/templates/base.html:58
 #: budget_manager/templates/doc/_savings.html:1
-#: budget_manager/templates/doc/index.html:112
+#: budget_manager/templates/doc/index.html:115
 #: budget_manager/templates/saving/saving.html:6
 msgid "Savings"
 msgstr ""
 
-#: budget_manager/templates/base.html:55
+#: budget_manager/templates/base.html:61
 msgid "Elytras"
 msgstr ""
 
-#: budget_manager/templates/base.html:58
+#: budget_manager/templates/base.html:64
 msgid "PayPal"
 msgstr ""
 
-#: budget_manager/templates/base.html:65
+#: budget_manager/templates/base.html:71
 msgid "Administration"
 msgstr ""
 
-#: budget_manager/templates/base.html:68
+#: budget_manager/templates/admin/roles.html:36
+#: budget_manager/templates/base.html:74
 msgid "Users"
 msgstr ""
 
+#: budget_manager/templates/admin/permissions.html:41
+#: budget_manager/templates/admin/roles.html:3
+#: budget_manager/templates/admin/roles.html:10
+#: budget_manager/templates/admin/users.html:69
+#: budget_manager/templates/admin/users.html:175
+#: budget_manager/templates/admin/users.html:227
+#: budget_manager/templates/base.html:75
+msgid "Roles"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:3
+#: budget_manager/templates/admin/permissions.html:10
+#: budget_manager/templates/admin/roles.html:37
+#: budget_manager/templates/admin/roles.html:103
+#: budget_manager/templates/admin/roles.html:147
+#: budget_manager/templates/base.html:76
+msgid "Permissions"
+msgstr ""
+
 #: budget_manager/templates/admin/tasks.html:3
-#: budget_manager/templates/base.html:69
+#: budget_manager/templates/base.html:77
 msgid "Async Tasks"
 msgstr ""
 
-#: budget_manager/templates/base.html:70
+#: budget_manager/templates/base.html:80
 msgid "Logs"
 msgstr ""
 
-#: budget_manager/templates/base.html:82
+#: budget_manager/templates/base.html:92
 msgid "Tests"
 msgstr ""
 
-#: budget_manager/templates/base.html:85
+#: budget_manager/templates/base.html:95
 msgid "Coverage"
 msgstr ""
 
-#: budget_manager/templates/base.html:86
+#: budget_manager/templates/base.html:96
 msgid "Test Output"
 msgstr ""
 
-#: budget_manager/templates/base.html:109
+#: budget_manager/templates/base.html:119
 msgid "Help"
 msgstr ""
 
-#: budget_manager/templates/base.html:111
+#: budget_manager/templates/base.html:121
 msgid "Toggle theme"
 msgstr ""
 
-#: budget_manager/templates/base.html:117
+#: budget_manager/templates/base.html:127
 msgid "Language"
 msgstr ""
 
-#: budget_manager/templates/base.html:130
+#: budget_manager/templates/base.html:140
 #: budget_manager/templates/login.html:14
 msgid "Login"
 msgstr ""
 
-#: budget_manager/templates/base.html:213
+#: budget_manager/templates/base.html:223
 msgid "Switch to light mode"
 msgstr ""
 
-#: budget_manager/templates/base.html:216
+#: budget_manager/templates/base.html:226
 msgid "Switch to dark mode"
 msgstr ""
 
@@ -153,9 +381,13 @@ msgstr ""
 msgid "User ID"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:110
+#: budget_manager/templates/admin/users.html:158
 #: budget_manager/templates/login.html:13
 msgid "Password"
+msgstr ""
+
+#: budget_manager/templates/login.html:19
+msgid "Connect as reviewer"
 msgstr ""
 
 #: budget_manager/templates/admin/logs.html:3
@@ -165,6 +397,8 @@ msgid "Application Logs"
 msgstr ""
 
 #: budget_manager/templates/admin/logs.html:3
+#: budget_manager/templates/admin/permissions.html:3
+#: budget_manager/templates/admin/roles.html:3
 #: budget_manager/templates/admin/tasks.html:3
 #: budget_manager/templates/admin/users.html:3
 msgid "Admin"
@@ -181,6 +415,139 @@ msgstr ""
 
 #: budget_manager/templates/admin/logs.html:36
 msgid "No logs available"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:18
+#: budget_manager/templates/admin/permissions.html:96
+#: budget_manager/templates/admin/permissions.html:114
+msgid "Create Permission"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:24
+msgid ""
+"Permission names cannot be renamed after creation; they are used in "
+"application code."
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:31
+msgid "Permissions List"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:38
+#: budget_manager/templates/admin/permissions.html:101
+#: budget_manager/templates/admin/permissions.html:132
+#: budget_manager/templates/admin/roles.html:34
+#: budget_manager/templates/admin/roles.html:95
+#: budget_manager/templates/admin/roles.html:136
+#: budget_manager/templates/category/category.html:13
+#: budget_manager/templates/doc/_categories.html:58
+#: budget_manager/templates/saving/add_saving.html:9
+#: budget_manager/templates/saving/edit_saving.html:9
+msgid "Name"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:39
+#: budget_manager/templates/admin/permissions.html:108
+#: budget_manager/templates/admin/permissions.html:136
+#: budget_manager/templates/admin/roles.html:35
+#: budget_manager/templates/admin/roles.html:99
+#: budget_manager/templates/admin/roles.html:143
+#: budget_manager/templates/admin/tasks.html:99
+msgid "Description"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:40
+#: budget_manager/templates/category/category.html:15
+#: budget_manager/templates/doc/_categories.html:62
+msgid "Type"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:42
+#: budget_manager/templates/admin/roles.html:38
+#: budget_manager/templates/admin/tasks.html:104
+#: budget_manager/templates/admin/users.html:72
+msgid "Actions"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:52
+msgid "System"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:54
+msgid "Custom"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:65
+#: budget_manager/templates/admin/roles.html:59
+#: budget_manager/templates/admin/users.html:108
+#: budget_manager/templates/category/category.html:12
+#: budget_manager/templates/saving/saving.html:44
+msgid "Edit"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:70
+msgid "Are you sure you want to delete this permission?"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:74
+#: budget_manager/templates/admin/roles.html:68
+#: budget_manager/templates/category/category.html:20
+#: budget_manager/templates/saving/saving.html:49
+msgid "Delete"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:104
+#: budget_manager/templates/admin/permissions.html:105
+msgid "Lowercase letter, then letters, digits or underscores"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:113
+#: budget_manager/templates/admin/permissions.html:141
+#: budget_manager/templates/admin/roles.html:117
+#: budget_manager/templates/admin/roles.html:161
+#: budget_manager/templates/admin/users.html:185
+#: budget_manager/templates/admin/users.html:237
+#: budget_manager/templates/saving/add_saving.html:53
+#: budget_manager/templates/saving/edit_saving.html:56
+msgid "Cancel"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:126
+msgid "Edit Permission"
+msgstr ""
+
+#: budget_manager/templates/admin/permissions.html:142
+msgid "Update Permission"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:18
+#: budget_manager/templates/admin/roles.html:90
+#: budget_manager/templates/admin/roles.html:118
+msgid "Create Role"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:27
+msgid "Roles List"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:64
+msgid "Are you sure you want to delete this role?"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:130
+msgid "Edit Role"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:139
+msgid "The admin role name cannot be changed."
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:162
+msgid "Update Role"
+msgstr ""
+
+#: budget_manager/templates/admin/roles.html:196
+msgid "Failed to load role data"
 msgstr ""
 
 #: budget_manager/templates/admin/tasks.html:10
@@ -214,10 +581,6 @@ msgstr ""
 msgid "Task Name"
 msgstr ""
 
-#: budget_manager/templates/admin/tasks.html:99
-msgid "Description"
-msgstr ""
-
 #: budget_manager/templates/admin/tasks.html:100
 msgid "Schedule"
 msgstr ""
@@ -225,7 +588,7 @@ msgstr ""
 #: budget_manager/templates/admin/tasks.html:101
 #: budget_manager/templates/admin/tasks.html:134
 #: budget_manager/templates/admin/tasks.html:187
-#: budget_manager/templates/admin/users.html:40
+#: budget_manager/templates/admin/users.html:71
 msgid "Status"
 msgstr ""
 
@@ -237,13 +600,8 @@ msgstr ""
 msgid "Next Run"
 msgstr ""
 
-#: budget_manager/templates/admin/tasks.html:104
-#: budget_manager/templates/admin/users.html:41
-msgid "Actions"
-msgstr ""
-
 #: budget_manager/templates/admin/tasks.html:114
-#: budget_manager/templates/admin/users.html:58
+#: budget_manager/templates/admin/users.html:96
 msgid "Active"
 msgstr ""
 
@@ -303,6 +661,7 @@ msgid "Loading..."
 msgstr ""
 
 #: budget_manager/templates/admin/tasks.html:221
+#: budget_manager/templates/admin/users.html:267
 msgid "Close"
 msgstr ""
 
@@ -319,113 +678,166 @@ msgstr ""
 msgid "Users Management"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:18
-#: budget_manager/templates/admin/users.html:100
-msgid "Create New User"
+#: budget_manager/templates/admin/users.html:19
+msgid "Validation access"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:28
-msgid "Users List"
+#: budget_manager/templates/admin/users.html:21
+msgid ""
+"When enabled, visitors on this validation instance sign in as the "
+"reviewer without a password until they log out. They can also use Connect"
+" as reviewer on the login page."
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:31
+msgid "Allow passwordless reviewer login"
 msgstr ""
 
 #: budget_manager/templates/admin/users.html:35
-#: budget_manager/templates/admin/users.html:105
-#: budget_manager/templates/admin/users.html:157
+msgid "Save"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:48
+#: budget_manager/templates/admin/users.html:148
+msgid "Create New User"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:58
+msgid "Users List"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:65
+#: budget_manager/templates/admin/users.html:153
+#: budget_manager/templates/admin/users.html:205
+#: budget_manager/templates/admin/users.html:253
 msgid "Username"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:36
-#: budget_manager/templates/admin/users.html:115
-#: budget_manager/templates/admin/users.html:167
+#: budget_manager/templates/admin/users.html:66
+#: budget_manager/templates/admin/users.html:163
+#: budget_manager/templates/admin/users.html:215
 msgid "First Name"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:37
-#: budget_manager/templates/admin/users.html:119
-#: budget_manager/templates/admin/users.html:171
+#: budget_manager/templates/admin/users.html:67
+#: budget_manager/templates/admin/users.html:167
+#: budget_manager/templates/admin/users.html:219
 msgid "Last Name"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:38
-#: budget_manager/templates/admin/users.html:123
-#: budget_manager/templates/admin/users.html:175
+#: budget_manager/templates/admin/users.html:68
+#: budget_manager/templates/admin/users.html:171
+#: budget_manager/templates/admin/users.html:223
 msgid "Email"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:39
-#: budget_manager/templates/admin/users.html:127
-#: budget_manager/templates/admin/users.html:179
-msgid "Roles"
+#: budget_manager/templates/admin/users.html:70
+#: budget_manager/templates/admin/users.html:116
+#: budget_manager/templates/admin/users.html:249
+msgid "API Token"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:60
+#: budget_manager/templates/admin/users.html:91
+#: budget_manager/templates/admin/users.html:322
+msgid "No token"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:98
 msgid "Left"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:62
+#: budget_manager/templates/admin/users.html:100
 msgid "Inactive"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:69
-#: budget_manager/templates/category/category.html:12
-#: budget_manager/templates/saving/saving.html:44
-msgid "Edit"
-msgstr ""
-
-#: budget_manager/templates/admin/users.html:75
+#: budget_manager/templates/admin/users.html:123
 msgid "Deactivate"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:77
+#: budget_manager/templates/admin/users.html:125
 msgid "Activate"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:133
-#: budget_manager/templates/admin/users.html:185
+#: budget_manager/templates/admin/users.html:181
+#: budget_manager/templates/admin/users.html:233
 msgid "Hold Ctrl/Cmd to select multiple roles"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:137
-#: budget_manager/templates/admin/users.html:189
-#: budget_manager/templates/saving/add_saving.html:53
-#: budget_manager/templates/saving/edit_saving.html:53
-msgid "Cancel"
-msgstr ""
-
-#: budget_manager/templates/admin/users.html:138
+#: budget_manager/templates/admin/users.html:186
 msgid "Create User"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:151
+#: budget_manager/templates/admin/users.html:199
 msgid "Edit User"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:162
+#: budget_manager/templates/admin/users.html:210
 msgid "New Password"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:164
+#: budget_manager/templates/admin/users.html:212
 msgid "Leave blank to keep current password"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:190
+#: budget_manager/templates/admin/users.html:238
 msgid "Update User"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:235
+#: budget_manager/templates/admin/users.html:256
+msgid "Copy this token now. It will not be shown again."
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:260
+#: budget_manager/templates/admin/users.html:329
+msgid "Copy"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:266
+msgid "Revoke"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:268
+msgid "Generate Token"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:312
 msgid "Failed to load user data"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:246
+#: budget_manager/templates/admin/users.html:323
+msgid "Current token prefix:"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:324
+msgid "Generating a new token will replace the existing one. Continue?"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:325
+msgid "Revoke this API token? The user will no longer be able to call the API."
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:326
+msgid "Failed to generate API token"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:327
+msgid "Failed to revoke API token"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:328
+msgid "Copied"
+msgstr ""
+
+#: budget_manager/templates/admin/users.html:430
 msgid "Are you sure you want to deactivate this user?"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:246
+#: budget_manager/templates/admin/users.html:430
 msgid "Are you sure you want to activate this user?"
 msgstr ""
 
-#: budget_manager/templates/admin/users.html:265
-#: budget_manager/templates/admin/users.html:270
+#: budget_manager/templates/admin/users.html:449
+#: budget_manager/templates/admin/users.html:454
 msgid "Failed to update user status"
 msgstr ""
 
@@ -473,15 +885,15 @@ msgid "months"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:86
-#: budget_manager/templates/saving/saving.html:58
+#: budget_manager/templates/saving/saving.html:60
 msgid "Ratio"
 msgstr ""
 
 #: budget_manager/templates/analytics/summary.html:95
 #: budget_manager/templates/doc/_savings.html:39
 #: budget_manager/templates/saving/add_saving.html:40
-#: budget_manager/templates/saving/edit_saving.html:40
-#: budget_manager/templates/saving/saving.html:69
+#: budget_manager/templates/saving/edit_saving.html:43
+#: budget_manager/templates/saving/saving.html:71
 msgid "Goal"
 msgstr ""
 
@@ -544,23 +956,11 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:13
-#: budget_manager/templates/doc/_categories.html:58
-#: budget_manager/templates/saving/add_saving.html:9
-#: budget_manager/templates/saving/edit_saving.html:9
-msgid "Name"
-msgstr ""
-
 #: budget_manager/templates/category/category.html:14
 #: budget_manager/templates/doc/_categories.html:35
 #: budget_manager/templates/saving/add_saving.html:30
-#: budget_manager/templates/saving/edit_saving.html:30
+#: budget_manager/templates/saving/edit_saving.html:33
 msgid "Color"
-msgstr ""
-
-#: budget_manager/templates/category/category.html:15
-#: budget_manager/templates/doc/_categories.html:62
-msgid "Type"
 msgstr ""
 
 #: budget_manager/templates/category/category.html:16
@@ -568,29 +968,39 @@ msgstr ""
 msgid "Calculated budget"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:20
-#: budget_manager/templates/saving/saving.html:48
-msgid "Delete"
-msgstr ""
-
-#: budget_manager/templates/category/category.html:151
+#: budget_manager/templates/category/category.html:149
 msgid "At least"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:151
+#: budget_manager/templates/category/category.html:149
 msgid "of your income remains for savings or other expenses (🔒)"
 msgstr ""
 
-#: budget_manager/templates/category/category.html:161
+#: budget_manager/templates/category/category.html:159
 msgid "Category budgets for this month"
 msgstr ""
 
 #: budget_manager/templates/dashboard/home.html:5
-msgid "Welcome to the Dashboard"
+msgid "Welcome"
+msgstr ""
+
+#: budget_manager/templates/dashboard/home.html:11
+msgid ""
+"Authentication and roles, admin UI, REST API tokens, PostgreSQL and "
+"Alembic, Redis-backed tasks, translations, and Docker / GitLab "
+"deployment—ready for your own features."
+msgstr ""
+
+#: budget_manager/templates/dashboard/home.html:15
+msgid "Developed by"
+msgstr ""
+
+#: budget_manager/templates/dashboard/home.html:20
+msgid "Open documentation"
 msgstr ""
 
 #: budget_manager/templates/doc/_async_tasks.html:1
-#: budget_manager/templates/doc/index.html:118
+#: budget_manager/templates/doc/index.html:121
 msgid "Async tasks"
 msgstr ""
 
@@ -933,7 +1343,7 @@ msgid ""
 msgstr ""
 
 #: budget_manager/templates/doc/_home.html:1
-#: budget_manager/templates/doc/index.html:106
+#: budget_manager/templates/doc/index.html:109
 msgid "Home dashboard"
 msgstr ""
 
@@ -1186,7 +1596,8 @@ msgstr ""
 msgid ""
 "you can edit a saving to change its configuration or delete it entirely. "
 "Deletion is protected by a confirmation dialog and will remove the saving"
-" but not its historical snapshots."
+" but not its historical snapshots. The Base saving is created with the "
+"database and cannot be deleted or renamed."
 msgstr ""
 
 #: budget_manager/templates/doc/_savings.html:25
@@ -1210,7 +1621,7 @@ msgstr ""
 #: budget_manager/templates/doc/_savings.html:35
 #: budget_manager/templates/doc/_transactions.html:48
 #: budget_manager/templates/saving/add_saving.html:14
-#: budget_manager/templates/saving/edit_saving.html:14
+#: budget_manager/templates/saving/edit_saving.html:17
 msgid "Amount"
 msgstr ""
 
@@ -1230,7 +1641,7 @@ msgstr ""
 
 #: budget_manager/templates/doc/_savings.html:43
 #: budget_manager/templates/saving/add_saving.html:45
-#: budget_manager/templates/saving/edit_saving.html:45
+#: budget_manager/templates/saving/edit_saving.html:48
 msgid "Ratio for leftover distribution"
 msgstr ""
 
@@ -1243,7 +1654,7 @@ msgstr ""
 #: budget_manager/templates/doc/_savings.html:45
 msgid ""
 "Ratios are automatically normalized across all savings so that their sum "
-"remains equal to 1, with special handling for the “Reste” saving, which "
+"remains equal to 1, with special handling for the “Base” saving, which "
 "acts as a buffer."
 msgstr ""
 
@@ -1271,8 +1682,8 @@ msgstr ""
 #: budget_manager/templates/doc/_savings.html:59
 msgid ""
 "a dedicated function computes, for any month and year, how much income "
-"remains once fixed and variable expenses linked to the “Reste” saving (or"
-" no saving) are taken into account."
+"remains once fixed and variable expenses linked to the “Base” saving (or "
+"no saving) are taken into account."
 msgstr ""
 
 #: budget_manager/templates/doc/_savings.html:62
@@ -1281,7 +1692,7 @@ msgstr ""
 
 #: budget_manager/templates/doc/_savings.html:63
 msgid ""
-"the distribution process takes the leftover amount from the “Reste” "
+"the distribution process takes the leftover amount from the “Base” "
 "saving, ensuring that this buffer decreases by exactly what is being "
 "distributed (or by the available amount if it is smaller)."
 msgstr ""
@@ -1336,7 +1747,7 @@ msgstr ""
 
 #: budget_manager/templates/doc/_savings.html:84
 msgid ""
-"the first pass tries to absorb the difference inside the “Reste” saving "
+"the first pass tries to absorb the difference inside the “Base” saving "
 "when it exists, since it is the natural buffer for discrepancies."
 msgstr ""
 
@@ -1746,9 +2157,9 @@ msgid ""
 msgstr ""
 
 #: budget_manager/templates/doc/_transactions.html:57
-#: budget_manager/templates/doc/index.html:138
+#: budget_manager/templates/doc/index.html:141
 #: budget_manager/templates/saving/add_saving.html:25
-#: budget_manager/templates/saving/edit_saving.html:25
+#: budget_manager/templates/saving/edit_saving.html:28
 msgid "Note"
 msgstr ""
 
@@ -1773,8 +2184,7 @@ msgstr ""
 msgid ""
 "for an INCOME: if a saving is selected, the amount is added to that "
 "saving (capped at its goal if one is defined); otherwise the amount is "
-"added to the special “Reste” saving or to the first saving if “Reste” "
-"does not exist."
+"added to the special “Base” saving."
 msgstr ""
 
 #: budget_manager/templates/doc/_transactions.html:68
@@ -1807,9 +2217,9 @@ msgstr ""
 #: budget_manager/templates/doc/_transactions.html:84
 msgid ""
 "if the original transaction was an income, the amount is removed from the"
-" saving (or “Reste”) where it was previously stored; if it was an "
-"expense, the corresponding amount is added back to the affected saving so"
-" that your totals return to the pre‑edit state."
+" saving (or “Base”) where it was previously stored; if it was an expense,"
+" the corresponding amount is added back to the affected saving so that "
+"your totals return to the pre‑edit state."
 msgstr ""
 
 #: budget_manager/templates/doc/_transactions.html:87
@@ -1885,113 +2295,171 @@ msgid "Overview"
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:91
-#: budget_manager/templates/doc/index.html:146
+#: budget_manager/templates/doc/index.html:149
 msgid "User Management"
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:94
-#: budget_manager/templates/doc/index.html:158
-msgid "Database"
+#: budget_manager/templates/doc/index.html:162
+msgid "REST API"
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:97
-#: budget_manager/templates/doc/index.html:169
-msgid "Configuration"
+#: budget_manager/templates/doc/index.html:172
+msgid "Database"
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:100
-#: budget_manager/templates/doc/index.html:181
+#: budget_manager/templates/doc/index.html:184
+msgid "Configuration"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:103
+#: budget_manager/templates/doc/index.html:196
 msgid "Deployment"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:132
+#: budget_manager/templates/doc/index.html:135
 msgid "Welcome to the Budget Manager Documentation"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:134
+#: budget_manager/templates/doc/index.html:137
 msgid ""
 "This documentation provides information about the Budget Manager "
 "application, its\n"
 "                        features, and how to use it."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:139
+#: budget_manager/templates/doc/index.html:142
 msgid ""
 "This documentation is customizable and can be edited to include specific "
 "information\n"
 "                            about your implementation."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:147
-msgid ""
-"The application includes a comprehensive user management system with "
-"role-based\n"
-"                        permissions:"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:150
-msgid "User authentication and authorization"
-msgstr ""
-
 #: budget_manager/templates/doc/index.html:151
-msgid "Role-based access control"
+msgid ""
+"Flask-Login sessions; passwords stored as Werkzeug hashes (scrypt or "
+"pbkdf2)."
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:152
-msgid "Permission management"
+msgid ""
+"Assign roles to users under Admin → Users. Effective rights are the union"
+" of those roles."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:159
+#: budget_manager/templates/doc/index.html:153
+msgid ""
+"The reviewer role is read-only across the app: every page is visible, "
+"but add/edit/delete controls are disabled. The Statistics Apply button "
+"is the exception. Admin create/edit and API tokens require "
+"has_permission(admin). Logs require has_role(admin)."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:154
+msgid ""
+"Admin → Roles: create roles and tick permissions. The admin role cannot "
+"be renamed or deleted."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:155
+msgid ""
+"Admin → Permissions: default slugs are admin, read, write, delete. Names "
+"cannot be changed after creation."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:156
+msgid ""
+"The admin account is created at startup from ADMIN_USER_*. The reviewer "
+"account is created only when REVIEWER_USER_USERNAME and "
+"REVIEWER_USER_PASSWORD are set (.env or GitLab CI <ENV>_REVIEWER_USER_*)."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:157
+msgid ""
+"On validation only: admins can enable passwordless reviewer login under "
+"Admin → Users. Visitors are signed in as reviewer until they log out; the"
+" login page also offers Connect as reviewer."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:164
+msgid ""
+"Issue one API token per user from Admin → Users (key button). The secret "
+"is shown once; only a hash is stored."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:165
+msgid ""
+"All /rest routes require the token: Authorization: Bearer <token> or X"
+"-API-Token."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:166
+msgid ""
+"Probe: GET /rest/test returns the username bound to the token. Inactive "
+"users are rejected."
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:173
 msgid ""
 "The application uses PostgreSQL as its database with Alembic for "
 "migrations:"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:161
+#: budget_manager/templates/doc/index.html:175
 msgid "Automatic database migrations"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:162
+#: budget_manager/templates/doc/index.html:176
 msgid "SQLAlchemy ORM for database access"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:163
-msgid "Efficient data management"
+#: budget_manager/templates/doc/index.html:177
+msgid ""
+"Permissions live in permissions and role_permissions. API tokens are "
+"stored hashed on users."
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:170
-msgid "The application supports multiple environments:"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:172
-msgid "Development"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:173
-msgid "Testing"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:174
-msgid "Demo"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:175
-msgid "Production"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:182
-msgid "The application can be deployed using Docker:"
-msgstr ""
-
-#: budget_manager/templates/doc/index.html:184
-msgid "Docker Compose for local development"
+#: budget_manager/templates/doc/index.html:178
+msgid ""
+"Application DB name is BUDMAN_DB_NAME; Postgres superuser DB is "
+"POSTGRES_DB."
 msgstr ""
 
 #: budget_manager/templates/doc/index.html:185
+msgid "BUDGET_MANAGER_CONTEXT selects the config class in lib/_config.py:"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:187
+msgid "Local Docker Compose"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:188
+msgid "CI disposable VM; TESTING enabled"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:189
+msgid "Pre-production, same deployment as prod, no automated tests"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:190
+msgid "Production"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:197
+msgid "The application can be deployed using Docker:"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:199
+msgid "Docker Compose for local development"
+msgstr ""
+
+#: budget_manager/templates/doc/index.html:200
 msgid "Ansible for production deployment"
 msgstr ""
 
-#: budget_manager/templates/doc/index.html:186
+#: budget_manager/templates/doc/index.html:201
 msgid "CI/CD pipeline integration"
 msgstr ""
 
@@ -2003,29 +2471,29 @@ msgstr ""
 #: budget_manager/templates/saving/add_saving.html:25
 #: budget_manager/templates/saving/add_saving.html:35
 #: budget_manager/templates/saving/add_saving.html:40
-#: budget_manager/templates/saving/edit_saving.html:25
-#: budget_manager/templates/saving/edit_saving.html:35
-#: budget_manager/templates/saving/edit_saving.html:40
+#: budget_manager/templates/saving/edit_saving.html:28
+#: budget_manager/templates/saving/edit_saving.html:38
+#: budget_manager/templates/saving/edit_saving.html:43
 msgid "optional"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:35
-#: budget_manager/templates/saving/edit_saving.html:35
+#: budget_manager/templates/saving/edit_saving.html:38
 msgid "Icon"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:41
-#: budget_manager/templates/saving/edit_saving.html:41
+#: budget_manager/templates/saving/edit_saving.html:44
 msgid "Target amount"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:46
-#: budget_manager/templates/saving/edit_saving.html:46
+#: budget_manager/templates/saving/edit_saving.html:49
 msgid "0 to 1"
 msgstr ""
 
 #: budget_manager/templates/saving/add_saving.html:48
-#: budget_manager/templates/saving/edit_saving.html:48
+#: budget_manager/templates/saving/edit_saving.html:51
 msgid ""
 "Ratio defines how much of the leftover is allocated to this saving. Sum "
 "of all ratios is kept at 1."
@@ -2039,7 +2507,11 @@ msgstr ""
 msgid "Edit Saving"
 msgstr ""
 
-#: budget_manager/templates/saving/edit_saving.html:52
+#: budget_manager/templates/saving/edit_saving.html:12
+msgid "The Base saving is required by the application and cannot be renamed."
+msgstr ""
+
+#: budget_manager/templates/saving/edit_saving.html:55
 msgid "Update"
 msgstr ""
 
@@ -2059,63 +2531,63 @@ msgstr ""
 msgid "Snapshot"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:97
+#: budget_manager/templates/saving/saving.html:99
 msgid "Amounts"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:100
+#: budget_manager/templates/saving/saving.html:102
 msgid "Ratios"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:109
+#: budget_manager/templates/saving/saving.html:111
 msgid "No savings found. Add your first saving!"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:119
+#: budget_manager/templates/saving/saving.html:121
 msgid "Are you sure you want to delete this saving?"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:128
+#: budget_manager/templates/saving/saving.html:130
 msgid "Error deleting saving"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:141
+#: budget_manager/templates/saving/saving.html:143
 msgid ""
 "This will adjust all saving amounts to match the current balance. "
 "Continue?"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:152
+#: budget_manager/templates/saving/saving.html:154
 msgid "Error adjusting amounts"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:167
+#: budget_manager/templates/saving/saving.html:169
 msgid "This will distribute the remaining monthly savings (Leftover: "
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:167
-msgid "from Reste saving among all savings. Continue?"
-msgstr ""
-
 #: budget_manager/templates/saving/saving.html:169
-msgid ""
-"This will distribute the remaining monthly savings from Reste saving "
-"among all savings. Continue?"
+msgid "from Base saving among all savings. Continue?"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:183
+#: budget_manager/templates/saving/saving.html:171
+msgid ""
+"This will distribute the remaining monthly savings from Base saving among"
+" all savings. Continue?"
+msgstr ""
+
+#: budget_manager/templates/saving/saving.html:185
 msgid "Error distributing monthly savings"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:196
+#: budget_manager/templates/saving/saving.html:198
 msgid "Capture a snapshot of current savings state?"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:207
+#: budget_manager/templates/saving/saving.html:209
 msgid "Error capturing snapshot"
 msgstr ""
 
-#: budget_manager/templates/saving/saving.html:255
+#: budget_manager/templates/saving/saving.html:257
 msgid "No ratios defined yet."
 msgstr ""
 
@@ -2153,7 +2625,7 @@ msgstr ""
 #~ msgstr "Password"
 
 #~ msgid "Welcome to the Dashboard"
-#~ msgstr "Welcome to the Dashboard"
+#~ msgstr ""
 
 #~ msgid "Documentation"
 #~ msgstr ""
@@ -2240,5 +2712,98 @@ msgstr ""
 #~ "At least {percent}% of your income "
 #~ "remains for savings or other expenses"
 #~ " (🔒)"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "The application includes a comprehensive "
+#~ "user management system with role-based"
+#~ "\n"
+#~ "                        permissions:"
+#~ msgstr ""
+
+#~ msgid "User authentication and authorization"
+#~ msgstr ""
+
+#~ msgid "Role-based access control"
+#~ msgstr ""
+
+#~ msgid "Permission management"
+#~ msgstr ""
+
+#~ msgid "Efficient data management"
+#~ msgstr ""
+
+#~ msgid "The application supports multiple environments:"
+#~ msgstr ""
+
+#~ msgid "Development"
+#~ msgstr ""
+
+#~ msgid "Testing"
+#~ msgstr ""
+
+#~ msgid "Demo"
+#~ msgstr ""
+
+#~ msgid ""
+#~ "you can edit a saving to change"
+#~ " its configuration or delete it "
+#~ "entirely. Deletion is protected by a "
+#~ "confirmation dialog and will remove the"
+#~ " saving but not its historical "
+#~ "snapshots."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Ratios are automatically normalized across "
+#~ "all savings so that their sum "
+#~ "remains equal to 1, with special "
+#~ "handling for the “Reste” saving, which"
+#~ " acts as a buffer."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "a dedicated function computes, for any"
+#~ " month and year, how much income "
+#~ "remains once fixed and variable expenses"
+#~ " linked to the “Reste” saving (or "
+#~ "no saving) are taken into account."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the distribution process takes the "
+#~ "leftover amount from the “Reste” saving,"
+#~ " ensuring that this buffer decreases "
+#~ "by exactly what is being distributed "
+#~ "(or by the available amount if it"
+#~ " is smaller)."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "the first pass tries to absorb the"
+#~ " difference inside the “Reste” saving "
+#~ "when it exists, since it is the"
+#~ " natural buffer for discrepancies."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "for an INCOME: if a saving is "
+#~ "selected, the amount is added to "
+#~ "that saving (capped at its goal if"
+#~ " one is defined); otherwise the "
+#~ "amount is added to the special "
+#~ "“Reste” saving or to the first "
+#~ "saving if “Reste” does not exist."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "if the original transaction was an "
+#~ "income, the amount is removed from "
+#~ "the saving (or “Reste”) where it "
+#~ "was previously stored; if it was "
+#~ "an expense, the corresponding amount is"
+#~ " added back to the affected saving"
+#~ " so that your totals return to "
+#~ "the pre‑edit state."
 #~ msgstr ""
 

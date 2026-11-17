@@ -9,12 +9,15 @@ from apscheduler.events import EVENT_JOB_EXECUTED, EVENT_JOB_ERROR
 from flask import current_app
 
 from budget_manager.lib import config
+from budget_manager.lib.const import CONTEXT_VALIDATION
 from budget_manager.lib.telegram import send_error_notification_telegram
 from budget_manager.lib.backup import create_backup, cleanup_old_backups, list_backups
 from budget_manager.models.task import TaskExecution, ScheduledTask
 from budget_manager.lib.database import DBSession
 
 log = logging.getLogger(__name__)
+
+VALIDATION_ONLY_TASKS = frozenset({"fill_validation_demo_transactions"})
 
 
 class TaskScheduler:
@@ -42,6 +45,7 @@ class TaskScheduler:
             from budget_manager.models.task import TaskExecution, ScheduledTask
             self._load_scheduled_tasks()
             self._schedule_pending_tasks()
+            self._fill_validation_demo_if_needed()
     
     def shutdown(self):
         """Shutdown the scheduler"""
@@ -114,6 +118,9 @@ class TaskScheduler:
         """Schedule all pending tasks that were registered with decorator"""
         for pending in self._pending_schedules:
             try:
+                if pending['task_name'] in VALIDATION_ONLY_TASKS and config.CONTEXT != CONTEXT_VALIDATION:
+                    log.debug("Skipping validation-only task '%s' in %s", pending['task_name'], config.CONTEXT)
+                    continue
                 # Check if task already exists in database
                 existing_task = ScheduledTask.get_task_by_name(pending['task_name'])
                 if not existing_task:
@@ -184,6 +191,9 @@ class TaskScheduler:
             # Load all scheduled tasks to restore their state
             scheduled_tasks = ScheduledTask.query.all()
             for task in scheduled_tasks:
+                if task.task_name in VALIDATION_ONLY_TASKS and config.CONTEXT != CONTEXT_VALIDATION:
+                    log.debug("Skipping validation-only task '%s' in %s", task.task_name, config.CONTEXT)
+                    continue
                 if task.task_name in self._registered_tasks:
                     # Check if cron expression or description has changed
                     metadata = self._task_metadata[task.task_name]
@@ -213,9 +223,18 @@ class TaskScheduler:
                     DBSession.commit()
         except Exception as e:
             log.error(f"Failed to load scheduled tasks: {e}")
-    
 
-    
+    def _fill_validation_demo_if_needed(self):
+        """Backfill missing demo months when the validation app starts."""
+        if config.CONTEXT != CONTEXT_VALIDATION:
+            return
+        try:
+            from budget_manager.lib.demo_data import ValidationDemoFiller
+            result = ValidationDemoFiller().fill_missing_months()
+            log.info("Validation demo fill on startup: %s", result)
+        except Exception as e:
+            log.error("Validation demo fill on startup failed: %s", e)
+
     def _execute_task(self, task_name, task_args, task_kwargs):
         """Execute a task and record the result"""
         task_id = str(uuid.uuid4())
@@ -403,6 +422,14 @@ def distribute_monthly_savings():
     except Exception as e:
         log.error(f"Distribute monthly savings failed: {e}")
         raise
+
+
+# Keep the validation demo current (daily no-op when the month is already filled)
+@scheduled_task('20 0 * * *', 'Fill missing validation demo months with randomized transactions')
+def fill_validation_demo_transactions():
+    """Insert randomized demo transactions for any month still missing in validation."""
+    from budget_manager.lib.demo_data import ValidationDemoFiller
+    return ValidationDemoFiller().fill_missing_months()
 
 
 # Record saving history snapshots shortly after monthly distribution

@@ -91,6 +91,9 @@
                             <a class="nav-link" href="#user-management"><i class="fas fa-users"></i> {{ _('User Management') }}</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="#rest-api"><i class="fas fa-plug"></i> {{ _('REST API') }}</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#database"><i class="fas fa-database"></i> {{ _('Database') }}</a>
                         </li>
                         <li class="nav-item">
@@ -144,12 +147,23 @@
                 <!-- User Management Section -->
                 <div id="user-management" class="doc-content-section">
                     <h2><i class="fas fa-users"></i> {{ _('User Management') }}</h2>
-                    <p>{{ _('The application includes a comprehensive user management system with role-based
-                        permissions:') }}</p>
                     <ul>
-                        <li>{{ _('User authentication and authorization') }}</li>
-                        <li>{{ _('Role-based access control') }}</li>
-                        <li>{{ _('Permission management') }}</li>
+                        <li>{{ _('Flask-Login sessions; passwords stored as Werkzeug hashes (scrypt or pbkdf2).') }}</li>
+                        <li>{{ _('Assign roles to users under Admin → Users. Effective rights are the union of those roles.') }}</li>
+                        <li>{{ _('The reviewer role is read-only across the app: every page is visible, but add/edit/delete controls are disabled. The Statistics Apply button is the exception. Admin create/edit and API tokens require has_permission(admin). Logs require has_role(admin).') }}</li>
+                        <li>{{ _('Admin → Roles: create roles and tick permissions. The admin role cannot be renamed or deleted.') }}</li>
+                        <li>{{ _('Admin → Permissions: default slugs are admin, read, write, delete. Names cannot be changed after creation.') }}</li>
+                        <li>{{ _('The admin account is created at startup from ADMIN_USER_*. The reviewer account is created only when REVIEWER_USER_USERNAME and REVIEWER_USER_PASSWORD are set (.env or GitLab CI <ENV>_REVIEWER_USER_*).') }}</li>
+                        <li>{{ _('On validation only: admins can enable passwordless reviewer login under Admin → Users. Visitors are signed in as reviewer until they log out; the login page also offers Connect as reviewer.') }}</li>
+                    </ul>
+                </div>
+
+                <div id="rest-api" class="doc-content-section">
+                    <h2><i class="fas fa-plug"></i> {{ _('REST API') }}</h2>
+                    <ul>
+                        <li>{{ _('Issue one API token per user from Admin → Users (key button). The secret is shown once; only a hash is stored.') }}</li>
+                        <li>{{ _('All /rest routes require the token: Authorization: Bearer <token> or X-API-Token.') }}</li>
+                        <li>{{ _('Probe: GET /rest/test returns the username bound to the token. Inactive users are rejected.') }}</li>
                     </ul>
                 </div>
 
@@ -160,19 +174,20 @@
                     <ul>
                         <li>{{ _('Automatic database migrations') }}</li>
                         <li>{{ _('SQLAlchemy ORM for database access') }}</li>
-                        <li>{{ _('Efficient data management') }}</li>
+                        <li>{{ _('Permissions live in permissions and role_permissions. API tokens are stored hashed on users.') }}</li>
+                        <li>{{ _('Application DB name is BUDMAN_DB_NAME; Postgres superuser DB is POSTGRES_DB.') }}</li>
                     </ul>
                 </div>
 
                 <!-- Configuration Section -->
                 <div id="configuration" class="doc-content-section">
                     <h2><i class="fas fa-cogs"></i> {{ _('Configuration') }}</h2>
-                    <p>{{ _('The application supports multiple environments:') }}</p>
+                    <p>{{ _('BUDGET_MANAGER_CONTEXT selects the config class in lib/_config.py:') }}</p>
                     <ul>
-                        <li>{{ _('Development') }}</li>
-                        <li>{{ _('Testing') }}</li>
-                        <li>{{ _('Demo') }}</li>
-                        <li>{{ _('Production') }}</li>
+                        <li><code>dev</code> — {{ _('Local Docker Compose') }}</li>
+                        <li><code>integration</code> — {{ _('CI disposable VM; TESTING enabled') }}</li>
+                        <li><code>validation</code> — {{ _('Pre-production, same deployment as prod, no automated tests') }}</li>
+                        <li><code>prod</code> — {{ _('Production') }}</li>
                     </ul>
                 </div>
 

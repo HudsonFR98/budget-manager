@@ -3,7 +3,9 @@ import logging
 from datetime import date
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_required
+from flask_babel import gettext as _
 from budget_manager.models import *
+from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import DBSession
 from budget_manager.lib.telegram import send_telegram_message
 
@@ -91,7 +93,7 @@ def _redistribute_proportionally(savings, target_sum: float):
 
 
 def _normalize_saving_ratios(updated_saving, new_ratio: float):
-    """Normalize ratios so their sum stays at 1 following Reste-first adjustments."""
+    """Normalize ratios so their sum stays at 1 following Base-first adjustments."""
     new_ratio = max(0.0, min(1.0, new_ratio))
     updated_saving.ratio = new_ratio
 
@@ -105,19 +107,19 @@ def _normalize_saving_ratios(updated_saving, new_ratio: float):
         DBSession.commit()
         return
 
-    reste_saving = next((s for s in all_savings if s.name == "Reste"), None)
+    base_saving = next((s for s in all_savings if s.name == SYSTEM_SAVING_NAME), None)
 
-    # If "Reste" is missing, fall back to proportional scaling for others.
-    if not reste_saving:
+    # If Base is missing, fall back to proportional scaling for others.
+    if not base_saving:
         others = [s for s in all_savings if s.id != updated_saving.id]
         _redistribute_proportionally(others, max(0.0, 1.0 - new_ratio))
         DBSession.commit()
         return
 
-    if updated_saving.id == reste_saving.id:
-        # Editing "Reste": redistribute all other ratios proportionally.
-        others = [s for s in all_savings if s.id != reste_saving.id]
-        _redistribute_proportionally(others, max(0.0, 1.0 - float(reste_saving.ratio or 0.0)))
+    if updated_saving.id == base_saving.id:
+        # Editing Base: redistribute all other ratios proportionally.
+        others = [s for s in all_savings if s.id != base_saving.id]
+        _redistribute_proportionally(others, max(0.0, 1.0 - float(base_saving.ratio or 0.0)))
         DBSession.commit()
         return
 
@@ -125,21 +127,21 @@ def _normalize_saving_ratios(updated_saving, new_ratio: float):
     rest_savings = [s for s in all_savings if s.id != updated_saving.id]
     rest_current_sum = _sum_positive_ratios(rest_savings)
 
-    reste_current = max(float(reste_saving.ratio or 0.0), 0.0)
+    base_current = max(float(base_saving.ratio or 0.0), 0.0)
     delta = rest_target - rest_current_sum
-    max_reste_allowed = rest_target
-    new_reste_ratio = reste_current + delta
-    new_reste_ratio = min(max(new_reste_ratio, 0.0), max_reste_allowed)
-    reste_saving.ratio = new_reste_ratio
+    max_base_allowed = rest_target
+    new_base_ratio = base_current + delta
+    new_base_ratio = min(max(new_base_ratio, 0.0), max_base_allowed)
+    base_saving.ratio = new_base_ratio
 
-    remaining_target = max(0.0, rest_target - new_reste_ratio)
-    other_savings = [s for s in rest_savings if s.id != reste_saving.id]
+    remaining_target = max(0.0, rest_target - new_base_ratio)
+    other_savings = [s for s in rest_savings if s.id != base_saving.id]
     _redistribute_proportionally(other_savings, remaining_target)
 
     total_sum = _sum_positive_ratios(all_savings)
     diff = 1.0 - total_sum
     if abs(diff) > 1e-6:
-        adjust_target = reste_saving if reste_saving.id != updated_saving.id else (other_savings[0] if other_savings else updated_saving)
+        adjust_target = base_saving if base_saving.id != updated_saving.id else (other_savings[0] if other_savings else updated_saving)
         if adjust_target:
             adjusted = max(float(adjust_target.ratio or 0.0) + diff, 0.0)
             adjust_target.ratio = min(1.0, adjusted)
@@ -200,27 +202,27 @@ def adjust_savings_amounts():
     if abs(difference) < 0.01:  # Already balanced (within 0.01€ tolerance)
         return 'Savings are already balanced!'
     
-    # Find "Reste" saving
-    reste_saving = None
+    # Find Base saving
+    base_saving = None
     for saving in all_savings:
-        if saving.name == "Reste":
-            reste_saving = saving
+        if saving.name == SYSTEM_SAVING_NAME:
+            base_saving = saving
             break
     
-    # Step 1: Adjust "Reste" saving first if it exists
-    if reste_saving:
-        reste_saving.amount = float(reste_saving.amount) + difference
+    # Step 1: Adjust Base saving first if it exists
+    if base_saving:
+        base_saving.amount = float(base_saving.amount) + difference
         DBSession.commit()
     
-    # Step 2: Check if any saving (including Reste) is negative
-    # If Reste is negative, proportionally adjust all savings
-    if reste_saving and float(reste_saving.amount) < 0:
-        # Reste is negative, need to redistribute proportionally
-        negative_amount = abs(float(reste_saving.amount))
-        reste_saving.amount = 0  # Set Reste to 0
+    # Step 2: Check if any saving (including Base) is negative
+    # If Base is negative, proportionally adjust all savings
+    if base_saving and float(base_saving.amount) < 0:
+        # Base is negative, need to redistribute proportionally
+        negative_amount = abs(float(base_saving.amount))
+        base_saving.amount = 0  # Set Base to 0
         
-        # Get all other savings (excluding Reste)
-        other_savings = [s for s in all_savings if s.id != reste_saving.id]
+        # Get all other savings (excluding Base)
+        other_savings = [s for s in all_savings if s.id != base_saving.id]
         
         if other_savings:
             # Calculate total amount in other savings
@@ -289,18 +291,18 @@ def adjust_savings_amounts():
     final_total = sum([float(s.amount) for s in all_savings])
     final_difference = total_balance - final_total
     
-    # Final adjustment: if still not balanced, adjust Reste or first saving
+    # Final adjustment: if still not balanced, adjust Base or first saving
     # But respect goals - don't exceed goal limits
     if abs(final_difference) >= 0.01:
-        if reste_saving:
-            new_reste_amount = float(reste_saving.amount) + final_difference
-            # Reste typically doesn't have a goal, but check anyway
-            if reste_saving.goal:
-                reste_saving.amount = min(new_reste_amount, float(reste_saving.goal))
+        if base_saving:
+            new_base_amount = float(base_saving.amount) + final_difference
+            # Base typically doesn't have a goal, but check anyway
+            if base_saving.goal:
+                base_saving.amount = min(new_base_amount, float(base_saving.goal))
             else:
-                reste_saving.amount = new_reste_amount
+                base_saving.amount = new_base_amount
         elif all_savings:
-            # No Reste, adjust first saving that hasn't reached its goal
+            # No Base, adjust first saving that hasn't reached its goal
             for saving in all_savings:
                 if not saving.goal or float(saving.amount) < float(saving.goal):
                     new_amount = float(saving.amount) + final_difference
@@ -348,6 +350,8 @@ def delete():
     id = data.get('id')
     saving_item = Saving.query.get(id)
     if saving_item:
+        if saving_item.name == SYSTEM_SAVING_NAME:
+            return jsonify({'error': _('The Base saving cannot be deleted.')}), 403
         DBSession.delete(saving_item)
         DBSession.commit()
         return jsonify({'message': 'Saving deleted!'})
@@ -448,7 +452,8 @@ def edit(id):
         return redirect(url_for('saving.summary'))
     
     if request.method == 'POST':
-        saving_item.name = request.form['name']
+        if saving_item.name != SYSTEM_SAVING_NAME:
+            saving_item.name = request.form['name']
         saving_item.note = request.form.get('note', '') or None
         # Use amount-euros if provided, otherwise use amount
         saving_item.amount = request.form.get('amount-euros') or request.form['amount']
@@ -541,8 +546,8 @@ def calculate_leftover_for_savings(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
-            # Only count transactions registered against "Reste" (or no saving)
-            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+            # Only count transactions registered against Base (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != SYSTEM_SAVING_NAME):
                 continue
             total_earnings += float(t.amount)
     
@@ -556,8 +561,8 @@ def calculate_leftover_for_savings(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
-            # Only count transactions registered against "Reste" (or no saving)
-            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+            # Only count transactions registered against Base (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != SYSTEM_SAVING_NAME):
                 continue
             total_fixed_expenses += float(t.amount)
     
@@ -571,8 +576,8 @@ def calculate_leftover_for_savings(month=None, year=None):
             extract('year', Transaction.date) == year
         ).all()
         for t in transactions:
-            # Only count transactions registered against "Reste" (or no saving)
-            if t.saving_id and (not t.saving or t.saving.name != "Reste"):
+            # Only count transactions registered against Base (or no saving)
+            if t.saving_id and (not t.saving or t.saving.name != SYSTEM_SAVING_NAME):
                 continue
             total_variable_expenses += float(t.amount)
     
@@ -587,8 +592,8 @@ def distribute_monthly_savings(month=None, year=None):
     
     This function:
     1. Calculates 'Reste pour épargner' for the specified month
-    2. Removes that amount from 'Reste' saving
-    3. Distributes it proportionally among all savings (including Reste)
+    2. Removes that amount from the Base saving
+    3. Distributes it proportionally among all savings (including Base)
     
     Args:
         month: Month number (1-12). If None, uses previous month.
@@ -618,30 +623,30 @@ def distribute_monthly_savings(month=None, year=None):
     if leftover_for_savings <= 0:
         return f'No remaining amount to distribute for {month}/{year}. Leftover for savings: {leftover_for_savings:.2f}€'
     
-    # Find "Reste" saving
-    reste_saving = Saving.query.filter(Saving.name == "Reste").first()
-    if not reste_saving:
-        return f'No "Reste" saving found. Cannot distribute monthly savings.'
+    # Find Base saving
+    base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
+    if not base_saving:
+        return f'No "{SYSTEM_SAVING_NAME}" saving found. Cannot distribute monthly savings.'
     
-    # Get current amount in Reste saving
-    reste_amount = float(reste_saving.amount)
+    # Get current amount in Base saving
+    base_amount = float(base_saving.amount)
     
-    # We need to take the leftover amount FROM Reste saving
-    # But only if Reste has at least that amount
-    if reste_amount < leftover_for_savings:
-        # Not enough in Reste, use what's available (but warn the user)
-        amount_to_distribute = reste_amount
-        reste_saving.amount = 0
-        log.warning(f'Reste saving ({reste_amount:.2f}€) has less than calculated leftover ({leftover_for_savings:.2f}€). Distributing available amount.')
+    # We need to take the leftover amount FROM Base saving
+    # But only if Base has at least that amount
+    if base_amount < leftover_for_savings:
+        # Not enough in Base, use what's available (but warn the user)
+        amount_to_distribute = base_amount
+        base_saving.amount = 0
+        log.warning(f'{SYSTEM_SAVING_NAME} saving ({base_amount:.2f}€) has less than calculated leftover ({leftover_for_savings:.2f}€). Distributing available amount.')
     else:
-        # Take exactly the leftover amount from Reste
+        # Take exactly the leftover amount from Base
         amount_to_distribute = leftover_for_savings
-        reste_saving.amount = reste_amount - leftover_for_savings
+        base_saving.amount = base_amount - leftover_for_savings
     
-    # Commit the Reste saving update first
+    # Commit the Base saving update first
     DBSession.commit()
     
-    # Get all savings (including Reste) for proportional distribution
+    # Get all savings (including Base) for proportional distribution
     all_savings = Saving.query.all()
     
     if not all_savings:

@@ -7,7 +7,10 @@
 <form method="POST" action="{{ url_for('saving.edit', id=saving.id) }}">
     <div class="form-group">
         <label for="name">{{ _('Name') }}</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{ saving.name }}" required maxlength="100">
+        <input type="text" class="form-control" id="name" name="name" value="{{ saving.name }}" required maxlength="100"{% if saving.name == 'Base' %} readonly{% endif %}>
+        {% if saving.name == 'Base' %}
+        <small class="form-text text-muted">{{ _('The Base saving is required by the application and cannot be renamed.') }}</small>
+        {% endif %}
     </div>
     <br>
     <div class="form-group">
@@ -49,7 +52,7 @@
         </small>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">{{ _('Update') }}</button>
+    <button type="submit" class="btn btn-primary mutate-control" {% if not can_edit_data %}disabled{% endif %}>{{ _('Update') }}</button>
     <a href="{{ url_for('saving.summary') }}" class="btn btn-secondary">{{ _('Cancel') }}</a>
 </form>
 

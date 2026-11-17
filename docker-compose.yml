@@ -1,17 +1,20 @@
-# Docker Compose file format version 3.8 for compatibility with Docker Compose 2.35.1
-version: '3.8'
+# Project name prefixes containers, volumes, and networks (e.g. budman-prod, budman-dev).
+# Set BUDGET_MANAGER_CONTEXT in .env (dev, prod, validation, …).
+name: "budman-${BUDGET_MANAGER_CONTEXT:-dev}"
 
 services:
   app:
     build: .
-    container_name: budman_app_dev
+    container_name: "budman_app_${BUDGET_MANAGER_CONTEXT:-dev}"
     ports:
       - "8081:8080"
     env_file:
       - .env
     environment:
-      - BUDGET_MANAGER_CONTEXT=dev
-      - DB_IP=budman_db_dev
+      # Same value as in .env; default dev if missing (drives lib/_config.py and container names below).
+      BUDGET_MANAGER_CONTEXT: ${BUDGET_MANAGER_CONTEXT:-dev}
+      DB_IP: db
+      PATH: /opt/env3/budget_manager/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
     depends_on:
       db:
         condition: service_healthy
@@ -21,13 +24,13 @@ services:
       - ./:/opt/budget_manager:cached
       - ./logs:/var/log/budget_manager
       - ./backups:/var/backup
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: always
-    networks:
-      - budman_network_dev
 
   db:
     image: postgres:15
-    container_name: budman_db_dev
+    container_name: "budman_db_${BUDGET_MANAGER_CONTEXT:-dev}"
     env_file:
       - .env
     volumes:
@@ -39,16 +42,14 @@ services:
     restart: always
     command: postgres -c 'max_connections=100'
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U web -d budman" ]
+      test: [ "CMD-SHELL", "pg_isready -U web -d postgres" ]
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - budman_network_dev
 
   redis:
     image: redis:7-alpine
-    container_name: budman_redis_dev
+    container_name: "budman_redis_${BUDGET_MANAGER_CONTEXT:-dev}"
     ports:
       - "6381:6379"
     restart: always
@@ -57,8 +58,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    networks:
-      - budman_network_dev
 
 volumes:
   postgres_data:
@@ -68,12 +67,7 @@ volumes:
       type: none
       o: bind
       device: ./logs
-  backup_data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./backups
+
 networks:
-  budman_network_dev:
-    driver: bridge
+  default:
+    name: "budman_network_${BUDGET_MANAGER_CONTEXT:-dev}"

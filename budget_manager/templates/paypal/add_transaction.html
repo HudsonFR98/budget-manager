@@ -30,7 +30,7 @@
         <input type="text" class="form-control" id="note" name="note" required>
     </div>
     <br>
-    <button type="submit" class="btn btn-primary">Créer</button>
+    <button type="submit" class="btn btn-primary mutate-control" {% if not can_edit_data %}disabled{% endif %}>Créer</button>
 </form>
 
 {% endblock %}

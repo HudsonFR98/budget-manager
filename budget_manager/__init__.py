@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session
-from flask_login import LoginManager
+from flask_login import LoginManager, current_user
 from flask_babel import Babel, gettext as _
 
 from budget_manager.lib import config
@@ -22,7 +22,7 @@ from .blueprints.paypal import paypal
 from .blueprints.elytras import elytras
 from .blueprints.saving import saving
 from .blueprints.home import home
-# from .blueprints.rest import rest
+from .blueprints.rest import rest
 
 
 def create_app():
@@ -67,7 +67,7 @@ def create_app():
     
     # Start the task scheduler only in the main process
     # In development mode with reloader, this prevents duplicate schedulers
-    # In production environments (test, demo, prod), always start the scheduler
+    # In deployed environments (integration, validation, prod), always start the scheduler
     import os
     if config.CONTEXT == 'dev':
         # In dev mode, only start if not in reloader process
@@ -219,7 +219,16 @@ def create_app():
 
     @app.context_processor
     def inject_ui():
-        return dict(CONTEXT=config.CONTEXT, VERSION=version.get_version(), get_locale=get_locale, _=_)
+        can_edit_data = bool(
+            current_user.is_authenticated and current_user.can_edit_data()
+        )
+        return dict(
+            CONTEXT=config.CONTEXT,
+            VERSION=version.get_version(),
+            get_locale=get_locale,
+            _=_,
+            can_edit_data=can_edit_data,
+        )
 
     app.register_blueprint(auth)
     app.register_blueprint(doc, url_prefix='/doc/')
@@ -232,10 +241,10 @@ def create_app():
     app.register_blueprint(elytras, url_prefix='/elytras/')
     app.register_blueprint(saving, url_prefix='/saving/')
     app.register_blueprint(home, url_prefix='/home/')
-    # Register coverage blueprint only in test context
-    if config.CONTEXT in ['test', 'dev']:
+    app.register_blueprint(rest, url_prefix='/rest')
+    # Register coverage blueprint only in integration and local dev
+    if config.CONTEXT in ['integration', 'dev']:
         app.register_blueprint(coverage, url_prefix='/coverage/')
     app.register_blueprint(test_output, url_prefix='/tests/')
-    # app.register_blueprint(rest, url_prefix='/rest')
 
     return app

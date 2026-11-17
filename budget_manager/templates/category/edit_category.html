@@ -50,7 +50,7 @@
     <input style="font-size: 30px" type="text" class="form-control" id="icon" name="icon" value="{{ cat.icon }}">
   </div>
   <br>
-  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+  <button type="submit" class="btn btn-primary mutate-control" {% if not can_edit_data %}disabled{% endif %}>Mettre à jour</button>
 </form>
 
 <script>

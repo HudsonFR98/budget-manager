@@ -4,6 +4,7 @@ from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, Da
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
 
+from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import Base, DBSession
 
 log = logging.getLogger(__name__)
@@ -51,7 +52,7 @@ class Transaction(Base):
 
     @staticmethod
     def get_budget_eligible_earnings(month=None, year=None):
-        """Return earnings total used for budgeting (excludes non-Reste savings)."""
+        """Return earnings total used for budgeting (excludes non-Base savings)."""
         if month is None or year is None:
             today = datetime.today()
             if month is None:
@@ -63,7 +64,7 @@ class Transaction(Base):
             Transaction.category.has(type=0),
             extract('month', Transaction.date) == month,
             extract('year', Transaction.date) == year,
-            or_(Transaction.saving_id == None, Transaction.saving.has(name="Reste"))
+            or_(Transaction.saving_id == None, Transaction.saving.has(name=SYSTEM_SAVING_NAME))
         )
         total = 0
         for transaction in query:
