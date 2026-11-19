@@ -47,6 +47,15 @@ class Transaction(Base):
         """Get datetime object"""
         return datetime.combine(self.date, datetime.min.time())
 
+    @property
+    def list_saving(self):
+        """Saving envelope shown in transaction lists; None for Base or unassigned."""
+        if not self.saving_id or not self.saving:
+            return None
+        if self.saving.name == SYSTEM_SAVING_NAME:
+            return None
+        return self.saving
+
     def __repr__(self):
         return f'<Transaction {self.id}: {self.amount} on {self.date}>'
 

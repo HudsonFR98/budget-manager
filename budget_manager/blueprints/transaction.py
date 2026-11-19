@@ -3,9 +3,11 @@ from datetime import datetime, date, timedelta
 from flask import Blueprint, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_required
 from sqlalchemy import extract
+from sqlalchemy.orm import joinedload
 from budget_manager.models import *
 from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import DBSession
+from budget_manager.dao.transaction import record_spending_transaction, spending_exceeds_envelope
 
 transaction = Blueprint("transaction", __name__)
 
@@ -54,11 +56,19 @@ def summary():
     end_date = current_date
 
     #we display transaction from 1 month max
-    transactions = Transaction.query.filter(
-        Transaction.date >= start_date.date(),
-        Transaction.date <= end_date.date(),
-        (Transaction.paypal == False) | (Transaction.paypal == None)
-    ).order_by(Transaction.id.desc()).all()
+    transactions = (
+        Transaction.query.options(
+            joinedload(Transaction.category),
+            joinedload(Transaction.saving),
+        )
+        .filter(
+            Transaction.date >= start_date.date(),
+            Transaction.date <= end_date.date(),
+            (Transaction.paypal == False) | (Transaction.paypal == None),
+        )
+        .order_by(Transaction.id.desc())
+        .all()
+    )
     ctx = {'transactions': transactions,
            'sold': sold()}
     return render_template('transaction/transaction.html', **ctx)
@@ -135,44 +145,41 @@ def add():
                 savings = Saving.query.order_by(Saving.id).all()
                 return render_template('transaction/add_transaction.html', now=now, categories=Category.query.order_by(Category.name).all(), savings=savings)
         
-        transac = Transaction(note=note, category_id=category_id, date=date, amount=amount, saving_id=saving_id if saving_id else None)
-        DBSession.add(transac)
-        DBSession.commit()
-        
-        # Handle savings based on transaction type
         category = Category.query.get(category_id)
+        spending_warning = None
         if category.type == 0:
-            # Earning: Add amount to Base saving (or selected saving if provided)
+            transac = Transaction(
+                note=note,
+                category_id=category_id,
+                date=date,
+                amount=amount,
+                saving_id=saving_id if saving_id else None,
+            )
+            DBSession.add(transac)
             if saving_id:
-                # Add to selected saving
                 saving = Saving.query.get(saving_id)
                 if saving:
                     new_amount = float(saving.amount) + amount
-                    # Don't exceed goal if set
                     if saving.goal:
                         saving.amount = min(new_amount, float(saving.goal))
                     else:
                         saving.amount = new_amount
             else:
-                # Add to Base saving by default
                 base_saving = Saving.query.filter(Saving.name == SYSTEM_SAVING_NAME).first()
                 if base_saving:
                     base_saving.amount = float(base_saving.amount) + amount
                 else:
-                    # No Base saving found, add to first saving
                     all_savings = Saving.query.all()
                     if all_savings:
                         all_savings[0].amount = float(all_savings[0].amount) + amount
         else:
-            # Spending: Subtract amount from selected saving
-            # Amount is already negative for spending, so use absolute value
-            if saving_id:
-                saving = Saving.query.get(saving_id)
-                if saving:
-                    spending_amount = abs(amount)  # Convert negative to positive
-                    saving.amount = max(0, float(saving.amount) - spending_amount)  # Don't go below 0
-        
+            spending_result = record_spending_transaction(note, category_id, date, amount, saving_id)
+            spending_warning = spending_result.warning
+
         DBSession.commit()
+
+        if spending_warning:
+            flash(spending_warning, 'warning')
         
         # if earning has changed
         if category.type == 0:
@@ -249,16 +256,26 @@ def edit(id):
                     old_spending_amount = abs(old_amount)  # Convert negative to positive
                     saving.amount = float(saving.amount) + old_spending_amount
         
+        category = Category.query.get(category_id)
+        if category.type != 0 and spending_exceeds_envelope(new_amount, new_saving_id):
+            DBSession.delete(transac)
+            DBSession.flush()
+            spending_result = record_spending_transaction(
+                note, category_id, date, new_amount, new_saving_id,
+            )
+            DBSession.commit()
+            if spending_result.warning:
+                flash(spending_result.warning, 'warning')
+            return redirect(url_for('transaction.summary'))
+
         # Update transaction
         transac.note = note
         transac.category_id = category_id
         transac.date = date
         transac.amount = new_amount
         transac.saving_id = new_saving_id if new_saving_id else None
-        DBSession.commit()
         
         # Apply new transaction's effect on savings
-        category = Category.query.get(category_id)
         if category.type == 0:
             # Earning: Add amount to Base saving (or selected saving if provided)
             if new_saving_id:
@@ -289,12 +306,10 @@ def edit(id):
                 if saving:
                     new_spending_amount = abs(new_amount)  # Convert negative to positive
                     saving.amount = max(0, float(saving.amount) - new_spending_amount)
-        
+
         DBSession.commit()
-        
-        # if earning has changed
+
         if category.type == 0:
-            # we re-adjust all fixed bugdets
             reajust_fixed_budgets(old_total_earnings)
         return redirect(url_for('transaction.summary'))
     
