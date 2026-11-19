@@ -58,10 +58,7 @@
             <a class="nav-link" href="{{ url_for('saving.summary') }}">{{ _('Savings') }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('elytras.summary') }}">{{ _('Elytras') }}</a>
-          </li>
-          <li class="nav-item paypal-tab" style="display: none;">
-            <a class="nav-link" href="{{ url_for('paypal.summary') }}">{{ _('PayPal') }}</a>
+            <a class="nav-link" href="{{ url_for('business.summary') }}">{{ _('Businesses') }}</a>
           </li>
           <!-- Admin Navigation -->
           {% if current_user.has_role('admin', 'reviewer') %}
@@ -234,37 +231,6 @@
             setTheme(e.matches ? 'dark' : 'light');
           }
         });
-      }
-    });
-  </script>
-
-  <!-- PayPal Tab Toggle Script -->
-  <script>
-    document.body.addEventListener('keyup', function (event) {
-      // Check if the pressed key is the "$" key (key code 36)
-      if (event.key === '$') {
-        // Find the element with class "paypal_tab"
-        var paypalTab = document.querySelector('.paypal-tab');
-        if (paypalTab) {
-          // Toggle the visibility by switching between 'none' and 'block'
-          var newDisplayValue = (paypalTab.style.display === 'none') ? 'block' : 'none';
-          paypalTab.style.display = newDisplayValue;
-
-          var currentYear = new Date().getFullYear();
-
-          // Check if the current URL is "/elytras"
-          if (window.location.pathname === '/elytras/') {
-            // Get the current year
-
-            // Load the URL "/elytras/{current year}/True"
-            window.location.href = '/elytras/' + currentYear + '/True';
-          }
-          if (window.location.pathname === '/elytras/' + currentYear + '/True') {
-
-            // Load the URL "/elytras/"
-            window.location.href = '/elytras/';
-          }
-        }
       }
     });
   </script>

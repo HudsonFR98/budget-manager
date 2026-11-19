@@ -255,11 +255,144 @@ msgid "Savings"
 msgstr ""
 
 #: budget_manager/templates/base.html:61
-msgid "Elytras"
+#: budget_manager/templates/business/list.html:5
+#: budget_manager/templates/business/report.html:8
+msgid "Businesses"
 msgstr ""
 
-#: budget_manager/templates/base.html:64
-msgid "PayPal"
+#: budget_manager/templates/business/list.html:8
+#: budget_manager/templates/business/add.html:4
+msgid "Add business"
+msgstr ""
+
+#: budget_manager/templates/business/edit.html:4
+msgid "Edit business"
+msgstr ""
+
+#: budget_manager/templates/business/list.html:36
+#: budget_manager/templates/business/add.html:13
+#: budget_manager/templates/business/edit.html:13
+msgid "Start date"
+msgstr ""
+
+#: budget_manager/templates/business/list.html:39
+#: budget_manager/templates/business/add.html:18
+#: budget_manager/templates/business/edit.html:18
+msgid "Opening result"
+msgstr ""
+
+#: budget_manager/templates/business/add.html:20
+#: budget_manager/templates/business/edit.html:20
+msgid "Result already accumulated before the first recorded transaction."
+msgstr ""
+
+#: budget_manager/templates/business/list.html:45
+msgid "Profitability"
+msgstr ""
+
+#: budget_manager/templates/business/list.html:54
+msgid "No businesses yet. Add your first business."
+msgstr ""
+
+#: budget_manager/templates/business/list.html:66
+msgid "Are you sure you want to delete this business?"
+msgstr ""
+
+#: budget_manager/templates/business/list.html:77
+msgid "Error deleting business"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:6
+msgid "Profitability analysis"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:29
+msgid "Year"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:30
+msgid "Q1"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:31
+msgid "Q2"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:32
+msgid "Q3"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:33
+msgid "Q4"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:51
+msgid "Profitability since the start of activity"
+msgstr ""
+
+#: budget_manager/templates/business/report.html:65
+msgid "Quarter"
+msgstr ""
+
+#: budget_manager/lib/business_report.py
+#: budget_manager/templates/business/report.html
+msgid "Turnover"
+msgstr ""
+
+#: budget_manager/lib/business_report.py
+msgid "Gross expenses"
+msgstr ""
+
+#: budget_manager/lib/business_report.py
+msgid "Final profit"
+msgstr ""
+
+#: budget_manager/templates/business/report.html
+msgid "Time"
+msgstr ""
+
+#: budget_manager/templates/business/report.html
+msgid "Expenses"
+msgstr ""
+
+#: budget_manager/dao/business.py
+msgid "A business name is required."
+msgstr ""
+
+#: budget_manager/dao/business.py
+msgid "A business name cannot exceed 70 characters."
+msgstr ""
+
+#: budget_manager/dao/business.py
+msgid "A business with this name already exists."
+msgstr ""
+
+#: budget_manager/dao/business.py
+msgid "Categories for this business name already exist."
+msgstr ""
+
+#: budget_manager/dao/business.py
+msgid "This business still has transactions and cannot be deleted."
+msgstr ""
+
+#: budget_manager/blueprints/business.py
+msgid "Business added."
+msgstr ""
+
+#: budget_manager/blueprints/business.py
+msgid "Business updated."
+msgstr ""
+
+#: budget_manager/blueprints/business.py
+msgid "Business deleted."
+msgstr ""
+
+#: budget_manager/blueprints/business.py
+msgid "Business not found."
+msgstr ""
+
+#: budget_manager/blueprints/business.py
+msgid "Please provide a valid start date and opening result."
 msgstr ""
 
 #: budget_manager/templates/base.html:71

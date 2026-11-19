@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, date
-from sqlalchemy import Column, Integer, String, Numeric, Boolean, ForeignKey, Date, extract, or_
+from sqlalchemy import Column, Integer, String, Numeric, ForeignKey, Date, extract, or_
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declared_attr
 
@@ -22,15 +22,13 @@ class Transaction(Base):
     category = relationship('Category', backref='transactions')
     saving_id = Column(Integer, ForeignKey('saving.id'), nullable=True)
     saving = relationship('Saving', backref='transactions')
-    paypal = Column(Boolean, default=False)
 
-    def __init__(self, date=None, note=None, amount=None, category_id=None, saving_id=None, paypal=False):
+    def __init__(self, date=None, note=None, amount=None, category_id=None, saving_id=None):
         self.date = date or date.today()
         self.note = note
         self.amount = amount
         self.category_id = category_id
         self.saving_id = saving_id
-        self.paypal = paypal
 
     @property
     def get_datetime(self):

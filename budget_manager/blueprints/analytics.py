@@ -189,7 +189,6 @@ def _build_savings_insights(months: int = 12, leftover_median: float = 0.0) -> l
 
 def _sum_transactions_until(target_date: date) -> float:
     total = DBSession.query(func.sum(Transaction.amount)).filter(
-        (Transaction.paypal == False) | (Transaction.paypal == None),
         Transaction.date <= target_date
     ).scalar()
     return float(total or 0.0)

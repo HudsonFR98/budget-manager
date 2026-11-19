@@ -14,7 +14,7 @@ transaction = Blueprint("transaction", __name__)
 def sold():
     """Calculate total balance"""
     total_amount = 0
-    transactions = Transaction.query.filter((Transaction.paypal == False) | (Transaction.paypal == None)).all()
+    transactions = Transaction.query.all()
     for t in transactions:
         total_amount += t.amount
     return total_amount
@@ -64,7 +64,6 @@ def summary():
         .filter(
             Transaction.date >= start_date.date(),
             Transaction.date <= end_date.date(),
-            (Transaction.paypal == False) | (Transaction.paypal == None),
         )
         .order_by(Transaction.id.desc())
         .all()

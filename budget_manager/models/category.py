@@ -31,7 +31,7 @@ class Category(Base):
     
     id = Column(Integer, primary_key=True)
     budgets = relationship('Budget', secondary=category_budget, backref='categories')
-    name = Column(String(30), nullable=False)
+    name = Column(String(80), nullable=False)
     type = Column(Integer, nullable=True)
     color = Column(String(30), nullable=True)  # hexadecimal
     icon = Column(String(30), nullable=True)  # a html class
@@ -129,12 +129,12 @@ class Category(Base):
 
     @property
     def is_deletable(self):
-        """Check if category is deletable (no transactions and no budgets linked)"""
+        """Check if category is deletable (no transactions and not linked to a business)"""
         transactions = Transaction.query.filter(Transaction.category == self).all()
         if transactions:
             return False
-        else:
-            return True
+        from budget_manager.dao.business import category_is_linked
+        return not category_is_linked(self.id)
 
 
 # Add query property to model

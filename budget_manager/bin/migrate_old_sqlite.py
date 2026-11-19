@@ -198,7 +198,6 @@ def migrate(sqlite_path: str, dry_run: bool = False, links_only: bool = False):
                         "note": clamp(r.get("note"), 30),
                         "amount": r["amount"],
                         "category_id": r["category_id"],
-                        "paypal": bool(r.get("paypal")) if r.get("paypal") is not None else False,
                     } for r in batch]
                     session.bulk_insert_mappings(Transaction, mappings)
                 session.flush()

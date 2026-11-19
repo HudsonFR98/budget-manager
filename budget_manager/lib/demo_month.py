@@ -14,6 +14,31 @@ SYSTEM_SAVING_NAME = "Base"
 SENTINEL_SAVING = "Vacances"
 DEMO_SALARY_CATEGORY = "Salaire"
 DEMO_SALARY_NOTE = "Salaire"
+DEMO_BUSINESS_NAME = "Atelier"
+DEMO_BUSINESS_STARTED_ON = date(2026, 4, 1)
+DEMO_BUSINESS_SALES_MARKER = "__business_sales__"
+DEMO_BUSINESS_EXPENSES_MARKER = "__business_expenses__"
+DEMO_BUSINESS_SALES_ICON = "🏪"
+DEMO_BUSINESS_SALES_COLOR = "#b0ea70"
+DEMO_BUSINESS_EXPENSES_ICON = "📦"
+DEMO_BUSINESS_EXPENSES_COLOR = "#dfff2a"
+
+
+def demo_business_sales_category_name(business_name: str = DEMO_BUSINESS_NAME) -> str:
+    return f"Ventes {business_name}"
+
+
+def demo_business_expense_category_name(business_name: str = DEMO_BUSINESS_NAME) -> str:
+    return f"Dépenses {business_name}"
+
+
+def resolve_demo_category_name(category_name: str, sales_name: str, expense_name: str) -> str:
+    if category_name == DEMO_BUSINESS_SALES_MARKER:
+        return sales_name
+    if category_name == DEMO_BUSINESS_EXPENSES_MARKER:
+        return expense_name
+    return category_name
+
 
 CATEGORIES = [
     ("Salaire", 0, "#6cf561", "💶"),
@@ -76,7 +101,6 @@ class DemoTransaction:
     amount: float
     category_name: str
     saving_name: str | None
-    paypal: bool
     kind: str
 
 
@@ -99,26 +123,26 @@ class DemoMonthBuilder:
         rng = self.rng
 
         salary = 2180.00 if month != 6 else 2380.00
-        rows.append(DemoTransaction(date(year, month, 1), DEMO_SALARY_NOTE, salary, DEMO_SALARY_CATEGORY, None, False, "income"))
-        rows.append(DemoTransaction(date(year, month, 5), "CAF", 192.40, "CAF", None, False, "income"))
+        rows.append(DemoTransaction(date(year, month, 1), DEMO_SALARY_NOTE, salary, DEMO_SALARY_CATEGORY, None, "income"))
+        rows.append(DemoTransaction(date(year, month, 5), "CAF", 192.40, "CAF", None, "income"))
 
         if month in (4, 10):
-            rows.append(DemoTransaction(date(year, month, 12), "Remboursement", 45.00, "Autres revenus", None, False, "income"))
+            rows.append(DemoTransaction(date(year, month, 12), "Remboursement", 45.00, "Autres revenus", None, "income"))
 
-        rows.append(DemoTransaction(date(year, month, 3), "Loyer", -720.00, "Loyer", None, False, "expense"))
+        rows.append(DemoTransaction(date(year, month, 3), "Loyer", -720.00, "Loyer", None, "expense"))
         elec = round(-62.00 - rng.randint(0, 18) - (10 if month in (1, 2, 11, 12) else 0), 2)
-        rows.append(DemoTransaction(date(year, month, 8), "EDF", elec, "Électricité", None, False, "expense"))
-        rows.append(DemoTransaction(date(year, month, 6), "Forfait mobile", -19.99, "Mobile", None, False, "expense"))
-        rows.append(DemoTransaction(date(year, month, 7), "Mutuelle", -42.00, "Mutuelle", None, False, "expense"))
+        rows.append(DemoTransaction(date(year, month, 8), "EDF", elec, "Électricité", None, "expense"))
+        rows.append(DemoTransaction(date(year, month, 6), "Forfait mobile", -19.99, "Mobile", None, "expense"))
+        rows.append(DemoTransaction(date(year, month, 7), "Mutuelle", -42.00, "Mutuelle", None, "expense"))
         if month % 3 == 1:
-            rows.append(DemoTransaction(date(year, month, 10), "Assurance hab.", -18.50, "Assurance habitation", None, False, "expense"))
+            rows.append(DemoTransaction(date(year, month, 10), "Assurance hab.", -18.50, "Assurance habitation", None, "expense"))
 
         food_count = 8 if not is_current else 5
         for _ in range(food_count):
             day = rng.randint(2, last_day)
             amount = round(-rng.uniform(14, 68), 2)
             rows.append(DemoTransaction(
-                date(year, month, day), clip_note(rng.choice(FOOD_NOTES)), amount, "Alimentation", None, False, "expense",
+                date(year, month, day), clip_note(rng.choice(FOOD_NOTES)), amount, "Alimentation", None, "expense",
             ))
 
         leisure_count = rng.randint(2, 3 if not is_current else 2)
@@ -126,7 +150,7 @@ class DemoMonthBuilder:
             day = rng.randint(4, last_day)
             amount = round(-rng.uniform(8, 38), 2)
             rows.append(DemoTransaction(
-                date(year, month, day), clip_note(rng.choice(LEISURE_NOTES)), amount, "Loisirs", None, False, "expense",
+                date(year, month, day), clip_note(rng.choice(LEISURE_NOTES)), amount, "Loisirs", None, "expense",
             ))
 
         transport_count = 4 if not is_current else 2
@@ -134,24 +158,24 @@ class DemoMonthBuilder:
             day = rng.randint(2, last_day)
             amount = round(-rng.choice([1.80, 1.80, 3.60, 12.50, 38.00]), 2)
             rows.append(DemoTransaction(
-                date(year, month, day), clip_note(rng.choice(TRANSPORT_NOTES)), amount, "Transports", None, False, "expense",
+                date(year, month, day), clip_note(rng.choice(TRANSPORT_NOTES)), amount, "Transports", None, "expense",
             ))
 
         if month in (5, 11):
             gift_day = min(15, last_day)
-            rows.append(DemoTransaction(date(year, month, gift_day), "Anniversaire", -35.00, "Cadeaux", None, False, "expense"))
+            rows.append(DemoTransaction(date(year, month, gift_day), "Anniversaire", -35.00, "Cadeaux", None, "expense"))
 
         if month == 7:
-            rows.append(DemoTransaction(date(year, month, 18), "Optique", -89.00, "Santé", "Santé", False, "expense"))
+            rows.append(DemoTransaction(date(year, month, 18), "Optique", -89.00, "Santé", "Santé", "expense"))
 
         if month == 8:
-            rows.append(DemoTransaction(date(year, month, 4), "Camping", -160.00, "Vacances", SENTINEL_SAVING, False, "expense"))
+            rows.append(DemoTransaction(date(year, month, 4), "Camping", -160.00, "Vacances", SENTINEL_SAVING, "expense"))
 
         if month in (6, 9):
             sales = round(rng.uniform(28, 75), 2)
-            rows.append(DemoTransaction(date(year, month, 20), "Vente figurine", sales, "Ventes Elytras", None, True, "income"))
+            rows.append(DemoTransaction(date(year, month, 20), "Vente", sales, DEMO_BUSINESS_SALES_MARKER, None, "income"))
             spend = round(-rng.uniform(12, 40), 2)
-            rows.append(DemoTransaction(date(year, month, 21), "Resine / colis", spend, "Dépenses Elytras", None, True, "expense"))
+            rows.append(DemoTransaction(date(year, month, 21), "Fournitures", spend, DEMO_BUSINESS_EXPENSES_MARKER, None, "expense"))
 
         return rows
 

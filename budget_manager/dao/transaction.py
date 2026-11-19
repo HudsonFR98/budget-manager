@@ -133,7 +133,7 @@ def record_spending_transaction(
     }
     return RecordSpendingResult([envelope_transac, base_transac], warning)
 
-def get_trimester_transac(trim, year, cat_names, paypal=False) -> List[Transaction]:
+def get_trimester_transac(trim, year, cat_names) -> List[Transaction]:
     """ extract all transactions from specific trimester, year and categories """
 
     q = Transaction.query.join(Transaction.category).filter(
@@ -142,21 +142,15 @@ def get_trimester_transac(trim, year, cat_names, paypal=False) -> List[Transacti
         Category.name.in_(cat_names)
     ).order_by(Transaction.id.desc())
 
-    if not paypal:
-        q = q.filter((Transaction.paypal == False) | (Transaction.paypal == None))
-
     return q.all()
 
-def get_year_transac(year, cat_names, paypal=False) -> List[Transaction]:
-    """ extract all transactions from specific trimester, year and categories """
+def get_year_transac(year, cat_names) -> List[Transaction]:
+    """ extract all transactions from specific year and categories """
 
     q = Transaction.query.join(Transaction.category).filter(
         extract('year', Transaction.date) == year,
         Category.name.in_(cat_names)
     ).order_by(Transaction.id.desc())
-
-    if not paypal:
-        q = q.filter((Transaction.paypal == False) | (Transaction.paypal == None))
 
     return q.all()
 
@@ -189,7 +183,7 @@ def latest_salary_transaction_date() -> Optional[date]:
     return row.date if row else None
 
 
-def get_month_transac(month, year, cat_names=None, paypal=False) -> List[Transaction]:
+def get_month_transac(month, year, cat_names=None) -> List[Transaction]:
     """ extract all transactions from specific month, year and categories """
 
     if cat_names:
@@ -203,9 +197,6 @@ def get_month_transac(month, year, cat_names=None, paypal=False) -> List[Transac
             extract('year', Transaction.date) == year,
             extract('month', Transaction.date) == month
         ).order_by(Transaction.id.desc())
-
-    if not paypal:
-        q = q.filter((Transaction.paypal == False) | (Transaction.paypal == None))
 
     return q.all()
 
@@ -256,7 +247,6 @@ def past_sold(month, year):
     total_amount = 0
     transactions = Transaction.query.filter(
         Transaction.date <= end_date,
-        (Transaction.paypal == False) | (Transaction.paypal == None)
     ).order_by(Transaction.id.desc())
     for t in transactions:
         total_amount += t.amount

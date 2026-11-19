@@ -65,15 +65,18 @@ class StackedSpendingChart():
         fig.patch.set_alpha(0.0)  # transparent figure
         ax.set_facecolor('none')  # transparent axes
 
-        # Plot stacked areas
-        ax.stackplot(x, *spending_data, labels=labels, colors=self.colors)
+        # Plot stacked areas (matplotlib needs at least one series)
+        if spending_data:
+            ax.stackplot(x, *spending_data, labels=labels, colors=self.colors)
+        else:
+            ax.stackplot(x, np.zeros(len(x_labels)))
         ax.set_xticks(x)
         ax.set_xticklabels(x_labels, color=self.text_color)
 
         # Generate income data
         income_data = []
         for date in self.month_dates:
-            transactions = dao.get_month_transac(month=date.month, year=date.year, paypal=True)
+            transactions = dao.get_month_transac(month=date.month, year=date.year)
             y = dao.turnover(transactions)
             income_data.append(y)
         # Add simple line for income data
@@ -100,15 +103,16 @@ class StackedSpendingChart():
         # Grid and legend styled for theme
         ax.grid(True, color=self.axis_color, alpha=self.grid_alpha, linewidth=0.6)
 
-        legend = ax.legend(labels, loc='center left', bbox_to_anchor=(1, 0.5))
-        # Legend background: white in light mode, transparent in dark mode
-        if self.is_dark:
-            legend.get_frame().set_facecolor((0, 0, 0, 0))
-        else:
-            legend.get_frame().set_facecolor('#ffffff')
-        legend.get_frame().set_edgecolor(self.axis_color)
-        for text in legend.get_texts():
-            text.set_color(self.text_color)
+        if labels:
+            legend = ax.legend(labels, loc='center left', bbox_to_anchor=(1, 0.5))
+            # Legend background: white in light mode, transparent in dark mode
+            if self.is_dark:
+                legend.get_frame().set_facecolor((0, 0, 0, 0))
+            else:
+                legend.get_frame().set_facecolor('#ffffff')
+            legend.get_frame().set_edgecolor(self.axis_color)
+            for text in legend.get_texts():
+                text.set_color(self.text_color)
 
         # Titles and labels
         ax.set_title(self.title, color=self.text_color)

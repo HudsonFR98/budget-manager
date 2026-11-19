@@ -24,7 +24,7 @@ SAVINGS_COLORS = [
 def sold():
     """Calculate total balance (same as in transaction blueprint)"""
     total_amount = 0
-    transactions = Transaction.query.filter((Transaction.paypal == False) | (Transaction.paypal == None)).all()
+    transactions = Transaction.query.all()
     for t in transactions:
         total_amount += t.amount
     return total_amount

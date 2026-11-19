@@ -30,6 +30,15 @@ CATEGORIES = _demo_month.CATEGORIES
 SAVINGS = _demo_month.SAVINGS
 SENTINEL_SAVING = _demo_month.SENTINEL_SAVING
 SYSTEM_SAVING_NAME = _demo_month.SYSTEM_SAVING_NAME
+DEMO_BUSINESS_NAME = _demo_month.DEMO_BUSINESS_NAME
+DEMO_BUSINESS_STARTED_ON = _demo_month.DEMO_BUSINESS_STARTED_ON
+DEMO_BUSINESS_SALES_COLOR = _demo_month.DEMO_BUSINESS_SALES_COLOR
+DEMO_BUSINESS_SALES_ICON = _demo_month.DEMO_BUSINESS_SALES_ICON
+DEMO_BUSINESS_EXPENSES_COLOR = _demo_month.DEMO_BUSINESS_EXPENSES_COLOR
+DEMO_BUSINESS_EXPENSES_ICON = _demo_month.DEMO_BUSINESS_EXPENSES_ICON
+demo_business_sales_category_name = _demo_month.demo_business_sales_category_name
+demo_business_expense_category_name = _demo_month.demo_business_expense_category_name
+resolve_demo_category_name = _demo_month.resolve_demo_category_name
 DemoMonthBuilder = _demo_month.DemoMonthBuilder
 DemoSavingsLedger = _demo_month.DemoSavingsLedger
 
@@ -123,6 +132,28 @@ def render_sql() -> str:
             f"WHERE NOT EXISTS (SELECT 1 FROM category WHERE name = {sql_str(name)});"
         )
 
+    sales_name = demo_business_sales_category_name()
+    expense_name = demo_business_expense_category_name()
+    lines += [
+        "",
+        "-- Create one demo business when none exists (runs even if the rest of the demo is skipped).",
+        "INSERT INTO category (name, type, color, icon)",
+        f"SELECT {sql_str(sales_name)}, 0, {sql_str(DEMO_BUSINESS_SALES_COLOR)}, {sql_str(DEMO_BUSINESS_SALES_ICON)}",
+        "WHERE NOT EXISTS (SELECT 1 FROM business)",
+        f"  AND NOT EXISTS (SELECT 1 FROM category WHERE name = {sql_str(sales_name)});",
+        "",
+        "INSERT INTO category (name, type, color, icon)",
+        f"SELECT {sql_str(expense_name)}, 2, {sql_str(DEMO_BUSINESS_EXPENSES_COLOR)}, {sql_str(DEMO_BUSINESS_EXPENSES_ICON)}",
+        "WHERE NOT EXISTS (SELECT 1 FROM business)",
+        f"  AND NOT EXISTS (SELECT 1 FROM category WHERE name = {sql_str(expense_name)});",
+        "",
+        "INSERT INTO business (name, started_on, opening_result, sales_category_id, expense_category_id)",
+        f"SELECT {sql_str(DEMO_BUSINESS_NAME)}, '{DEMO_BUSINESS_STARTED_ON.isoformat()}', 0.00,",
+        f"       {cat_id(sales_name)}, {cat_id(expense_name)}",
+        "WHERE NOT EXISTS (SELECT 1 FROM business);",
+        "",
+    ]
+
     lines += [
         "",
         "DO $demo$",
@@ -157,11 +188,11 @@ def render_sql() -> str:
     lines.append("")
     for row in transactions:
         saving_sql = sav_id(row.saving_name) if row.saving_name else "NULL"
-        paypal_sql = "TRUE" if row.paypal else "FALSE"
+        category_name = resolve_demo_category_name(row.category_name, sales_name, expense_name)
         lines.append(
-            "    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)\n"
+            "    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)\n"
             f"    VALUES ('{row.date.isoformat()}', {sql_str(row.note)}, {sql_num(row.amount)}, "
-            f"{cat_id(row.category_name)}, {saving_sql}, {paypal_sql});"
+            f"{cat_id(category_name)}, {saving_sql});"
         )
 
     lines.append("")

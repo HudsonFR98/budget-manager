@@ -1,4 +1,4 @@
-"""Seed Base saving and Elytras categories
+"""Seed Base saving
 
 Revision ID: seed_starter_data
 Revises: add_app_settings
@@ -44,32 +44,6 @@ def upgrade():
         },
     )
 
-    categories = (
-        {
-            "name": "Ventes Elytras",
-            "type": 0,
-            "icon": "🐜",
-            "color": "#b0ea70",
-        },
-        {
-            "name": "Dépenses Elytras",
-            "type": 2,
-            "icon": "🐜",
-            "color": "#dfff2a",
-        },
-    )
-    for category in categories:
-        conn.execute(
-            sa.text(
-                """
-                INSERT INTO category (name, type, color, icon)
-                SELECT :name, :type, :color, :icon
-                WHERE NOT EXISTS (SELECT 1 FROM category WHERE name = :name)
-                """
-            ),
-            category,
-        )
-
 
 def downgrade():
     conn = op.get_bind()
@@ -83,20 +57,3 @@ def downgrade():
             sa.text("UPDATE saving SET name = :old_name WHERE name = :new_name"),
             {"old_name": LEGACY_SAVING_NAME, "new_name": SYSTEM_SAVING_NAME},
         )
-
-    for name in ("Ventes Elytras", "Dépenses Elytras"):
-        referenced = conn.execute(
-            sa.text(
-                """
-                SELECT 1 FROM transaction
-                WHERE category_id IN (SELECT id FROM category WHERE name = :name)
-                LIMIT 1
-                """
-            ),
-            {"name": name},
-        ).first()
-        if referenced is None:
-            conn.execute(
-                sa.text("DELETE FROM category WHERE name = :name"),
-                {"name": name},
-            )
