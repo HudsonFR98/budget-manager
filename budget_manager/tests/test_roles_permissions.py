@@ -193,8 +193,8 @@ def test_reviewer_can_view_staff_pages(app):
             assert client.get('/saving/').status_code == 200
             assert client.get('/analytics/').status_code == 200
             assert client.get('/analytics/?months=6').status_code == 200
-            assert client.get('/elytras/').status_code == 200
-            assert client.get('/paypal/').status_code == 200
+            assert client.get('/businesses/').status_code == 200
+            assert client.get('/businesses/add').status_code == 200
             assert client.get('/transaction/add').status_code == 200
             assert b'reviewer-readonly' in client.get('/home/').data
     finally:

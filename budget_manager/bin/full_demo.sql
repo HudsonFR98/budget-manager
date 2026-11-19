@@ -49,6 +49,23 @@ INSERT INTO category (name, type, color, icon)
 SELECT 'Vacances', 2, '#fff577', '🏖'
 WHERE NOT EXISTS (SELECT 1 FROM category WHERE name = 'Vacances');
 
+-- Create one demo business when none exists (runs even if the rest of the demo is skipped).
+INSERT INTO category (name, type, color, icon)
+SELECT 'Ventes Atelier', 0, '#b0ea70', '🏪'
+WHERE NOT EXISTS (SELECT 1 FROM business)
+  AND NOT EXISTS (SELECT 1 FROM category WHERE name = 'Ventes Atelier');
+
+INSERT INTO category (name, type, color, icon)
+SELECT 'Dépenses Atelier', 2, '#dfff2a', '📦'
+WHERE NOT EXISTS (SELECT 1 FROM business)
+  AND NOT EXISTS (SELECT 1 FROM category WHERE name = 'Dépenses Atelier');
+
+INSERT INTO business (name, started_on, opening_result, sales_category_id, expense_category_id)
+SELECT 'Atelier', '2026-04-01', 0.00,
+       (SELECT id FROM category WHERE name = 'Ventes Atelier'), (SELECT id FROM category WHERE name = 'Dépenses Atelier')
+WHERE NOT EXISTS (SELECT 1 FROM business);
+
+
 DO $demo$
 BEGIN
     IF EXISTS (SELECT 1 FROM saving WHERE name = 'Vacances') THEN
@@ -98,354 +115,354 @@ BEGIN
     INSERT INTO category_budget (category_id, budget_id)
     SELECT (SELECT id FROM category WHERE name = 'Transports'), currval('budget_id_seq');
 
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-12', 'Remboursement', 45.00, (SELECT id FROM category WHERE name = 'Autres revenus'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-08', 'EDF', -66.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-02', 'Super U', -66.47, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-08', 'Super U', -32.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-13', 'Courses Lidl', -39.11, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-30', 'Fromagerie', -54.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-11', 'Boulangerie', -40.01, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-18', 'Café', -53.65, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-07', 'Marché', -20.94, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-21', 'Marché', -26.70, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-21', 'Cinéma', -10.91, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-23', 'Cinéma', -10.32, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-06', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-05', 'Essence', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-24', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-04-11', 'Tram', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-08', 'EDF', -64.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-20', 'Marché', -58.23, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-13', 'Marché', -48.23, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-10', 'Boulangerie', -40.28, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-25', 'Fromagerie', -23.01, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-17', 'Courses Lidl', -25.07, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-28', 'Super U', -34.73, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-26', 'Restaurant', -37.53, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-16', 'Super U', -54.02, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-12', 'Livre', -29.08, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-22', 'Musée', -33.73, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-09', 'Cinéma', -32.52, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-18', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-11', 'Essence', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-26', 'Bus', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-12', 'Essence', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-05-15', 'Anniversaire', -35.00, (SELECT id FROM category WHERE name = 'Cadeaux'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-01', 'Salaire', 2380.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-08', 'EDF', -71.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-18', 'Restaurant', -16.62, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-13', 'Super U', -62.29, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-17', 'Café', -59.98, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-04', 'Super U', -39.38, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-06', 'Boulangerie', -57.22, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-22', 'Café', -39.61, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-16', 'Fromagerie', -38.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-29', 'Super U', -53.99, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-30', 'Livre', -19.76, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-30', 'Livre', -29.88, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-04', 'Livre', -8.74, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-11', 'Essence', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-29', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-14', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-14', 'Parking', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-20', 'Vente figurine', 56.97, (SELECT id FROM category WHERE name = 'Ventes Elytras'), NULL, TRUE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-06-21', 'Resine / colis', -23.89, (SELECT id FROM category WHERE name = 'Dépenses Elytras'), NULL, TRUE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-08', 'EDF', -68.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-22', 'Boulangerie', -44.33, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-05', 'Marché', -16.41, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-10', 'Fromagerie', -23.20, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-20', 'Fruits', -41.16, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-21', 'Fromagerie', -15.65, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-21', 'Restaurant', -51.20, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-05', 'Café', -41.22, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-04', 'Café', -45.60, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-29', 'Livre', -23.73, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-10', 'Cinéma', -17.75, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-23', 'Concert', -35.58, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-05', 'Essence', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-27', 'Essence', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-18', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-23', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-07-18', 'Optique', -89.00, (SELECT id FROM category WHERE name = 'Santé'), (SELECT id FROM saving WHERE name = 'Santé'), FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-08', 'EDF', -64.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-05', 'Restaurant', -41.97, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-03', 'Marché', -16.39, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-21', 'Boulangerie', -62.54, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-15', 'Restaurant', -46.03, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-09', 'Fromagerie', -24.51, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-11', 'Fruits', -65.75, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-11', 'Fromagerie', -33.73, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-21', 'Café', -31.95, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-27', 'Concert', -22.63, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-11', 'Concert', -17.52, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-13', 'Concert', -28.01, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-27', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-16', 'Tram', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-24', 'Tram', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-07', 'Essence', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-08-04', 'Camping', -160.00, (SELECT id FROM category WHERE name = 'Vacances'), (SELECT id FROM saving WHERE name = 'Vacances'), FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-08', 'EDF', -62.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-25', 'Café', -60.66, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-28', 'Super U', -53.37, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-05', 'Super U', -53.94, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-24', 'Restaurant', -64.18, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-20', 'Marché', -40.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-18', 'Courses Lidl', -57.83, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-18', 'Fruits', -35.32, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-21', 'Fruits', -27.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-27', 'Concert', -32.22, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-29', 'Cinéma', -23.89, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-12', 'Musée', -33.07, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-28', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-08', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-10', 'Bus', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-08', 'Parking', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-20', 'Vente figurine', 37.22, (SELECT id FROM category WHERE name = 'Ventes Elytras'), NULL, TRUE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-09-21', 'Resine / colis', -28.67, (SELECT id FROM category WHERE name = 'Dépenses Elytras'), NULL, TRUE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-12', 'Remboursement', 45.00, (SELECT id FROM category WHERE name = 'Autres revenus'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-08', 'EDF', -77.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-05', 'Fruits', -56.36, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-10', 'Courses Lidl', -22.25, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-04', 'Courses Lidl', -49.97, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-07', 'Fruits', -66.16, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-15', 'Super U', -16.61, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-10', 'Café', -29.42, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-05', 'Super U', -25.59, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-26', 'Super U', -47.63, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-16', 'Livre', -22.84, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-27', 'Cinéma', -10.74, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-19', 'Concert', -24.63, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-18', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-08', 'Parking', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-17', 'Tram', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-10-16', 'Tram', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-08', 'EDF', -85.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-17', 'Fruits', -19.89, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-16', 'Restaurant', -41.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-15', 'Boulangerie', -35.17, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-03', 'Marché', -23.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-14', 'Fruits', -29.46, (SELECT id FROM category WHERE name = 'Alimentation'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-10', 'Cinéma', -36.41, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-06', 'Cinéma', -34.67, (SELECT id FROM category WHERE name = 'Loisirs'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-17', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-03', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL, FALSE);
-    INSERT INTO public.transaction (date, note, amount, category_id, saving_id, paypal)
-    VALUES ('2026-11-15', 'Anniversaire', -35.00, (SELECT id FROM category WHERE name = 'Cadeaux'), NULL, FALSE);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-12', 'Remboursement', 45.00, (SELECT id FROM category WHERE name = 'Autres revenus'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-08', 'EDF', -66.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-02', 'Super U', -66.47, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-08', 'Super U', -32.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-13', 'Courses Lidl', -39.11, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-30', 'Fromagerie', -54.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-11', 'Boulangerie', -40.01, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-18', 'Café', -53.65, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-07', 'Marché', -20.94, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-21', 'Marché', -26.70, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-21', 'Cinéma', -10.91, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-23', 'Cinéma', -10.32, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-06', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-05', 'Essence', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-24', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-04-11', 'Tram', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-08', 'EDF', -64.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-20', 'Marché', -58.23, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-13', 'Marché', -48.23, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-10', 'Boulangerie', -40.28, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-25', 'Fromagerie', -23.01, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-17', 'Courses Lidl', -25.07, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-28', 'Super U', -34.73, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-26', 'Restaurant', -37.53, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-16', 'Super U', -54.02, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-12', 'Livre', -29.08, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-22', 'Musée', -33.73, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-09', 'Cinéma', -32.52, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-18', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-11', 'Essence', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-26', 'Bus', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-12', 'Essence', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-05-15', 'Anniversaire', -35.00, (SELECT id FROM category WHERE name = 'Cadeaux'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-01', 'Salaire', 2380.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-08', 'EDF', -71.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-18', 'Restaurant', -16.62, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-13', 'Super U', -62.29, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-17', 'Café', -59.98, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-04', 'Super U', -39.38, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-06', 'Boulangerie', -57.22, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-22', 'Café', -39.61, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-16', 'Fromagerie', -38.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-29', 'Super U', -53.99, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-30', 'Livre', -19.76, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-30', 'Livre', -29.88, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-04', 'Livre', -8.74, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-11', 'Essence', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-29', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-14', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-14', 'Parking', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-20', 'Vente', 56.97, (SELECT id FROM category WHERE name = 'Ventes Atelier'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-06-21', 'Fournitures', -23.89, (SELECT id FROM category WHERE name = 'Dépenses Atelier'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-08', 'EDF', -68.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-22', 'Boulangerie', -44.33, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-05', 'Marché', -16.41, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-10', 'Fromagerie', -23.20, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-20', 'Fruits', -41.16, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-21', 'Fromagerie', -15.65, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-21', 'Restaurant', -51.20, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-05', 'Café', -41.22, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-04', 'Café', -45.60, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-29', 'Livre', -23.73, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-10', 'Cinéma', -17.75, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-23', 'Concert', -35.58, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-05', 'Essence', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-27', 'Essence', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-18', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-23', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-07-18', 'Optique', -89.00, (SELECT id FROM category WHERE name = 'Santé'), (SELECT id FROM saving WHERE name = 'Santé'));
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-08', 'EDF', -64.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-05', 'Restaurant', -41.97, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-03', 'Marché', -16.39, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-21', 'Boulangerie', -62.54, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-15', 'Restaurant', -46.03, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-09', 'Fromagerie', -24.51, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-11', 'Fruits', -65.75, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-11', 'Fromagerie', -33.73, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-21', 'Café', -31.95, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-27', 'Concert', -22.63, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-11', 'Concert', -17.52, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-13', 'Concert', -28.01, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-27', 'Parking', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-16', 'Tram', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-24', 'Tram', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-07', 'Essence', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-08-04', 'Camping', -160.00, (SELECT id FROM category WHERE name = 'Vacances'), (SELECT id FROM saving WHERE name = 'Vacances'));
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-08', 'EDF', -62.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-25', 'Café', -60.66, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-28', 'Super U', -53.37, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-05', 'Super U', -53.94, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-24', 'Restaurant', -64.18, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-20', 'Marché', -40.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-18', 'Courses Lidl', -57.83, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-18', 'Fruits', -35.32, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-21', 'Fruits', -27.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-27', 'Concert', -32.22, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-29', 'Cinéma', -23.89, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-12', 'Musée', -33.07, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-28', 'Bus', -3.60, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-08', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-10', 'Bus', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-08', 'Parking', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-20', 'Vente', 37.22, (SELECT id FROM category WHERE name = 'Ventes Atelier'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-09-21', 'Fournitures', -28.67, (SELECT id FROM category WHERE name = 'Dépenses Atelier'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-12', 'Remboursement', 45.00, (SELECT id FROM category WHERE name = 'Autres revenus'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-08', 'EDF', -77.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-10', 'Assurance hab.', -18.50, (SELECT id FROM category WHERE name = 'Assurance habitation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-05', 'Fruits', -56.36, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-10', 'Courses Lidl', -22.25, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-04', 'Courses Lidl', -49.97, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-07', 'Fruits', -66.16, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-15', 'Super U', -16.61, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-10', 'Café', -29.42, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-05', 'Super U', -25.59, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-26', 'Super U', -47.63, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-16', 'Livre', -22.84, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-27', 'Cinéma', -10.74, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-19', 'Concert', -24.63, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-18', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-08', 'Parking', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-17', 'Tram', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-10-16', 'Tram', -12.50, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-01', 'Salaire', 2180.00, (SELECT id FROM category WHERE name = 'Salaire'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-05', 'CAF', 192.40, (SELECT id FROM category WHERE name = 'CAF'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-03', 'Loyer', -720.00, (SELECT id FROM category WHERE name = 'Loyer'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-08', 'EDF', -85.00, (SELECT id FROM category WHERE name = 'Électricité'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-06', 'Forfait mobile', -19.99, (SELECT id FROM category WHERE name = 'Mobile'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-07', 'Mutuelle', -42.00, (SELECT id FROM category WHERE name = 'Mutuelle'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-17', 'Fruits', -19.89, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-16', 'Restaurant', -41.24, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-15', 'Boulangerie', -35.17, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-03', 'Marché', -23.55, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-14', 'Fruits', -29.46, (SELECT id FROM category WHERE name = 'Alimentation'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-10', 'Cinéma', -36.41, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-06', 'Cinéma', -34.67, (SELECT id FROM category WHERE name = 'Loisirs'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-17', 'Tram', -1.80, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-03', 'Bus', -38.00, (SELECT id FROM category WHERE name = 'Transports'), NULL);
+    INSERT INTO public.transaction (date, note, amount, category_id, saving_id)
+    VALUES ('2026-11-15', 'Anniversaire', -35.00, (SELECT id FROM category WHERE name = 'Cadeaux'), NULL);
 
     UPDATE saving SET amount = 17297.55 WHERE name = 'Base';
     UPDATE saving SET amount = 250.00 WHERE name = 'Santé';

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>{{ _('Businesses') }}</h4>
+    <a href="{{ url_for('business.add') }}" class="btn btn-primary mutate-control{% if not can_edit_data %} disabled{% endif %}"
+        {% if not can_edit_data %}aria-disabled="true" tabindex="-1"{% endif %}>
+        <i class="fa-solid fa-plus"></i>&nbsp;{{ _('Add business') }}
+    </a>
+</div>
+
+{% if rows %}
+<div class="row g-4">
+    {% for item in rows %}
+    {% set biz = item.business %}
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <h5 class="card-title mb-0">{{ biz.name }}</h5>
+                    <div class="btn-group" role="group">
+                        <a href="{{ url_for('business.edit', id=biz.id) }}"
+                            class="btn btn-sm btn-outline-primary mutate-control{% if not can_edit_data %} disabled{% endif %}"
+                            title="{{ _('Edit') }}"
+                            {% if not can_edit_data %}aria-disabled="true" tabindex="-1"{% endif %}>
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <button type="button" class="btn btn-sm btn-outline-danger delete-business mutate-control"
+                            data-id="{{ biz.id }}" title="{{ _('Delete') }}"
+                            {% if not can_edit_data %}disabled{% endif %}>
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+                <p class="mb-1">
+                    <small class="text-muted">{{ _('Start date') }}: {{ biz.started_on.strftime('%d/%m/%Y') }}</small>
+                </p>
+                <p class="mb-3">
+                    <small class="text-muted">{{ _('Opening result') }}: {{ biz.opening_result }} €</small>
+                </p>
+                <h3 class="mb-3" style="color: {% if item.profitability < 0 %}red{% else %}forestgreen{% endif %};">
+                    {{ item.profitability }} €
+                </h3>
+                <a href="{{ url_for('business.report', id=biz.id) }}" class="btn btn-outline-secondary btn-sm">
+                    {{ _('Profitability') }}
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="fa-solid fa-info-circle"></i> {{ _('No businesses yet. Add your first business.') }}
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (document.body.classList.contains('reviewer-readonly')) {
+            return;
+        }
+        document.querySelectorAll('.delete-business').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var id = this.getAttribute('data-id');
+                if (confirm('{{ _("Are you sure you want to delete this business?") }}')) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '{{ url_for("business.delete") }}', true);
+                    xhr.setRequestHeader('Content-Type', 'application/json');
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === XMLHttpRequest.DONE) {
+                            if (xhr.status === 200) {
+                                window.location.reload();
+                            } else {
+                                var response = {};
+                                try { response = JSON.parse(xhr.responseText); } catch (e) {}
+                                alert(response.error || '{{ _("Error deleting business") }}');
+                            }
+                        }
+                    };
+                    xhr.send(JSON.stringify({ "id": id }));
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -18,8 +18,7 @@ from .blueprints.admin import admin
 from .blueprints.analytics import analytics
 from .blueprints.category import category
 from .blueprints.transaction import transaction
-from .blueprints.paypal import paypal
-from .blueprints.elytras import elytras
+from .blueprints.business import business
 from .blueprints.saving import saving
 from .blueprints.home import home
 from .blueprints.rest import rest
@@ -237,8 +236,7 @@ def create_app():
     app.register_blueprint(analytics, url_prefix='/analytics/')
     app.register_blueprint(category, url_prefix='/category/')
     app.register_blueprint(transaction, url_prefix='/transaction/')
-    app.register_blueprint(paypal, url_prefix='/paypal/')
-    app.register_blueprint(elytras, url_prefix='/elytras/')
+    app.register_blueprint(business, url_prefix='/businesses/')
     app.register_blueprint(saving, url_prefix='/saving/')
     app.register_blueprint(home, url_prefix='/home/')
     app.register_blueprint(rest, url_prefix='/rest')

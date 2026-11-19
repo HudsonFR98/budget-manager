@@ -4,7 +4,12 @@ from unittest.mock import patch
 
 from budget_manager.lib.const import CONTEXT_VALIDATION
 from budget_manager.lib.demo_data import ValidationDemoFiller
-from budget_manager.lib.demo_month import DEMO_SALARY_NOTE, DemoMonthBuilder
+from budget_manager.lib.demo_month import (
+    DEMO_BUSINESS_EXPENSES_MARKER,
+    DEMO_BUSINESS_SALES_MARKER,
+    DEMO_SALARY_NOTE,
+    DemoMonthBuilder,
+)
 from budget_manager.lib.task_scheduler import fill_validation_demo_transactions, task_scheduler
 
 
@@ -16,6 +21,13 @@ def test_month_builder_includes_salary_and_clipped_notes():
     assert salary[0].amount > 0
     assert all(row.note is None or len(row.note) <= 30 for row in rows)
     assert any(row.amount < 0 for row in rows)
+
+
+def test_month_builder_includes_business_activity_in_june():
+    rows = DemoMonthBuilder(Random(1)).build(2027, 6)
+    assert any(row.category_name == DEMO_BUSINESS_SALES_MARKER for row in rows)
+    assert any(row.category_name == DEMO_BUSINESS_EXPENSES_MARKER for row in rows)
+    assert all(row.category_name != "Ventes Elytras" for row in rows)
 
 
 def test_month_builder_is_deterministic():

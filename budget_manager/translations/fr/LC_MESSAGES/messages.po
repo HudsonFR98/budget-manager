@@ -268,12 +268,145 @@ msgid "Savings"
 msgstr "Épargnes"
 
 #: budget_manager/templates/base.html:61
-msgid "Elytras"
-msgstr "Elytras"
+#: budget_manager/templates/business/list.html:5
+#: budget_manager/templates/business/report.html:8
+msgid "Businesses"
+msgstr "Entreprises"
 
-#: budget_manager/templates/base.html:64
-msgid "PayPal"
-msgstr "PayPal"
+#: budget_manager/templates/business/list.html:8
+#: budget_manager/templates/business/add.html:4
+msgid "Add business"
+msgstr "Ajouter une entreprise"
+
+#: budget_manager/templates/business/edit.html:4
+msgid "Edit business"
+msgstr "Modifier l'entreprise"
+
+#: budget_manager/templates/business/list.html:36
+#: budget_manager/templates/business/add.html:13
+#: budget_manager/templates/business/edit.html:13
+msgid "Start date"
+msgstr "Date de début"
+
+#: budget_manager/templates/business/list.html:39
+#: budget_manager/templates/business/add.html:18
+#: budget_manager/templates/business/edit.html:18
+msgid "Opening result"
+msgstr "Résultat d'ouverture"
+
+#: budget_manager/templates/business/add.html:20
+#: budget_manager/templates/business/edit.html:20
+msgid "Result already accumulated before the first recorded transaction."
+msgstr "Résultat déjà accumulé avant la première transaction enregistrée."
+
+#: budget_manager/templates/business/list.html:45
+msgid "Profitability"
+msgstr "Rentabilité"
+
+#: budget_manager/templates/business/list.html:54
+msgid "No businesses yet. Add your first business."
+msgstr "Aucune entreprise pour le moment. Ajoutez votre première entreprise."
+
+#: budget_manager/templates/business/list.html:66
+msgid "Are you sure you want to delete this business?"
+msgstr "Voulez-vous vraiment supprimer cette entreprise ?"
+
+#: budget_manager/templates/business/list.html:77
+msgid "Error deleting business"
+msgstr "Erreur lors de la suppression de l'entreprise"
+
+#: budget_manager/templates/business/report.html:6
+msgid "Profitability analysis"
+msgstr "Analyse de la rentabilité"
+
+#: budget_manager/templates/business/report.html:29
+msgid "Year"
+msgstr "Année"
+
+#: budget_manager/templates/business/report.html:30
+msgid "Q1"
+msgstr "T1"
+
+#: budget_manager/templates/business/report.html:31
+msgid "Q2"
+msgstr "T2"
+
+#: budget_manager/templates/business/report.html:32
+msgid "Q3"
+msgstr "T3"
+
+#: budget_manager/templates/business/report.html:33
+msgid "Q4"
+msgstr "T4"
+
+#: budget_manager/templates/business/report.html:51
+msgid "Profitability since the start of activity"
+msgstr "Rentabilité depuis le début de l'activité"
+
+#: budget_manager/templates/business/report.html:65
+msgid "Quarter"
+msgstr "Trimestre"
+
+#: budget_manager/lib/business_report.py
+#: budget_manager/templates/business/report.html
+msgid "Turnover"
+msgstr "Chiffre d'affaires"
+
+#: budget_manager/lib/business_report.py
+msgid "Gross expenses"
+msgstr "Dépenses brutes"
+
+#: budget_manager/lib/business_report.py
+msgid "Final profit"
+msgstr "Bénéfice final"
+
+#: budget_manager/templates/business/report.html
+msgid "Time"
+msgstr "Temps"
+
+#: budget_manager/templates/business/report.html
+msgid "Expenses"
+msgstr "Dépenses"
+
+#: budget_manager/dao/business.py
+msgid "A business name is required."
+msgstr "Le nom de l'entreprise est obligatoire."
+
+#: budget_manager/dao/business.py
+msgid "A business name cannot exceed 70 characters."
+msgstr "Le nom de l'entreprise ne peut pas dépasser 70 caractères."
+
+#: budget_manager/dao/business.py
+msgid "A business with this name already exists."
+msgstr "Une entreprise porte déjà ce nom."
+
+#: budget_manager/dao/business.py
+msgid "Categories for this business name already exist."
+msgstr "Des catégories existent déjà pour ce nom d'entreprise."
+
+#: budget_manager/dao/business.py
+msgid "This business still has transactions and cannot be deleted."
+msgstr "Cette entreprise a encore des transactions et ne peut pas être supprimée."
+
+#: budget_manager/blueprints/business.py
+msgid "Business added."
+msgstr "Entreprise ajoutée."
+
+#: budget_manager/blueprints/business.py
+msgid "Business updated."
+msgstr "Entreprise mise à jour."
+
+#: budget_manager/blueprints/business.py
+msgid "Business deleted."
+msgstr "Entreprise supprimée."
+
+#: budget_manager/blueprints/business.py
+msgid "Business not found."
+msgstr "Entreprise introuvable."
+
+#: budget_manager/blueprints/business.py
+msgid "Please provide a valid start date and opening result."
+msgstr "Veuillez indiquer une date de début et un résultat d'ouverture valides."
 
 #: budget_manager/templates/base.html:71
 msgid "Administration"

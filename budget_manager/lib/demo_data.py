@@ -12,6 +12,7 @@ from budget_manager.lib.demo_month import (
     SENTINEL_SAVING,
     DemoMonthBuilder,
     add_months,
+    resolve_demo_category_name,
 )
 
 log = logging.getLogger(__name__)
@@ -41,6 +42,8 @@ class ValidationDemoFiller:
         if not months:
             DBSession.commit()
             return "No missing demo months"
+
+        dao.ensure_demo_business()
 
         filled: list[str] = []
         for year, month in months:
@@ -91,13 +94,19 @@ class ValidationDemoFiller:
         from budget_manager import dao
         from budget_manager.models import Transaction
 
+        business = dao.ensure_demo_business()
+        sales_name = business.sales_category.name
+        expense_name = business.expense_category.name
         builder = DemoMonthBuilder(self.rng or Random())
         rows = builder.build(year, month)
         inserted = 0
         for row in rows:
-            category = dao.get_category_by_name(row.category_name)
+            category_name = resolve_demo_category_name(
+                row.category_name, sales_name, expense_name
+            )
+            category = dao.get_category_by_name(category_name)
             if category is None:
-                log.warning("Skipping demo transaction: missing category %s", row.category_name)
+                log.warning("Skipping demo transaction: missing category %s", category_name)
                 continue
             saving = dao.get_saving_by_name(row.saving_name) if row.saving_name else None
             if row.saving_name and saving is None:
@@ -109,7 +118,6 @@ class ValidationDemoFiller:
                 amount=row.amount,
                 category_id=category.id,
                 saving_id=saving.id if saving else None,
-                paypal=row.paypal,
             ))
             self._apply_to_savings(row.amount, category.type, saving)
             inserted += 1
