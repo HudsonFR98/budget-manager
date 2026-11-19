@@ -7,6 +7,8 @@ from flask_babel import gettext as _
 from budget_manager.models import *
 from budget_manager.lib.const import SYSTEM_SAVING_NAME
 from budget_manager.lib.database import DBSession
+from budget_manager.lib.exc import DomainError
+from budget_manager.dao.saving import delete_saving as dao_delete_saving
 from budget_manager.lib.telegram import send_telegram_message
 
 saving = Blueprint("saving", __name__)
@@ -349,13 +351,14 @@ def delete():
     data = request.get_json()
     id = data.get('id')
     saving_item = Saving.query.get(id)
-    if saving_item:
-        if saving_item.name == SYSTEM_SAVING_NAME:
-            return jsonify({'error': _('The Base saving cannot be deleted.')}), 403
-        DBSession.delete(saving_item)
-        DBSession.commit()
-        return jsonify({'message': 'Saving deleted!'})
-    return jsonify({'error': 'Saving not found'}), 404
+    if not saving_item:
+        return jsonify({'error': 'Saving not found'}), 404
+    try:
+        dao_delete_saving(saving_item)
+    except DomainError as exc:
+        status = 403 if saving_item.name == SYSTEM_SAVING_NAME else 400
+        return jsonify({'error': str(exc)}), status
+    return jsonify({'message': 'Saving deleted!'})
 
 @saving.route('/distribute-monthly', methods=['POST'])
 @login_required

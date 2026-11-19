@@ -20,6 +20,12 @@ class Saving(Base):
     goal = Column(Numeric(precision=8, scale=2), nullable=True)  # goal amount for this saving
     ratio = Column(Numeric(precision=8, scale=2), nullable=True)
 
+    history_entries = relationship(
+        'SavingHistory',
+        back_populates='saving',
+        cascade='all, delete-orphan',
+    )
+
     def __init__(self, name=None, note=None, amount=None, icon=None, color=None, goal=None, ratio=None):
         self.name = name
         self.note = note
@@ -46,7 +52,7 @@ class SavingHistory(Base):
     date = Column(Date, default=date.today, nullable=False, index=True)
     amount = Column(Numeric(precision=8, scale=2), nullable=False)
 
-    saving = relationship('Saving', backref='history_entries')
+    saving = relationship('Saving', back_populates='history_entries')
 
     def __init__(self, saving_id=None, date_snapshot=None, amount=None):
         self.saving_id = saving_id
