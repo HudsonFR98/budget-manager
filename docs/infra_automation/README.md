@@ -35,12 +35,12 @@ What differs between environments is only data, never code:
 | FQDN / Pi-hole record | `budman.integration.nath-server.home`, `budman.validation.nath-server.home`, `budman.nath-server.home` |
 | GitLab Terraform state | `<env>-vm` |
 | dotenv keys between jobs | `<ENV>_VM_IP`, `<ENV>_VM_FQDN`, `<ENV>_VM_ID`, `<ENV>_VM_NAME`, `<ENV>_VM_GENERATION` |
-| CI variables | `<ENV>_VM_FQDN`, `<ENV>_POSTGRES_*`, `<ENV>_SECRET_KEY`, `<ENV>_BUDMAN_DB_NAME`, `<ENV>_ADMIN_USER_*`, `<ENV>_REVIEWER_USER_*`, optional `<ENV>_VM_GENERATION_SEED` |
+| CI variables | `<ENV>_PROXMOX_NODE_NAME`, `<ENV>_PROXMOX_TEMPLATE_VM_ID`, `<ENV>_PROXMOX_DATASTORE_ID`, `<ENV>_VM_FQDN`, optional `<ENV>_VM_IP`, `<ENV>_POSTGRES_*`, `<ENV>_SECRET_KEY`, `<ENV>_BUDMAN_DB_NAME`, `<ENV>_ADMIN_USER_*`, `<ENV>_REVIEWER_USER_*`, optional `<ENV>_VM_GENERATION_SEED` |
 | Flask context / nginx / inventory group | `lib/_config.py`, `deploy/nginx_<env>.conf`, `[<env>]` in `deploy/ansible/inventory.ini` |
 | GitLab environment + `resource_group` | `<env>` / `<env>-infra` |
 | Demo dataset | validation only: `budget_manager/bin/full_demo.sql` after Alembic, then monthly fill via `fill_validation_demo_transactions` |
 
-The IP pool (`IP_POOL_START`/`IP_POOL_END`, default `.124–.200`) is shared: each environment takes the first free address.
+The IP pool (`IP_POOL_START`/`IP_POOL_END`, default `.124–.200`) is shared: each environment takes the first free address, unless `<ENV>_VM_IP` is set, in which case that address is used as-is.
 
 ## Documents
 
