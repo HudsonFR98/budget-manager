@@ -22,6 +22,8 @@ variables:
 #             optional: IP_POOL_START, IP_POOL_END, IP_POOL_RESERVED (one pool for all envs)
 #   per env (<ENV> = INTEGRATION | VALIDATION | PROD):
 #             <ENV>_PROXMOX_NODE_NAME, <ENV>_PROXMOX_TEMPLATE_VM_ID, <ENV>_PROXMOX_DATASTORE_ID,
+#             optional: <ENV>_PROXMOX_NETWORK_BRIDGE (default vmbr0 when unset),
+#             optional: <ENV>_GATEWAY (default 192.168.1.1 in Terraform when unset)
 #             <ENV>_VM_FQDN, <ENV>_POSTGRES_USER, <ENV>_POSTGRES_PASSWORD (masked),
 #             <ENV>_POSTGRES_DB, <ENV>_BUDMAN_DB_NAME, <ENV>_SECRET_KEY (masked),
 #             <ENV>_ADMIN_USER_USERNAME, <ENV>_ADMIN_USER_PASSWORD (masked),
@@ -123,10 +125,20 @@ stages:
     - export TF_VAR_node_name="$(printenv "${ENV_PREFIX}_PROXMOX_NODE_NAME" || true)"
     - export TF_VAR_template_vm_id="$(printenv "${ENV_PREFIX}_PROXMOX_TEMPLATE_VM_ID" || true)"
     - export TF_VAR_datastore_id="$(printenv "${ENV_PREFIX}_PROXMOX_DATASTORE_ID" || true)"
+    - |
+      network_bridge="$(printenv "${ENV_PREFIX}_PROXMOX_NETWORK_BRIDGE" || true)"
+      if [ -n "$network_bridge" ]; then
+        export TF_VAR_network_bridge="$network_bridge"
+      fi
+    - |
+      lan_gateway="$(printenv "${ENV_PREFIX}_GATEWAY" || true)"
+      if [ -n "$lan_gateway" ]; then
+        export TF_VAR_gateway="$lan_gateway"
+      fi
     - test -n "$TF_VAR_node_name" || { echo "CI variable ${ENV_PREFIX}_PROXMOX_NODE_NAME is missing"; exit 1; }
     - test -n "$TF_VAR_template_vm_id" || { echo "CI variable ${ENV_PREFIX}_PROXMOX_TEMPLATE_VM_ID is missing"; exit 1; }
     - test -n "$TF_VAR_datastore_id" || { echo "CI variable ${ENV_PREFIX}_PROXMOX_DATASTORE_ID is missing"; exit 1; }
-    - echo "environment=${ENV_NAME} state=${TF_STATE_NAME} fqdn=${VM_FQDN} node=${TF_VAR_node_name}"
+    - echo "environment=${ENV_NAME} state=${TF_STATE_NAME} fqdn=${VM_FQDN} node=${TF_VAR_node_name} bridge=${TF_VAR_network_bridge:-vmbr0} gateway=${TF_VAR_gateway:-192.168.1.1}"
     # Self-signed GitLab cert (CN=gitlab.nath-server.home). The terraform image
     # does not use the runner host trust store. GITLAB_CA_FILE is a File-type
     # CI variable containing /etc/gitlab/ssl/gitlab.nath-server.home.crt (public

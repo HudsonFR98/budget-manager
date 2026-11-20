@@ -62,6 +62,8 @@ Per environment, `<ENV>` ∈ {`INTEGRATION`, `VALIDATION`, `PROD`}:
 | `<ENV>_PROXMOX_NODE_NAME` | no | prod only | Proxmox node for that environment (e.g. `proxmox2`, `nath-server`) |
 | `<ENV>_PROXMOX_TEMPLATE_VM_ID` | no | prod only | cloud-init template VMID on that node |
 | `<ENV>_PROXMOX_DATASTORE_ID` | no | prod only | datastore on that node (e.g. `local-lvm`) |
+| `<ENV>_PROXMOX_NETWORK_BRIDGE` | no | prod only | optional. Proxmox bridge for the VM NIC (`vmbr0`, `vmbr1`, …). Default `vmbr0` when unset |
+| `<ENV>_GATEWAY` | no | prod only | optional. Cloud-init default gateway for the VM. Default `192.168.1.1` in Terraform when unset (set when using another bridge/L3, e.g. `vmbr1` → `10.20.40.1`) |
 | `<ENV>_VM_IP` | no | prod only | optional. When set, Pi-hole and Terraform use this address and do not scan the pool |
 | `<ENV>_VM_FQDN` | no | prod only | FQDNs in `deploy/ansible/inventory.ini` and nginx `server_name` |
 | `<ENV>_VM_GENERATION_SEED` | no | prod only | optional, default `1` |
@@ -93,6 +95,12 @@ The real file uses `extends:` (deep merge) rather than YAML anchors, so per-envi
     - export TF_VAR_node_name="$(printenv "${ENV_PREFIX}_PROXMOX_NODE_NAME")"
     - export TF_VAR_template_vm_id="$(printenv "${ENV_PREFIX}_PROXMOX_TEMPLATE_VM_ID")"
     - export TF_VAR_datastore_id="$(printenv "${ENV_PREFIX}_PROXMOX_DATASTORE_ID")"
+    - |
+      network_bridge="$(printenv "${ENV_PREFIX}_PROXMOX_NETWORK_BRIDGE" || true)"
+      if [ -n "$network_bridge" ]; then export TF_VAR_network_bridge="$network_bridge"; fi
+    - |
+      lan_gateway="$(printenv "${ENV_PREFIX}_GATEWAY" || true)"
+      if [ -n "$lan_gateway" ]; then export TF_VAR_gateway="$lan_gateway"; fi
     - export TF_STATE_NAME="${ENV_NAME}-vm"                      # integration-vm | validation-vm | prod-vm
     - export TF_HTTP_ADDRESS="${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${TF_STATE_NAME}"
     - export TF_HTTP_LOCK_ADDRESS="${TF_HTTP_ADDRESS}/lock"
