@@ -1,6 +1,10 @@
 BUDGET_MANAGER
 ============================
 
+**Budget Manager** is a personal finance web app: monthly income and expense dashboards (fixed vs variable), category budgets with progress, transactions, savings, and statistics—built on the Nath Flask stack.
+
+![Financial status dashboard on the validation environment](docs/preview-validation.png)
+---
 
 # Technical documentation for the Budget Manager Application
 
